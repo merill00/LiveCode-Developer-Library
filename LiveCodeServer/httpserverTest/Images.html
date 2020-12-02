@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+</style>
+</head>
+<body>
+
+<h2>Images Side by Side</h2>
+<p>How to create side-by-side images with the CSS float property:</p>
+
+<div class="row">
+  <div class="column">
+    <img src="./files/img_snow.jpg" alt="Snow" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="./files/img_forest.jpg" alt="Forest" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="./files/img_mountains.jpg" alt="Mountains" style="width:100%">
+
+
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAE7UlEQVRoge2YS2xUVRjHf9+9M9Pn2Jctj5YiRYSEgtKCpbCwwVjS2NoSbYwaE01UNuzEhRFNNQYRTFjgIyFx6boPW0rbCAsjtJWmIkUDQlMoLYMwfdEOnd7pPS7KDNPOTDsDUyBmfqt7zvnO9/+fx82550KMGDFixIgR49EhkQSXlZXFDSvbbqV4E8i/W90jSn5K091Hm5ub3Q8zT0QDKC4vzzYNrQnk2RAhf2jW6fLTjY0DDyOPl7AGUFZWFjdkWjvmEfWJp2tTW0PNYLTy+KMtFAAwrGy7wxAFeM5pWt9f7Dz+zLsCJSUl8a64J97RkEMKksNJGEVcIuor09B/6Pyl1hkqKOQAtpRWrtCEWqBwUeyFi2JA4NX21vqOYM1BB1BSUhJ/Jy71N1AFi+subIZEpLD9eF3f3Iag74ArLmXfY2QeIF2Z6rtgDQErsP2lV5Z7NLkIJC26rYhROzpaGk761wSswLTwBY+leQA5wJxJn1UoLq1YZ4p2DrA8TFuRIKIq2483NHjLs1ZgWtMO8hibB1BK9ldXV+vesm8AxWW7XhBFxaOxFRHr+24bb3sL3i0kRTsrrwHLvQ2JUykUXCln1c3NpLmWATCcNEhv5hm6c5tw2Uaj6ioyPTWWrhlZzc3NbgEo2ln1DagPvc1rHdspPb8HmychqNiU5Q4t+Ue4uORUVMzfj55S6sfO1ob39PXV1TbrpOdbEUnzJnv57F4spjWkoG5aecaxDae9H2dy/wObvx89TdMyUjZt+N5iH53apUTyYGYZS8/vQe7urKT1E6TuGCLuqUlQ4L4az+ivqYx32xGEnT176E/r4Y5tLEA0IclO2tJlgDDkGGByYjwgZiG9yb54RtoycF1IDNBTSq1Muu2u1LNXr9uHzFwqinpfY6Vz5mMxvdRJ1lsOrBkGoivEorBmGCRvuo2e6sHVk4xuWpnWDfrTzwWYy8pdhW6xomkacQlJjA8Hfo8tqPekgX3LGKahMdmbEKgnMqUh4vtYy7u5xZfcvnUMTGHoeAZ9n+fR99lqbtVmogwhecO92cy7udn3rAQzyA6Yg/hiwtLzCGkvDgXVE8VmC6hl3opU11Jf4/Wj2WDC1L82X93IiXQmztpn2Ul1+bojCuV9HnIMkL40G6UUwzcG/fwrX9SD6gHZsw4tJT59phw2gmE4575syr/gBhIBJifGGbx8ITCBUgaIHiU9UwN80zOS4AiaZD5GEmf1uSqwP2Swki9BrkZRb1AD1eUt9Wb9HnHCy5l+fZQ6095S/4lSWgVwEhgHxhE5oVDlHa11n0ZbzyJodQr1BkB3bhMFVypCHihzcVtcdOc2+dVIPUBna20j0BisT7T1NONWVi1wCcBlG6Ul/whq9j4LikLRkn/k3hkgqnc8xdYwfy+Itp5+/XqXuWLN2gGQ1wGcyf047f2surUJPcTp6La4OLbxMP8sOe0v8W53Q+1fCxmJtp4OcO3Shb9z1qxLBrZ5k57LaWNaN7BNx2PzJGJqHpz2K/yZ08axjYe5kXLZb3b4urOlIeiVLxjR1Lt3oamp0YpOdR9A+ChcIzMJ1MH24oKPqakJ4xDzI0p6AXfi50urqkTUIeDpBXJdAnNvR8vP9ZEYiLZe0N8qhYUfWPVMRxVIpSgKgZy7TdeU0CUmdR7nkvqurqPGg5h/VHoxYsSIEeP/w394X5RP9+fDwQAAAABJRU5ErkJggg==" />
+  </div>
+</div>
+
+</body>
+</html>
