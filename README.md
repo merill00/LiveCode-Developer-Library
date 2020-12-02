@@ -1,4 +1,4 @@
-# LiveCode-Information
+# LiveCode-Developer-Library
 Collection of LiveCode developer information and Code Stacks
 
 Please honor the developer's rights as noted by them.
