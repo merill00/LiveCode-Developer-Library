@@ -1,0 +1,46 @@
+1.0.0 build 6
+* When creating an application the 'glxapUpdateDialog' stack is no longer included as a substack of the 'application' stack. This stack should now be stored on the update server.
+* Updated standalone building code to make it more robust. It now takes into account different folders names for Mac OSX builds and single platform builds.
+* When building a standalone using the plugin, the executable name defined in the application framework will be inserted into cRevStandaloneSettings["name"] custom property of the glxappLauncher stack. If you are using your own info.plist file for OS X the "CFBundleExecutable" key in the plist will be updated as well. This means you only have to update the executable name in the plugin and the plugin will take care of the rest.
+
+1.0.0 build 5
+* Editing data grid text values (stacks, externals, standalone resources) now saves those values to the objects.
+
+1.0.0 build 4
+* Adding revBrowser external with plugin would add a non-printing character to the internal list of required externals for the app. This would cause the app to complain that the external wasn't loading at startup of a standalone even though it was.
+* Added "generic version" field to general tab. This is used on by new standalone building code when building OS X executable (CFBundleVersion).
+* Added BuildStandalones handler to stack script. This will build the glxappLauncher stack after updating the Windows version properties and OS X plist info. The message glxapp_buildStandalone is sent to the applicaton stack afterwards.
+
+1.0.0 build 3
+* Added Valentina (V4REV) external to list of known externals.
+
+1.0.0 build 2
+* You can now delete externals in the plugin IDE again.
+
+1.0.0 build 1
+* Created a version of the plugin for Rev 3.5 >. The new version uses Data Grids.
+* Began work on simplifying many of the plugin operations.
+
+0.6.1.2
+* Fixed bug when setting the path relative to launcher property. 
+* Setting the path relative to launcher property now alerts developer that standalone needs to be built again using the glxappLauncher stack.
+
+0.6.0.1
+* UI tweaks.
+* Updating create new application code to use latest templates.
+
+0.5.0.5
+* Can now configure ftp settings for uploading updater to FTP after build.
+* New "Global" category when configuring Build Profiles. Global settings apply to all build profiles by default.
+
+0.5.0.4
+* Plugin now repositions itself if it opens and is not in visible portion of one of the monitors.
+
+0.5.0.3
+* Added file type filter group reordering controls to Files tab.
+* File extension list field now allows double-clicking to rename extension or modify extension list.
+* The default application stack script now uses a constant to refer to the "program" stack.
+* You can now add folders in the Standalone Resources tab.
+
+0.5.0.2
+* Initial release.

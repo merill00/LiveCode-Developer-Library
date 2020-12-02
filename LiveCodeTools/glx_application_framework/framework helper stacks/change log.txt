@@ -1,0 +1,20 @@
+Change log for GLX Application Framework support stacks
+
+1.2
+* glxappUpdateDialog has been updated and moved to the "auto update" folder in the distribution. It should no longer be included as a stack in your application. Rather, the update_dialog.gz file should be uploaded alongside updater.gz. The stack will be downloaded and displayed if an update is available. This allows you to customize the dialog after your application has been shipped. To update the update_dialog.gz file you can make changes to glxappUpdateDialog.rev and then call the 'PackageMe' handler in the stack script. This handler will save the stack to the update_dialog.gz file.
+* glxappErrorDialog has been updated with a second card named "Auto Submit". If you have defined the application property "error reporting url" then this card will be displayed. This card will automatically POST the error report to the URL you specify. The POST variables that are sent are:
+1) 'error_report': The human readable version of the error report.
+2) 'original_error': The original error as reported by the LiveCode engine.
+3) 'sys_info': Information about the system as returned by glxapputil_sysInfo(). Noo personal information is included.
+4) 'desktop_version': Version of your software that generated the error.
+5) 'user_comments': Comments user entered in form.
+6) 'user_email': Email address that user entered in form.
+
+1.1
+* program.dat stack updated to latest template.
+* glxappAuthenticate.rev stack added. Used for authenticating with servers.
+
+1.0.0.8
+* Relaunch message now deals with the scenario where the application updater stack was the only stack open. In this case "relaunch" is not passed.
+* Changed 'relaunch' message so that it is ignored until glxapp_getProp("application has loaded") is true. This means glxapp_relaunch and glxapp_openFiles won't be sent if the application has not finished loading.
+* glxapp_openFiles is no longer sent from the 'relaunch' message if no files were passed in.

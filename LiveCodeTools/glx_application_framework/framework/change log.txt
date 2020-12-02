@@ -1,0 +1,178 @@
+Change log for GLX Application Framework library (glxapp_framework.dat)
+
+1.2.0 build 1
+* glxapp_addToRecentlyOpened now supports a "tag" for each file added. This tag is used when creating the list for display in a menu. This allows you to use recently opened files for items other than just file names (i.e. database connection settings).
+* glxapp_recentlyOpenedMenuText now returns any supplied "tags" used when adding a file to the recently opened list.
+* Internal storage format for recently opened files was changed to an array.
+* glxapp_pathFromRecentlyOpenedKey has been deprecated.
+* Added the "is portable" property to the application object.
+* If the glxappLibURL stack is available in memory then the current libURL will be removed from the backscripts and the stack script will be inserted. Set as substack of your "application" stack to use.
+* Fixes to how window positions are stored/restored between sessions.
+* Reduced socket timeout when using WPAD detection.
+* Added support for PAC files that are pointed to using file://.
+* When downloading the updater.gz file for auto updating up to 5 attempts are made in cases of timeout.
+* Added 10 millisecond breathers inbetween libURL calls that are repeated due to timeouts.
+* glxapp_initializeExternals messsage is now sent before application loads externals. A list of externals that will be loaded is passed as the first parameter. If you handle the message then you return the list of externals to load.
+* The framework no longer calls libURLResetAll before running the updater. This would wipe out any proxy information, etc. that was stored in the libURL library.
+* glxapp_recentlyOpenedMenuText now encodes "\" properly for menus.
+* Added glxapp_debugLog for logging debug messages. Call 'glxapp_setProp "debug log file", path-to-file' to specify the file to log to.
+* When using the updater, the framework now looks at line 8 of the update.txt file for a url to a GZ compressed glxappUpdateDialog stack file. If no glxappUpdateDialog stack is in memory and there is a url on line 8 then the stack will be downloaded and used to display the change log. This allows the developer to make changes to this dialog after the product has shipped. The change log text will be available to the stack via an array stored in the dialogData. The key of the array is "change log".
+* Added glxapputil_sysInfo() for getting information about the system the application is running on.
+* Framework now takes into account 'error reporting url' property when opening glxappErrorDialog. If it is set and there is a card "Auto Submit" in the glxappErrorDialog stack then that card is used. This card will submit the error report information to the url defined in 'error reporting url'.
+* Updated the uPACSupport Javascript included with the framework. 'i' vars in the for loops were not being prefixed with 'var' and this would cause LiveCode to lock up when calling httpproxyforurl. Now check that ip var is not null before doing split.
+* When not running in "development" enviroment the appleEvent handler in the library now traps "miscDOSC" and "miscEVAL" events so that users cannot execute scripts in your application via AppleScript.
+* When not running in "development" enviroment the library no longer passes "aevtODOC" event after processing. This keeps LiveCode stacks from being dropped on your application and opened by an end user.
+* Added undoRegisterEditFieldType to the undo manager. This will insert a front script that handles undo on a per-field basis.
+* Adjusted external unloading code so that stack is not deleted from memory when quitting. Saw some crashes on OS 10.7.3 with 4.6.2 engine when aborting from glxapp_initializeApplication.
+* Updated gxlappLauncher script to support command line parameter parsing.
+* Framework now detects URLs passed in on the command line (see glxapp_processCommandLineParameters).
+* The message "glxapp_processURL pURL" will now be sent when URL requests are received on the command line or via an apple event.
+* Added glxapputil_registerURLProtocol. Registers a URL to be processed by your application (only applicalbe on Windows).
+* Default font in Windows Vista and above is now Segoe UI.
+* Removed the "Application Would Quit" message from the front script.
+* Added support for a preference external on OS X. This stores preferences in the plist that the OS expects and works with sandboxing. (See glxapp_getProp("use preferences external")).
+* Reworked the undo manager and pushed it bumped it up to version 1.
+
+1.1.0 build 18
+* Code that automatically puts substacks in use (for stacks you've added as a library and the "application" stack) only targets stacks that A) don't have a space in the name and B) start with "lib" or "object".
+
+1.1.0 build 17
+* Fixed an issue on OS X when extracting application supported files from a list in glxapp_extractAppAssociatedFilesFromList().
+* Added "network traffic log file" property to specify file to log network activity to.
+* Added glxapp_logNetworkActivity message to custom liburl and to library. Logs internet settings detection and traffic to log file pointed to by glxapp_getProp("network traffic log file").
+* HKEY_LOCAL_MACHINE is now checked for autoconfigurl (and other internet settings on Windows) if not found in HKEY_CURRENT_USER.
+* The framework now handles stacks stored in folders above the folder that the application.dat stack is stored in. This means you can have a common repository for multiple applications.
+
+--- PUBLIC RELEASE ---
+
+1.1.0 build 16
+* Added additional error checking to preference loading code (_loadExternalData).
+* Fixed an issue with custom libURL.
+
+1.1.0 build 15
+* Looking for files passed via the command line was going from i to $#. Since $# includes param(0) the loop was changed to $# - 1. This won't affect actual results obtained however.
+* Added support for linux to the glxapp_getProp/setProp handlers. Linux support is not complete however.
+
+1.1.0 build 14
+* Added glxapp_getPrefDefaultValue and glxapp_setPrefDefaultValue.
+* When working with the broadcast API handlers "global" is now a valid 1st parameter. Passing in "global" will store the broadcast information in the custom properties of the ApplicationObject group of the application stack. This can be convenient when you want an application level broadcast or just don't want to associated the broadcast with any particular object.
+
+1.1.0 build 13
+* The framework now sets the font of the glxappLauncher stack to the platform font and size. Lucida Grande 13 for Mac and Tahoma 11 for Windows. This is done before glxapp_preloadApplication is sent so you can change it if you want.
+
+1.1.0 build 12
+* Framework no longer calls 'quit' if errors occurr during launch in development. This allows developer to troubleshoot.
+
+* Creating a new application now sets the selectGroupControls property of the ApplicationObject group of the application stack to false. The application browser is much cleaner when looking at the application card controls.
+
+* Library stacks are now loaded before window stacks at startup. This ensures that library stacks are available for Windows.
+
+1.1.0 build 11
+* Listening and stop listening broadcast API handlers now store reference to control/variable being listened to so plugin can display info to user.
+
+1.1.0 build 10
+* Preferences are now loaded before the splash stack is displayed. This allows the splash stack to access preferences.
+
+1.1.0 build 8
+* glxapp_getPref/glxapp_setPref now try to load pref stack into memory if it isn't loaded. This could happen if the developer or a 3rd party stack removed the pref stack from memory.
+* Incorporated refined broadcasting API.
+
+1.1.0 build 7
+* Some small updates to the undo manager.
+
+1.1.0 build 6
+
+* Window repositioning code now moves offscreen window to edges rather than always repositioning in center of screen.
+
+* Window repositioning code deals with palettes better now.
+
+* Updated glxapp_checkForUpdate code that checks for a timeout so that it detects timeouts for https urls ("socket timeout" rather than "timeout").
+
+* Added try/catch around shutdown code.
+
+* libURLRestAll is now called when shutting down (wrapped in try/catch).
+
+* glxapp_build now has a second parameter sent that is "standalone" or "updater".
+
+* Added glxapp_addPropertyListenerA. The first parameter is an array (script local or global works best) that is passed by reference and will be used to store broadcast info.
+
+* Added glxapp_removePropertyListenerA which takes a variable (passed by reference) as the first parameter.
+
+* If developer returns false from glxapp_initialize then the framework will cleanup and quit the application.
+
+* glxappLauncher is now restored as the topStack before calling glxapp_firstRun or glxapp_initialize. This means any answer dialogs displayed on Windows will be centered on the screen.
+
+* Added glxapp_initializeProxy which configures libURL according to settings on computer. Works with WPAD on Windows, PAC files and ignore lists. Requires a custom version of libURL.
+
+* Added support for percentages in uGLXApp["default window width|height"] for stack windows (i.e. 80%).
+
+* Framework no longer tries to save window positions of managed windows if preferences have not been initialized.
+
+* Created an undo framework that relies on multi-dimensional arrays in Revolution 3.0 (MD arrays). See lib.glx.UndoManager.
+
+* Exposed broadcasting handlers. Look in the lib.glx.Objects stack script.
+
+* Window positions are only saved on quit if framework is configured to use user prefs.
+
+* When restoring window positions the framework was using a hard coded value to adjust the window rect when the stack vscroll was greater than 0. The vcroll property is now used so the rect/loc are restored correctly.
+
+* The framework no longer attempts to delete the "app_update_temp_files" directory if glxapp_getProp("user data folder") is empty.
+
+* Added "shutdown when all windows are closed" property. If true then application behaves the same on Mac as it does on Windows. That is that the application will quit when all stacks of mode 1 or 2 are closed AND stacks of mode 3 are closed or invisible.
+
+* Line endings are now normalized (numToChar(10)) when retrieving update.txt from the update server using glxapp_checkForUpdates.
+
+* Added glxapp_setHTTPProxy, glxapp_setHTTPProxyForURL and glxapp_locatePACFileURLUsingWPAD() handlers. glxapp_setHTTPProxy sets the httpproxy property based on system settings. If the system is using a PAC file then calling glxapp_setHTTPProxyForURL will use httpproxyforurl to determine the proxy url for the given url. You can safely call glxapp_setHTTPProxyForURL for every url after calling glxapp_setHTTPProxy regardless of whether or not a PAC file is being used. It will simply return an error which can be ignored.
+
+On Windows you can tell glxapp_setHTTPProxy to use WPAD detection and it will use glxapp_locatePACFileURLUsingWPAD() and attemp a DNS search for the PAC file.
+
+* Added glxapp_httpProxyForURL and glxapp_initializePacFile handlers. Can be used ot manually deal with PAC files. If using glxapp_setHTTPProxy then these two handlers can be ignored.
+
+* If glxapp_getProp("use pac file") is true then calls glxapp_setHTTPProxyForURL for every url the downloaded when auto updating.
+
+* The stack object now has a "load at startup" property. If false then the stack is considered part of the application but will not be automatically loaded into memory when the application launches.
+
+* Updated window commands (i.e. glxapputil_positionWindowWithinConstraints) to use uGLXApp[default window width|default window height|center window on screen] custom properties rather than a uWindow custom property set.
+
+* Framework now registers "glxappAuthBasicCallback", "glxappAuthDigestCallback" and "glxappAuthNTLMCallback" with libURLSetAuthCallback. This is done before any messages are sent to your application so you can override them.
+
+* Addd glxurlauth_getProp/setProp handlers. Properties include "http proxy username", "http proxy password", "http proxy domain", "server username", "server password", "server domain" and "prompt user for credentials".
+
+Set the proxy properties to values that your application needs for authenticating with a proxy server and the framework will handle Basic, Digest and NTLM (if user credentials on computer are valid) for all urls.
+
+Set the server properties if you are going to load a url that requires authentication with the server.
+
+Set "prompt user for credentials" to false to no longer prompt user for credentials.
+
+* Added the glxappAuthenticate stack to the framework. This dialog is displayed if you attempt to load a url that requires authentication with a proxy or server. If the stack is in memory it will be displayed to the user if you have not defined the appropriate properties using glxurlauth_setProp.
+
+* Made glxapputil_compareVersionStrings public.
+
+1.0.0.7
+* Added support for default build profile properties in glxbuildprofile_getProp and glxbuildprofile_setProp.
+* Added glxbuildprofile_IsPropSet() function to determine if a build profile has a particular property set or if it should inherit the global setting.
+* glxapp_installUpdate now returns a meaningful error message if something goes wrong.
+* glxapp_getProp("language") now returns "en" rather than empty if no language stack is open.
+* glxappUpdater had some bugs related to localization.
+
+1.0.0.6
+* Workaround for queryRegistry bug in 2.9 when running on Vista. When fetching system language a trailing NULL was being included which caused problems when passing to baseConvert.
+
+1.0.0.5
+* More robust unloading of stacks when framework unloads the application (i.e. when quitting or running the updater).
+* The framework was unlocking stacks protected using the password property when packaged for distribution if you opened the stacks in the development environment using a launcher.rev stack. Now the framework only unlocks stacks when running in standalone mode and if the stack short name is listed among the lines of the "stacks to unlock in standalone" property of the application object. There is currently no UI for setting this property so the developer can either set it manually or handle unlocking of stacks on their own.
+* The name of the framework stack is no longer hard wired to glxapp_framework.dat when getting the "framework stack file path" property.
+
+1.0.0.4
+* Default shared preferences are now read from the uDefaultSharedPreferences custom property set of the ApplicationObject group.
+
+1.0.0.3
+* You can now pass "shared" as the last parameter to any pref API call to use a shared preference file. You need to set the "use shared preference file" property to true if you want the framework to automatically load the shared pref file at launch.
+* Fixed a call to _escapeShell in _setFilePermissions.
+
+1.0.0.2
+* Setting "command line files" was using a 2.9 only feature. Branching now occurs for 2.9 and pre-2.9.
+
+1.0.0.1
+
+* First public release.

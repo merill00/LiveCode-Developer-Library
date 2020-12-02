@@ -1,0 +1,43 @@
+Change log for auto updater stack (glxappUpdater.rev)
+
+1.1.0.4
+* glxappUpdateDialog has been updated and moved to the "auto update" folder in the distribution. It should no longer be included as a stack in your application. Rather, the update_dialog.gz file should be uploaded alongside updater.gz. The stack will be downloaded and displayed if an update is available. This allows you to customize the dialog after your application has been shipped. To update the update_dialog.gz file you can make changes to glxappUpdateDialog.rev and then call the 'PackageMe' handler in the stack script. This handler will save the stack to the update_dialog.gz file.
+* Updater now looks for glxappLibURL and makes sure that it stays in memory during update.
+* Update the progress bar to be 20 pixels tall. This will use the large progress bar on OS X when using newer LiveCode engine.
+* Canceling the auto update was not resetting the application.
+
+1.1.0.3
+* VBScript was updated so that it copies files/folders rather than moving them. Sometimes "permission denied" errors would occur when trying to move. This would happen when running a Windows app from the Mac shared drive under VMWare/Parallels for example.
+* Progress bar is now 20 pixels tall so as to take advantage of larger progress bar on OS X (requires Rev 4.5 or later).
+* Fixed error reporting for folder copy operations.
+
+1.1.0.2
+
+* When  calling VBScript file from Revolution the pah to the file no escapes special characters using '^'. This is required for paths to files you are executing with shell.
+
+* if glxapp_getProp("user data folder") is empty then application update files are stored in the system temporary folder. If the property is not empty then a folder named "app_update_temp_files" is created in that folder during the update. It is subsequently deleted the next time your application launches.
+
+* VB script used for update on Windows is much more robust now when it comes to error handling.
+
+* The defaultFolder is now to set the system temporary folder before an update begins. This removes the lock on the defaultFolder that Revolution obtains on Windows, which in turn could cause problems for the updater if the defaultFolder was a folder in the application directory.
+
+* Line endings are now normalized (numToChar(10)) when retrieving update.txt from the update server.
+
+* If glxapp_getProp("use pac file") is true then calls glxapp_setHTTPProxyForURL for every url the updater downloads.
+* The auto updater now works with a single package file for each platform as opposed to one.
+
+* When a Revolution application launches it loads the SSL dlls on Windows if they are present. When the auto updater was launching the launcher.exe executable on Windows (launcher.exe restarts the app after an update) launcher.exe was inheriting the environmental variables from the main application which means it too loaded the SSL libraries. This made it impossible to update the SSL libraries on disk since they were in use. Now VBScript is used to handle the updating.
+
+* Now that the framework handles libURL authentication externals and the glxApplicationFramework stack are not unloaded until all files have been downloaded. glxapplicationFramework has the libURL callbacks and the external required for NTLM authentication may be needed.
+
+* The updater will no longer attempt to update applications running under non-admin accounts on OS X 10.3. The applescript permissions dialog does not allow a username meaning you cannot run the operation as an admin user.
+
+1.0.0.2
+* Fixed a bug when retrieving file sizes from the server.
+
+* Canceling now disables cancel button and waits for the current url to unload before closing the stack.
+
+* Added a workaround for potential crash in 2.9 engine. Relates to the first stack your application opens being an invisible palette. Engine didn't like that if you started the updater but then cancelled on Windows.
+
+1.0.0.1
+* Initial release.

@@ -1,0 +1,1 @@
+The plugin stack goes in your Revolution plugins directory.
