@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigMailTo ${1:addressesArray}${0}</string>
+	<key>name</key>
+	<string>To Array</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>email</string>
+	<key>uuid</key>
+	<string>7C4046D8-1789-4C05-ABA9-BF5C7DB8222A</string>
+</dict>
+</plist>

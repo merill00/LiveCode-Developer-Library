@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>/*----------------------------------------------------------------------
+--| FUNCTION scriptLocalVar
+--|
+--| Author: rabit
+--| Version:  1.0
+--| Created:  15-10-08
+--| Last Mod: --
+--| Requires:  --
+--|
+--| Summary: Access the values of script local variables.
+--| 
+--| Format: get scriptLocalVar("sMyVar")
+--|
+--| Parameters: string &lt;pVarName&gt;
+----------------------------------------------------------------------*/
+
+function scriptLocalVar pVarName
+   put value(pVarName) into tValue
+   if tValue &lt;&gt; pVarName then
+      return tValue for value
+   else
+      return "failed!" for error
+   end if
+end scriptLocalVar
+
+
+
+
+/*----------------------------------------------------------------------
+--| COMMAND setScriptLocalVar
+--|
+--| Author: rabit
+--| Version:  1.0
+--| Created:  18-04-14
+--| Last Mod: --
+--| Requires:  --
+--|
+--| Summary: Set values of script local variables.
+--| 
+--| Format: setScriptLocalVar "sMyVar", "theValue"
+--|
+--| Parameters: string &lt;pVarName&gt;, mixed &lt;pVal&gt;
+----------------------------------------------------------------------*/
+
+command setScriptLocalVar pVarName pVal
+	do "put" &amp;&amp; pVal &amp;&amp; "into" &amp;&amp; pVarName
+end setScriptLocalVar
+${0}</string>
+	<key>name</key>
+	<string>GetterSetter</string>
+	<key>scope</key>
+	<string>text.livecode</string>
+	<key>tabTrigger</key>
+	<string>gettersetter</string>
+	<key>uuid</key>
+	<string>C22AF138-0B11-405C-8115-4AEA248D61BE</string>
+</dict>
+</plist>

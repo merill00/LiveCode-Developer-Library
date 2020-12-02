@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSessDestroy</string>
+	<key>name</key>
+	<string>Session Destroy</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>session</string>
+	<key>uuid</key>
+	<string>9583D1E3-417F-4B85-B628-446DCA3F3571</string>
+</dict>
+</plist>

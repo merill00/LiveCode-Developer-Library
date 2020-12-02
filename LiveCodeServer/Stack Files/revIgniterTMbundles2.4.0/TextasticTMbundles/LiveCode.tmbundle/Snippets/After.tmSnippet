@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>after ${1:messageName} ${2:pParams}
+	${3:# code...}
+end ${1}
+${0}</string>
+	<key>name</key>
+	<string>After</string>
+	<key>scope</key>
+	<string>text.livecode</string>
+	<key>tabTrigger</key>
+	<string>after</string>
+	<key>uuid</key>
+	<string>59485D13-CF17-4BC9-B44E-BF851FB99220</string>
+</dict>
+</plist>

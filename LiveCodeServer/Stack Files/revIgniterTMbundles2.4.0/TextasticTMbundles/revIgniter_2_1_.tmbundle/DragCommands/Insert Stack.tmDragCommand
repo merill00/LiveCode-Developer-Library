@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>command</key>
+	<string>#!/usr/bin/env livecode-community-server
+
+put getCodeSnippet($TM_DROPPED_FILE)
+
+function getCodeSnippet pFilePath
+	set the itemDelimiter to "/"
+	put char 1 to -10 of (item -1 of pFilePath) into tFile
+	
+	if "modules" is among the items of pFilePath then
+		put item -3 of pFilePath into tModule
+		return "rigLoadStack" &amp;&amp; quote &amp; tFile &amp; quote &amp; ", , ," &amp;&amp; quote &amp; tModule &amp; quote
+	end if
+	
+	return "rigLoadStack" &amp;&amp; quote &amp; tFile &amp; quote
+end getCodeSnippet</string>
+	<key>draggedFileExtensions</key>
+	<array>
+		<string>livecode</string>
+	</array>
+	<key>name</key>
+	<string>Insert Stack</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>uuid</key>
+	<string>A3C987A6-2D17-4C55-B36F-BED322A3CF86</string>
+</dict>
+</plist>

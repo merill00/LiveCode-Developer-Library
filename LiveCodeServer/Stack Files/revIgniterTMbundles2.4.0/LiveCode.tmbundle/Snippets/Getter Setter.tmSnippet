@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>/*----------------------------------------------------------------------
+--| CONTROL STRUCTURE getprop
+--|
+--| Author: Trevor DeVore
+--| Version:  1.0
+--| Created:  15-10-08
+--| Last Mod: --
+--| Requires:  --
+--|
+--| Summary: Access the values of script local variables. Keep in mind that when lockMessages
+--|            is true getProp and setProp won't fire.
+--| 
+--| Format: put the uScriptLocal["sScriptLocal"] of this stack
+--|
+--| Parameters: &lt;pVarName&gt;
+----------------------------------------------------------------------*/
+
+getprop uScriptLocal[pVarName]
+   put "return" &amp;&amp; pVarName into theDo
+   do theDo
+end uScriptLocal
+
+
+
+
+/*----------------------------------------------------------------------
+--| CONTROL STRUCTURE setprop
+--|
+--| Author: rabit
+--| Version:  1.0
+--| Created:  18-04-14
+--| Last Mod: --
+--| Requires:  --
+--|
+--| Summary: Set values of script local variables. Keep in mind that when lockMessages
+--|            is true getProp and setProp won't fire.
+--| 
+--| Format: set the uScriptLocal["sScriptLocal"] of this stack to value
+--|
+--| Parameters: &lt;pVarName&gt;, &lt;pVal&gt;
+----------------------------------------------------------------------*/
+
+setprop uScriptLocal[pVarName] pVal
+   local tVal, theDo
+   
+   # ARRAYS CAN NOT BE USED WITH do
+   # SO, CONVERT THEM TO STRINGS
+   if pVal is an array then
+      put base64Encode(arrayEncode(pVal)) into tVal
+   else
+      put pVal into tVal
+   end if
+   
+   put "put" &amp;&amp; quote &amp; tVal &amp; quote &amp;&amp; "into" &amp;&amp; pVarName into theDo
+   do theDo
+   
+   # CONVERT THE VALUE OF THE LOCAL VARIABLE TO AN ARRAY AGAIN
+   if pVal is an array then 
+      put "put arrayDecode(base64Decode(" &amp; pVarName &amp; ")) into" &amp;&amp; pVarName into theDo
+      do theDo
+   end if
+end uScriptLocal
+${0}</string>
+	<key>name</key>
+	<string>Getter Setter</string>
+	<key>scope</key>
+	<string>text.livecode</string>
+	<key>tabTrigger</key>
+	<string>getset</string>
+	<key>uuid</key>
+	<string>E5C89044-A447-42D8-B7FA-0C5162169F11</string>
+</dict>
+</plist>

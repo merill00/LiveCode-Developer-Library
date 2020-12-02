@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigTransRollback</string>
+	<key>name</key>
+	<string>Transaction Rollback</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>database</string>
+	<key>uuid</key>
+	<string>CFFE27A5-EF47-4165-A229-59FE674E49E6</string>
+</dict>
+</plist>

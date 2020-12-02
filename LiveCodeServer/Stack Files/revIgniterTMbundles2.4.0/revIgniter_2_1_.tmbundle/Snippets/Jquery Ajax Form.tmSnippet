@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigJQajaxForm ${1:submitBtnSelector}, ${2:selectorList}, ${3:postURI}${4:, ${5:preventDefault}}${6:, ${7:dataToLoadURI}}${8:, ${9:dataContainerSelector}}${0}</string>
+	<key>name</key>
+	<string>Jquery Ajax Form</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>jquery</string>
+	<key>uuid</key>
+	<string>EAAA4528-EDCD-4A94-B5E9-0957A5C3991A</string>
+</dict>
+</plist>

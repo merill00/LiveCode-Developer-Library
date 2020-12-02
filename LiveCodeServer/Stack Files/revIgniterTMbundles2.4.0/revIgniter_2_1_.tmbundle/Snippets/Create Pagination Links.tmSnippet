@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigCreatePaginationLinks()</string>
+	<key>name</key>
+	<string>Create Pagination Links</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>pagination</string>
+	<key>uuid</key>
+	<string>A180FD92-6AEE-45A3-8F9D-493F01D2242E</string>
+</dict>
+</plist>

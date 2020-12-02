@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigMakeTableColumns(${1:dataArray}, ${2:colNumber})${0}</string>
+	<key>name</key>
+	<string>Make Table Columns</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>table</string>
+	<key>uuid</key>
+	<string>DB7B6BE2-04D4-4B9D-861D-8B86FC7AA468</string>
+</dict>
+</plist>

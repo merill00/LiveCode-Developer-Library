@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigImgAssetURL("${1:imageName}"${2:, "${3:moduleName}"${4:, ${5:cacheBuster}}})${0}</string>
+	<key>name</key>
+	<string>Asset Image URL</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>asset</string>
+	<key>uuid</key>
+	<string>436CD8D5-FE9A-491F-97D4-B17934F35BA4</string>
+</dict>
+</plist>

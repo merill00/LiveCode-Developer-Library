@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigFormDropDown("${1:name}", ${2:options}, ${3:selectedValues}${4:, ${5:additionalData}${6:, "${7:asctext}"}})${0}</string>
+	<key>name</key>
+	<string>Form Drop Down</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>form</string>
+	<key>uuid</key>
+	<string>C8C01320-5762-4054-AECF-C6D27B41AC3A</string>
+</dict>
+</plist>

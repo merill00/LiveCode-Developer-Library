@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSetStatusHeader ${1:code}, "${2:text}"${0}</string>
+	<key>name</key>
+	<string>Set Status Header</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>status</string>
+	<key>uuid</key>
+	<string>89B47CC7-CCAB-47E7-99FC-87E34419A956</string>
+</dict>
+</plist>

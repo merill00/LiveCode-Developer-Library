@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>contactEmailRot13</key>
+	<string>enovg@erivtavgre.pbz</string>
+	<key>contactName</key>
+	<string>Ralf Bitter</string>
+	<key>description</key>
+	<string>Support for &lt;a href="https://livecode.com/"&gt;LiveCode&lt;/a&gt; script files.</string>
+	<key>name</key>
+	<string>LiveCode</string>
+	<key>uuid</key>
+	<string>FA39421E-05BB-4917-BDBE-39622C6C4AF0</string>
+</dict>
+</plist>

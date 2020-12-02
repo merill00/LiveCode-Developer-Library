@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigEncode(${1:message}${2:, ${3:key}})${0}</string>
+	<key>name</key>
+	<string>Encode</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>encrypt</string>
+	<key>uuid</key>
+	<string>CE2F22D6-3B72-4FEB-80DD-BA36CBA46A17</string>
+</dict>
+</plist>

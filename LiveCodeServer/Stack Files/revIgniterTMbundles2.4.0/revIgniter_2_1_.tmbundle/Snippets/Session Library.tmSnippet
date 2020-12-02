@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigLoaderLoadLibrary "Session"</string>
+	<key>name</key>
+	<string>Session Library</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>session</string>
+	<key>uuid</key>
+	<string>CAAA5B94-1206-44FC-8742-165626251AAA</string>
+</dict>
+</plist>

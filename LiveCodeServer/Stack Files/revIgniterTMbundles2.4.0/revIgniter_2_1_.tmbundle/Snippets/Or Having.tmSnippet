@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigDbOrHaving "${1:field}", "${2:value}"${3:, ${4:escaping}}${0}</string>
+	<key>name</key>
+	<string>Or Having</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>ridb database having</string>
+	<key>uuid</key>
+	<string>9B0C074C-EC9A-403C-A778-747556E884E1</string>
+</dict>
+</plist>

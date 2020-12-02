@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigDisplayImgErrors(${1:"${2:openingTag}", "${3:closingTag}"})${0}</string>
+	<key>name</key>
+	<string>Display Image Errors</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>image</string>
+	<key>uuid</key>
+	<string>B98334A5-5D94-4F97-B931-952CB81E2AE5</string>
+</dict>
+</plist>

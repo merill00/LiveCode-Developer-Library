@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigAuthRegister(${1:username}, ${2:password}, ${3:email}${4:, ${5:extraData}${6:, ${7:groupName}}})${0}</string>
+	<key>name</key>
+	<string>Auth Register</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>auth</string>
+	<key>uuid</key>
+	<string>0C60E2AC-9A05-4909-B7D2-A00B6FC190D4</string>
+</dict>
+</plist>

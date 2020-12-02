@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigRuriString()</string>
+	<key>name</key>
+	<string>URI String Routed</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>uri</string>
+	<key>uuid</key>
+	<string>41F8C5F1-DF07-4B2E-BCF4-BDCC686AF72C</string>
+</dict>
+</plist>

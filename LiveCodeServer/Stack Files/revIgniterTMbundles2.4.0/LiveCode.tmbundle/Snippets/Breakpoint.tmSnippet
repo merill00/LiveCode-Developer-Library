@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>if the optionkey is "down" then breakpoint
+${0}</string>
+	<key>name</key>
+	<string>Breakpoint</string>
+	<key>scope</key>
+	<string>text.livecode</string>
+	<key>tabTrigger</key>
+	<string>breakpoint</string>
+	<key>uuid</key>
+	<string>BCD94E27-E934-461A-8393-271257CD684C</string>
+</dict>
+</plist>

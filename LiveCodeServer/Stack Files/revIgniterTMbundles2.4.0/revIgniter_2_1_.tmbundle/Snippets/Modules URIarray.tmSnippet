@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigModuleUriToAssoc(${1:segmentOffset}, ${2:defaultArray})${0}</string>
+	<key>name</key>
+	<string>Modules URIarray</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>module</string>
+	<key>uuid</key>
+	<string>E5D7AB8B-B5D5-4152-829C-835F0F022D98</string>
+</dict>
+</plist>

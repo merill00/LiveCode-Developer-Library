@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigFormFieldset("${1:legend}"${2:, ${3:attributes}})${0}</string>
+	<key>name</key>
+	<string>Form Field Set</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>form</string>
+	<key>uuid</key>
+	<string>AFFC9B0C-6FF8-44D9-8273-7785EF296621</string>
+</dict>
+</plist>

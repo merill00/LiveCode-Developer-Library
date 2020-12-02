@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigJQconditionR(${1:condition}, ${2:ifAction}${3:, ${4:elseAction}})${0}</string>
+	<key>name</key>
+	<string>Jquery ConditionR</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>jquery</string>
+	<key>uuid</key>
+	<string>BB677FBE-44E8-4DE1-AA0B-524D4B338514</string>
+</dict>
+</plist>

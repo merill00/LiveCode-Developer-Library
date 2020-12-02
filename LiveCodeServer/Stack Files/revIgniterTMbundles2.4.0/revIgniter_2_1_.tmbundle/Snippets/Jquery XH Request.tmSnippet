@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigJQxhRequest ${1:type}${2:, ${3:URI}}${4:, ${5:data}}${6:, ${7:callback}}${8:, ${9:dataType}}${10:, ${11:selector}}${0}</string>
+	<key>name</key>
+	<string>Jquery XH Request</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>jquery</string>
+	<key>uuid</key>
+	<string>45958CDC-B988-4708-A559-2F12E843FB88</string>
+</dict>
+</plist>

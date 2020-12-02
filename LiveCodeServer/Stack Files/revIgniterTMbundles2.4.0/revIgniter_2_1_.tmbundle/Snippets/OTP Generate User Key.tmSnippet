@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigOTPgenerateUserKey ${1:"${2:secret}"}${0}</string>
+	<key>name</key>
+	<string>OTP Generate User Key</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>otp</string>
+	<key>uuid</key>
+	<string>399C600E-3626-4C0F-8E45-0765E2FAE519</string>
+</dict>
+</plist>

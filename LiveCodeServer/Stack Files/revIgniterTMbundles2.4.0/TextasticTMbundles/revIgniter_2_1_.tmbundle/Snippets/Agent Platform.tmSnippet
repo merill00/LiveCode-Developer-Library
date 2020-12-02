@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigAgentPlatform()</string>
+	<key>name</key>
+	<string>Agent Platform</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>useragent</string>
+	<key>uuid</key>
+	<string>762E7117-9AF3-4BCA-BBCE-83436C040388</string>
+</dict>
+</plist>

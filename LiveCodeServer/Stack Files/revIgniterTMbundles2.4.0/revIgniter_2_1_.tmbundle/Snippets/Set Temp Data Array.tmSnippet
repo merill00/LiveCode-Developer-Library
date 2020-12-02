@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSetSessTempdata ${1:dataArray}${2:, , ${3:seconds}}${0}</string>
+	<key>name</key>
+	<string>Set Temp Data Array</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>session</string>
+	<key>uuid</key>
+	<string>E42EFA9C-DE57-4677-8D99-D68DD9AC6DD0</string>
+</dict>
+</plist>

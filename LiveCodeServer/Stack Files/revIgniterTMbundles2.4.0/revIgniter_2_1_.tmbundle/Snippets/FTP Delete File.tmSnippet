@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigFtpDeleteFile ${1:path}${0}</string>
+	<key>name</key>
+	<string>FTP Delete File</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>ftp</string>
+	<key>uuid</key>
+	<string>75F77207-29BC-4F8D-980C-0FBEB554EF7B</string>
+</dict>
+</plist>

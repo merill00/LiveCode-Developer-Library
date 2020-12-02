@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>script "${1:modelName}"
+
+
+global gRigA
+
+
+on libraryStack
+  if (gRigA is not an array) and (the environment is "server") then
+    put "No direct script access allowed."
+    exit to top
+  end if
+
+  if the short name of the target &lt;&gt; the short name of me then
+    pass libraryStack
+  end if
+end libraryStack
+
+
+${0}
+
+
+
+--| END OF ${1}.livecodescript
+--| Location:  ./application/models/${1}.livecodescript
+----------------------------------------------------------------------</string>
+	<key>name</key>
+	<string>Create New Model</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>model</string>
+	<key>uuid</key>
+	<string>3C8C1823-0EEF-4EB1-97C6-4A04E25547CD</string>
+</dict>
+</plist>

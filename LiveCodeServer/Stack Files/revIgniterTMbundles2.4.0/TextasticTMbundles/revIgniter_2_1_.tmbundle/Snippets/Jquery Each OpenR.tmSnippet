@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigJQeachOpenR(${1:selector}${2:, ${3:collection}}, ${4:callback})${0}</string>
+	<key>name</key>
+	<string>Jquery Each OpenR</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>jquery</string>
+	<key>uuid</key>
+	<string>1315D218-BD2B-409E-9EBF-0B852F7FFE1B</string>
+</dict>
+</plist>

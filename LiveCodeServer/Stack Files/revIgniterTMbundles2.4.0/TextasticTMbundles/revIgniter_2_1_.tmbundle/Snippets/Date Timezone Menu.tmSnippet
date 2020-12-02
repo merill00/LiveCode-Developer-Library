@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigTimezoneMenu(${1:default}${2:, ${3:class}}${4:, ${5:name}})${0}</string>
+	<key>name</key>
+	<string>Date Timezone Menu</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>date</string>
+	<key>uuid</key>
+	<string>DA9D02C5-3D30-4A3A-A18F-A55CF859507C</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigIsRobot()</string>
+	<key>name</key>
+	<string>Is Robot</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>useragent</string>
+	<key>uuid</key>
+	<string>3EFC0DCD-3360-418E-9CEE-7B017A6C64EC</string>
+</dict>
+</plist>

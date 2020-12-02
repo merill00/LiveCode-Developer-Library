@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>&lt;?lc
+if gRigA is not an array then
+	put "No direct script access allowed."
+	exit to top
+end if
+
+
+local s${1:configName}ConfA
+
+
+
+# ${1} SETTINGS
+${0}
+
+
+
+
+
+# START LIBRARY CONFIGURATION
+# THIS LINE IS MANDATORY
+# SAMPLE: rigRunInitial${1}Config s${1}ConfA
+# PROTOTYPE: rigRunInitialLibrarynameConfig yourConfigArray
+rigRunInitial${1}Config s${1}ConfA
+
+
+
+--| END OF ${1}.lc
+--| Location:  ./application/config/${1}.lc
+----------------------------------------------------------------------</string>
+	<key>name</key>
+	<string>Create New Config</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>config</string>
+	<key>uuid</key>
+	<string>0027FCBD-D52C-44D5-ACE0-3B3ACEBEF684</string>
+</dict>
+</plist>

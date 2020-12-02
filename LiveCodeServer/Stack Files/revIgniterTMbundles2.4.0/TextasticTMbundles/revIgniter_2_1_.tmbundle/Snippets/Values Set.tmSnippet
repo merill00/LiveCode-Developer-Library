@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigDbValuesSet("${1:field}", ${2:value}${3:, ${4:escaping}})${0}</string>
+	<key>name</key>
+	<string>Values Set</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>database</string>
+	<key>uuid</key>
+	<string>439594D4-B3B1-49C0-A1CE-18E3C562A08A</string>
+</dict>
+</plist>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env livecode-community-server
+
+if the outputLineEndings = "cr" then
+	set the outputLineEndings to "lf"
+end if
+
+put "sips -g pixelWidth -g pixelHeight" &amp;&amp; quote &amp; $TM_DROPPED_FILEPATH &amp; quote into tCommandStr
+set shellCommand to "/bin/sh"
+put shell(tCommandStr) into tResult
+put riImageData(tResult)
+
+
+function riImageData pData
+	set the itemDelimiter to "/"
+	put item -1 of line 1 of pData into tFileName
+
+	put word -1 of line 2 of pData into tWidth
+	put word -1 of line 3 of pData into tHeight
+
+	put "put" &amp;&amp; quote &amp; "${1:picSelector}" &amp; quote &amp;&amp; "into t${2:Array}[" &amp; quote &amp; "${3:class/id}" &amp; quote &amp; "]" &amp; return into tImgSnippet
+
+	put "put" &amp;&amp; quote &amp; "${4:altText}" &amp; quote &amp;&amp; "into t${2}[" &amp; quote &amp; "alt" &amp; quote &amp; "]" &amp; return after tImgSnippet
+
+	put "put" &amp;&amp; quote &amp; tWidth &amp; quote &amp;&amp; "into t${2}[" &amp; quote &amp; "width" &amp; quote &amp; "]" &amp; return after tImgSnippet
+
+	put "put" &amp;&amp; quote &amp; tHeight &amp; quote &amp;&amp; "into t${2}[" &amp; quote &amp; "height" &amp; quote &amp; "]" &amp; return after tImgSnippet
+
+	put "put rigImageAsset(" &amp; quote &amp; tFileName &amp; quote &amp; ", t${2}${5:," &amp;&amp; quote &amp; "${6:module}" &amp; quote &amp; "${7:, ${8:cacheBuster}}}) into gData[" &amp; quote &amp; "${9:myPic}" &amp; quote &amp; "]${0}" after tImgSnippet
+
+	return tImgSnippet
+end riImageData</string>
+	<key>draggedFileExtensions</key>
+	<array>
+		<string>png</string>
+		<string>jpg</string>
+		<string>gif</string>
+	</array>
+	<key>input</key>
+	<string>selection</string>
+	<key>name</key>
+	<string>Insert Asset Helper Image Data</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>uuid</key>
+	<string>53115C52-4C85-447E-B9B9-AB359954DED7</string>
+</dict>
+</plist>

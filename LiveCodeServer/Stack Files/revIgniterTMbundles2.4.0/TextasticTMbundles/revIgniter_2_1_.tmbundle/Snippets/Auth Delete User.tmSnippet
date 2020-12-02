@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigAuthDeleteUser(${1:id})${0}</string>
+	<key>name</key>
+	<string>Auth Delete User</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>auth</string>
+	<key>uuid</key>
+	<string>7AED6F2A-26A9-4F0D-8B4A-03C4A55994D7</string>
+</dict>
+</plist>

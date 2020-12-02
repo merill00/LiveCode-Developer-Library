@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigCalGenerate(${1: ${2:jear}, ${3:month}${4:, ${5:data}}})${0}</string>
+	<key>name</key>
+	<string>Generate</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>calendar</string>
+	<key>uuid</key>
+	<string>7113B4FE-693C-480E-A5C4-8BC6680E4768</string>
+</dict>
+</plist>

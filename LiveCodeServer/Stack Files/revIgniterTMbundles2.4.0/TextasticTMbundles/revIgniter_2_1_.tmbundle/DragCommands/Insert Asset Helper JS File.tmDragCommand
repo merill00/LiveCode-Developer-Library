@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env livecode-community-server
+
+put getJSname($TM_DROPPED_FILE) into tLinkData
+put "&lt;? return rigJsAsset(" &amp; tLinkData &amp; ") ?&gt;"
+
+function getJSname pFilePath
+	set the itemDelimiter to "/"
+	put item -1 of pFilePath into tFile
+	
+	if "modules" is among the items of pFilePath then
+		put item -3 of pFilePath into tModule
+		return quote &amp; tFile &amp; quote &amp; "," &amp;&amp; quote &amp; tModule &amp; quote
+	end if
+	
+	return quote &amp; tFile &amp; quote
+end getJSname</string>
+	<key>draggedFileExtensions</key>
+	<array>
+		<string>js</string>
+	</array>
+	<key>input</key>
+	<string>selection</string>
+	<key>name</key>
+	<string>Insert Asset Helper JS File</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>uuid</key>
+	<string>F9961ADA-E430-46B1-B53C-64143681655A</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigFormValidRun(${1:"${2:ruleGroup}"})${0}</string>
+	<key>name</key>
+	<string>Validation Run</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>formvalidation</string>
+	<key>uuid</key>
+	<string>4024FA33-3F08-4063-9992-A47A208C20B0</string>
+</dict>
+</plist>

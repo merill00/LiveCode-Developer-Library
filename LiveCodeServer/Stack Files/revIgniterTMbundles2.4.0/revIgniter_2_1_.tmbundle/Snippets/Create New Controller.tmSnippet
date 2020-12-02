@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>&lt;?lc
+
+
+put "${1:controllerName},index" into gControllerHandlers
+
+
+command ${1}
+	${0:# code...}
+end ${1}
+
+
+command index
+	# SET PAGE TITLE
+	put "${2:YourPageTitle}" into gData["pageTitle"]
+
+	# LOAD THE VIEW FILE
+	get rigLoadView("${1:controllerName}View")
+end index
+
+
+
+
+--| END OF ${1}.lc
+--| Location: ./application/controllers/${1}.lc
+----------------------------------------------------------------------</string>
+	<key>name</key>
+	<string>Create New Controller</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>cont</string>
+	<key>uuid</key>
+	<string>39663E5A-DEE5-442E-A7EB-2FCC9B9EA8D1</string>
+</dict>
+</plist>

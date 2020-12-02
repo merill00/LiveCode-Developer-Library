@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigJWTdecode(${1:token}${2:, ${3:256}})${0}</string>
+	<key>name</key>
+	<string>JWT Decode</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>jwt</string>
+	<key>uuid</key>
+	<string>AED0CC96-E291-4452-AB7F-1B00AB64AD53</string>
+</dict>
+</plist>

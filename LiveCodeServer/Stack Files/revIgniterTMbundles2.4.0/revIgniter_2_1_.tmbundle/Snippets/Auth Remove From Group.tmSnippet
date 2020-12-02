@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigAuthRemoveFromGroup(${1:groupIDs}, ${2:userID})${0}</string>
+	<key>name</key>
+	<string>Auth Remove From Group</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>auth</string>
+	<key>uuid</key>
+	<string>941A604E-9CD4-41AD-854B-C912AED81198</string>
+</dict>
+</plist>

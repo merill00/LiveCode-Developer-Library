@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigValidCaptchaUserInput(${1:captchaInput}, ${2:hiddenFieldValue})${0}</string>
+	<key>name</key>
+	<string>Captcha Validate</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>captcha</string>
+	<key>uuid</key>
+	<string>69F86405-0966-41B1-8C89-8BD56AD9B224</string>
+</dict>
+</plist>

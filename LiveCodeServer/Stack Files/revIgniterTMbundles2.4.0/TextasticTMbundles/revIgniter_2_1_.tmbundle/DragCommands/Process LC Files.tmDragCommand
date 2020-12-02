@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>command</key>
+	<string>#!/usr/bin/env livecode-community-server
+
+put getCodeSnippet($TM_DROPPED_FILE)
+
+function getCodeSnippet pFilePath
+	set the itemDelimiter to "/"
+	put char 1 to -4 of (item -1 of pFilePath) into tFile
+	put item -2 of pFilePath into tFolder
+	
+	if "modules" is among the items of pFilePath then
+		if "controllers" is among the items of pFilePath then
+			return "rigLoadModule" &amp;&amp; quote &amp; tFile &amp; quote
+		end if
+		
+		if item -3 of pFilePath &lt;&gt; "language" then
+			switch tFolder
+				case "libraries"
+				return "rigLoaderLoadLibrary" &amp;&amp; quote &amp; tFile &amp; quote &amp; ", ," &amp;&amp; quote &amp; item -3 of pFilePath &amp; quote
+				case "helpers"
+				put char 1 to -7 of tFile into tFile
+				return "rigLoadHelper" &amp;&amp; quote &amp; tFile &amp; quote &amp; "," &amp;&amp; quote &amp; item -3 of pFilePath &amp; quote
+				case "plugins"
+				put char 1 to -3 of tFile into tFile
+				return "rigLoadPlugin" &amp;&amp; quote &amp; tFile &amp; quote &amp; "," &amp;&amp; quote &amp; item -3 of pFilePath &amp; quote
+				case "models"
+				return "rigLoadModel" &amp;&amp; quote &amp; tFile &amp; quote &amp; ", ," &amp;&amp; quote &amp; item -3 of pFilePath &amp; quote
+				case "config"
+				return "get rigLoadConfig(" &amp; quote &amp; tFile &amp; quote &amp; ", TRUE, TRUE," &amp;&amp; quote &amp; item -3 of pFilePath &amp; quote &amp; ")"
+			end switch
+			
+		else
+			put char 1 to -5 of tFile into tFile
+			return "get rigLangLoadLang(" &amp; quote &amp; tFile &amp; quote &amp; "," &amp;&amp; quote &amp; tFolder &amp; quote &amp; "," &amp;&amp; item -4 of pFilePath &amp; quote &amp; ")"
+		end if
+	
+	else
+		if item -3 of pFilePath &lt;&gt; "language" then
+			switch tFolder
+				case "libraries"
+				return "rigLoaderLoadLibrary" &amp;&amp; quote &amp; tFile &amp; quote
+				case "helpers"
+				put char 1 to -7 of tFile into tFile
+				return "rigLoadHelper" &amp;&amp; quote &amp; tFile &amp; quote
+				case "plugins"
+				put char 1 to -3 of tFile into tFile
+				return "rigLoadPlugin" &amp;&amp; quote &amp; tFile &amp; quote
+				case "models"
+				return "rigLoadModel" &amp;&amp; quote &amp; tFile &amp; quote
+				case "config"
+				return "get rigLoadConfig(" &amp; quote &amp; tFile &amp; quote &amp; ")"
+			end switch
+			
+		else
+			put char 1 to -5 of tFile into tFile
+			return "get rigLangLoadLang(" &amp; quote &amp; tFile &amp; quote &amp; "," &amp;&amp; quote &amp; tFolder &amp; quote &amp; ")"
+		end if
+	end if
+	
+	return empty
+end getCodeSnippet</string>
+	<key>draggedFileExtensions</key>
+	<array>
+		<string>lc</string>
+	</array>
+	<key>name</key>
+	<string>Insert LC Files</string>
+	<key>output</key>
+	<string>insertAsSnippet</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>uuid</key>
+	<string>D124928D-F78C-47DF-B221-DEF6CD3FF1B6</string>
+</dict>
+</plist>

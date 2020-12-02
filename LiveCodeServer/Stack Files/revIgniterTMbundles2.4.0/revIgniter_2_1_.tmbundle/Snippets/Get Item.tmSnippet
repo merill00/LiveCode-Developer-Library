@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigFetchConfigItem("${1:item}"${2:, "${3:index}"})${0}</string>
+	<key>name</key>
+	<string>Get Config Item</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>config</string>
+	<key>uuid</key>
+	<string>D13C1801-0D65-4F72-A710-FDBD8C078339</string>
+</dict>
+</plist>

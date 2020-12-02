@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>\$_FILES["${1:variable}"]</string>
+	<key>name</key>
+	<string>FILES['...']</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>$_</string>
+	<key>uuid</key>
+	<string>45158CE2-8756-4E47-A6EA-EEBAF3D91E20</string>
+</dict>
+</plist>

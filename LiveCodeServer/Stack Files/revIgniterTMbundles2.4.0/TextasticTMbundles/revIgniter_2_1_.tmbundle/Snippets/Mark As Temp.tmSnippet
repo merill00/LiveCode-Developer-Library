@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSessMarkAsTemp ${1:"${2:item}"}${3:, ${4:seconds}}${0}</string>
+	<key>name</key>
+	<string>Mark as Temp</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>session</string>
+	<key>uuid</key>
+	<string>4B84045D-C49E-49CD-A1DB-F95862EAAD4E</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigRunInitialFtpConfig ${1:ftpConfA}${0}</string>
+	<key>name</key>
+	<string>FTP Run Initial Config</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>ftp</string>
+	<key>uuid</key>
+	<string>3D0657C9-9BA0-4C03-A274-E5AE6FCF1B0E</string>
+</dict>
+</plist>

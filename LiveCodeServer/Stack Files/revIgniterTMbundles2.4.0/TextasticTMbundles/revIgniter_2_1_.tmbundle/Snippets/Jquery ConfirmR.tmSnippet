@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigJQconfirmR(${1:varName}, ${2:question}, ${3:global})${0}</string>
+	<key>name</key>
+	<string>Jquery ConfirmR</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>jquery</string>
+	<key>uuid</key>
+	<string>DC6E7D54-C23B-4646-8033-5163939FAC31</string>
+</dict>
+</plist>

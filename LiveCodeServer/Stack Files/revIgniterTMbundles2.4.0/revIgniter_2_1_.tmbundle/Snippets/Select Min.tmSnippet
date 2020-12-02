@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSelectMin "${1:field}"${2:, "${3:resultName}"}${0}</string>
+	<key>name</key>
+	<string>Select Min</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>database</string>
+	<key>uuid</key>
+	<string>BDF9000A-3393-4A0F-9127-03F2DFA7654A</string>
+</dict>
+</plist>

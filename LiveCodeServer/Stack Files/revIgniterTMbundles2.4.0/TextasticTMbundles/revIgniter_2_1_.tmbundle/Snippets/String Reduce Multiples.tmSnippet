@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigReduceMultiples(${1:string}, "${2:char}"${3:, ${4:bool}})${0}</string>
+	<key>name</key>
+	<string>String Reduce Multiples</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>string</string>
+	<key>uuid</key>
+	<string>80DEB5B0-B634-4A5C-8F7F-9A5F50634B6E</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigQueryValues(${1:result}${2:, "${3:keyValueDelimiter}"${4:, "${5:recordDelimiter}"}${6:, ${7:fieldNames}}})${0}</string>
+	<key>name</key>
+	<string>Queryvalues</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>queryvalues</string>
+	<key>uuid</key>
+	<string>6D475919-A4CB-44C6-9F68-B28D3BC72498</string>
+</dict>
+</plist>

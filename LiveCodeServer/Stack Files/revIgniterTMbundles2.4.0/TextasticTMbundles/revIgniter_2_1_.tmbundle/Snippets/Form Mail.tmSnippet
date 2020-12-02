@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigFormMail("${1:filePath}", ${2:substitutionArray}${3:, "${4:prefix}"${5:, "${6:suffix}"}})${0}</string>
+	<key>name</key>
+	<string>Form Mail</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>formmail</string>
+	<key>uuid</key>
+	<string>9333CE8F-BC25-4171-AE75-55E7EB971AB8</string>
+</dict>
+</plist>

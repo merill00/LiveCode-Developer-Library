@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigAlternator(${1:parameters})${0}</string>
+	<key>name</key>
+	<string>String Alternator</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>string</string>
+	<key>uuid</key>
+	<string>BE7895B8-3DE0-4FE6-84A3-C67820989DCD</string>
+</dict>
+</plist>

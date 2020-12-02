@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveActiveFile</string>
+	<key>command</key>
+	<string>#!/usr/bin/env livecode-community-server
+
+if the outputLineEndings = "cr" then
+	set the outputLineEndings to "lf"
+end if
+
+/*--------------------------
+Linter code by Monte Goulding (see https://github.com/peter-b/atom-language-livecode) adjusted for TextMate.
+---------------------------*/
+
+local sErrorsList
+
+Lint
+
+command Lint
+  local tFileName
+
+  local tIndex
+	local tExplicitVars, tScript, tErrors, tOutput
+	local tLineOffset = 0
+	local tMessage
+	
+	put $TM_livecode_explicit_vars into tExplicitVars
+	
+	if tExplicitVars is a boolean then
+		set the explicitVariables to tExplicitVars
+	end if
+  
+
+	put empty into tFileName
+	if $TM_FILEPATH is not empty then
+	  put $TM_FILEPATH into tFileName
+	end if
+	put URL format("binfile:%s", tFileName) into tScript
+
+  put the scriptParsingErrors into sErrorsList
+  split sErrorsList with return
+
+  create script only stack "TestScript"
+
+	-- check for script only
+  if word 1 of tScript is "script" then
+    put 1 into tLineOffset
+  end if
+
+  if tLineOffset is 1 then
+    delete line 1 of tScript
+  end if
+
+	set the script of stack "TestScript" to tScript
+
+  put the result into tErrors
+  split tErrors with return
+  repeat with tIndex = 1 to the number of elements in tErrors
+    if tErrors[tIndex] is not empty then
+      split tErrors[tIndex] with ","
+      put sErrorsList[tErrors[tIndex][1]] into tMessage
+      if tMessage is not empty then
+        if tErrors[tIndex][4] is not empty then
+          put " (" &amp; item 4 of tErrors[tIndex][4] &amp; ")" after tMessage
+        end if
+        put tErrors[tIndex][2] + tLineOffset, tErrors[tIndex][3], tMessage &amp; return after tOutput
+      end if
+    end if
+  end repeat
+	
+	if tOutput is empty then
+		put "No problems found."
+	else
+ 	 	put tOutput
+	end if
+end Lint
+
+
+
+command scriptExecutionError pStack, pFiles
+	local tIndex, tMessage, tOutput
+		
+  split pStack with return
+
+  repeat with tIndex = 2 to the number of elements in pStack
+    if item 1 of pStack[tIndex] is 730 then
+      exit repeat
+    end if
+
+    put sErrorsList[item 1 of pStack[tIndex]] into tMessage
+    if tMessage is not empty then
+      if item 4 of pStack[tIndex] is not empty then
+        put " (" &amp; item 4 of pStack[tIndex] &amp; ")" after tMessage
+      end if
+      put item 2 of pStack[tIndex], item 3 of pStack[tIndex], tMessage &amp; return after tOutput
+    end if
+  end repeat
+end scriptExecutionError</string>
+	<key>input</key>
+	<string>document</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>keyEquivalent</key>
+	<string>^V</string>
+	<key>name</key>
+	<string>Linter</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>toolTip</string>
+	<key>scope</key>
+	<string>text.livecode</string>
+	<key>uuid</key>
+	<string>66B003CB-FC32-4781-A961-C54F3834BA6C</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>

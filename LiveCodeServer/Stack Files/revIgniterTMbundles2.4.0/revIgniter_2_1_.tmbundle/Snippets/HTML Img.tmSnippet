@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigHtmlImg(${1:attributesArray}${2:, ${3:bool}})${0}</string>
+	<key>name</key>
+	<string>HTML Img Array</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>html</string>
+	<key>uuid</key>
+	<string>770C5224-8C44-4C04-B733-3A5CFF48E9A6</string>
+</dict>
+</plist>

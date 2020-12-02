@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>\$_SERVER["CONTENT_LENGTH"]</string>
+	<key>name</key>
+	<string>SERVER['CONTENT_LENGTH']</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>$_</string>
+	<key>uuid</key>
+	<string>0FDAED01-A8DE-4D2B-936B-0C8C2D8C6223</string>
+</dict>
+</plist>

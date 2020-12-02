@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigJQsetR(${1:selector}, ${2:method}, ${3:propertyValues}${4:, ${5:function}}${6:, ${7:toggleClassSwitch}})${0}</string>
+	<key>name</key>
+	<string>Jquery SetR</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>jquery</string>
+	<key>uuid</key>
+	<string>740CEF0C-E45B-4028-8E5E-5B4261445D8B</string>
+</dict>
+</plist>

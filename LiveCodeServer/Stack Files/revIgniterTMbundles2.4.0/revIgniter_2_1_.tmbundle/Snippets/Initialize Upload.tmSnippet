@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigInitializeUpload ${1:configArray}${0}</string>
+	<key>name</key>
+	<string>File Upload Initialize</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>upload</string>
+	<key>uuid</key>
+	<string>1890F8ED-CDC0-4DAA-93F3-797CCEB5AF89</string>
+</dict>
+</plist>

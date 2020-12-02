@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSetPrefilledValues ${1:arrayOrList}${0}</string>
+	<key>name</key>
+	<string>Set Prefilled Values</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>formvalidation</string>
+	<key>uuid</key>
+	<string>D3A5B3DF-7450-4867-8C3B-7CC6783CAA57</string>
+</dict>
+</plist>

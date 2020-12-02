@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSetSessFlashdata ${1:dataArray}${0}</string>
+	<key>name</key>
+	<string>Set Flash Data Array</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>session</string>
+	<key>uuid</key>
+	<string>79FEE210-C551-4884-A0C3-B55A5082BF80</string>
+</dict>
+</plist>

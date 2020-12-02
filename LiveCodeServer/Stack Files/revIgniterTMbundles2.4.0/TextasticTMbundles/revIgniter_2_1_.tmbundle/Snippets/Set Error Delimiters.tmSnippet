@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSetErrorDelimiters "${1:delimStart}", "${2:delimEnd}"${0}</string>
+	<key>name</key>
+	<string>Set Error Delimiters</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>formvalidation</string>
+	<key>uuid</key>
+	<string>E425023E-4F3B-4DCF-B049-B7E5E8C8860A</string>
+</dict>
+</plist>

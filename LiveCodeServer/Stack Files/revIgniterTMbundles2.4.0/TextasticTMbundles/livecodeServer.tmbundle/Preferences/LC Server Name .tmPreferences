@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Environment</string>
+	<key>settings</key>
+	<dict>
+		<key>shellVariables</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>PATH</string>
+				<key>value</key>
+				<string>$PATH:/opt/local/bin:/usr/local/bin:/usr/texbin:/Library/WebServer/CGI-Executables/LiveCodeServer</string>
+			</dict>
+		</array>
+	</dict>
+	<key>uuid</key>
+	<string>FBD4B5D9-7A47-464D-8DA0-56DA5352A367</string>
+</dict>
+</plist>

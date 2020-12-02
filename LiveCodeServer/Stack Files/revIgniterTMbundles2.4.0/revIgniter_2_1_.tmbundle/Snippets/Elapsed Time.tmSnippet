@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigElapsedTime("${1:start}", "${2:end}")${0:}</string>
+	<key>name</key>
+	<string>Elapsed Time</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>benchmark</string>
+	<key>uuid</key>
+	<string>19365712-D3AC-4CD9-A381-8047B913DB25</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigFtpUpload ${1:localPath}, ${2:remotePath}${3:, ${4|data,FALSE,TRUE|}${5:, ${6|createMissingDirs,TRUE,FALSE|}}${7:, ${8:0700}}}${0}</string>
+	<key>name</key>
+	<string>Ftp Upload</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>ftp</string>
+	<key>uuid</key>
+	<string>0A6CCEB9-7691-42E0-A87D-788C76F71DD2</string>
+</dict>
+</plist>

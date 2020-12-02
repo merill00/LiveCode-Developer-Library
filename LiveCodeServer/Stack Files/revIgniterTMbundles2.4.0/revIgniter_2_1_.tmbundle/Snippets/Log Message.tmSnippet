@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigLogMessage "${1:level}", "${2:message}"${3:, ${4:displayError}}${0}</string>
+	<key>name</key>
+	<string>Log Message</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>log</string>
+	<key>uuid</key>
+	<string>CE4D40ED-2E7F-485F-89D1-AE80C355ADE1</string>
+</dict>
+</plist>

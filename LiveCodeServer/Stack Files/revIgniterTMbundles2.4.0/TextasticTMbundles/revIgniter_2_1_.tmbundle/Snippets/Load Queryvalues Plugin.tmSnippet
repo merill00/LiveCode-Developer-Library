@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigLoadPlugin "queryvalues"${0}</string>
+	<key>name</key>
+	<string>Load Queryvalues Plugin</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>queryvalues</string>
+	<key>uuid</key>
+	<string>FABA57F9-F608-4D4B-9F9C-7B78368165A5</string>
+</dict>
+</plist>

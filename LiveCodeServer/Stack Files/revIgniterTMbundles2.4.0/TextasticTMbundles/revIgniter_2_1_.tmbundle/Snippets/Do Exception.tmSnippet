@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigDoException ${1:contexts}, "${2:currentFile}", "${3:currentMethod}"${0}</string>
+	<key>name</key>
+	<string>Do Exception</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>except</string>
+	<key>uuid</key>
+	<string>C0DF6EFC-7877-4F3D-8492-2A165308ADBB</string>
+</dict>
+</plist>

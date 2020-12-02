@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigGetFileNames("${1:path}"${2:, ${3:bool}${4:, ${5:bool}}})${0}</string>
+	<key>name</key>
+	<string>File Names</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>file</string>
+	<key>uuid</key>
+	<string>70302FCE-F111-4E73-A7C3-F34BB84D03E7</string>
+</dict>
+</plist>

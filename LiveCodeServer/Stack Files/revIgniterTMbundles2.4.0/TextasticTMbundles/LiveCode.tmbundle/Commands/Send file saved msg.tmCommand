@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveActiveFile</string>
+	<key>command</key>
+	<string>#!/usr/bin/env livecode-community-server
+
+if the outputLineEndings = "cr" then
+	set the outputLineEndings to "lf"
+end if
+
+
+put empty into tFileName
+if $TM_FILEPATH is not empty then
+  put $TM_FILEPATH into tFileName
+end if
+
+
+# STACKNAME
+put URL format("binfile:%s", tFileName) into tFileData
+put line 1 of tFileData into tStackName
+put word 2 to -1 of tStackName into tStackName
+replace quote with empty in tStackName
+put textEncode(urlEncode(tStackName), "utf8") into tStackName
+
+# FILENAME
+put textEncode(urlEncode(tFilename), "utf8") into tFileName
+
+# DATA
+put "filename=" &amp; tFileName &amp; "&amp;stack=" &amp; tStackName into tData
+
+
+put FALSE into tConnectionFailed
+
+open datagram socket to "127.0.0.1:61373"
+if the Result &lt;&gt; "" then
+	put TRUE into tConnectionFailed
+	put "Result:" &amp;&amp; the result
+else
+	put "Opened datagram socket."
+end if
+
+if tConnectionFailed is FALSE then
+	write tData to socket "127.0.0.1:61373" -- with message "foo"
+
+	put return &amp; "Update message sent to LiveCode."
+end if
+
+
+command foo pSocketID
+   -- close socket "127.0.0.1:61373"
+	 put "foo"
+end foo
+</string>
+	<key>input</key>
+	<string>document</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>keyEquivalent</key>
+	<string>^@s</string>
+	<key>name</key>
+	<string>Send File Saved Msg</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>toolTip</string>
+	<key>scope</key>
+	<string>text.livecode</string>
+	<key>uuid</key>
+	<string>8CEF22B8-81B5-4B9D-B35A-FD1365D66F18</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>

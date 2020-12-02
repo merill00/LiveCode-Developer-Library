@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigJQeventAnim ${1:triggerSelector}, ${2:targetSelector}, ${3:event}, ${4:properties}${5:, ${6:duration}}${7:, ${8:easing}}${9:, ${10:callback}}${0}</string>
+	<key>name</key>
+	<string>Jquery Event Anim</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>jquery</string>
+	<key>uuid</key>
+	<string>5B5E5683-61C4-44B7-912A-07339383C6E0</string>
+</dict>
+</plist>

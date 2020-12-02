@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigFtpClose ${0}</string>
+	<key>name</key>
+	<string>FTP Close</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>ftp</string>
+	<key>uuid</key>
+	<string>D64FE137-AC28-47F8-86C7-C6263E6242D9</string>
+</dict>
+</plist>

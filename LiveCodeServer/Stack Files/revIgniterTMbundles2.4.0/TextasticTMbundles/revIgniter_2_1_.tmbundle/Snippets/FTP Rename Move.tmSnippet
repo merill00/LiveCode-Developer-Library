@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigFtpRenameMove ${1:oldFile}, ${2:newFile}${3:, ${4|missingDirs,FALSE,TRUE|}}${0}</string>
+	<key>name</key>
+	<string>FTP Rename Move</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>ftp</string>
+	<key>uuid</key>
+	<string>78A2DB2A-F6D7-460A-9804-789BD67B5A08</string>
+</dict>
+</plist>
