@@ -1,0 +1,156 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2576
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;\red26\green26\blue26;}
+{\*\expandedcolortbl;;\cssrgb\c13333\c13333\c13333;}
+\margl1440\margr1440\vieww24420\viewh18580\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+
+\fs36 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs30 \cf2 \expnd0\expndtw0\kerning0
+do "document.body.style.fontSize = '110%';" in widget "Browser"\
+\
+I use this technique (essentially) in hhTextEditBasic, see\
+{\field{\*\fldinst{HYPERLINK "http://livecodeshare.runrev.com/stack/860"}}{\fldrslt http://livecodeshare.runrev.com/stack/860}}\
+\
+
+\f0\fs36 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+Re: Browser Widget usage examples\
+Quote\
+Post  by [-hh] \'bb Mon Apr 01, 2019 8:27 am\
+\
+(a) Card TextEdit-Mini:\
+The styles (font,font-size etc.) are handled in "mouseUp" of group "buttons" (the options group).\
+Shortcut to edit the script: RightClick the frame of this options group.\
+\
+The text insertion is handled by button "innerHtml". Similarly you could write\
+CODE: SELECT ALL\
+on mouseUp\
+  do "document.body.innerHTML=" &quote& text() &quote & ";" in widget "hhview"\
+end mouseUp\
+\
+function text\
+  return fld "MyInput"\
+end text\
+\
+where text() contains no literal quote, that is you have to write, for example,\
+CODE: SELECT ALL\
+\
+return "I am a" &quote& " text " &quote& "containing quotes."\
+or use the base64-method of (b).\
+\
+(b) Card TextEdit-Basic:\
+\
+The styles (font,font-size etc.) are handled in "mouseUp" of group "hhView" (the options group).\
+Shortcut to edit this script: RightClick the frame of this options group.\
+\
+The text insertion is handled by button "Insert". Similarly you could write\
+\
+CODE: SELECT ALL\
+\
+on mouseUp\
+  put base64Encode(text()) into str\
+  replace linefeed with empty in str\
+  do "document.body.innerHTML= window.atob('" & str & "');" in widget "hhview"\
+end mouseUp\
+\
+function text\
+  return fld "MyInput"\
+end text\
+\
+Currently this b64-method doesn't support UTF-8.\
+I know how to do it and it is on my to-do-list. Meanwhile you could use the method from (a).\
+\
+
+\fs24 \
+\
+\
+\
+\
+\
+\
+\
+\
+'\
+'local finaltext\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\partightenfactor0
+\cf0 \
+on closefield\
+\'a0\'a0\'a0justifyme\
+end closefield\
+\
+on justifyme\
+\'a0\'a0\'a0lock screen\
+\'a0\'a0\'a0put empty into finaltext\
+\'a0\'a0\'a0stripspaces\
+\'a0\'a0\'a0set the dontwrap of me to true\
+\'a0\'a0\'a0put the text of me into temp\
+\'a0\'a0\'a0set the text of me to empty\
+\'a0\'a0\'a0replace return with (space & chartonum(1) & space ) in temp #we separete words with newlines attached, and much more, newline is a word now\
+\'a0\'a0\'a0put the width of me into tw\
+\'a0\'a0\'a0put the number of words of temp into nw \
+\'a0\'a0\'a0repeat with i=1 to nw\
+\'a0\'a0\'a0\'a0\'a0\'a0if word i of temp is chartonum(1) then\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0put return after me\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0put the text of me after finaltext\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0put empty into me\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0next repeat\
+\'a0\'a0\'a0\'a0\'a0\'a0end if\
+\'a0\'a0\'a0\'a0\'a0\'a0put word i of temp after me\
+\'a0\'a0\'a0\'a0\'a0\'a0if the formattedwidth of me > tw then\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0delete the last word of me\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0addspaces 0\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0put word i of temp & space into me\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\
+\'a0\'a0\'a0\'a0\'a0\'a0else\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0put space after me\
+\'a0\'a0\'a0\'a0\'a0\'a0end if\
+\'a0\'a0\'a0end repeat\
+\'a0\'a0\'a0put the text of me after finaltext\
+\'a0\'a0\'a0set the text of me to finaltext\
+\'a0\'a0\'a0set the dontwrap of me to false\
+\'a0\'a0\'a0unlock screen\
+end justifyme\
+\
+on addspaces temp\
+\'a0\'a0\'a0if the number of words of me is 1 then\
+\'a0\'a0\'a0\'a0\'a0\'a0put the text of me after finaltext\
+\'a0\'a0\'a0\'a0\'a0\'a0set the text of me to empty\
+\'a0\'a0\'a0\'a0\'a0\'a0exit addspaces\
+\'a0\'a0\'a0end if\
+\'a0\'a0\'a0\
+\'a0\'a0\'a0put the width of me into tw\
+\'a0\'a0\'a0put the number of words of me -1 into nspaces #the correct number of spaces between words is nspaces -1, but we'll use mod\
+\'a0\'a0\'a0put temp mod nspaces into temp\
+\'a0\'a0\'a0add 1 to temp\
+\'a0\'a0\'a0put space after word temp of me\
+\'a0\'a0\'a0if the formattedwidth of me > tw then\
+\'a0\'a0\'a0\'a0\'a0\'a0put the number of chars of word 1 to temp of me into tc\
+\'a0\'a0\'a0\'a0\'a0\'a0delete char (tc +1) of me\
+\'a0\'a0\'a0\'a0\'a0\'a0put the text of me & space after finaltext\
+\'a0\'a0\'a0\'a0\'a0\'a0set the text of me to empty\
+\'a0\'a0\'a0else\
+\'a0\'a0\'a0\'a0\'a0\'a0addspaces temp\
+\'a0\'a0\'a0end if\
+end addspaces\
+\
+on stripspaces\
+\'a0\'a0\'a0put the text of me into temp\
+\'a0\'a0\'a0repeat for each char tchar in temp\
+\'a0\'a0\'a0\'a0\'a0\'a0if (tchar is space) and (the last char of t2 is space) then\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0next repeat\
+\'a0\'a0\'a0\'a0\'a0\'a0else\
+\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0put tchar after t2\
+\'a0\'a0\'a0\'a0\'a0\'a0end if\
+\'a0\'a0\'a0end repeat\
+\'a0\'a0\'a0set the text of me to t2 \
+end stripspaces\
+\
+on resizeControl\
+\'a0\'a0\'a0justifyme\'a0\'a0\'a0\
+end resizeControl}
