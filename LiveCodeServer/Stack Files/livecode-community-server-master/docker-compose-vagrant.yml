@@ -1,0 +1,41 @@
+version: '3.1'
+
+networks:
+  livecode:
+
+volumes:
+  db-data:
+
+services:
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: livecode
+      MYSQL_USER: livecodeuser
+      MYSQL_PASSWORD: livecode
+      MYSQL_DATABASE: livecode
+      MYSQL_ROOT_HOST: "%"
+    volumes:
+      - db-data:/var/lib/mysql
+      - /vagrant/user-data/mariadb/db-src:/docker-entrypoint-initdb.d
+    networks:
+      - livecode
+
+  livecode:
+    build: ./livecode-centos7-httpd
+    volumes:
+      - /vagrant/user-data/html:/var/www/html
+    networks:
+      - livecode
+
+  proxy:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - /vagrant/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /vagrant/nginx/sites-enabled:/etc/nginx/sites-enabled
+    networks:
+      - livecode
