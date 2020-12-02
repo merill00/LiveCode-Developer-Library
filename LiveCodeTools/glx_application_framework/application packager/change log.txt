@@ -1,0 +1,36 @@
+1.1.1 build 4
+* glxapp_finalizeBuild is now sent when glxapp_postBuild used to be sent. glxapp_postBuild is now sent AFTER code signing has occurred. Use this message to build installers.
+* LiveCode script and AppleScript buttons are only enabled if scripts are configured for the build profile.
+* AppleScript is not run if platform is not "macos".
+* 
+
+1.1.1 build 3
+* Support for "Run LiveCode" added. A glxapp_postBuild message is not sent to the stack configured in the plugin. This allows you to customize what happens after a build. The variables passed are pProfile, pType, pPropsA.
+* The update_dialog.gz line is now added to update.txt when package updates. It is now recommended practice to store the update dialog on the server so that you can make changes after shipping.
+* Added support for signing Mac applications by providing the certificate name to use. Signing for Mac App Store is done if the build profile is named "Mac App Store". Otherwise it is signed using the Developer profile so it can be installed when GateKeeper is active. If an .entitlements file is present in the bundle (alongside or inside the Resources folder) then then the app will be sandboxed during the signing process.
+* On Mac, any files located in a "sandbox files/macos" folder that sites alongside your launcher.rev file will be copied into the Resources folder when building an application. You can place the [APP-NAME].entitlements and container-migration.plist files in this folder so that your application can be sandboxed. This is done prior to signing the application.
+
+1.1.1 build 2
+* The auto update packager was not respecting stacks stored above the application.data stack folder.
+
+1.1.1
+* The Application Packager now handles stacks stored in folders above the folder that the application.dat stack is stored in. This means you can have a common repository for multiple applications.
+
+1.1.0.2
+* The Application Packager now refreshes version information each time resumeStack is sent to it. This keeps the UI up to date when changing it in another instance of the IDE.
+* Added uRIP custom property set to stack.
+
+1.1.0.1
+* The auto updater now uses a single file for updates. This means the engine and all resources are updated each time.
+* You can now create a backup of the application when you package it. The backup is a snapshot of the development version and has no password protection on the stacks.
+* The packager was not packaging folders from the Standalone Resources tab correctly when building updaters for Windows.
+
+1.0.0.4
+* Added FTP upload of updaters after build.
+* Base auto update url is no longer in the General tab but rather the Build tab as it is now a property of a build profile.
+
+1.0.0.3
+* The packager now embeds stacks that should be unlocked in the framework library script.
+
+1.0.0.2
+* Initial release.

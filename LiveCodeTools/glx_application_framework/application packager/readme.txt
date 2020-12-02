@@ -1,0 +1,1 @@
+This stack is used for packaging your applications for distribution with an installer or as an auto update.
