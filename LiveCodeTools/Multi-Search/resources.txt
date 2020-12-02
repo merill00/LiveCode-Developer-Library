@@ -1,0 +1,6 @@
+LiveCode Super Site,http://livecodesupersite.com/
+LiveCode Cheat Sheets,https://livecode.com/resources/cheat-sheets/
+BYU LiveCode Gateway,http://livecode.byu.edu/
+Reactor Lab,http://reactorlab.net/
+LiveCode Learning,http://learninglivecode.blogspot.com/
+LiveCode Server Guide,https://activethought.net/livecode-server/introduction/

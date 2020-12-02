@@ -1,0 +1,26 @@
+{
+	"folders":
+	[
+		{
+			"folder_exclude_patterns":
+			[
+				"builds"
+			],
+			"name": "DataView Demo",
+			"path": "app"
+		},
+		{
+			"path": "levure"
+		}
+	],
+	"livecode":
+	{
+		"notify_on_save": true,
+		"notify_server":
+		{
+			"debug": false,
+			"host": "localhost",
+			"port": 61373
+		}
+	}
+}

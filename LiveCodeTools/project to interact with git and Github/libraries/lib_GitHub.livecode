@@ -1,0 +1,394 @@
+﻿script "lib_GitHub"
+--> MetaData
+-
+copyright: David Bovill
+license: GPLv3
+name: lib_GitHub
+type: script library
+version: 0.3
+
+/*
+A library for interfacing with GitHub APIv3.
+
+The gist library is seperate and moving forwards we wil create individual libraries for each GitHub subproject.
+*/
+
+--> Working on
+-
+function script_GetHandlerMarkdown tObject, relativePath
+   put the revAvailableHandlers of tObject into handlerTable
+   sort numeric handlerTable by word 3 of each
+   repeat for each line someLine in handlerTable
+      --    - [G mobile_VerticalScroller](../blob/master/libraries/lib_MobileControls.livecodescript#L35-L42)
+      -- put word 1 of someLine into item 2 of shortHkey
+      -- put word 2 of someLine into item 1 of shortHkey
+      put word 3 of someLine +1 into startLineNum
+      put word 4 of someLine +1 into endLineNum
+      put "- [" & word 1 to 2 of someLine & "](../blob/master/" & relativePath & "#L" & startLineNum & "-L" & endLineNum & ")" & CR after mdLines
+   end repeat
+   delete char -1 of mdLines
+   return mdLines
+end script_GetHandlerMarkdown
+
+command github_CreateProject repoName, gitFolder, repoDescription
+   -- First Create a new GitHub repo
+   github_CreateOrgRepo repoName, repoDescription
+   put the result into postJSON
+   put json_ToArray (postJSON) into githubProjectArray
+   put githubProjectArray ["ssh_url"] into gitRemoteAddress
+   
+   if oldRemoteAddress is not empty then
+      -- we will need to change it
+      put oldRemoteAddress
+      put lcw_Ask ("Are you sure you want to change the git remote address to...", gitRemoteAddress)into gitRemoteAddress
+      breakpoint
+      git_SetRemoteOrigin gitRemoteAddress, gitFolder
+      put the result into addResult
+   else
+      -- we need to add it
+      git_AddFolderToRemote gitFolder, gitRemoteAddress
+      put the result into addResult
+   end if
+end github_CreateProject
+
+function github_FetchReadmeMD githubProjectName
+   -- put github_FetchReadmeMD ("lcw_Menus") into readmeJSON
+   put "LiveCodeWorld" into orgName
+   put merge ("https://raw.githubusercontent.com/[[orgName]]/[[githubProjectName]]/master/README.md") into readmeURL
+   put url readmeURL into readmeMarkdown
+   return readmeMarkdown
+end github_FetchReadmeMD
+
+command github_Launch repoName
+   put github_FetchRepoArray (repoName) into repoArray
+   put github_ExtractHtmlUrl (repoArray) into githubURL
+   launch url githubURL
+end github_Launch
+
+command display_GithubProjects
+   put github_FetchOrgRepoAray() into reposArray
+   display_Array reposArray
+end display_GithubProjects
+
+command display_GitHubInfo repoName
+   put github_FetchRepoArray (repoName) into repoArray
+   display_Array repoArray
+end display_GitHubInfo
+
+function github_FindRepoName remoteAddress
+   -- can fail to find if repo has been renamed
+   put github_FetchOrgRepoAray() into reposArray
+   repeat for each key repoNum in reposArray
+      put reposArray [repoNum]["ssh_url"] into sshURL
+      put reposArray [repoNum]["clone_url"] into cloneURL
+      if sshURL = remoteAddress or cloneURL = remoteAddress then
+         return reposArray [repoNum]["name"]
+      end if
+   end repeat
+   return empty
+end github_FindRepoName
+
+
+--> GitHub | Tokens
+-
+function github_GetApiToken
+   -- check LastPass
+   -- token is cached first time we use this
+   
+   put "GitHubAuthoringToken" into prefName -- "GitHubApiToken"
+   put pref_GetValue (prefName) into gitHubApiToken
+   if gitHubApiToken is empty then
+      put pref_FetchValue (prefName) into gitHubApiToken
+      pref_SetValue prefName, gitHubApiToken
+   end if
+   return gitHubApiToken
+end github_GetApiToken
+
+command github_SetApiToken gitHubApiToken
+   pref_SetValue "GitHubApiToken", gitHubApiToken
+end github_SetApiToken
+
+
+--> GitHub | Wiki
+-
+getprop github_WikiPage
+   put the stack_Object of the target into stackObject
+   put github_CreateStackWikiPage (stackObject) into mdLines
+   return mdLines
+end github_WikiPage
+
+function github_CreateStackWikiPage stackObject
+   /*
+   You can find the latest version of the script [here](../blob/master/[[relativePath]]).
+   
+   [[scriptHelp]]
+   
+   ## Handlers
+   
+   [[handlerList]]
+   */
+   put script_GetCommentAboveMe() into mkTemplate
+   
+   put the script_MetaData of stackObject into scriptMetaData
+   put scriptMetaData ["script_Help"] into scriptHelp
+   put the project_Folder of stackObject into projectFolder
+   put the effective filename of stackObject into stackPath
+   put stackPath into relativePath
+   replace projectFolder with empty in relativePath
+   put script_GetHandlerMarkdown (stackObject, relativePath) into handlerList
+   
+   put merge (mkTemplate) into wikiMarkdown
+   return wikiMarkdown
+end github_CreateStackWikiPage
+
+
+--> GitHub | Issues
+-
+command github_CreateIssue repoOwner, someRepo, postJSON
+   -- POST /repos/:owner/:repo/issues
+   put _issueCommandPath (repoOwner, someRepo, "issues") into restPath
+   github_RestPost restPath, postJSON
+   return the result
+end github_CreateIssue
+
+function github_FetchIssue repoOwner, someRepo, issueNum
+   -- GET /repos/:owner/:repo/issues/:number
+   
+   put "issues/" & issueNum into issueString   
+   put _issueCommandPath (repoOwner, someRepo, issueString) into restPath
+   put github_RestGet (restPath) into someJSON
+   return someJSON
+end github_FetchIssue
+
+function github_ListRepoIssues repoOwner, someRepo
+   -- help: https://developer.github.com/v3/issues/#list-issues
+   -- GET /repos/:owner/:repo/issues
+   
+   put _issueCommandPath (repoOwner, someRepo, "issues") into restPath
+   put github_RestGet (restPath) into someJSON
+   return someJSON
+end github_ListRepoIssues
+
+function github_ListAllMyIssues
+   -- help: https://developer.github.com/v3/issues/#list-issues
+   --  List all issues across all the authenticated user's visible repositories including owned repositories, member repositories, and organization repositories:
+   put github_RestGet ("/issues") into someData
+   return someData
+end github_ListAllMyIssues
+
+function github_ListMyIssues
+   -- help: https://developer.github.com/v3/issues/#list-issues
+   -- List all issues across owned and member repositories for the authenticated user:
+   put github_RestGet ("/user/issues") into someJSON
+   return someJSON
+end github_ListMyIssues
+
+function github_ListOrgIssues someOrg
+   -- help: https://developer.github.com/v3/issues/#list-issues
+   -- put "co-operating-systems" into someOrg
+   
+   put "/orgs/" & someOrg & "/issues" into orgBit
+   put github_RestGet (orgBit) into someJSON
+   return someJSON
+end github_ListOrgIssues
+
+
+--> GitHub | Repos
+-
+command github_CreateOrgRepo rName, rDesc, pOrgName, pHomePage
+   -- https://developer.github.com/v3/repos/#create
+   if pOrgName is empty then put "LiveCodeWorld" into pOrgName
+   if pHomePage is empty then put "http://livecode.world" into pHomePage
+   put merge ("/orgs/[[pOrgName]]/repos") into restPath
+   --
+   put rName into postArray ["name"]
+   put rDesc into postArray ["description"]
+   put pHomePage into postArray ["homepage"]
+   put "false" into postArray ["private"]
+   put "true" into postArray ["has_issues"]
+   put "true" into postArray ["has_projects"]
+   put "true" into postArray ["has_wiki"]
+   --
+   put json_FromArray (postArray) into postJSON
+   github_RestPost restPath, postJSON
+   put the result into postResult
+   return postResult
+end github_CreateOrgRepo
+
+function github_ListOrgRepos pOrgName
+   put github_FetchOrgRepoAray (pOrgName) into reposArray
+   repeat for each key repoNum in reposArray
+      put reposArray [repoNum]["name"] into repoName
+      put repoName & CR after orgRepoNames
+   end repeat
+   delete char -1 of orgRepoNames
+   return orgRepoNames
+end github_ListOrgRepos
+
+function github_ExtractHtmlUrl repoArray
+   put repoArray ["html_url"] into githubURL
+   return githubURL
+end github_ExtractHtmlUrl
+
+command github_DeconstructRepoArray repoArray, @remoteAddress, @htmlURL, @cloneURL, @gitURL
+   put repoArray ["clone_url"] into cloneURL
+   put repoArray ["git_url"] into gitURL
+   put repoArray ["html_url"] into htmlURL
+   put repoArray ["ssh_url"] into remoteAddress
+end github_DeconstructRepoArray
+   
+function github_FetchOrgRepoAray pOrgName
+   put github_FetchOrgRepoListJson (pOrgName) into someJSON
+   put json_ToArray (someJSON) into reposArray
+   return reposArray
+end github_FetchOrgRepoAray
+
+function github_FetchOrgRepoListJson pOrgName
+   if pOrgName is empty then put "LiveCodeWorld" into pOrgName
+   put merge ("/orgs/[[pOrgName]]/repos") into restPath
+   put github_RestGet (restPath) into someJSON
+   return someJSON
+end github_FetchOrgRepoListJson
+
+function github_FetchRepoArray repoName, pOwner
+   if pOwner is empty then put "LiveCodeWorld" into pOwner
+   put merge ("/repos/[[pOwner]]/[[repoName]]") into restPath
+   put github_RestGet (restPath) into someJSON
+   put json_ToArray (someJSON) into repoArray
+   return repoArray
+end github_FetchRepoArray
+
+function github_ListMyRepos
+   put github_RestGet ("/user/repos") into someData
+   return someData
+end github_ListMyRepos
+
+function github_ListPublicRepos
+   put github_RestGet ("/users/opn/repos") into someData
+   return someData
+end github_ListPublicRepos
+
+
+--> GitHub | REST
+-
+function github_RestGet restPath
+   put _constructApiUrl (restPath) into someUrl
+   put github_RestGetFromUrl (someUrl) into someJSON
+   return someJSON
+end github_RestGet
+
+function github_RestGetFromUrl someUrl
+   _setAuthHeaders
+   put url someUrl into someJSON
+   return someJSON
+end github_RestGetFromUrl
+
+command github_RestPost restPath, postJSON
+   _setAuthHeaders
+   put _constructApiUrl (restPath) into someUrl
+ 
+   post postJSON to url someUrl
+   put it into postResult
+   return postResult
+end github_RestPost
+
+command github_RestPatch restPath, postJSON
+   _setAuthHeaders
+   put _constructApiUrl (restPath) into someUrl
+   -- patch url someUrl
+   post postJSON to url someUrl
+   put it into postResult
+   return postResult
+end github_RestPatch
+
+command github_RestDelete restPath
+   -- this is slow
+   _setAuthHeaders
+   put _constructApiUrl (restPath) into someUrl
+   delete url someUrl
+   return the result
+end github_RestDelete
+
+
+--> GitHub | Private
+-
+private function _constructIssueJSON someTitle, pBody, pAssignee, pMilestone, pLabelArray
+   put someTitle into jsonArray ["title"]
+   
+   if pBody is not empty then put pBody into jsonArray ["body"]
+   if pAssignee is not empty then put pAssignee into jsonArray ["assignee"]
+   if pMilestone is not empty then put pMilestone into jsonArray ["milestone"]
+   if pLabelArray is an array then
+      put pLabelArray into jsonArray ["labels"]
+   else if pLabelArray is not empty then
+      replace CR with comma in pLabelArray
+      split pLabelArray with comma
+      put pLabelArray into jsonArray ["labels"]
+   end if
+   
+   put json_FromArray (jsonArray) into someJSON
+   return someJSON
+end _constructIssueJSON
+
+private function _issueCommandPath repoOwner, someRepo, issueString
+   put "/repos/" & repoOwner & "/" & someRepo & "/" & issueString into restPath
+   return restPath
+end _issueCommandPath
+
+private function _constructApiUrl restPath
+   local GitHubApiStem = "https://api.github.com"
+   
+   put GitHubApiStem into someUrl
+   if char 1 of restPath is not "/" then put "/" after someUrl
+   put restPath after someUrl
+   
+   return someUrl
+end _constructApiUrl
+
+private command _setAuthHeaders
+   put github_GetApiToken() into gitHubApiToken
+   put "Accept: application/vnd.github.v3+json" into someHeader
+   put CR & "Authorization: token" && gitHubApiToken after someHeader
+   put CR & "User-Agent: OPN" after someHeader
+   set the httpheaders to someHeader
+end _setAuthHeaders
+
+
+--> Deps
+-
+command text_EscapeReturns @someText
+   /*
+   \r = CR (Carriage Return) // Used as a new line character in Mac OS before X
+   \n = LF (Line Feed) // Used as a new line character in Unix/Mac OS X
+   \r\n = CR + LF // Used as a new line character in Windows
+   */
+   -- replace CRLF with "\r\n" in someText
+   replace CR with "\r" in someText
+   replace LF with "\n" in someText
+end text_EscapeReturns
+
+function json_EncodeText someText
+   text_EscapeReturns someText
+   xml_Escape someText
+   put text_UTF8
+end json_EncodeText
+
+private function _constructIssueJSON someTitle, pBody, pAssignee, pMilestone, pLabelArray
+   put someTitle into jsonArray ["title"]
+   
+   if pBody is not empty then
+      put pBody into jsonArray ["body"]
+   end if
+   if pAssignee is not empty then put pAssignee into jsonArray ["assignee"]
+   if pMilestone is not empty then put pMilestone into jsonArray ["milestone"]
+   if pLabelArray is an array then
+      put pLabelArray into jsonArray ["labels"]
+   else if pLabelArray is not empty then
+      replace CR with comma in pLabelArray
+      split pLabelArray with comma
+      put pLabelArray into jsonArray ["labels"]
+   end if
+   
+   put json_FromArray (jsonArray) into someJSON
+   return someJSON
+end _constructIssueJSON

@@ -1,0 +1,151 @@
+﻿script "Global | Gist | Menu"
+--> MetaData
+-
+license: GPLv3
+name: Global | Gist | Menu
+type: controller
+version: 0.5
+gist: https://gist.github.com/opn/9b9d8362dbc267ac7348ec64e11fb54c
+
+
+--> Display | Events
+-
+command gistMouseUp indexView, someLine
+   put someLine
+end gistMouseUp
+
+command gistMouseDoubleUp indexView, someLine
+   answer someLine
+end gistMouseDoubleUp
+
+
+--> Global | Gist | Menu
+-
+on menu_DisplayGists
+   set the cursor to watch
+   put gist_FetchFiles() into gistList
+   display_Index gistList, "gist_FetchFiles(),Gists", "Global | Gist | Menu", "Global | Gist | Line | Menu", "gistMouseUp", "gistMouseDoubleUp"
+end menu_DisplayGists
+
+on menu_DisplayScripts
+   set the cursor to watch
+   put gist_FetchFiles() into gistList
+   filter gistList with "script,*"
+   
+   display_Index gistList, "gist_FetchFiles(),Gists", "Global | Gist | Menu", "Global | Gist | Line | Menu", "gistMouseUp", "gistMouseDoubleUp"
+end menu_DisplayScripts
+
+on menu_DisplayControllers mTarget
+   set the cursor to watch
+   put gist_FetchFiles ("controller") into gistList
+   
+   display_Index gistList, "gist_FetchFiles(),Gists", "Global | Gist | Menu", "Global | Gist | Line | Menu", "gistMouseUp", "gistMouseDoubleUp"
+end menu_DisplayControllers
+
+on _
+end _
+
+on menu_SaveScriptAsGist scriptObject   
+   put hkey_FetchHelp (hKey) into helpText
+   put html_StripAllTags (helpText) into helpText
+   put merge ("Give a description for [[scriptObject]]...") into someComment
+   put lcw_Ask (someComment, helpText) into pGistHelp
+   
+   gist_SaveObjectScript scriptObject, pGistHelp
+   put the result into gistReplyArray
+   display_Array gistReplyArray, scriptObject
+   
+   put gistReplyArray ["html_url"] into htmlURL
+   if htmlURL is not empty then
+      launch url htmlURL
+   end if
+end menu_SaveScriptAsGist
+
+on menu_SaveControllerAsGist scriptObject
+   put the stack_Name of scriptObject into shortControllerFile
+   put "rest.livecode.world" into serverTLD
+   --
+   put merge ("This the is Revigniter controller '[[shortControllerFile]]' from the domain '[[serverTLD]]'.") into mergeHelp
+   put rig_FetchController (shortControllerFile) into rigScript
+   rig_SaveControllerAsGist rigScript, shortControllerFile, serverTLD, mergeHelp
+   put the result into shortGistFile
+   --
+   gist_Launch shortGistFile
+end menu_SaveControllerAsGist
+
+on menu_ScriptOnlyStackAsGist scriptObject
+   put hkey_FetchHelp (hKey) into helpText
+   put html_StripAllTags (helpText) into helpText
+   put merge ("Give a description for [[scriptObject]]...") into someComment
+   put lcw_Ask (someComment, helpText) into pGistHelp
+   --
+   put true into pIsPublic
+   put the short name of stack scriptObject into stackName
+   save stack stackName
+   rig_SaveGistStackScript stackName, pGistHelp, pIsPublic
+   --
+   put the result into htmlURL
+   if htmlURL is not empty then
+      launch url htmlURL
+   end if
+end menu_ScriptOnlyStackAsGist
+
+on _
+end _
+
+on submenu_Dev
+   return "Dev | Menu"
+end submenu_Dev
+
+
+--> Global | Gist | Menu | Props
+-
+getprop launch_Whats
+   return "My Gists,API"
+end launch_Whats
+
+
+--> Global | Gist | Menu | Disables
+-
+getprop disabled_SaveControllerAsGist [scriptObject]
+   put the short_ControllerFile of scriptObject into shortControllerFile
+   if shortControllerFile is empty then
+      return true
+   else
+      return false
+   end if
+end disabled_SaveControllerAsGist
+
+getprop disabled_ScriptOnlyStackAsGist [scriptObject]
+   put the script_MetaData ["type"] of scriptObject into scriptType
+   if scriptType contains "library" then
+      return false
+   else
+      return true
+   end if
+end disabled_ScriptOnlyStackAsGist
+   
+   
+--> Dev | Menu
+-
+on menu_SetGithubApiToken
+   put github_GetApiToken () into githubApiToken
+   put lcw_Ask ("Enter your token for the GitHubApi...", githubApiToken) into githubApiToken
+   github_SetApiToken gitHubApiToken
+   answer "Stored GitHub API token in your preferences"
+end menu_SetGithubApiToken
+
+on menu_GitHubApiTokenDocs
+   launch url "https://github.com/settings/tokens"
+end menu_GitHubApiTokenDocs
+
+on _
+end _
+
+on menu_LaunchGithubApiDocumentation
+   launch url "https://developer.github.com/v3/"
+end menu_LaunchGithubApiDocumentation
+
+on menu_LaunchGist mTarget, launchWhat
+   gist_Launch launchWhat
+end menu_LaunchGist

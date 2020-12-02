@@ -1,0 +1,18 @@
+RReadMe.mdelease info for icsLib
+
+pre-history removed :-)
+
+1.0
++ removed icsLibType variable and function
++ removed GPL variations
+
+NB - Some of the test files do contain incomplete timezone info, so
+please ignore warnings form icsTest about this warning message.
+
+2.0  2018-05-10
+ - Released under permissive MT License
+ - script-only stack
+ - put into git, and put it up on github
+
+
+

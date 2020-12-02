@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+		<key>Identifier</key>
+		<string>com.merg.livecode.externals.base</string>
+		<key>Kind</key>
+		<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
+		<key>Definitions</key>
+		<dict>
+			<key>*:comments</key>
+			<string>//
+//  ___FILENAME___
+//
+//  ___PROJECTNAME___
+//  ___VARIABLE_bundleIdentifierPrefix:bundleIdentifier___.___PACKAGENAMEASIDENTIFIER___
+//
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//___COPYRIGHT___
+//
+			</string>
+			<key>___PACKAGENAMEASIDENTIFIER___.lcidl</key>
+			<dict>
+				<key>Beginning</key>
+				<string></string>
+				<key>End</key>
+				<string></string>
+				<key>SubstituteMacros</key>
+				<true/>
+				<key>TargetIndices</key>
+				<array>
+					<string>0</string>
+				</array>
+			</dict>
+			<key>___PACKAGENAMEASIDENTIFIER___.lcidl:base</key>
+			<string>
+external ___VARIABLE_bundleIdentifierPrefix:bundleIdentifier___.___PACKAGENAMEASIDENTIFIER___
+			</string>
+			<key>___PACKAGENAMEASIDENTIFIER___.lcidl:lcidlhooks</key>
+			<string>
+on startup call ___PACKAGENAMEASIDENTIFIER___Startup
+
+on shutdown call ___PACKAGENAMEASIDENTIFIER___Shutdown
+			</string>
+			<key>___PACKAGENAMEASIDENTIFIER___.livecode</key>
+			<dict>
+				<key>Path</key>
+				<string>___PACKAGENAMEASIDENTIFIER___.livecode</string>
+				<key>TargetIndices</key>
+				<array/>
+			</dict>
+	</dict>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>Identifier</key>
+			<string>productName</string>
+			<key>Name</key>
+			<string>Project Name</string>
+			<key>Description</key>
+			<string>The project&apos;s name.</string>
+			<key>EmptyReplacement</key>
+			<string>ProjectName</string>
+			<key>Type</key>
+			<string>text</string>
+			<key>Required</key>
+			<true/>
+			<key>NotPersisted</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Identifier</key>
+			<string>organizationName</string>
+			<key>Name</key>
+			<string>Organization Name:</string>
+			<key>Description</key>
+			<string>Your company&apos;s name</string>
+			<key>Type</key>
+			<string>text</string>
+			<key>Default</key>
+			<string>___FULLUSERNAME___</string>
+		</dict>
+		<dict>
+        <key>Identifier</key>
+        <string>bundleIdentifierPrefix</string>
+        <key>Required</key>
+        <true/>
+        <key>Name</key>
+        <string>Organization Identifier:</string>
+        <key>Description</key>
+        <string>Your organization&apos;s bundle identifier prefix</string>
+        <key>EmptyReplacement</key>
+        <string>com.yourcompany</string>
+        <key>Type</key>
+        <string>text</string>
+    </dict>
+    <dict>
+        <key>Identifier</key>
+        <string>bundleIdentifier</string>
+        <key>Name</key>
+        <string>External Identifier:</string>
+        <key>NotPersisted</key>
+        <true/>
+        <key>Description</key>
+        <string>Your new product&apos;s bundle identifier</string>
+        <key>Default</key>
+        <string>___VARIABLE_bundleIdentifierPrefix:bundleIdentifier___.___VARIABLE_productName:RFC1034Identifier___</string>
+        <key>Type</key>
+        <string>static</string>
+    </dict>
+		<dict>
+      <key>Identifier</key>
+      <string>isLCIDL</string>
+      <key>Name</key>
+      <string>Use LCIDL</string>
+      <key>NotPersisted</key>
+      <false/>
+      <key>Type</key>
+      <string>checkbox</string>
+      <key>Default</key>
+      <string>true</string>
+      <key>Units</key>
+      <dict>
+          <key>true</key>
+          <dict>
+            <key>Nodes</key>
+            <array>
+							<string>___PACKAGENAMEASIDENTIFIER___.lcidl:comments</string>
+							<string>___PACKAGENAMEASIDENTIFIER___.lcidl:base</string>
+						</array>
+          </dict>
+					<key>false</key>
+					<dict>
+						<key>Definitions</key>
+						<dict>
+							<key>external.c</key>
+							<dict>
+								<key>Path</key>
+								<string>external.c</string>
+								<key>TargetIndices</key>
+								<array>
+									<string>0</string>
+								</array>
+							</dict>
+							<key>external.h</key>
+							<dict>
+								<key>Path</key>
+								<string>external.h</string>
+								<key>TargetIndices</key>
+								<array/>
+							</dict>
+						</dict>
+						<key>Nodes</key>
+						<array>
+							<string>external.c</string>
+							<string>external.h</string>
+						</array>
+						<key>Project</key>
+						<dict>
+							<key>SharedSettings</key>
+							<dict>
+								<key>SYMBOLS</key>
+								<string>_getXtable</string>
+							</dict>
+						</dict>
+					</dict>
+      </dict>
+    </dict>
+	</array>
+	<key>Nodes</key>
+	<array>
+		<string>___PACKAGENAMEASIDENTIFIER___.livecode</string>
+	</array>
+	<key>Project</key>
+	<dict>
+		<key>SharedSettings</key>
+		<dict>
+			<key>PRODUCT_NAME</key>
+			<string>___PACKAGENAMEASIDENTIFIER___</string>
+			<key>ALWAYS_SEARCH_USER_PATHS</key>
+			<string>NO</string>
+			<key>LIVECODE_EXTERNAL_TEMPLATES_DIR</key>
+			<string>$(HOME)/livecode-external-templates</string>
+			<key>LIVECODE_REPO_ROOT</key>
+			<string>$(HOME)/livecode</string>
+			<key>LIVECODE_TEST_EXTERNAL</key>
+			<string>___PACKAGENAMEASIDENTIFIER___</string>
+			<key>LIVECODE_TEST_STACK</key>
+			<string>$(SRCROOT)/___PACKAGENAME___/___PACKAGENAMEASIDENTIFIER___.livecode</string>
+			<key>CLANG_CXX_LIBRARY</key>
+			<string>libc++</string>
+			<key>ENABLE_BITCODE</key>
+			<string>NO</string>
+			<key>HEADER_SEARCH_PATHS</key>
+			<string>"$(LIVECODE_REPO_ROOT)/lcidlc/include"</string>
+		</dict>
+		<key>Configurations</key>
+		<dict>
+			<key>Debug</key>
+			<dict>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<string>DEBUG</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+			</dict>
+			<key>Release</key>
+			<dict/>
+		</dict>
+	</dict>
+</dict>
+</plist>

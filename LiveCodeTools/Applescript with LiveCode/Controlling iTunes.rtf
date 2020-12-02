@@ -1,0 +1,186 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2509
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue-Medium;\f1\fnil\fcharset0 HelveticaNeue;\f2\fnil\fcharset0 Menlo-Regular;
+\f3\fnil\fcharset0 Menlo-Bold;}
+{\colortbl;\red255\green255\blue255;\red59\green59\blue59;\red255\green255\blue255;\red0\green0\blue0;
+\red41\green101\blue168;\red17\green66\blue101;\red227\green243\blue247;\red44\green44\blue44;\red242\green242\blue242;
+\red108\green110\blue3;\red106\green0\blue108;\red0\green0\blue108;\red37\green76\blue150;}
+{\*\expandedcolortbl;;\cssrgb\c29804\c29804\c29804;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;
+\cssrgb\c20000\c47843\c71765;\cssrgb\c6667\c32941\c47059;\cssrgb\c90980\c96078\c97647;\cssrgb\c22745\c22745\c22745;\cssrgb\c96078\c96078\c96078;
+\cssrgb\c49804\c49804\c0;\cssrgb\c49804\c0\c49804;\cssrgb\c0\c0\c49804;\cssrgb\c18824\c38039\c65490;}
+\margl1440\margr1440\vieww25240\viewh19420\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs82 \cf2 \cb3 \expnd0\expndtw0\kerning0
+Controlling iTunes\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs32 \cf2 \cb3 This lesson takes you through the task of making a LiveCode program that controls and fetches information from your copy of iTunes. This may seem like a difficult task, but thanks to LiveCode support for executing so called "active scripting" languages, it's in fact very straight forward. The ideas used in this tutorial can also be used to interact with other Windows and Mac OS X applications.\cb1 \
+\cb3 Note that some of the Windows features discussed in this article were added in version 2.9 but the example stack should work in older versions of LiveCode on Mac OS X.\cb1 \
+\cb3 You can download the stack that accompanies this lesson from: {\field{\*\fldinst{HYPERLINK "https://tinyurl.com/y9a7deq8"}}{\fldrslt \cf5 https://tinyurl.com/y9a7deq8}}\cb1 \
+\pard\pardeftab720\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "https://media.screensteps.com/attachment_assets/assets/001/323/729/original/Player.livecode"}}{\fldrslt \cf6 \cb7 Player.livecode}}\cf6 \cb7 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs48 \cf5 \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf8 \cb3 How does it work
+\f1\fs32 \cf2 \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 LiveCode programs can communicate with iTunes easily because iTunes makes most of its functionality available via a COM interface on Windows and via AppleScript on OS X.\cb1 \
+\cb3 In this tutorial we use fragments of VBScript to communicate with iTunes on Windows and AppleScript to do so on the Mac. These scripts are executed directly by LiveCode using the {\field{\*\fldinst{HYPERLINK "https://livecode.com/resources/api/#livecode_script/do"}}{\fldrslt \cf5 do as vbscript}} and {\field{\*\fldinst{HYPERLINK "https://livecode.com/resources/api/#livecode_script/do"}}{\fldrslt \cf5 do as applescript}} commands.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs48 \cf5 \
+\pard\pardeftab720\partightenfactor0
+\cf8 \cb3 Start talking to iTunes
+\f1\fs32 \cf2 \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 First off, we will try and make iTunes start playing from inside LiveCode, this will show the general pattern for how we talk to iTunes, and from here, the rest of the functions we need should be easy.\cb1 \
+\cb3 We need two fragments of "active script" code to achieve this, the simplest forms of these are shown below.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs30 \cf2 \cb9 -- AppleScript code to start iTunes playing on OS X.\
+tell application "iTunes"\
+tell source "Library"\
+tell playlist "Library"\
+play track 1\
+end tell\
+end tell\
+end tell\
+'VBScript code to start iTunes playing on Windows.\
+Dim thePlayLists, theTrack, theLibrary, thePlayList, i\
+Dim iTunesApp\
+Set iTunesApp = CreateObject("iTunes.Application")\
+Set theLibrary = iTunesApp.LibrarySource\
+Set thePlayLists = theLibrary.Playlists\
+Set thePlayList = thePlayLists.ItemByName("Library")\
+Set theTrack = thePlayList.Tracks.Item(1)\
+theTrack.Play()\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs32 \cf2 \cb3 These two code fragments can most conveniently be executed in LiveCode by putting them into custom properties. To get this working, open LiveCode and create a new stack. Set the cMacPlayScript of the stack to the Applescript sample above and the cWinPlayScript to the VBScript sample. Next edit the stack script and put the following simple command into it:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\b\fs30 \cf2 \cb9 command
+\f2\b0  iTunesPlay
+\f3\b \cf10 \
+	local
+\f2\b0 \cf2  tScript
+\f3\b \
+	if
+\f2\b0  \cf11 the\cf2  \cf11 platform\cf2  \cf11 is\cf2  \cf12 "win32"\cf2  
+\f3\b then
+\f2\b0 \cf10 \
+		put\cf2  \cf11 the\cf2  cWinPlayScript \cf11 of\cf2  \cf11 me\cf2  \cf11 into\cf2  tScript
+\f3\b \cf10 \
+		do
+\f2\b0 \cf2  tScript \cf11 as\cf2  \cf12 "vbscript"
+\f3\b \cf2 \
+	else
+\f2\b0 \cf10 \
+		put\cf2  \cf11 the\cf2  cMacPlayScript \cf11 of\cf2  \cf11 me\cf2  \cf11 into\cf2  tScript
+\f3\b \cf10 \
+		do
+\f2\b0 \cf2  tScript \cf11 as\cf2  \cf12 "applescript"
+\f3\b \cf2 \
+	end
+\f2\b0  
+\f3\b if\
+end
+\f2\b0  iTunesPlay\
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs48 \cf5 \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf8 \cb3 Add a play button
+\f1\fs32 \cf2 \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 Place a button called "Play" onto the stack, and set the script of the button to simply be:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\b\fs30 \cf2 \cb9 on
+\f2\b0  mouseUp\
+	iTunesPlay
+\f3\b \
+end
+\f2\b0  mouseUp\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs32 \cf2 \cb3 When the button is clicked, iTunes should come to life by playing the first track of your music library.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs48 \cf5 \
+\pard\pardeftab720\partightenfactor0
+\cf8 \cb3 The script for the stop button
+\f1\fs32 \cf2 \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 The stop script is simpler than the one for play:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs30 \cf2 \cb9 -- AppleScript to stop iTunes playing on OS X\
+tell application "iTunes"\
+stop\
+end tell\
+'VBScript to stop iTunes playing on Windows\
+Dim iTunesApp\
+Set iTunesApp = CreateObject("iTunes.Application")\
+iTunesApp.Stop\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs32 \cf2 \cb3 The command iTunesStop is shown below and should be added to the stack script of our program.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\b\fs30 \cf2 \cb9 command
+\f2\b0  iTunesStop
+\f3\b \cf10 \
+	local
+\f2\b0 \cf2  tScript
+\f3\b \
+	if
+\f2\b0  \cf11 the\cf2  \cf11 platform\cf2  \cf11 is\cf2  \cf12 "win32"\cf2  
+\f3\b then
+\f2\b0 \cf10 \
+		put\cf2  \cf11 the\cf2  cWinStopScript \cf11 of\cf2  \cf11 me\cf2  \cf11 into\cf2  tScript
+\f3\b \cf10 \
+		do
+\f2\b0 \cf2  tScript \cf11 as\cf2  \cf12 "vbscript"
+\f3\b \cf2 \
+	else
+\f2\b0 \cf10 \
+		put\cf2  \cf11 the\cf2  cMacStopScript \cf11 of\cf2  \cf11 me\cf2  \cf11 into\cf2  tScript
+\f3\b \cf10 \
+		do
+\f2\b0 \cf2  tScript \cf11 as\cf2  \cf12 "applescript"
+\f3\b \cf2 \
+	end
+\f2\b0  
+\f3\b if\
+end
+\f2\b0  iTunesStop\
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs48 \cf5 \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf8 \cb3 Add a stop button
+\f1\fs32 \cf2 \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 Place a button called "Stop" on the stack and set its script to:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\b\fs30 \cf2 \cb9 on
+\f2\b0  mouseUp\
+	iTunesStop
+\f3\b \
+end
+\f2\b0  mouseUp\
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs48 \cf5 \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf8 \cb3 The example stack
+\f1\fs32 \cf2 \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 We have so far demonstrated how to create a simple program that starts and stops iTunes. At the top of this lesson is a link to the example stack. The look and feel of the stack was based on the example from the excellent 3rd edition of the LiveCode newsletter by Ben Beaumont (3rd August 2006). If you would like to know more on how to create skinned LiveCode stacks like this, there is a lesson {\field{\*\fldinst{HYPERLINK "http://lessons.livecode.com/m/4071/l/19144-skinning"}}{\fldrslt \cf13 here}}.\cb1 \
+\cb3 The iTunes example uses a library stack to keep all the iTunes interaction code in a single place. This library is a substack called "iTunes", which is loaded when the stack is opened. The library uses the same principals as shown earlier in this article, except that the code has been written in a slightly more abstract fashion to avoid too much duplication. The VBScript executed on Windows is the same every time, because otherwise code to declare and initialise the iTunes COM object would have to be copied into the separate script for each function.You are welcome to take the iTunes example stack apart to learn how it works and use any of the code in your own applications.\cb1 \
+\cb3 Many other major applications on Windows and Mac OS X provide an interface through AppleScript or COM objects that allow LiveCode to communicate with them.}

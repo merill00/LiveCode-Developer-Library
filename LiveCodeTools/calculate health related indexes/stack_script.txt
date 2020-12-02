@@ -1,0 +1,251 @@
+// NEXT STEPS: MAKE SURE ALL FORMULAS EXIST AND ARE ACCURATE AS PER:
+// http://en.wikipedia.org/wiki/Basal_metabolic_rate
+// LEAR THE DIFF BETWEEN RMR and BMR
+
+// http://www.caloriesperhour.com/tutorial_BMR.php
+
+ON ____CONVERSIONS
+end ____CONVERSIONS
+
+function feetInchToInches pFeet pInches
+   return ((pFeet*12)+pInches)
+end feetInchToInches
+
+function inchToCentiMeter pInches
+   return (pInches*2.54)
+end inchToCentiMeter
+
+function feetInchToMeters pFeet pInches
+   return (feetInchToInches(pFeet,pInches))*0.0254
+end feetInchToMeters
+
+function lbsToKg pLbs
+   return (pLbs/2.20462)
+end lbsToKg
+
+ON ____HEALTH_METRICS
+end ____HEALTH_METRICS
+
+function activityMultiplier pOptionNum
+   if pOptionNum is "1" then return 1.2
+   if pOptionNum is "2" then return 1.375
+   if pOptionNum is "3" then return 1.55
+   if pOptionNum is "4" then return 1.725
+   if pOptionNum is "5" then return 1.9
+   return 1
+   /*
+   Activity Multiplier
+   1. Sedentary = BMR X 1.2 (little or no exercise, desk job)
+   2. Lightly active = BMR X 1.375 (light exercise/sports 1-3 days/wk)
+   3. Mod. active = BMR X 1.55 (moderate exercise/sports 3-5 days/wk)
+   4. Very active = BMR X 1.725 (hard exercise/sports 6-7 days/wk)
+   5. Extr. Active = BMR X 1.9 (hard daily exercise/sports & physical job or 2X day training, i.e marathon, contest etc.)
+   */
+end activityMultiplier
+
+function theBodyFatFromBMI pBMI pGender pAgeYrs
+   // WIKIPEDIA AND OTHER SOURCES ARE UNCLEAR ON WHAT AGE IS DEFINED AS CHILD
+   // SINCE MOST DEFINATIONS STATE EITHER <18 OR ONCE PUBERTY BEGINS, WE FIND SOMETHING IN BETWEEN.
+   if pAgeYrs < 15 then put "TRUE" into tIsChild else put "FALSE" into tIsChild
+   
+   // WE NEED TO EXPRESS GENDER AS A NUMERICAL BINARY FOR THE FORMULA
+   if pGender is among the items of "Male,M,Man,Boy" then put 1 into tGender
+   if pGender is among the items of "Female,F,Woman,Girl" then put 0 into tGender
+   if not(pGender is among the items of "1,0") then put 0 into tGender
+   
+   // WE ARE READY TO CALCULATE
+   if tIsChild then 
+      put ((1.51*pBMI) - (0.70*pAgeYrs) - (3.6*tGender) + 1.4) into tBF
+   else 
+      put ((1.20*pBMI) + (0.23*pAgeYrs) - (10.8*tGender) - 5.4) into tBF
+   end if
+   return tBF
+   /*
+   Child body fat % = (1.51  BMI) - (0.70  Age) - (3.6  sex) + 1.4
+   Adult body fat % = (1.20  BMI) + (0.23  Age) - (10.8  sex) - 5.4
+   */ 
+end theBodyFatFromBMI
+
+function theBodyFatFromVolume pWeight pVolume
+   // CALCULATE DENSITY (p) IN g/cm^3 from mass and volume
+   
+   // USE THE FOLLOWING FORMULAS to calculate BF %
+   /*
+   Brozek formula: BF = (4.57/p - 4.142)  100[8]
+   Siri formula is: BF = (4.95/p - 4.50)  100[9]
+   */
+   
+end theBodyFatFromVolume
+
+function theBMI pMassKgs pHeightMtrs
+   put pMassKgs/(pHeightMtrs^2) into tBMI
+   return tBMI
+   // http://en.wikipedia.org/wiki/Body_mass_index
+end theBMI
+
+function theBMIprime
+   put theBMI() / 25 into tBMIPrime
+   return tBMIPrime
+end theBMIprime
+
+function theStatusBMI pBMIorBMIPrime
+   // IN ACCORDANCE WITH W.H.O. THE US HAS A DIFFERENT STANDARD I THINK.
+   put pBMIorBMIPrime into tBMI
+   // DETECT IF IT IS A BMI PRIME VALUE AND CONVERT TO BMI
+   if 0 < tBMI AND tBMI < 3 then put tBMI*25 into tBMI
+   
+   // NOW USE DATA TO RETURN AN ANSWER
+   if tBMI <= 15 then return "Very severely underweight"
+   if tBMI > 15 AND tBMI <= 16 then return "Severely underweight"
+   if tBMI > 16 AND tBMI <= 18.5 then return "Underweight"
+   if tBMI > 18.5 AND tBMI <= 25 then return "Normal (healthy weight)"
+   if tBMI > 25 AND tBMI <= 30 then return "Overweight"
+   if tBMI > 30 AND tBMI <= 35 then return "Obese Class I (Moderately obese)"
+   if tBMI > 35 AND tBMI <= 40 then return "Obese Class II (Severely obese)"
+   if tBMI > 40 then return "Obese Class III (Very severely obese)"
+   return "Could Not Determine"
+end theStatusBMI
+
+// WAIST TO HIP RATIO : WHR : http://en.wikipedia.org/wiki/Waist-to-height_ratio
+// WAIST TO HEIGHT RATIO : WHtR : http://en.wikipedia.org/wiki/Waist-to-height_ratio
+// EXTREMELY INTERESTING http://en.wikipedia.org/wiki/Digit_ratio
+// http://en.wikipedia.org/wiki/Body_fat_percentage
+// http://en.wikipedia.org/wiki/Ponderal_index
+//  http://en.wikipedia.org/wiki/Rohrer%27s_index
+
+// CONFIRM UNITS FOR THIS EQUATION
+function theMufflinRMR pGender pWeightKg pHeightCm pAgeYrs
+   -- VALIDATE AND DEFAULT TO FEMALE
+   set the itemdel to comma 
+   If pGender is among the items of "Male,M,Man,Boy" then put "M" into pGender
+   If pGender is among the items of "Female,F,Woman,Girl" then put "F" into pGender
+   If not(pGender is among the items of "F,M") then put "F" into pGender
+   
+   if pGender is "M" then 
+      put 5 + (10*pWeightKg) + (6.25*pHeightCm) - (5*pAgeYrs) into tRMR
+   else 
+      put -161 + (10*pWeightKg) + (6.25*pHeightCm) - (5*pAgeYrs) into tRMR
+   end if
+   /*
+   The Mufflin equation for RMR:
+   For men: (10 x w) + (6.25 x h) - (5 x a) + 5
+   For women: (10 x w) + (6.25 x h) - (5 x a) - 161
+   */
+   return tRMR
+end theMufflinRMR
+
+function theHarrisBenedictBMR pGender pWeightKg pHeightCm pAgeYrs
+   -- VALIDATE AND DEFAULT TO FEMALE
+   set the itemdel to comma 
+   if pGender is among the items of "Male,M,Man,Boy" then put "M" into pGender
+   if pGender is among the items of "Female,F,Woman,Girl" then put "F" into pGender
+   if not(pGender is among the items of "F,M") then put "F" into pGender
+   
+   if pGender is "M" then 
+      put 66 + (13.7*pWeightKg) + (5*pHeightCm) - (6.8*pAgeYrs) into tBMR
+   else 
+      put 655 + (9.6*pWeightKg) + (1.8*pHeightCm) - (4.7*pAgeYrs) into tBMR
+   end if
+   
+   /*
+   Men: BMR = 66 + (13.7 X wt in kg) + (5 X ht in cm) - (6.8 X age in years)
+   Women: BMR = 655 + (9.6 X wt in kg) + (1.8 X ht in cm) - (4.7 X age in years)
+   
+   Note: 1 inch = 2.54 cm.
+   1 kilogram = 2.2 lbs.
+   
+   Example:
+   You are female
+   You are 30 years old
+   You are 5' 6 " tall (167.6 cm)
+   You weigh 120 lbs. (54.5 kilos)
+   Your BMR = 655 + 523 + 302 - 141 = 1339 calories/day
+   
+   Now that you know your BMR, you can calculate TDEE by multiplying your BMR by your activity multiplier from the chart below:
+   
+   Activity Multiplier
+   Sedentary = BMR X 1.2 (little or no exercise, desk job)
+   Lightly active = BMR X 1.375 (light exercise/sports 1-3 days/wk)
+   Mod. active = BMR X 1.55 (moderate exercise/sports 3-5 days/wk)
+   Very active = BMR X 1.725 (hard exercise/sports 6-7 days/wk)
+   Extr. Active = BMR X 1.9 (hard daily exercise/sports & physical job or 2X day training, i.e marathon, contest etc.)
+   
+   Example:
+   Your BMR is 1339 calories per day
+   Your activity level is moderately active (work out 3-4 times per week)
+   Your activity factor is 1.55
+   Your TDEE = 1.55 X 1339 = 2075 calories/day
+   */
+   return tBMR
+end theHarrisBenedictBMR
+
+function theKatchMcArdleBMR pWeightKg pFatPercentage
+   put pWeightKg*(100-pFatPercentage) into tLeanMass
+   put 370 + 21.6*tLeanMass into tBMR
+   return tBMR
+   /* 
+   Katch-McArdle formula (BMR based on lean body weight)
+   If you have had your body composition tested and you know your lean body mass, then you can get the most accurate BMR estimate of all. This formula from Katch & McArdle takes into account lean mass and therefore is more accurate than a formula based on total body weight. The Harris Benedict equation has separate formulas for men and women because men generally have a higher LBM and this is factored into the men's formula. Since the Katch-McArdle formula accounts for LBM, this single formula applies equally to both men and women.
+   BMR (men and women) = 370 + (21.6 X lean mass in kg)
+   
+   Example:
+   You are female
+   You weigh 120 lbs. (54.5 kilos)
+   Your body fat percentage is 20% (24 lbs. fat, 96 lbs. lean)
+   Your lean mass is 96 lbs. (43.6 kilos)
+   Your BMR = 370 + (21.6 X 43.6) = 1312 calories
+   
+   To determine TDEE from BMR, you simply multiply BMR by the activity multiplier:
+   
+   Example:
+   Your BMR is 1312
+   Your activity level is moderately active (work out 3-4 times per week)
+   Your activity factor is 1.55
+   Your TDEE = 1.55 X 1312 = 2033 calories
+   */
+end theKatchMcArdleBMR
+
+function totalDailyEnergyExpenditure pBMR pActivityOptionNum
+   return (activityMultiplier(pActivityOptionNum))*pBMR
+end totalDailyEnergyExpenditure
+
+function theBodyAdiposity pHipCircumMeters pHeightMeters
+   put ((100*pHipCircumMeters)/(sqrt(pHeightMeters)*pHeightMeters)) - 18 into tBAI
+   return tBAI
+end theBodyAdiposity
+
+function theWaistToHipRatio pWaist pHip
+   // READ THE WIKI FOR THIS METRIC, PROVIDES LOT OF INTERESTING APPLICATIONS
+   // SINCE UNITS CANCEL, ANY UNITS CAN BE USED
+   if pHip is 0 then put 0.00000000001 into pHeight
+   put pWaist/pHip  into tWHR
+   return tWHR
+end theWaistToHipRatio
+
+function theWaistToHeightRatio pWaist pHeight
+   // SINCE UNITS CANCEL, ANY UNITS CAN BE USED
+   if pHeight is 0 then put 0.00000000001 into pHeight
+   put pWaist/pHeight  into tWHtR
+   return tWHtR
+end theWaistToHeightRatio
+
+function thePonderalIndex pMassKgs pHeightMeters
+   // THIS IS A MEASURE OF "LEANNESS" OFTEN USED BY PEDIATRICIANS 
+   //READ THE WIKI FOR WHEN AND WHY TO USE THIS INDEX
+   return (pMassKgs/(pHeightMeters^3))
+end thePonderalIndex
+
+function theRohrersIndex pMassKgs pHeightMeters
+   // THE ROHRERS INDEX FORMULA IS CALCULATED IN g (mass) and cm (height)
+   // SO WE DO THE CONVERSIONS
+   put pMassKgs*1000 into tMass
+   put pHeightMeters*100 into tHeight
+   put ((tMass*100)/(tHeight^3)) into tRI
+   return tRI
+end theRohrersIndex
+
+function theDigitRatio pIndexFingerLen pRingFingerLen
+   // READ THE WIKI. LOT OF INTERESTING APPLICATIONS LIKE PREDICTING BEHAVIORS
+   put (pIndexFingerLen/pRingFingerLen) into tDR
+   return tDR
+end theDigitRatio

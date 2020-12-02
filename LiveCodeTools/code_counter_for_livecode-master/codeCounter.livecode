@@ -1,0 +1,27 @@
+function linesOfCodeInMyProject
+   local tLines
+   
+   // Get substacks
+   put the substacks of this stack into tStacks
+   
+   // Add the lines of scripts of substacks to counter
+   repeat for each line tStack in tStacks
+      add the number of lines of the script of stack tStack to tLines
+   end repeat
+   
+   // Loop the cards
+   repeat with tCardNum = 1 to the num of cards of this stack
+      
+      // Add card lines
+      add the number of lines of the script of card tCardNum of this stack to tLines
+      
+      // Loop controls and add lines
+      repeat with tControl = 1 to the number of controls of card tCardNum of this stack
+         add the number of lines of the script of control tControl of card tCardNum of this stack to tLines
+      end repeat
+      
+   end repeat
+   
+   -- Retrurn the number of lines of code in this project
+   return tLines
+end linesOfCodeInMyProject

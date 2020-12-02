@@ -1,0 +1,467 @@
+﻿script "CDB_Header.lib"
+on libraryStack
+     if the long name of me is not in the long name of target() then pass libraryStack
+end libraryStack
+
+
+
+private function ____CRUD
+end ____CRUD
+
+
+
+function cdb_create pDataA,pTable,pTarget
+     return cdbi_create(pDataA,pTable,pTarget)
+end cdb_create
+
+
+function cdb_batchCreate pDataA,pTarget,pInternalA
+     return cdbi_batchCreate(pDataA,pTarget,pInternalA)
+end cdb_batchCreate
+
+
+function cdb_read pTable,pRecordIDs,pTarget
+     return cdbi_read(pTable,pRecordIDs,pTarget)
+end cdb_read
+
+
+function cdb_batchRead pDataA,pTarget,pInternalA
+     return cdbi_batchRead(pDataA,pTarget,pInternalA)
+end cdb_batchRead
+
+
+function cdb_readKeys pTable,pKeys,pRecordIDs,pTarget
+     return cdbi_readKeys(pTable,pKeys,pRecordIDs,pTarget)
+end cdb_readKeys
+
+
+function cdb_batchReadKeys pDataA,pTarget,pInternalA
+     return cdbi_batchReadKeys(pDataA,pTarget,pInternalA)
+end cdb_batchReadKeys
+
+
+function cdb_lookupValue pTable, pRecordID, pKey, pTarget, pInternalA
+     return cdbi_lookupValue(pTable, pRecordID, pKey, pTarget, pInternalA)
+end cdb_lookupValue
+
+
+command cdb_update pDataA,pTable,pRecordID,pTarget
+     cdbi_update pDataA,pTable,pRecordID,pTarget
+end cdb_update
+
+
+command cdb_batchUpdate pDataA,pTarget,pInternalA
+     cdbi_batchUpdate pDataA,pTarget,pInternalA
+end cdb_batchUpdate
+
+
+command cdb_batchMerge pDataA, pTarget, pInternalA
+     cdbi_batchMerge pDataA, pTarget, pInternalA
+end cdb_batchMerge
+
+
+command cdb_delete pTable,pRecordIDs,pTarget
+     cdbi_delete pTable,pRecordIDs,pTarget
+end cdb_delete
+
+
+command cdb_batchDelete pDataA,pTarget,pInternalA
+     cdbi_batchDelete pDataA,pTarget,pInternalA
+end cdb_batchDelete
+
+
+command cdb_deleteKeys pTable, pRecordIDs, pKeys, pTarget
+     cdbi_deleteKeys pTable, pRecordIDs, pKeys, pTarget
+end cdb_deleteKeys
+
+
+command cdb_batchDeleteKeys pDataA, pTarget, pInternalA
+     cdbi_batchDeleteKeys pDataA, pTarget, pInternalA
+end cdb_batchDeleteKeys
+
+
+
+private function ____QUERY
+end ____QUERY
+
+
+
+function cdb_query pKey, pOperator, pValue, pTable, pTarget, pResultFormat
+     return cdbi_query(pKey, pOperator, pValue, pTable, pTarget, pResultFormat)
+end cdb_query
+
+
+function cdb_advancedQuery pQueryA, pAdvancedMap, pTable, pTarget, pResultFormat, pAggregateA, pRecordID, pInternalA
+     return cdbi_advancedQuery(pQueryA, pAdvancedMap, pTable, pTarget, pResultFormat, pAggregateA, pRecordID, pInternalA)
+end cdb_advancedQuery
+
+
+function cdb_batchQuery pQueryA, pTarget, pMode, pResultFormat, pCollapseArray, pRecordIDA, pInternalA
+     return cdbi_batchQuery(pQueryA, pTarget, pMode, pResultFormat, pCollapseArray, pRecordIDA, pInternalA)
+end cdb_batchQuery
+
+
+function cdb_batchAdvancedQuery pQueryA, pAdvancedMapA, pTarget, pResultFormat, pAggregateA, pRecordIDA, pInternalA
+     return cdbi_batchAdvancedQuery(pQueryA, pAdvancedMapA, pTarget, pResultFormat, pAggregateA, pRecordIDA, pInternalA)
+end cdb_batchAdvancedQuery
+
+
+
+private function ____BLOB
+end ____BLOB
+
+command cdb_clearTempBlobs pProjectID
+     cdbi_clearTempBlobs pProjectID
+end cdb_clearTempBlobs
+
+function cdb_createBlob pPath, pTarget, pProject, pFromSync
+     return cdbi_createBlob(pPath, pTarget, pProject, pFromSync)
+end cdb_createBlob
+
+
+function cdb_batchCreateBlob pPath, pTarget, pProject, pFromSync
+     return cdbi_batchCreateBlob(pPath, pTarget, pProject, pFromSync)
+end cdb_batchCreateBlob
+
+
+command cdb_deleteBlob pID, pTarget, pProject
+     cdbi_deleteBlob pID, pTarget, pProject
+end cdb_deleteBlob
+
+command cdb_batchDeleteBlob pDataA, pTarget, pProject
+     cdbi_batchDeleteBlob pDataA, pTarget, pProject
+end cdb_batchDeleteBlob
+
+
+function cdb_readBlob pID, pTarget, pProject
+     return cdbi_readBlob(pID, pTarget, pProject)
+end cdb_readBlob
+
+
+function cdb_batchReadBlob pDataA, pTarget, pProject
+     return cdbi_batchReadBlob(pDataA, pTarget, pProject)
+end cdb_batchReadBlob
+
+
+command cdb_updateBlob pPath, pBlobID, pTarget, pProject
+     cdbi_updateBlob pPath, pBlobID, pTarget, pProject
+end cdb_updateBlob
+
+
+command cdb_batchUpdateBlob pDataA, pTarget, pProject
+     cdbi_batchUpdateBlob pDataA, pTarget, pProject
+end cdb_batchUpdateBlob
+
+
+private function ____AUTH
+end ____AUTH
+
+
+
+function cdb_auth pEmail,pPassword,pTarget
+     get cdbi_auth(pEmail,pPassword,pTarget)
+end cdb_auth
+
+
+command cdb_logout pTarget
+     cdbi_logout pTarget
+end cdb_logout
+
+
+
+private function ____USER_ACCOUNTS
+end ____USER_ACCOUNTS
+
+
+
+command cdb_createUserAccount pProjectName,pEmail,pPassword,pFirstName,pLastName,pPreVerified,pAutoAuth
+     cdbi_createUserAccount pProjectName,pEmail,pPassword,pFirstName,pLastName,pPreVerified,pAutoAuth
+end cdb_createUserAccount
+
+
+command cdb_deleteUserAccount pProjectName, pEmail,pPassword
+     cdbi_deleteUserAccount pProjectName, pEmail, pPassword
+end cdb_deleteUserAccount
+
+
+command cdb_readUserAccount pProjectName, pEmail
+     cdbi_readUserAccount pProjectName, pEmail
+end cdb_readUserAccount
+
+
+command cdb_resendVerificationEmail pEmail, pPassword, pType
+     cdbi_resendVerificationEmail pEmail, pPassword, pType
+end cdb_resendVerificationEmail
+
+
+command cdb_updateUserAccount pDataA, pProjectName, pEmail
+     cdbi_updateUserAccount pDataA, pProjectName, pEmail
+end cdb_updateUserAccount
+
+function cdb_loggedInUser
+     return cdbi_loggedInUser()
+end cdb_loggedInUser
+
+function cdb_userTableName pProjectName
+     return cdbi_userTableName(pProjectName)
+end cdb_userTableName
+
+function cdb_readUsersByEmail pEmail
+     return cdbi_readUsersByEmail(pEmail)
+end cdb_readUsersByEmail
+     
+     private function ____UTILITIES
+end ____UTILITIES
+
+
+
+function cdb_count pTable, pTarget, pInternalA
+     return cdbi_count(pTable, pTarget, pInternalA)
+end cdb_count
+
+
+function cdb_batchCount pDataA, pTarget, pInternalA
+     return cdbi_batchCount(pDataA, pTarget, pInternalA)
+end cdb_batchCount
+
+
+function cdb_list pTable, pTarget, pKeys
+     return cdbi_list(pTable, pTarget, pKeys)
+end cdb_list
+
+
+function cdb_sort pSortKey,pDirection,pSortType, pTable, pRecordID, pTarget
+     return cdbi_sort(pSortKey,pDirection,pSortType, pTable, pRecordID, pTarget)
+end cdb_sort
+
+
+function cdb_batchSort pInputA, pTarget, pInternalA
+     return cdbi_batchSort(pInputA, pTarget, pInternalA)
+end cdb_batchSort
+
+
+function cdb_SDK pProject,pMode
+     return cdbi_SDK(pProject,pMode)
+end cdb_SDK
+
+
+function cdb_sdkBuild 
+     return cdbi_sdkBuild()
+end cdb_sdkBuild
+
+
+command cdb_sendEmail pToI,pFrom,pSubject,pHTMLBody,pTextBody,pCCI,pBCCI,pAttachmentName,pAttachementContent
+     cdbi_sendEmail pToI,pFrom,pSubject,pHTMLBody,pTextBody,pCCI,pBCCI,pAttachmentName,pAttachementContent
+end cdb_sendEmail
+
+
+function cdb_sync pRecordID,pTable,pSource,pAllowDeletes,pDetectCollisions,pInternalA
+     return cdbi_sync(pRecordID,pTable,pSource,pAllowDeletes,pDetectCollisions,pInternalA)
+end cdb_sync
+
+
+function cdb_tableID pTableName
+     return cdbi_tableID(pTableName)
+end cdb_tableID
+
+
+function cdb_tableName pTableID
+     return cdbi_tableName(pTableID)
+end cdb_tableName
+
+
+function cdb_teamID pTable
+     return cdbi_teamID(pTable)
+end cdb_teamID
+
+
+function cdb_projectID pTeamID, pProjectName
+     return cdbi_projectID(pTeamID, pProjectName)
+end cdb_projectID
+
+
+command cdb_loadTable pTableL,pCallbackControl,pCallbackHandler
+     cdbi_loadTable pTableL,pCallbackControl,pCallbackHandler
+end cdb_loadTable
+
+
+command cdb_unloadTable pTables
+     cdbi_unloadTable pTables
+end cdb_unloadTable
+
+
+
+private function ____ERROR_CHECKING
+end ____ERROR_CHECKING
+
+
+
+function cdb_result pParam
+     return cdbi_result(pParam)
+end cdb_result
+
+
+command cdb_setLogMode pMode
+     cdbi_setLogMode pMode
+end cdb_setLogMode
+
+
+
+private function ____INTERNET
+end ____INTERNET
+
+
+
+function cdb_checkInternetStatus 
+     return cdbi_checkInternetStatus()
+end cdb_checkInternetStatus
+
+
+command cdb_flushCache
+     cdbi_flushCache 
+end cdb_flushCache
+
+
+function cdb_ping pTable
+     return cdbi_ping(pTable)
+end cdb_ping
+
+
+function cdb_pingNode pInputA
+     return cdbi_pingNode(pInputA)
+end cdb_pingNode
+
+
+command cdb_setCloudTolerance pTimeoutInterval, pCheckInternetInterval
+     cdbi_setCloudTolerance pTimeoutInterval, pCheckInternetInterval
+end cdb_setCloudTolerance
+
+
+command cdb_setFlushCacheInterval pInterval
+     cdbi_setFlushCacheInterval pInterval
+end cdb_setFlushCacheInterval
+
+
+
+private function ____EXPORT
+end ____EXPORT
+
+
+
+command cdb_exportAsJSON pTable
+	cdbi_exportAsJSON pTable
+end cdb_exportAsJSON
+
+
+command cdb_exportAsLSON pTable
+     cdbi_exportAsLSON pTable
+end cdb_exportAsLSON
+
+
+
+private function ____TABLE_MANAGEMENT
+end ____TABLE_MANAGEMENT
+
+
+
+function cdb_createTable pProject, pTableName, pKeys, pKeysType, pSchemaless, pTableDomain, pInstanceName
+     return cdbi_createTable(pProject, pTableName, pKeys, pKeysType, pSchemaless, pTableDomain, pInstanceName)
+end cdb_createTable
+
+
+command cdb_renameTable pTable, pNewName
+     cdbi_renameTable pTable, pNewName
+end cdb_renameTable
+
+
+command cdb_updateTableSchemaMode pTable, pSchemaless
+     cdbi_updateTableSchemaMode pTable, pSchemaless
+end cdb_updateTableSchemaMode
+
+
+command cdb_deleteTable pTable
+     cdbi_deleteTable pTable
+end cdb_deleteTable
+
+
+command cdb_addKeys pTable, pKeys
+     cdbi_addKeys pTable, pKeys
+end cdb_addKeys
+
+
+command cdb_renameKey pTable, pKey, pNewName
+     cdbi_renameKey pTable, pKey, pNewName
+end cdb_renameKey
+
+
+command cdb_removeKeys pTable, pKeys
+     cdbi_removeKeys pTable, pKeys
+end cdb_removeKeys
+
+
+function cdb_tableKeys pTable
+     return cdbi_tableKeys(pTable)
+end cdb_tableKeys
+
+
+function cdb_schemaless pTable
+     return cdbi_schemaless(pTable)
+end cdb_schemaless
+
+
+function cdb_tableKeysType pTable, pType
+     return cdbi_tableKeysType(pTable, pType)
+end cdb_tableKeysType
+
+
+function cdb_tableNames 
+     return cdbi_tableNames()
+end cdb_tableNames
+
+
+command cdb_addTableToProject pProject, pTable
+     cdbi_addTableToProject pProject, pTable
+end cdb_addTableToProject
+
+
+command cdb_removeTableFromProject pProject, pTable
+     cdbi_removeTableFromProject pProject, pTable
+end cdb_removeTableFromProject
+
+
+
+private function ____PROJECT_MANAGEMENT
+end ____PROJECT_MANAGEMENT
+
+
+
+command cdb_createProject pProjectName
+     cdbi_createProject pProjectName
+end cdb_createProject
+
+
+command cdb_renameProject pProject, pNewName
+     cdbi_renameProject pProject, pNewName
+end cdb_renameProject
+
+
+command cdb_deleteProject pProject
+     cdbi_deleteProject pProject
+end cdb_deleteProject
+
+
+function cdb_projectNames 
+     return cdbi_projectNames()
+end cdb_projectNames
+
+
+function cdb_projectTableIDs pProjectID
+     return cdbi_projectTableIDs(pProjectID)
+end cdb_projectTableIDs
+
+
+function cdb_projectName pProjectID
+     return cdbi_projectName(pProjectID)
+end cdb_projectName
+
+
