@@ -1,1 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui>
+	<control>
+		<type>button</type>
+		<name>My Button</name>
+		<width>360</width>
+		<height>50</height>
+		<loc>200,355</loc>
+	</control>
 
+	<control>
+		<type>field</type>
+		<name>My Field</name>
+		<width>360</width>
+		<height>290</height>
+		<loc>200,165</loc>
+	</control>
+</ui>
