@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>GLX Application Framework - Recent Lessons</title>
+    <description>Recently created lessons from GLX Application Framework</description>
+    <link>https://revolution.screenstepslive.com/s/1000</link>
+    <item>
+      <title>Cleanup</title>
+      <description>&lt;p&gt;That about does it for the conversion. The &lt;strong&gt;Article Maestro&lt;/strong&gt; application is now running on top of the GLX Application Framework and can take advantage of all the features the framework provides. There is just a little cleanup to perform before we are done.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:52:56 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6962-cleanup</link>
+    </item>
+    <item>
+      <title>Rework Stack (or Card) Script Using Framework Messages</title>
+      <description>&lt;p&gt;Now I'm going to rework some of your existing application handlers (preOpenStack and resizeStack) to take advantage of framework messages.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:52:43 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6961-rework-stack-or-card-script-using-framework-messages</link>
+    </item>
+    <item>
+      <title>Tell Framework to Manage Application Window</title>
+      <description>&lt;p&gt;Now that I have a working application let's look at how to tell the framework to manage the Article Maestro window. The framework will send special messages and manage the size and position of the window across sessions.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:52:16 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6960-tell-framework-to-manage-application-window</link>
+    </item>
+    <item>
+      <title>Build Standalones</title>
+      <description>&lt;p&gt;Now that I have finished configuring the &lt;strong&gt;glxappLauncher&lt;/strong&gt; stack I can build a standalone executable with it.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:51:56 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6959-build-standalones</link>
+    </item>
+    <item>
+      <title>Configure Standalone Settings</title>
+      <description>&lt;p&gt;Now that I have finished basic configuration I am going to build standalone executables. The standalone executables will enable me to test the standalone versions of the application while working on it in the IDE.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:51:38 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6958-configure-standalone-settings</link>
+    </item>
+    <item>
+      <title>Tell Framework About New Application Stack</title>
+      <description>&lt;p&gt;While I've added the &lt;strong&gt;Article Maestro.rev&lt;/strong&gt; stack file to the components folder, the framework still needs to know that the &lt;strong&gt;Article Maestro&lt;/strong&gt; stack file is part of the application.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:51:11 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6957-tell-framework-about-new-application-stack</link>
+    </item>
+    <item>
+      <title>Begin Integrating Existing Stack</title>
+      <description>&lt;p&gt;Now that I have created a new application it is time to integrate the existing &lt;strong&gt;Article Maestro.rev&lt;/strong&gt; stack file into it.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:50:52 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6956-begin-integrating-existing-stack</link>
+    </item>
+    <item>
+      <title>Configure Application Settings</title>
+      <description>&lt;p&gt;Now it is time to configure the application settings in the &lt;strong&gt;General&lt;/strong&gt; tab of the plugin.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:50:22 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6955-configure-application-settings</link>
+    </item>
+    <item>
+      <title>Creating A New GLX Framework Application</title>
+      <description>&lt;p&gt;To begin I will create a new application using the framework IDE plugin.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:50:06 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6954-creating-a-new-glx-framework-application</link>
+    </item>
+    <item>
+      <title>Introduction</title>
+      <description>&lt;p&gt;This manual will show how an existing Revolution application can be converted to use the GLX Application Framework. The application I will be converting is Article Maestro by &lt;a href="http://www.maplecommerce.com/"&gt;MapleCommerce&lt;/a&gt;.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:49:35 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6953-introduction</link>
+    </item>
+    <item>
+      <title>What is the Best Way To Include the Data Grid Library?</title>
+      <description>&lt;p&gt;When using Data Grids in your application you need to include the revDataGridLibrary.rev stack file in order for the Data Grids to work. This lesson will show you how to do this with the application framework.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:49:23 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/6887-what-is-the-best-way-to-include-the-data-grid-library</link>
+    </item>
+    <item>
+      <title>How Do I Display A Splash Screen When My Application Launches?</title>
+      <description>&lt;p&gt;This lesson will show you how to create a splash window that displays while your application launches.&lt;/p&gt;
+&lt;p&gt;You should have your application open in the IDE before starting this lesson.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:38:47 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/6886-how-do-i-display-a-splash-screen-when-my-application-launches</link>
+    </item>
+    <item>
+      <title>Incorporating Your Program Stack Into the Framework-Based Application</title>
+      <description>&lt;p&gt;This lesson will explain how to take existing stack files and use them with the GLX Application Framework. To begin, &lt;a href="http://revolution.screenstepslive.com/spaces/revolution/manuals/glxapp/lessons/5548-How-Do-I-Create-a-New-Application-Based-on-the-GLX-Application-Framework-"&gt;create a new GLX Application&lt;/a&gt;.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:25:07 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/6698-incorporating-your-program-stack-into-the-framework-based-application</link>
+    </item>
+    <item>
+      <title>How Can I Add An "Open Recent" Item To My File Menu?</title>
+      <description>&lt;p&gt;The framework provides handlers for storing, displaying and retrieving recent files that your application has opened. The recent files are stored in your application's preference file.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:10:46 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5672-how-can-i-add-an-open-recent-item-to-my-file-menu</link>
+    </item>
+    <item>
+      <title>What Message Is Sent To My Application During Packaging?</title>
+      <description>&lt;p&gt;A Revolution stack will always open looking the same as the last time you saved it. When deploying an application you usually want to prepare your stacks by deleting any development resources and arranging controls so they look right the first time the application opens.&lt;/p&gt;
+
+
+&lt;p&gt;When you package a GLX Application a copy of every application file is made and all custom properties that the Revolution IDE or GLX2 create are erased from every control. Each stack is also compacted and saved. This lesson discusses how to perform any additional actions when deploying an application.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:10:33 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5669-what-message-is-sent-to-my-application-during-packaging</link>
+    </item>
+    <item>
+      <title>How Do I Package My Application For Use With An Installer Or Auto Update?</title>
+      <description>&lt;p&gt;When it comes time to distribute your application to users you use the GLX Application Packager to package your application files for an installer or files that can be used with the auto update architecture.&lt;/p&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Note: &lt;/strong&gt;Currently you need to build the executables for both OS X and Windows before using the application packager.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:10:27 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5668-how-do-i-package-my-application-for-use-with-an-installer-or-auto-update</link>
+    </item>
+    <item>
+      <title>Custom libURL API</title>
+      <description>&lt;p&gt;This documentat contains the additional commands and functions available in the customized version of libURL that comes with the framework. Note that there are no API calls for working with cookies. Sending/receiving of cookies is handled transparently by libURL.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:10:04 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5617-custom-liburl-api</link>
+    </item>
+    <item>
+      <title>How Can I Specify the Username/Password For a URL or Proxy Server?</title>
+      <description>&lt;p&gt;Some web services require that you provide a valid username and password in order to access a URL. Some common means of authorization are Basic, Digest and NTLM. The framework provides some helpers that will handle authorization for you automatically.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:10:02 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5567-how-can-i-specify-the-username-password-for-a-url-or-proxy-server</link>
+    </item>
+    <item>
+      <title>How Do I Add Support For NTLM Authentication To My Application?</title>
+      <description>&lt;p&gt;This lesson will show you how to add NTLM authentication support to your application. NTLM authentication is currently only supported on Windows.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:10:00 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5566-how-do-i-add-support-for-ntlm-authentication-to-my-application</link>
+    </item>
+    <item>
+      <title>How Do I Get The Framework To Manage My Stack Windows?</title>
+      <description>&lt;p&gt;The application framework can make window management much easier. It can save and restore position between sessions and will also ensure that the window is visible on screen when first opened.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:09:38 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5563-how-do-i-get-the-framework-to-manage-my-stack-windows</link>
+    </item>
+    <item>
+      <title>Creating Advanced File Type Filters</title>
+      <description>&lt;p&gt;You can configure complex file type filters for use with the &lt;strong&gt;answer file with type&lt;/strong&gt; command. By doing so you can use one function call to create the necessary strings to pass as the type.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:09:33 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5562-creating-advanced-file-type-filters</link>
+    </item>
+    <item>
+      <title>Specifying Which Files Your Application Can Open</title>
+      <description>&lt;p&gt;You can configure the file extensions that your application supports. This is done for two primary reasons.&lt;/p&gt;
+
+
+&lt;p&gt;1) When your application receives a notice from the operating system to open a file the GLX framework checks all files against the list of supported file extensions. The framework then sends the &lt;strong&gt;glxapp_openFiles&lt;/strong&gt; message to your application with a list of files the operating system is requesting it to open.&lt;/p&gt;
+
+
+&lt;p&gt;2) You can quickly create file type filters for use with the &lt;strong&gt;answer file with type&lt;/strong&gt; command.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:09:14 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5561-specifying-which-files-your-application-can-open</link>
+    </item>
+    <item>
+      <title>How Do I Use RevDB With The Application Framework?</title>
+      <description>&lt;p&gt;Using RevDB with a standalone application requires a couple of steps.&lt;/p&gt;
+
+
+&lt;p&gt;All of the Revolution database handlers are provided through an external named RevDB. The RevDB external relies on a database driver file for the type of database that you are connecting to. For example, if you are connecting to a SQLite database then you need the RevDB external and the dbsqlite database driver file. &lt;/p&gt;
+
+
+&lt;p&gt;Not only does RevDB need an external driver file it also needs to know where that driver file is located. This lesson will walk you through the process of including the necessary files and telling RevDB where the database driver files are located.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:09:05 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5560-how-do-i-use-revdb-with-the-application-framework</link>
+    </item>
+    <item>
+      <title>How Can I Add A ReadMe File To My Application Distribution?</title>
+      <description>&lt;p&gt;The lesson will show you how to include a ReadMe file in your application distribution.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:08:25 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5559-how-can-i-add-a-readme-file-to-my-application-distribution</link>
+    </item>
+    <item>
+      <title>How Do I Include Supporting Files/Folders When I Build My Application? </title>
+      <description>&lt;p&gt;The Standalone Resources tab enables you to specify additional files to include when you deploy your application. This may include readme files, documentation, database drivers or SSL dlls.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:08:11 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5558-how-do-i-include-supporting-files-folders-when-i-build-my-application</link>
+    </item>
+    <item>
+      <title>How Do I Configure The Storage Locations For Application Data and Preferences?</title>
+      <description>&lt;p&gt;The GLX Application Framework simplifies creating application data folders and storing preferences. Before you can call the glxapp_getPref, glxapp_setPref and glxapp_savePrefs handlers you must define where the preference files will be stored.&lt;/p&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Currently preference data is stored as Revolution stacks. &lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:07:28 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5557-how-do-i-configure-the-storage-locations-for-application-data-and-preferences</link>
+    </item>
+    <item>
+      <title>How Can I Notify My Application That The Value For A Preference Has Been Changed?</title>
+      <description>&lt;p&gt;The GLX framework can broadcast messages when a preference value is changed.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:07:20 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5556-how-can-i-notify-my-application-that-the-value-for-a-preference-has-been-changed</link>
+    </item>
+    <item>
+      <title>How Can I Specify Default Values For Preferences On A Computer That Has Never Run My Application?</title>
+      <description>&lt;p&gt;The GLX framework can store default values for preferences. The default value will be used when your application is run on a computer that has never set the preference value before.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:07:07 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5555-how-can-i-specify-default-values-for-preferences-on-a-computer-that-has-never-run-my-application</link>
+    </item>
+    <item>
+      <title>If My Application Is Password Protected How Do I Unlock Certain Stacks At Runtime?</title>
+      <description>&lt;p&gt;If you are password protecting your application by setting the &amp;quot;stacks password&amp;quot; property then you may want to unlock some of the stacks at runtime. Any stack that you copy controls from needs to be unlocked in order for your code to work properly.&lt;/p&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Any &amp;quot;Data Grid XXXX&amp;quot; stacks your application uses will need to be added to list of stacks to unlock. &lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:06:55 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5554-if-my-application-is-password-protected-how-do-i-unlock-certain-stacks-at-runtime</link>
+    </item>
+    <item>
+      <title>How Do I Add Externals to My Application?</title>
+      <description>&lt;p&gt;The application framework will automatically load externals and make all external handlers available to all scripts in your application. You just need to tell it which externals you are using.&lt;/p&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Note: &lt;/strong&gt;The Revolution database external requires specific drivers for the database that you are connecting to. Please see the next lesson for instructions on including the appropriate database drivers in your application.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:06:39 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5553-how-do-i-add-externals-to-my-application</link>
+    </item>
+    <item>
+      <title>How Do I Add Stacks to My Application?</title>
+      <description>&lt;p&gt;You can define which stack files your application requires. The framework will automatically load all stack files into memory at launch and can also verify that the stack file exists and refuse to launch if not present.&lt;/p&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; You do not need to add the application.dat or glxapp_framework.dat stack files ot your application. The framework cannot function properly without these stacks so they are automatically included for you.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:06:08 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5552-how-do-i-add-stacks-to-my-application</link>
+    </item>
+    <item>
+      <title>How Do I Password Protect My Application Stacks When Deploying?</title>
+      <description>&lt;p&gt;Revolution allows you to set the password property of a stack in order to encrypt the scripts. While this is a useful feature it can be troublesome to password protect your stacks during development. &lt;/p&gt;
+
+
+&lt;p&gt;The GLX Application Framework enables you to specify a password that will only be applied to stacks when you deploy standalones or updates. This provides the benefit of password protection without the inconvenience of having to enter the password for stacks each time you open them in the Revolution IDE during development.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:05:54 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5551-how-do-i-password-protect-my-application-stacks-when-deploying</link>
+    </item>
+    <item>
+      <title>How Do I Determine File(s) That User Double-Clicked On To Launch My Application?</title>
+      <description>&lt;p&gt;When the user double-clicks on your application file the operating system will launch your application. This lesson shows how to determine what file the user double-clicked on so that you can open it.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 09:38:41 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5673-how-do-i-determine-file-s-that-user-double-clicked-on-to-launch-my-application</link>
+    </item>
+    <item>
+      <title>Move Application Logic Into 'application' Stack Script</title>
+      <description>&lt;p&gt;It is a good idea to use the built-in messages that the framework sends when your application initializes, opens and shuts down.&lt;/p&gt;</description>
+      <pubDate>Mon, 30 Sep 2013 08:10:51 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/6699-move-application-logic-into-application-stack-script</link>
+    </item>
+    <item>
+      <title>How Do I Build Standalones For Supported Platforms?</title>
+      <description>&lt;p&gt;This article will show you how to build a standalone for supported platforms and what properties to set in the framework plugin.&lt;/p&gt;</description>
+      <pubDate>Mon, 30 Sep 2013 08:07:58 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5549-how-do-i-build-standalones-for-supported-platforms</link>
+    </item>
+    <item>
+      <title>How Do I Create a New Application Based on the GLX Application Framework?</title>
+      <description>&lt;p&gt;This article will show you how to create a new application based on the GLX Application Framework using the plugin.&lt;/p&gt;</description>
+      <pubDate>Mon, 30 Sep 2013 08:07:25 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5548-how-do-i-create-a-new-application-based-on-the-glx-application-framework</link>
+    </item>
+    <item>
+      <title>How Do I Install the Custom Version of libURL?</title>
+      <description>&lt;p&gt;The framework distribution comes with a stack file named &lt;strong&gt;glxppLibURL.rev &lt;/strong&gt;which contains an upgraded version of libURL.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; To find the parts of the libURL script that have been customized you can search for #tkd in the script.&lt;/p&gt;</description>
+      <pubDate>Wed, 15 May 2013 13:10:14 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5615-how-do-i-install-the-custom-version-of-liburl</link>
+    </item>
+    <item>
+      <title>How Do I Add Undo/Redo Entries To the Edit Menu?</title>
+      <description>&lt;p&gt;This lesson will show you how to add Undo/Redo items to your Edit menu in your application menu.&lt;/p&gt;</description>
+      <pubDate>Wed, 15 May 2013 03:35:48 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5633-how-do-i-add-undo-redo-entries-to-the-edit-menu</link>
+    </item>
+    <item>
+      <title>How Do I Open An Application in the IDE The Next Time I Launch Revolution?</title>
+      <description>&lt;p&gt;This lesson will show you how to open an existing application based on the GLX Application Framework in the Revolution IDE. &lt;/p&gt;</description>
+      <pubDate>Wed, 15 May 2013 03:32:34 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5550-how-do-i-open-an-application-in-the-ide-the-next-time-i-launch-revolution</link>
+    </item>
+    <item>
+      <title>Properties &amp; Messages</title>
+      <description>&lt;p&gt;A PDF document outlining the properties and messages associated with the GLX Application Framework can be &lt;a href="http://www.bluemangolearning.com/download/revolution/glxapp_framework/GLX%20Application%20Framework.pdf"&gt;downloaded here&lt;/a&gt;.&lt;/p&gt;</description>
+      <pubDate>Wed, 15 May 2013 03:22:36 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/glxapp/l/5546-properties-messages</link>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,72 @@
+{
+	"Name": "Contacts",
+	"Description": "This is a basic contacts app. It uses the CRUD functions of LiveCloud to create a database app that allow users to store, modify, retrieve, and delete contact data at will.",
+	"Image": "Screenshot.png",
+	"Stack": "Contacts.livecode",
+	"Tables": [{
+		"Name": "People",
+		"Keys": "firstName,lastName,dob,phone,email",
+		"Values": [{
+			"firstName": "Jason",
+			"lastName": "Lam",
+			"dob": "1/1/2000",
+			"phone": "123-456-7890",
+			"email": "jason.l@canelasoftware.com"
+		},{
+			"firstName": "Mark",
+			"lastName": "Talluto",
+			"dob": "1/1/1980",
+			"phone": "211-021-5097",
+			"email": "Mark@canelasoftware.com"
+		},{
+			"firstName": "Marcus",
+			"lastName": "Cruz",
+			"dob": "2/29/1958",
+			"phone": "170-510-1136",
+			"email": "MarcusCruz@gmail.com"
+		},{
+			"firstName": "Angela",
+			"lastName": "Walker",
+			"dob": "7/11/1990",
+			"phone": "402-531-9250",
+			"email": "AWalker@Gamil.com"
+		},{
+			"firstName": "Eddit",
+			"lastName": "Randolph",
+			"dob": "8/8/1988",
+			"phone": "239-407-2525",
+			"email": "ER1988@gamil.com"
+		},{
+			"firstName": "Elle",
+			"lastName": "Clarke",
+			"dob": "4/5/1967",
+			"phone": "680-141-1412",
+			"email": "EC1967@gmail.com"
+		},{
+			"firstName": "Melissa",
+			"lastName": "Joyce",
+			"dob": "8/29/1928",
+			"phone": "634-073-2363",
+			"email": "MeJoy@randomCompany.com"
+		},{
+			"firstName": "James",
+			"lastName": "Cole",
+			"dob": "11/11/1911",
+			"phone": "111-111-1111",
+			"email": "JamesCole@yahoo.com"
+		},{
+			"firstName": "Coby",
+			"lastName": "Bryan",
+			"dob": "8/24/2016",
+			"phone": "520-753-2840",
+			"email": "coby824@LakePeople.com"
+		},{
+			"firstName": "Peter",
+			"lastName": "Parker",
+			"dob": "9/9/1999",
+			"phone": "999-999-9999",
+			"email": "PP99@spiders.com"
+		}
+		]
+	}]
+}

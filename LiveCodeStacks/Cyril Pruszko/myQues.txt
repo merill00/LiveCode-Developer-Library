@@ -1,0 +1,10 @@
+// The questions should be formatted in the following order
+// “question” , “correct answer” , “the other answers separated by commas”
+// notes:
+// each section is separated by a comma
+// when run, the answers will always be in a different order
+
+How many in a dozen?,12,13,11,10
+What is 13 called?, a bakers dozen, a big dozen, too many, nothing
+In the story about the cow that jumped over something. What did he jump over?, the moon, the sun, a star, a house
+2+2=,4,5

@@ -1,0 +1,12 @@
+{
+	"Name": "Notepad",
+	"Description": "This is a basic notepad app that works locally without user authentication. It uses the CRUD functions of LiveCloud to create a database app that allow users to store, modify, retrieve, and delete notes.",
+	"Image": "Screenshot.png",
+	"Stack": "Notepad.livecode",
+	"Tables": [{
+		"Name": "Notes",
+		"Keys": "title,timestamp,data",
+		"Values":[
+		]
+	}]
+}

@@ -1,0 +1,1456 @@
+
+
+https://newsapi.org/v1/articles?source=the-verge&apiKey=436fa5859dd8446c80571afbb5ac7b6d
+
+
+News API v1 legacy docs:   https://newsapi.org/docs/v1
+
+This page is for v1 of the API. V1 will still be available for the foreseeable future.
+
+Endpoints
+
+Using News API is simple. There are only 2 endpoints:
+
+GET https://newsapi.org/v1/articles
+GET https://newsapi.org/v1/sources
+GET https://newsapi.org/v1/articles
+
+Provides a list of live article metadata from a news source or blog (99% of the time this is the one you want!).
+
+Parameters
+
+source	(required) - The identifer for the news source or blog you want headlines from. Use the /sources endpoint to locate this or use the sources index.
+apiKey	(required) - Your API key. Alternatively you can provide this via the X-Api-Key HTTP header.
+sortBy	(optional) - Specify which type of list you want. The possible options are top, latest and popular. Note: not all options are available for all sources. Default: top.
+top	Requests a list of the source's headlines sorted in the order they appear on its homepage.
+latest	Requests a list of the source's headlines sorted in chronological order, newest first.
+popular	Requests a list of the source's current most popular or currently trending headlines.
+Request
+
+GET https://newsapi.org/v1/articles?source=the-verge&apiKey=436fa5859dd8446c80571afbb5ac7b6d
+
+Response
+
+{
+"status": "ok",
+"source": "the-verge",
+"sortBy": "top",
+-"articles": [
+-{
+"author": "Chris Welch",
+"title": "Instagram and WhatsApp will add ‘from Facebook’ to their names",
+"description": "In its latest power play over two massively popular apps that it owns, Facebook will add “from Facebook” to the titles of both Instagram and WhatsApp.",
+"url": "https://www.theverge.com/2019/8/2/20752324/instagram-whatsapp-renamed-adding-facebook-branding",
+"urlToImage": "https://cdn.vox-cdn.com/thumbor/7zby9wIisIohMoVjw8l_JVDh9y4=/0x166:2040x1234/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/11560021/akrales_180614_1777_0229.jpg",
+"publishedAt": "2019-08-02T22:17:22Z"
+},
+-{
+"author": "Chris Welch",
+"title": "Ikea’s new speakers are the most affordable way to get Sonos in your home",
+"description": "The Symfonisk lamp and bookshelf speakers actually sound good, too.",
+"url": "https://www.theverge.com/2019/7/25/20726409/ikea-sonos-symfonisk-table-lamp-bookshelf-speaker-review-sound",
+"urlToImage": "https://cdn.vox-cdn.com/thumbor/ANUo8jCpKpxIXpqrgHqNNsli_NI=/0x146:2040x1214/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/18332908/cwelch_190724_3559_2261.jpg",
+"publishedAt": "2019-07-25T13:00:00Z"
+},
+-{
+"author": "Dieter Bohn",
+"title": "Amazon will let you opt out of human review of Alexa recordings",
+"description": "Amazon is bowing to pressure from the EU over the issue of humans reviewing recordings from their respective digital assistants. Where Apple and Google paused human review, Amazon has decided to offer a clearer, more comprehensive opt-out setting to Alexa users.",
+"url": "https://www.theverge.com/2019/8/2/20752418/amazon-alexa-human-review-recordings-opt-out-eu",
+"urlToImage": "https://cdn.vox-cdn.com/thumbor/zzl0mgUaR3_eILIVpDMS8KUu52o=/0x146:2040x1214/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/13255999/dseifert_181011_3006_1133_2.jpg",
+"publishedAt": "2019-08-03T00:55:21Z"
+},
+-{
+"author": "Sarah Scoles",
+"title": "Meet the US’s spy system of the future — it’s Sentient",
+"description": "Until now, Sentient has been treated as a government secret, except for vague allusions in a few speeches and presentations. But recently released documents — many formerly classified secret or top secret — reveal new details about the program’s goals, progress, and reach.",
+"url": "https://www.theverge.com/2019/7/31/20746926/sentient-national-reconnaissance-office-spy-satellites-artificial-intelligence-ai",
+"urlToImage": "https://cdn.vox-cdn.com/thumbor/hw7b2WKwJiSJxyhk4aGejOr_bFo=/0x146:2040x1214/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/18367781/VRG_ILLO_3557_002.jpg",
+"publishedAt": "2019-07-31T15:06:53Z"
+},
+-{
+"author": "Jon Porter",
+"title": "This Kickstarter keyboard uses magnets to make every key pressure-sensitive",
+"description": "Input Club, the keyboard startup behind the WhiteFox, is Kickstarting a new project. The Keystone is the company’s first keyboard to make use of its new Silo switches, which use magnets to make every one of their switches analog.",
+"url": "https://www.theverge.com/circuitbreaker/2019/8/1/20747554/keystone-keyboard-input-club-kickstarter-beam-spring-hall-effect-silo-switches",
+"urlToImage": "https://cdn.vox-cdn.com/thumbor/_5rRfOwZC00ilxStszbKeWTiI5A=/0x49:680x405/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/18367375/7e7071cb08bbf7bee4e796843d9437d7_original.jpg",
+"publishedAt": "2019-08-01T13:59:39Z"
+},
+-{
+"author": "Chris Welch",
+"title": "iPad Pro USB-C hubs: the best, worst, and weirdest options",
+"description": "Apple’s iPad Pro only includes a single USB-C port for connectivity, but there are a number of third-party hubs available that can give you far more flexibility and power.",
+"url": "https://www.theverge.com/2019/8/2/20750137/apple-ipad-pro-usb-c-hubs-hyperdrive-belkin-satechi-kanex",
+"urlToImage": "https://cdn.vox-cdn.com/thumbor/bVb3lWTMRqx8tuE5E7Q1Bmv-Nho=/0x146:2040x1214/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/18376257/akrales_190731_3579_0028.jpg",
+"publishedAt": "2019-08-02T16:44:55Z"
+},
+-{
+"author": "Sean O'Kane",
+"title": "This Tesla-powered Porsche 912 is the new face of vintage restorations",
+"description": "The Verge visits with California car shops Zelectric Motors and EV West, which are in the business of turning old Volkswagen Beetles, Microbuses, and Porsches into electric cars. Their newest project involves a 1968 Porsche 912, which is powered by the motor from a Tesla Model S P85.",
+"url": "https://www.theverge.com/2019/8/1/20747528/electric-porsche-912-vintage-restoration-tesla-car-vehicle-ev",
+"urlToImage": "https://cdn.vox-cdn.com/thumbor/jHJPiGWCXuKPOhoP5yvo4sgMGg0=/0x292:2040x1360/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/18370817/vpavic_190731_3858_0025.jpg",
+"publishedAt": "2019-08-01T14:18:34Z"
+},
+-{
+"author": "Loren Grush",
+"title": "Space startup aims to launch thousands of satellite ‘cell towers’ that connect to the average phone",
+"description": "The SpaceX Falcon 9 rocket that launched to the International Space Station last week carried a tiny package that could eventually lead to the smartphone you have in your pocket getting cell service from space. If it works, the instrument could be a precursor to a giant constellation of thousands of mini-satellites that function as cell towers circulating all over the globe.",
+"url": "https://www.theverge.com/2019/8/2/20746947/ubiquitilink-satellite-cell-tower-space-mega-constellation",
+"urlToImage": "https://cdn.vox-cdn.com/thumbor/ZicrWsF7A2CZNvzoI0-NPOoTLBk=/0x37:1840x1000/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/18430415/Screen_Shot_2019_08_01_at_3.41.17_PM.png",
+"publishedAt": "2019-08-02T13:30:00Z"
+},
+-{
+"author": "Cameron Faulkner",
+"title": "This week’s best deals include Kindle e-readers and Google Play Store discounts",
+"description": "You can save some money this weekend on Amazon products, like the Kindle Paperwhite and Oasis, as well as Ring’s Video Doorbell. Google Play Store is discounting several books, in-game purchase, movies, and more, as well.",
+"url": "https://www.theverge.com/good-deals/2019/8/3/20752051/kindle-ring-doorbell-ipad-pro-google-play-store-deals-sale",
+"urlToImage": "https://cdn.vox-cdn.com/thumbor/mwCWSGDcZkaMhGJVIPWlVwYVoqA=/0x138:2040x1206/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/13391951/akrales_181101_3056_0275.jpg",
+"publishedAt": "2019-08-03T15:00:00Z"
+},
+-{
+"author": "Andrew Liptak",
+"title": "N.K. Jemisin’s Broken Earth fantasy trilogy is getting an RPG",
+"description": "N.K. Jemisin’s Broken Earth trilogy has become an acclaimed fantasy classic, earning three consecutive Hugo Awards in as many years. Now, fans will be able to experience their own versions of the world: Green Ronin Publishing has announced that it’ll be releasing a roleplaying game based on the trilogy.",
+"url": "https://www.theverge.com/2019/8/3/20752840/n-k-jemisin-broken-earth-fifth-season-roleplaying-game-rpg-green-ronin-publishing-fantasy",
+"urlToImage": "https://cdn.vox-cdn.com/thumbor/E-nYcnLizJxC6Y8F6eIHx48U8XU=/0x144:2040x1212/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/9069131/aliptak_170817_1888_0008.jpg",
+"publishedAt": "2019-08-03T14:55:34Z"
+}
+]
+}
+status	(string) - If the request was successful or not. Options: ok, error. In the case of error a code and message property will be populated.
+source	(string) - The identifier of the source requested.
+sortBy	(string) - Which type of article list is being returned. Options: top, latest, popular.
+articles	(array) The list of headline metadata requested.
+author	(string) - The author of the article.
+description	(string) - A description or preface for the article.
+title	(string) - The headline or title of the article.
+url	(string) - The direct URL to the content page of the article.
+urlToImage	(string) - The URL to a relevant image for the article.
+publishedAt	(string) - The best attempt at finding a date for the article, in UTC (+0).
+GET https://newsapi.org/v1/sources
+
+Provides a list of the news sources and blogs available on News API. You will need this to programmatically locate the identifier for the source you want articles from when querying the /articles endpoint.
+
+Parameters
+
+category	(optional) - The category you would like to get sources for.
+Possible options: .
+Default: empty (all sources returned)
+language	(optional) - The 2-letter ISO-639-1 code of the language you would like to get sources for.
+Possible options: .
+Default: empty (all sources returned)
+country	(optional) - The 2-letter ISO 3166-1 code of the country you would like to get sources for.
+Possible options: .
+Default: empty (all sources returned)
+Request
+
+GET https://newsapi.org/v1/sources?language=en
+
+Response
+
+{
+"status": "ok",
+-"sources": [
+-{
+"id": "abc-news-au",
+"name": "ABC News (AU)",
+"description": "Australia's most trusted source of local, national and world news. Comprehensive, independent, in-depth analysis, the latest business, sport, weather and more.",
+"url": "http://www.abc.net.au/news",
+"category": "general",
+"language": "en",
+"country": "au",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "al-jazeera-english",
+"name": "Al Jazeera English",
+"description": "News, analysis from the Middle East and worldwide, multimedia and interactives, opinions, documentaries, podcasts, long reads and broadcast schedule.",
+"url": "http://www.aljazeera.com",
+"category": "general",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "ars-technica",
+"name": "Ars Technica",
+"description": "The PC enthusiast's resource. Power users and the tools they love, without computing religion.",
+"url": "http://arstechnica.com",
+"category": "technology",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "associated-press",
+"name": "Associated Press",
+"description": "The AP delivers in-depth coverage on the international, politics, lifestyle, business, and entertainment news.",
+"url": "https://apnews.com/",
+"category": "general",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "bbc-news",
+"name": "BBC News",
+"description": "Use BBC News for up-to-the-minute news, breaking news, video, audio and feature stories. BBC News provides trusted World and UK news as well as local and regional perspectives. Also entertainment, business, science, technology and health news.",
+"url": "http://www.bbc.co.uk/news",
+"category": "general",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "bbc-sport",
+"name": "BBC Sport",
+"description": "The home of BBC Sport online. Includes live sports coverage, breaking news, results, video, audio and analysis on Football, F1, Cricket, Rugby Union, Rugby League, Golf, Tennis and all the main world sports, plus major events such as the Olympic Games.",
+"url": "http://www.bbc.co.uk/sport",
+"category": "sports",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "bloomberg",
+"name": "Bloomberg",
+"description": "Bloomberg delivers business and markets news, data, analysis, and video to the world, featuring stories from Businessweek and Bloomberg News.",
+"url": "http://www.bloomberg.com",
+"category": "business",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "breitbart-news",
+"name": "Breitbart News",
+"description": "Syndicated news and opinion website providing continuously updated headlines to top news and analysis sources.",
+"url": "http://www.breitbart.com",
+"category": "general",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "business-insider",
+"name": "Business Insider",
+"description": "Business Insider is a fast-growing business site with deep financial, media, tech, and other industry verticals. Launched in 2007, the site is now the largest business news site on the web.",
+"url": "http://www.businessinsider.com",
+"category": "business",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "business-insider-uk",
+"name": "Business Insider (UK)",
+"description": "Business Insider is a fast-growing business site with deep financial, media, tech, and other industry verticals. Launched in 2007, the site is now the largest business news site on the web.",
+"url": "http://uk.businessinsider.com",
+"category": "business",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "buzzfeed",
+"name": "Buzzfeed",
+"description": "BuzzFeed is a cross-platform, global network for news and entertainment that generates seven billion views each month.",
+"url": "https://www.buzzfeed.com",
+"category": "entertainment",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "cnbc",
+"name": "CNBC",
+"description": "Get latest business news on stock markets, financial & earnings on CNBC. View world markets streaming charts & video; check stock tickers and quotes.",
+"url": "http://www.cnbc.com",
+"category": "business",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "cnn",
+"name": "CNN",
+"description": "View the latest news and breaking news today for U.S., world, weather, entertainment, politics and health at CNN",
+"url": "http://us.cnn.com",
+"category": "general",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "daily-mail",
+"name": "Daily Mail",
+"description": "All the latest news, sport, showbiz, science and health stories from around the world from the Daily Mail and Mail on Sunday newspapers.",
+"url": "http://www.dailymail.co.uk/home/index.html",
+"category": "entertainment",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "engadget",
+"name": "Engadget",
+"description": "Engadget is a web magazine with obsessive daily coverage of everything new in gadgets and consumer electronics.",
+"url": "https://www.engadget.com",
+"category": "technology",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "entertainment-weekly",
+"name": "Entertainment Weekly",
+"description": "Online version of the print magazine includes entertainment news, interviews, reviews of music, film, TV and books, and a special area for magazine subscribers.",
+"url": "http://www.ew.com",
+"category": "entertainment",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "espn",
+"name": "ESPN",
+"description": "ESPN has up-to-the-minute sports news coverage, scores, highlights and commentary for NFL, MLB, NBA, College Football, NCAA Basketball and more.",
+"url": "http://espn.go.com",
+"category": "sports",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "espn-cric-info",
+"name": "ESPN Cric Info",
+"description": "ESPN Cricinfo provides the most comprehensive cricket coverage available including live ball-by-ball commentary, news, unparalleled statistics, quality editorial comment and analysis.",
+"url": "http://www.espncricinfo.com/",
+"category": "sports",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "financial-times",
+"name": "Financial Times",
+"description": "The latest UK and international business, finance, economic and political news, comment and analysis from the Financial Times on FT.com.",
+"url": "http://www.ft.com/home/uk",
+"category": "business",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "football-italia",
+"name": "Football Italia",
+"description": "Italian football news, analysis, fixtures and results for the latest from Serie A, Serie B and the Azzurri.",
+"url": "http://www.football-italia.net",
+"category": "sports",
+"language": "en",
+"country": "it",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "fortune",
+"name": "Fortune",
+"description": "Fortune 500 Daily and Breaking Business News",
+"url": "http://fortune.com",
+"category": "business",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "four-four-two",
+"name": "FourFourTwo",
+"description": "The latest football news, in-depth features, tactical and statistical analysis from FourFourTwo, the UK&#039;s favourite football monthly.",
+"url": "http://www.fourfourtwo.com/news",
+"category": "sports",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "fox-sports",
+"name": "Fox Sports",
+"description": "Find live scores, player and team news, videos, rumors, stats, standings, schedules and fantasy games on FOX Sports.",
+"url": "http://www.foxsports.com",
+"category": "sports",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "google-news",
+"name": "Google News",
+"description": "Comprehensive, up-to-date news coverage, aggregated from sources all over the world by Google News.",
+"url": "https://news.google.com",
+"category": "general",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "hacker-news",
+"name": "Hacker News",
+"description": "Hacker News is a social news website focusing on computer science and entrepreneurship. It is run by Paul Graham's investment fund and startup incubator, Y Combinator. In general, content that can be submitted is defined as \"anything that gratifies one's intellectual curiosity\".",
+"url": "https://news.ycombinator.com",
+"category": "technology",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "ign",
+"name": "IGN",
+"description": "IGN is your site for Xbox One, PS4, PC, Wii-U, Xbox 360, PS3, Wii, 3DS, PS Vita and iPhone games with expert reviews, news, previews, trailers, cheat codes, wiki guides and walkthroughs.",
+"url": "http://www.ign.com",
+"category": "entertainment",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "independent",
+"name": "Independent",
+"description": "National morning quality (tabloid) includes free online access to news and supplements. Insight by Robert Fisk and various other columnists.",
+"url": "http://www.independent.co.uk",
+"category": "general",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "mashable",
+"name": "Mashable",
+"description": "Mashable is a global, multi-platform media and entertainment company.",
+"url": "http://mashable.com",
+"category": "entertainment",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "metro",
+"name": "Metro",
+"description": "News, Sport, Showbiz, Celebrities from Metro - a free British newspaper.",
+"url": "http://metro.co.uk",
+"category": "general",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "mirror",
+"name": "Mirror",
+"description": "All the latest news, sport and celebrity gossip at Mirror.co.uk. Get all the big headlines, pictures, analysis, opinion and video on the stories that matter to you.",
+"url": "http://www.mirror.co.uk/",
+"category": "general",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "mtv-news",
+"name": "MTV News",
+"description": "The ultimate news source for music, celebrity, entertainment, movies, and current events on the web. It's pop culture on steroids.",
+"url": "http://www.mtv.com/news",
+"category": "entertainment",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "mtv-news-uk",
+"name": "MTV News (UK)",
+"description": "All the latest celebrity news, gossip, exclusive interviews and pictures from the world of music and entertainment.",
+"url": "http://www.mtv.co.uk/news",
+"category": "entertainment",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "national-geographic",
+"name": "National Geographic",
+"description": "Reporting our world daily: original nature and science news from National Geographic.",
+"url": "http://news.nationalgeographic.com",
+"category": "science",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "new-scientist",
+"name": "New Scientist",
+"description": "Breaking science and technology news from around the world. Exclusive stories and expert analysis on space, technology, health, physics, life and Earth.",
+"url": "https://www.newscientist.com/section/news",
+"category": "science",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "newsweek",
+"name": "Newsweek",
+"description": "Newsweek provides in-depth analysis, news and opinion about international issues, technology, business, culture and politics.",
+"url": "http://www.newsweek.com",
+"category": "general",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "new-york-magazine",
+"name": "New York Magazine",
+"description": "NYMAG and New York magazine cover the new, the undiscovered, the next in politics, culture, food, fashion, and behavior nationally, through a New York lens.",
+"url": "http://nymag.com",
+"category": "general",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "nfl-news",
+"name": "NFL News",
+"description": "The official source for NFL news, schedules, stats, scores and more.",
+"url": "http://www.nfl.com/news",
+"category": "sports",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "polygon",
+"name": "Polygon",
+"description": "Polygon is a gaming website in partnership with Vox Media. Our culture focused site covers games, their creators, the fans, trending stories and entertainment news.",
+"url": "http://www.polygon.com",
+"category": "entertainment",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "recode",
+"name": "Recode",
+"description": "Get the latest independent tech news, reviews and analysis from Recode with the most informed and respected journalists in technology and media.",
+"url": "http://www.recode.net",
+"category": "technology",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "reddit-r-all",
+"name": "Reddit /r/all",
+"description": "Reddit is an entertainment, social news networking service, and news website. Reddit's registered community members can submit content, such as text posts or direct links.",
+"url": "https://www.reddit.com/r/all",
+"category": "general",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "reuters",
+"name": "Reuters",
+"description": "Reuters.com brings you the latest news from around the world, covering breaking news in business, politics, entertainment, technology, video and pictures.",
+"url": "http://www.reuters.com",
+"category": "general",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "talksport",
+"name": "TalkSport",
+"description": "Tune in to the world's biggest sports radio station - Live Premier League football coverage, breaking sports news, transfer rumours &amp; exclusive interviews.",
+"url": "http://talksport.com",
+"category": "sports",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "techcrunch",
+"name": "TechCrunch",
+"description": "TechCrunch is a leading technology media property, dedicated to obsessively profiling startups, reviewing new Internet products, and breaking tech news.",
+"url": "https://techcrunch.com",
+"category": "technology",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "techradar",
+"name": "TechRadar",
+"description": "The latest technology news and reviews, covering computing, home entertainment systems, gadgets and more.",
+"url": "http://www.techradar.com",
+"category": "technology",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "the-economist",
+"name": "The Economist",
+"description": "The Economist offers authoritative insight and opinion on international news, politics, business, finance, science, technology and the connections between them.",
+"url": "http://www.economist.com",
+"category": "business",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "the-hindu",
+"name": "The Hindu",
+"description": "The Hindu. latest news, analysis, comment, in-depth coverage of politics, business, sport, environment, cinema and arts from India's national newspaper.",
+"url": "http://www.thehindu.com",
+"category": "general",
+"language": "en",
+"country": "in",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "the-huffington-post",
+"name": "The Huffington Post",
+"description": "The Huffington Post is a politically liberal American online news aggregator and blog that has both localized and international editions founded by Arianna Huffington, Kenneth Lerer, Andrew Breitbart, and Jonah Peretti, featuring columnists.",
+"url": "http://www.huffingtonpost.com",
+"category": "general",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "the-lad-bible",
+"name": "The Lad Bible",
+"description": "The LAD Bible is one of the largest community for guys aged 16-30 in the world. Send us your funniest pictures and videos!",
+"url": "http://www.theladbible.com",
+"category": "entertainment",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "the-new-york-times",
+"name": "The New York Times",
+"description": "The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",
+"url": "http://www.nytimes.com",
+"category": "general",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "the-next-web",
+"name": "The Next Web",
+"description": "The Next Web is one of the world’s largest online publications that delivers an international perspective on the latest news about Internet technology, business and culture.",
+"url": "http://thenextweb.com",
+"category": "technology",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "the-sport-bible",
+"name": "The Sport Bible",
+"description": "TheSPORTbible is one of the largest communities for sports fans across the world. Send us your sporting pictures and videos!",
+"url": "http://www.thesportbible.com",
+"category": "sports",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "the-telegraph",
+"name": "The Telegraph",
+"description": "Latest news, business, sport, comment, lifestyle and culture from the Daily Telegraph and Sunday Telegraph newspapers and video from Telegraph TV.",
+"url": "http://www.telegraph.co.uk",
+"category": "general",
+"language": "en",
+"country": "gb",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "the-times-of-india",
+"name": "The Times of India",
+"description": "Times of India brings the Latest News and Top Breaking headlines on Politics and Current Affairs in India and around the World, Sports, Business, Bollywood News and Entertainment, Science, Technology, Health and Fitness news, Cricket and opinions from leading columnists.",
+"url": "http://timesofindia.indiatimes.com",
+"category": "general",
+"language": "en",
+"country": "in",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "the-verge",
+"name": "The Verge",
+"description": "The Verge covers the intersection of technology, science, art, and culture.",
+"url": "http://www.theverge.com",
+"category": "technology",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "the-wall-street-journal",
+"name": "The Wall Street Journal",
+"description": "WSJ online coverage of breaking news and current headlines from the US and around the world. Top stories, photos, videos, detailed analysis and in-depth reporting.",
+"url": "http://www.wsj.com",
+"category": "business",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "the-washington-post",
+"name": "The Washington Post",
+"description": "Breaking news and analysis on politics, business, world national news, entertainment more. In-depth DC, Virginia, Maryland news coverage including traffic, weather, crime, education, restaurant reviews and more.",
+"url": "https://www.washingtonpost.com",
+"category": "general",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "time",
+"name": "Time",
+"description": "Breaking news and analysis from TIME.com. Politics, world news, photos, video, tech reviews, health, science and entertainment news.",
+"url": "http://time.com",
+"category": "general",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+},
+-{
+"id": "usa-today",
+"name": "USA Today",
+"description": "Get the latest national, international, and political news at USATODAY.com.",
+"url": "http://www.usatoday.com/news",
+"category": "general",
+"language": "en",
+"country": "us",
+-"urlsToLogos": {
+"small": "",
+"medium": "",
+"large": ""
+},
+-"sortBysAvailable": [
+"top"
+]
+}
+]
+}
+status	(string) - If the request was successful or not. Options: ok, error. In the case of error a code and message property will be populated.
+sources	(array) - A list of the news sources and blogs available on News API.
+id	(string) - The unique identifier for the news source. This is needed when querying the /articles endpoint to retrieve article metadata.
+name	(string) - The display-friendly name of the news source.
+description	(string) - A brief description of the news source and what area they specialize in.
+url	(string) - The base URL or homepage of the source.
+category	(string) - The topic category that the source focuses on.
+Possible options:
+language	(string) - The 2-letter ISO-639-1 code for the language that the source is written in.
+Possible options:
+country	(string) - The 2-letter ISO 3166-1 code of the country that the source mainly focuses on.
+Available options:
+urlsToLogos (deprecated)	(object) - An object containing URLs to the source's logo. The logo is available in three sizes - small, medium and large.
+small	The URL to a small (width 200px) image of the source's logo.
+medium	The URL to a medium (width 400px) image of the source's logo.
+large	The URL to a large (width 600px) image of the source's logo.
+sortBysAvailable	(array) - The available headline lists for the news source. The possible options are top, latest and popular.
+top	Indicates this source can return a list of headlines sorted in the order they appear on the source' homepage.
+latest	Indicates this source can return a list of headlines sorted in chronological order, newest first.
+popular	Indicates this source can return a list of its current most popular headlines.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Top headlines /v2/top-headlines
+
+This endpoint provides live top and breaking headlines for a country, specific category in a country, single source, or multiple sources. You can also search with keywords. Articles are sorted by the earliest date published first.
+
+This endpoint is great for retrieving headlines for display on news tickers or similar.
+
+
+https://newsapi.org/v2/top-headlines?country=us&apiKey=436fa5859dd8446c80571afbb5ac7b6d
+
+
+
+By News Source
+
+
+abc-news
+associated-press
+
+https://newsapi.org/v2/top-headlines?sources=abc-news&apiKey=436fa5859dd8446c80571afbb5ac7b6d
+
+
+
+Request parameters
+
+country
+The 2-letter ISO 3166-1 code of the country you want to get headlines for. Possible options: ae ar at au be bg br ca ch cn co cu cz de eg fr gb gr hk hu id ie il in it jp kr lt lv ma mx my ng nl no nz ph pl pt ro rs ru sa se sg si sk th tr tw ua us ve za . Note: you can't mix this param with the sources param.
+category
+The category you want to get headlines for. Possible options: business entertainment general health science sports technology . Note: you can't mix this param with the sources param.
+sources
+A comma-seperated string of identifiers for the news sources or blogs you want headlines from. Use the /sources endpoint to locate these programmatically or look at the sources index. Note: you can't mix this param with the country or category params.
+q
+Keywords or a phrase to search for.
+pageSize
+int
+The number of results to return per page (request). 20 is the default, 100 is the maximum.
+page
+int
+Use this to page through the results if the total results found is greater than the page size.
+apiKey
+REQUIRED
+Your API key. Alternatively you can provide this via the X-Api-Key HTTP header.
+Response object
+
+status
+string
+If the request was successful or not. Options: ok, error. In the case of error a code and message property will be populated.
+totalResults
+int
+The total number of results available for your request.
+articles
+array[article]
+The results of the request.
+source
+object
+The identifier id and a display name name for the source this article came from.
+author
+string
+The author of the article
+title
+string
+The headline or title of the article.
+description
+string
+A description or snippet from the article.
+url
+string
+The direct URL to the article.
+urlToImage
+string
+The URL to a relevant image for the article.
+publishedAt
+string
+The date and time that the article was published, in UTC (+000)
+content
+string
+The unformatted content of the article, where available. This is truncated to 260 chars for Developer plan users.
+
+
+
+
+Everything /v2/everything
+
+Search through millions of articles from over 30,000 large and small news sources and blogs. This includes breaking news as well as lesser articles.
+
+This endpoint suits article discovery and analysis, but can be used to retrieve articles for display, too.
+
+// To query /v2/everything
+// You must include at least one q, source, or domain
+newsapi.v2.everything({
+  q: 'bitcoin',
+  sources: 'bbc-news,the-verge',
+  domains: 'bbc.co.uk, techcrunch.com',
+  from: '2017-12-01',
+  to: '2017-12-12',
+  language: 'en',
+  sortBy: 'relevancy',
+  page: 2
+
+
+https://newsapi.org/v2/everything?q=bitcoin&apiKey=436fa5859dd8446c80571afbb5ac7b6d
+
+
+
+Request parameters
+
+q
+Keywords or phrases to search for.
+
+Advanced search is supported here:
+
+Surround phrases with quotes (") for exact match.
+Prepend words or phrases that must appear with a + symbol. Eg: +bitcoin
+Prepend words that must not appear with a - symbol. Eg: -bitcoin
+Alternatively you can use the AND / OR / NOT keywords, and optionally group these with parenthesis. Eg: crypto AND (ethereum OR litecoin) NOT bitcoin.
+The complete value for q must be URL-encoded.
+
+sources
+A comma-seperated string of identifiers (maximum 20) for the news sources or blogs you want headlines from. Use the /sources endpoint to locate these programmatically or look at the sources index.
+domains
+A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com, engadget.com) to restrict the search to.
+excludeDomains
+A comma-seperated string of domains (eg bbc.co.uk, techcrunch.com, engadget.com) to remove from the results.
+from
+A date and optional time for the oldest article allowed. This should be in ISO 8601 format (e.g. 2019-08-03 or 2019-08-03T15:17:30) Default: the oldest according to your plan.
+to
+A date and optional time for the newest article allowed. This should be in ISO 8601 format (e.g. 2019-08-03 or 2019-08-03T15:17:30) Default: the newest according to your plan.
+language
+The 2-letter ISO-639-1 code of the language you want to get headlines for. Possible options: ar de en es fr he it nl no pt ru se ud zh . Default: all languages returned.
+sortBy
+The order to sort the articles in. Possible options: relevancy, popularity, publishedAt.
+relevancy = articles more closely related to q come first.
+popularity = articles from popular sources and publishers come first.
+publishedAt = newest articles come first.
+Default: publishedAt
+pageSize
+int
+The number of results to return per page. 20 is the default, 100 is the maximum.
+page
+int
+Use this to page through the results.
+apiKey
+REQUIRED
+Your API key. Alternatively you can provide this via the X-Api-Key HTTP header.
+Response object
+
+status
+string
+If the request was successful or not. Options: ok, error. In the case of error a code and message property will be populated.
+totalResults
+int
+The total number of results available for your request. Only a limited number are shown at a time though, so use the page parameter in your requests to page through them.
+articles
+array[article]
+The results of the request.
+source
+object
+The identifier id and a display name name for the source this article came from.
+author
+string
+The author of the article
+title
+string
+The headline or title of the article.
+description
+string
+A description or snippet from the article.
+url
+string
+The direct URL to the article.
+urlToImage
+string
+The URL to a relevant image for the article.
+publishedAt
+string
+The date and time that the article was published, in UTC (+000)
+content
+string
+The unformatted content of the article, where available. This is truncated to 260 chars for Developer plan users.
+
+
+
+
+
+
+
+
+Sources /v2/sources
+
+This endpoint returns the subset of news publishers that top headlines (/v2/top-headlines) are available from. It's mainly a convenience endpoint that you can use to keep track of the publishers available on the API, and you can pipe it straight through to your users.
+
+
+
+
+
+https://newsapi.org/v2/sources?country=us&apiKey=436fa5859dd8446c80571afbb5ac7b6d
+
+
+
+
+Request parameters
+
+category
+Find sources that display news of this category. Possible options: business entertainment general health science sports technology . Default: all categories.
+language
+Find sources that display news in a specific language. Possible options: ar de en es fr he it nl no pt ru se ud zh . Default: all languages.
+country
+Find sources that display news in a specific country. Possible options: ae ar at au be bg br ca ch cn co cu cz de eg fr gb gr hk hu id ie il in it jp kr lt lv ma mx my ng nl no nz ph pl pt ro rs ru sa se sg si sk th tr tw ua us ve za . Default: all countries.
+apiKey
+REQUIRED
+Your API key. Alternatively you can provide this via the X-Api-Key HTTP header.
+Response object
+
+status
+string
+If the request was successful or not. Options: ok, error. In the case of error a code and message property will be populated.
+sources
+array[source]
+The results of the request.
+id
+string
+The identifier of the news source. You can use this with our other endpoints.
+name
+string
+The name of the news source
+description
+string
+A description of the news source
+url
+string
+The URL of the homepage.
+category
+string
+The type of news to expect from this news source.
+language
+string
+The language that this news source writes in.
+country
+string
+The country this news source is based in (and primarily writes about).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Top headlines from Google News
+
+https://newsapi.org/v2/top-headlines?sources=google-news&apiKey=436fa5859dd8446c80571afbb5ac7b6d
+
+https://news.google.com/?hl=en-US&gl=US&ceid=US:en
+
+
+
+
+

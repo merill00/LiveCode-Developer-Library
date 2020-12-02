@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Professional Application Development With Revolution (now LiveCode) - Recent Lessons</title>
+    <description>Recently created lessons from Professional Application Development With Revolution (now LiveCode)</description>
+    <link>https://revolution.screenstepslive.com/s/proappdev</link>
+    <item>
+      <title>Update FileStorm Project</title>
+      <description>&lt;p&gt;The FileStorm project uses an alias to the /Applications folder on your development computer. This alias adds an alias to the folder on the DMG file that is created so that the user can drag your application into the Applications directory really easily.&lt;/p&gt;
+
+
+&lt;p&gt;This lesson will show you how to create the alias and update the project to point to the alias.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:28:18 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4/l/6749-update-filestorm-project</link>
+    </item>
+    <item>
+      <title>Compiling Windows Installer</title>
+      <description>&lt;p&gt;Let's look at how you compile the Windows installer using INNO Setup. You must have INNO Setup installed on Windows for this to work.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:28:00 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4/l/6715-compiling-windows-installer</link>
+    </item>
+    <item>
+      <title>Building Installers With the Application Packager</title>
+      <description>&lt;p&gt;The Application Packager is what you use to package up your application in order to create an installer or provide an update. &lt;/p&gt;
+
+
+&lt;p&gt;In order to get around some limitations in regards to manipulating scripts that is present in a Revolution standalone application you need to open the Application Packager in the Revolution IDE. I usually keep multiple copies of the same version of Revolution around and just open the Application Packager stack in a separately running instance of the IDE.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:27:50 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4/l/6714-building-installers-with-the-application-packager</link>
+    </item>
+    <item>
+      <title>Configure Global Build Profile Settings</title>
+      <description>&lt;p&gt;We are just about ready to open the Application Packager. We just need to configure some settings that will affect building installers and update packages.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:27:25 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4/l/6713-configure-global-build-profile-settings</link>
+    </item>
+    <item>
+      <title>Add Read Me And Database As A Standalone Resource</title>
+      <description>&lt;p&gt;Before using the Application Packager we are going to add two more files to the application. The &lt;strong&gt;Standalone Resources&lt;/strong&gt; tab allows you to add files that will be included with the distribution for each platform.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:27:03 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4/l/6712-add-read-me-and-database-as-a-standalone-resource</link>
+    </item>
+    <item>
+      <title>Prepare FTP Server</title>
+      <description></description>
+      <pubDate>Fri, 02 Sep 2016 11:26:40 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4/l/6711-prepare-ftp-server</link>
+    </item>
+    <item>
+      <title>Download Installer Programs</title>
+      <description>&lt;p&gt;In order to automate the creation of installers as much as possible you need the write software for creating installers. You want an installer program that creates installers based on text files or that can be automated through the use of a command line tool or AppleScript.&lt;/p&gt;
+
+
+&lt;p&gt;Here are suggestions for programs that I use on Windows and OS X. Download and install these programs if you would like to test building installers.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:26:38 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4/l/6710-download-installer-programs</link>
+    </item>
+    <item>
+      <title>Filtering Files Using 'answer file with type'</title>
+      <description>&lt;p&gt;Now we will use the file extension we just created to create a Filter for 'answer file with type'.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:26:37 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3/l/6705-filtering-files-using-answer-file-with-type</link>
+    </item>
+    <item>
+      <title>Defining Supported File Types</title>
+      <description>&lt;p&gt;This chapter will show you how the GLX Application Framework helps you work with supported file extensions.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:26:28 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3/l/6704-defining-supported-file-types</link>
+    </item>
+    <item>
+      <title>Slider &amp; Field Example</title>
+      <description>&lt;p&gt;Now we will look at a simple broadcasting example. Broadcasting is a way for controls to &amp;quot;sign-up&amp;quot; to receive messages when certain events occurs. In this example we will notify a field that the slider position of a scrollbar has changed.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:26:15 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3/l/6703-slider-field-example</link>
+    </item>
+    <item>
+      <title>Scrollbar Example</title>
+      <description>&lt;p&gt;Now we will look at a similar undo example using a Scrollbar.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:25:53 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3/l/6702-scrollbar-example</link>
+    </item>
+    <item>
+      <title>Text Field Example</title>
+      <description>&lt;p&gt;Now let's look at how to undo changes to a field.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:25:37 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3/l/6701-text-field-example</link>
+    </item>
+    <item>
+      <title>Creating Undo/Redo Buttons</title>
+      <description>&lt;p&gt;Let's look at how to work with Undo.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:25:21 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3/l/6700-creating-undo-redo-buttons</link>
+    </item>
+    <item>
+      <title>Format General UI Controls For Platform</title>
+      <description>&lt;p&gt;I created this To-Do application on a Mac. That means that if I set the text size or style of any controls that the current font was saved with the control. In this case Lucida Grande. The stack won't look very nice on Windows so we are going to look at an easy way to format controls to use the right font on each platform.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:24:55 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2/l/6682-format-general-ui-controls-for-platform</link>
+    </item>
+    <item>
+      <title>Broadcast Preference Change</title>
+      <description>&lt;p&gt;The To-Do application has two places in the UI that can change the value of the &lt;strong&gt;hide completed items&lt;/strong&gt; preference. The first is the checkbox in the UI. The second is the Edit menu item. Let's look at a simple example that shows how Broadcasting can be used to keep the UI in sync when the preference value is changed by calling glxapp_setPref.&lt;/p&gt;
+
+
+&lt;p&gt;The framework uses the included Broadcasting API in order to send messages when preference values are changed. We will talk more about Broadcasting in Session III.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:24:40 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2/l/6681-broadcast-preference-change</link>
+    </item>
+    <item>
+      <title>Make State of "Hide Complete Items" Checkbox a Preference</title>
+      <description>&lt;p&gt;Now we are going to add a preference to the application.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:24:06 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2/l/6680-make-state-of-hide-complete-items-checkbox-a-preference</link>
+    </item>
+    <item>
+      <title>Test Loading of Libraries</title>
+      <description>&lt;p&gt;Now that you have configured the application to load the new libraries.rev stack file at launch you can open the application in the IDE again to test.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:23:39 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2/l/6679-test-loading-of-libraries</link>
+    </item>
+    <item>
+      <title>Add libControlFormatter.rev</title>
+      <description>&lt;p&gt;Now that you have a location to store libraries you are going to add a new library to the libraries stack.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:23:26 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2/l/6678-add-libcontrolformatter-rev</link>
+    </item>
+    <item>
+      <title>Create libraries.rev Stack File</title>
+      <description>&lt;p&gt;Now you will create a libraries.rev stack file. This stack file is a good place to store libraries that your application uses. The libraries can be substacks of the libraries.rev mainstack.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:22:38 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2/l/6677-create-libraries-rev-stack-file</link>
+    </item>
+    <item>
+      <title>Open To-Do Application</title>
+      <description>&lt;p&gt;Your homework for this session involves adding some features to an existing application. The application is a variant of the SQL Yoga To-Do application.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:22:10 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2/l/6676-open-to-do-application</link>
+    </item>
+    <item>
+      <title>Download cacert.pem File</title>
+      <description>&lt;p&gt;When working with SSL you need to provide Revolution with a certificate file so it can verify that the host is who it says it is. You can download a cert file here:&lt;/p&gt;
+
+
+&lt;p&gt;&lt;a href="http://curl.haxx.se/docs/caextract.html"&gt;http://curl.haxx.se/docs/caextract.html&lt;/a&gt;&lt;/p&gt;
+
+
+&lt;p&gt;You include this file in your application files and set the &lt;strong&gt;sslcertificates&lt;/strong&gt; property to the path to the file.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Oct 2009 13:18:24 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3/l/6750-download-cacert-pem-file</link>
+    </item>
+  </channel>
+</rss>

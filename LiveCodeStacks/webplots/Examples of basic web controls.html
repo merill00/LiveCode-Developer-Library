@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>web control examples</title>
+    <meta name="description" content="Interactive Simulations">
+    <meta name="keywords" content="interactive,simulation,reactor,reaction,reactorlab">
+    <meta name="author" content="Richard Herz">
+    <style>
+      p {font-size: 20px;}
+      a {font-size: 20px;}
+      li {font-size: 20px;}
+    </style>
+  </head>
+  <body>
+    <p>Back to <a href="https://github.com/RichardHerz/example-controls">github.com/RichardHerz/example-controls</a></p>
+    <h2>Examples of basic web controls</h2>
+    <p>
+      We use these controls to develop interactive simulations of physical systems for active learning.
+      We use client-side technology (html, css, javascript) with no, or few, external libraries.
+    </p>
+    <p>When the user makes a change to a control, a javascript function is called in order to carry out actions.
+    </p>
+    <p>Examples of individual controls are shown here so they are easier to inspect
+      than those embedded in a complete simulation. See source files of these examples by viewing the page source in your browser, or at <a
+        href="https://github.com/RichardHerz/example-controls">github.com/RichardHerz/example-controls</a>.
+    </p>
+    <p>See source files of complete simulations at
+      <a href="https://github.com/RichardHerz/web-labs">github.com/RichardHerz/web-labs</a>.
+      See our main site at <a href="http://reactorlab.net">ReactorLab.net</a>.
+    </p>
+    <p>
+      First, an example of a minimal .html text file to run Javascript in your web browser.
+      All you need in the .html file is a script tag with your Javascript, using
+      document.write() to write html to the web page or console.log() to write to the
+      browser's Javascript console:
+    </p>
+    <pre>
+      &lt;script&gt;
+        let a = 2;
+        console.log('minimal JS example, a = ' + a); // view in browser's Javascript console
+        let b = Math.pow(a,2); // raise a to power of 2
+        document.write('hello'); // display output on web page
+        document.write('&lt;br&gt; b = ' + b); // note &lt;br&gt; to start new line
+      &lt;/script&gt;
+    </pre>
+    <table>
+      <tr>
+        <td valign="top">
+          <h3>Basic Examples</h3>
+          <ul>
+            <li><a href="ex_buttons/index.html">buttons</a>&nbsp; <br>
+            </li>
+            <li><a href="ex_checkboxes/index.html">checkboxes</a>&nbsp; <br>
+            </li>
+            <li><a href="ex_input_field/index.html">input field</a> <br>
+            </li>
+            <li><a href="ex_radio_buttons/index.html">radio buttons</a> <br>
+            </li>
+            <li><a href="ex_range_slider/index.html">range slider</a> <br>
+            </li>
+            <li><a href="ex_animation/index.html">animation</a> <br>
+            </li>
+            <li><a href="ex_run-pause_reset/index.html">run-pause reset</a> of
+              simulation <br>
+            </li>
+            <li><a href="ex_check_javascript/index.html">check if Javascript</a>  is enabled<br>
+            </li>
+          </ul>
+        </td>
+        <td valign="top">
+          <h3>Plots</h3>
+          <ul>
+            <li><a href="ex_plots_static_xy/index.html">plots - static x,y</a> <br>
+            </li>
+            <li><a href="ex_plots_scrolling_xy/index.html">plots - scrolling x,y</a> <br>
+            </li>
+            <li><a href="ex_plots_scrolling_colormap/index.html">plots - scrolling colormap</a> <br>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+    <br><br>
+  </body>
+</html>

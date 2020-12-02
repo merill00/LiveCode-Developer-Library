@@ -1,0 +1,33 @@
+<?rev
+
+global gAdminConfig
+
+global gParams, gData, gTheme
+
+
+-- PUT YOUR METHOD NAMES  INTO THE GLOBAL gControllerHandlers AS A COMMA SEPARATED LIST
+put "index,dbedit,media,menus,templates,upload,showJSON,test_auth" into gControllerHandlers
+
+if there is a file ("user/libraryscripts/lcms_admin_script.livecode") then
+  put ("user/libraryscripts/lcms_admin_script.livecode") into tt
+else
+  put ("lcms/libraryscripts/lcms_admin_script.livecode") into tt
+end if
+start using stack tt
+
+
+repeat for each word W in "LCMS_shim common forms arrayjson"
+  put W & "_script.livecode" into tFile
+  if there is a file ("user/libraryscripts" & tFile) then
+    put ("user/libraryscripts/" & tFile) into tt
+  else
+    put ("lcms/libraryscripts/" & tFile) into tt
+  end if
+  start using stack tt
+end repeat 
+
+put "user/scripts/siteAdminConfig.lc" into tt  
+if there is a file tt then
+  start using stack tt
+  siteAdminConfig
+end if

@@ -1,0 +1,5 @@
+# workspace files are user-specific
+*.sublime-workspace
+
+# Misc
+.env

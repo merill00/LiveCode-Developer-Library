@@ -1,0 +1,806 @@
+﻿script "lcms_admin"
+
+global gAdminConfig
+
+global gParams, gData, gTheme
+ 
+local sUserName, sIsAdmin
+
+command test_auth
+  pl the stacksinuse
+  put lcmsIfLoggedIn(sUserName, sIsAdmin)
+end test_auth
+
+    	
+local sBaseURL
+command commonConfigSettings pPageName, pExtraSegment
+   put "/igniter.lc/lcms_admin" into sBaseURL
+   
+   put $_COOKIE["upload_photo_messages"] into gData["uploadError"]
+   put $_COOKIE["image_info"] into gData["image_info"]
+   if gData["image_info"] is not empty then
+      put JSONToArray(gData["image_info"]) into gData["image_info"]
+   end if
+   lcmsPutCookie "upload_photo_messages", "/", "OK"
+   lcmsPutCookie "image_info", "/", empty
+   
+   put getparams() into  gParams
+   	
+   put tolower(pPageName) into gData["activepage"]
+   
+   local NN, tt
+   put 3 into NN
+   if pExtraSegment then
+      put lcmsFetchSegment(NN) into gParams["extra_segment"]
+      add 1 to NN
+      put "/" & pPageName after gData["baseURL"]
+      put tolower(gParams["page"]) into gData["activepage"]
+   end if
+   put lcmsFetchSegment(NN, empty) into tt
+   if tt is FALSE then put empty into tt
+   if gParams["_detail"] is empty AND tt is not empty then put tt into gParams["_detail"]
+   
+   add 1 to NN
+   put lcmsFetchSegment(NN) into tt
+   if tt is FALSE then put empty into tt
+   if gParams["_pid"] is empty AND tt is not empty then put tt into gParams["_pid"]
+   
+   put gParams["_pid"] into gData["projectID"]
+   	
+   get lcmsLoadDatabase()     
+   
+   --    pl "cookie should be set to OK"
+   --    printarray "cos", $_COOKIE
+   
+end commonConfigSettings
+
+
+function showlocalCommand pLabel, pAction
+  return "<a href='" & sBaseURL & "/" & pAction & "'>" & pLabel & "</a>"
+end showlocalCommand
+
+-- THIS COMMAND WILL BE CALLED IF NONE IS SPECIFiED IN THE URI
+command index
+   local tLoggedIn
+   put lcmsIfLoggedIn(sUserName, sIsAdmin, TRUE) into tLoggedIn
+   if NOT tLoggedIn then
+      -- REDIRECT TO LOGIN PAGE AND KEEP FLASHDATA IN CASE THERE IS ANY
+      if rigSessFlashdata("message") <> FALSE then
+         rigKeepSessFlashdata "message"					
+      end if
+      put "Not logged in!! Please login first at <a href='/igniter.lc/auth/login'>Login page</a>"
+      
+      exit to top
+   end if
+   
+   commonConfigSettings "index", FALSE
+   pl "Logged in as " && sUserName &".<br><br>" & CR
+   if sIsAdmin then
+      pl "You are an admin, so you can do many things here, or go to the auth page to manage users.<br><br>" & CR
+   else
+      pl "You are NOT an admin, so you can only do a few things here.<br><br>" & CR
+   end if
+   
+   pl ""
+   if sIsAdmin then pl "<li>" & showlocalCommand("Edit a Custom Object database", "dbedit") & "</li>" & cr
+   
+   if sIsAdmin then pl "<li>" & showlocalCommand("Manage Media", "media") & "</li>" & cr
+   pl "<li>" & showlocalCommand("Check for contacts/emails needing attention", "contacts") & "</li>" & cr
+   pl "<li>" & showlocalCommand("Upload one or more images", "upload") & "</li>" & cr
+   pl "</ul>"
+end index
+
+
+command updateImageDB
+   local tTimestamp, tArray, tAQuery
+   put todayAsSQL(true, true) into tTimestamp
+   repeat for each key K in gData["image_info"]
+      put gData["image_info"][K] into tArray
+      replace "__" with "_,_" in tArray["tags"]
+      -- find if it already exists
+      rigDBWhere "folder", tArray["folder"]
+      rigDBWhere "name", tArray["name"]
+      put rigDBGet("images") into tAQuery
+      -- printarray "query", tAQuery
+      switch tAQuery["numrows"]
+         case 0
+            -- new record being added
+            put tTimestamp into tArray["date-uploaded"]
+            put tTimestamp into tArray["date-modified"]
+            get rigDBInsert("images", tArray)
+            break
+         case 1
+            -- record being changed
+            put tTimestamp into tArray["date-modified"]
+            rigDBWhere "folder", tArray["folder"]
+            rigDBWhere "name", tArray["name"]
+            get rigDBUpdate("images", tArray)
+            break
+         default
+            pl "too many matches in update" && tArray["folder"] && tArray["name"]
+            break
+      end switch
+   end repeat
+   
+end updateImageDB
+
+
+
+command upload
+   local tHelpers, tTimeStamp
+   get lcmsIfLoggedIn(sUserName, sIsAdmin)
+   commonConfigSettings "upload", FALSE
+   pl showlocalCommand("Back to administration home", "") & "<br><br>" & cr
+   
+   put "form,url" into tHelpers
+   rigLoadHelper tHelpers
+   
+   -- we are, or will be, uploading images - make sure needed folders exist
+   local tFolder
+   put the defaultFolder into tFolder
+   set the defaultFolder to gAdminConfig["imageBase"]
+   
+   put todayAsSQL(TRUE,TRUE) into tTimeStamp
+   if NOT (there is a folder char 1 to 7 of tTimestamp) then
+      create folder char 1 to 7 of tTimestamp
+   end if
+   set the defaultFolder to char 1 to 7 of tTimestamp
+   create folder "originals"
+   repeat for each key K in gAdminConfig["photo sizes"]
+      create folder K
+   end repeat
+   set the defaultFolder to tFolder
+   
+   put getParams() into gParams
+   
+   if gData["uploadError"] is not empty AND gData["uploadError"] <> "OK" then
+      pl "messages" && ":" & gData["uploadError"] & ":"
+   else
+      -- we *may* have just done a successful upload
+      
+      -- so update the image DB
+      updateImageDB
+   end if
+   
+   -- we want to show the form ready to submit 
+   -- starting with any previous errors
+   put "Upload Form" into gData["pageTitle"]
+   
+   local t1, t2, tResizes
+   --  put rigFormOpenMultiPart("upload/doUpload") into gData["formOpen"]
+   put "<form action='/upload_photo.lc' method='post' accept-charset='utf-8' enctype='multipart/form-data'>" &CR into gData["formOpen"]
+   put random(1234) into t1
+   put "  <input type='hidden' name='password' value='" & t1 & "'>" & CR after gData["formOpen"]
+   put md5hash(t1) into t2
+   put "  <input type='hidden' name='checkdigits' value='" & t2 & "'>" & CR after gData["formOpen"]
+   put "  <input type='hidden' name='action' value='doUpload'>" & CR after gData["formOpen"]
+   
+   repeat for each key K in gAdminConfig["photo sizes"]
+      put K & "," & gAdminConfig["photo sizes"][K] & CR after tResizes
+   end repeat
+   put "  <input type='hidden' name='sizes' value='" & tResizes & "'>" & CR after gData["formOpen"]
+   
+   -- now assuming "folder by month" and always on  
+   put "  <input type='hidden' name='folder' value='" & gAdminConfig["imageBase"] & "'>" & CR after gData["formOpen"]
+   
+   local tACategories, tATags, tCats, tSelectCategory, tChoice, tSelectTags
+   put makeOptions("Category") into tACategories
+   put makeOptions("Tag") into tATags
+   
+   --  put rigFormLabel("Select Category", "select") && rigFormDropDown("select_category", tACategories, tChoice) into gData["upload_category"]
+   put the keys of tACategories into tCats
+   sort lines of tCats 
+   if tSelectCategory is empty then 
+      put line 1 of tCats into tChoice
+   end if
+   replace CR with "," in tCats
+   put "Select Category" && lcmsFormSelect("select_category", "", tCats, tChoice) into gData["upload_category"]
+   
+   put empty into tSelectTags
+   put makeTagsCheckboxes(tATags, tSelectTags) into gData["upload_checkbox"]
+   
+   local tData
+   repeat with i = 1 to 4
+      put empty into tData
+      put lcmsFormInput("", "shortname_"&i, 32, "shortname") into gData["input" & i]
+      put empty into tData
+      put ("userfile" & i) into tData["name"]
+      put "40" into tData["size"]
+      put rigFormUpload(tData) after gData["input" & i]
+   end repeat
+   
+   put rigSubmitButton("uploadBtn", "upload") into gData["submit"]
+   
+   pl "<h1>" & gData["pageTitle"] & "</H1><br>" 
+   pl gData["uploadError"]
+   pl gData["formOpen"]
+   --  pl gData["dropDown"]
+   pl "<br>" & gData["upload_category"]
+   pl "<br>" & gData["upload_checkbox"]
+   pl "<br>" & gData["input1"]
+   pl "<br>" & gData["input2"]
+   pl "<br>" & gData["input3"]
+   pl "<br>" & gData["input4"]
+   pl "<br /><br />"
+   pl gData["submit"]
+   pl "</form>"
+   
+end upload
+
+
+function makeOptions pCatOrTags
+   local tAOptions, tAQuery, tA
+   put empty into tAOptions
+   rigDBWhere "TagOrCat", pCatOrTags
+   put rigDBGet("TagsCategories") into tAQuery
+   repeat with i = 1 to tAQuery["numrows"]
+      put rigDBRow(i) into tA
+      put tA["Name"] into tAOptions[tA["Name"]]
+   end repeat
+   if pCatOrTags = "Category" then
+      put "-- none --" into tAOptions["-- none --"]
+   end if
+   return tAOptions
+end makeOptions
+
+function makeTagsCheckboxes pATags, pSelectTags, pMetaName
+   local tTags, tData, tResult
+  if pMetaName is empty then put "select" into pMetaName
+  put the keys of pATags into tTags
+  sort lines of tTags
+  repeat for each line L in tTags
+    put "_" & pMetaName & "_tag_" & L into tData["name"]
+    put L into tData["id"]
+    put "accept" into tData["value"]
+    put FALSE into tData["checked"]
+    if ("_" & L & "_") is among the items of pSelectTags then
+      put TRUE into tData["checked"]
+    end if
+    put rigFormCheckbox(tData) & rigFormLabel(L, L) & CR after tResult
+  end repeat
+  return tResult
+end makeTagsCheckboxes
+
+function filterFor tArray, pKeyStarts, pVal
+   local tResult
+   local t_local_debug
+   -- put TRUE into t_local_debug
+   if t_local_debug then pl "filtering" && pKeyStarts && pVal
+   if t_local_debug then printarray "filtering", tArray
+   put empty into tResult
+   repeat for each key K in tArray            
+      if K begins with pKeyStarts then
+         if pVal is empty OR tArray[K] = pVal then
+            put K & "_" after tResult
+         end if
+         if t_local_debug then pl "filtered " && K && ":" & pVal & ":" & tArray[K] & ":" && tResult
+      end if
+   end repeat
+   replace pKeyStarts with "_" in tResult
+   replace "__" with "_,_" in tResult
+   if t_local_debug then pl "exit filtering" && tResult
+   
+   return tResult
+end filterFor
+
+function selectedImages pCategory, pTags
+   local tFirst, tAQuery
+   if (pCategory is not empty) AND (pCategory <> "-- none --") then
+      rigDBWhere "Category", pCategory
+   end if
+   if pTags is not empty then
+      --    split pTags by ","
+      --    rigDBWhereIn "tags", pTags
+      set the itemDel to ","
+      rigDBOpenParenthesis
+      put TRUE into tFirst
+      repeat for each item K in pTags
+         if tFirst then
+            rigDBLike "tags", K
+            put FALSE into tFirst
+         else
+            rigDBORLike "tags", K
+         end if
+      end repeat
+      rigDBCloseParenthesis
+      
+   end if
+   local tA, tAImages
+   put rigDBGet("images") into tAQuery
+   repeat with i = 1 to tAQuery["numrows"]
+      put rigDBRow(i) into tA
+      put tA into tAImages[i]
+   end repeat
+   return tAImages
+end selectedImages
+
+command media
+   local t_local_debug
+   local tHelpers, tACategories, tATags
+   get lcmsIfLoggedIn(sUserName, sIsAdmin)
+   commonConfigSettings "media", FALSE
+   pl showlocalCommand("Back to administration home", "") & "<br><br>" & cr
+   
+   put "form,url" into tHelpers
+   rigLoadHelper tHelpers
+   
+   
+   put makeOptions("Category") into tACategories
+   put makeOptions("Tag") into tATags
+   
+   -- put TRUE into t_local_debug
+   if t_local_debug then printarray "start media", gParams
+   
+   local tChosenImages, tID, tNewCat, tNewShort, tChosenTags, tData
+   local tSelectCategory, tSelectTags
+   -- see what has been commanded / changed
+   -- media commands are :
+   --     select - select a page to edit
+   --     update - update currently selected photo(s) with status, categories, etc.
+   if gParams["media_command"] is not empty then  
+      switch gParams["media_command"]
+         case "delete"
+         case "hide"
+         case "update"
+            -- pull all the IDs
+            -- pl "doing some kind of update"
+            -- printarray "inputs", gParams
+            put filterFor(gParams, "_id_image_", "accept") into tChosenImages
+            if t_local_debug then pl "chosen" && tChosenImages
+            repeat for each item K in tChosenImages
+               put char 2 to -2 of K into tID
+               put gParams["set_category_" & tID] into tNewCat
+               put gParams["shortname_" & tID] into tNewShort
+               put filterFor(gParams, "_set_" & tID & "_tag_", "accept") into tChosenTags
+               pl tID && tChosenTags && "::" & tNewCat
+               put empty into tData
+               put tChosenTags into tData["tags"]
+               put tNewCat into tData["category"]
+               put tNewShort into tData["shortname"]
+               rigDBWhere "id", tID
+               get rigDBUpdate("images", tData)
+            end repeat
+            
+            put gParams["images_category"] into tSelectCategory
+            put gParams["images_tags"] into tSelectTags
+            break
+            
+         case "select"
+            put gParams["select_category"] into tSelectCategory
+            -- printarray "params", gParams
+            put filterFor(gParams, "_select_tag_", "accept") into tSelectTags
+            -- printarray "selected", tSelectTags
+            break
+            
+         default
+            put gParams["images_category"] into tSelectCategory
+            put gParams["images_tags"] into tSelectTags
+      end switch
+   end if     
+   
+   -- Now we want to show the 'select' form ready to submit 
+   -- starting with any previous errors
+   put "Manage Media" into gData["pageTitle"]
+   
+   -- we have a selection form, then a command + thumbnail display form
+   
+   local tChoice
+   put rigFormOpen("lcms_admin/media") into gData["formOpenSelect"]
+   
+   if tSelectCategory is empty then 
+      put tACategories[line 1 of the keys of tACategories] into tChoice
+   end if
+   put rigFormLabel("Select Category", "select") && rigFormDropDown("select_category", tACategories, tChoice) into gData["select_category"]
+   
+   put makeTagsCheckboxes(tATags, tSelectTags) into gData["select_checkbox"]
+   
+   put rigSubmitButton("media_command", "Select") into gData["select_submit"]
+   
+   pl gData["uploadError"]
+   
+   pl "<h2>" & "Select / filter" & "</H2>" 
+   pl gData["formOpenSelect"]
+   --  pl gData["dropDown"]
+   pl gData["select_category"]
+   pl gData["select_checkbox"]
+   pl gData["select_submit"]
+   pl "</form>"
+   
+   -- then generate the action form, including all the selected images
+   
+   put rigFormOpen("lcms_admin/media") into gData["formOpenImages"]
+   -- hidden info to get back again ....
+   put "  <input type='hidden' name='images_category' value='" & tSelectCategory & "'>" & CR after gData["formOpenImages"]
+   put "  <input type='hidden' name='images_tags' value='" & tSelectTags & "'>" & CR after gData["formOpenImages"]
+   
+   -- a bunch of action buttons
+   --  put rigSubmitButton("media_command", "Hide") into gData["images_submit"]
+   --  put rigSubmitButton("media_command", "Delete") after gData["images_submit"]
+   put rigSubmitButton("media_command", "Update") after gData["images_submit"]
+   
+   if tSelectCategory is empty then 
+      put tACategories[line 1 of the keys of tACategories] into tChoice
+   end if
+   put rigFormLabel("Set Category", "select") && rigFormDropDown("set_category", tACategories, tChoice) into gData["set_category"]
+   
+   put makeTagsCheckboxes(tATags, tSelectTags, "set") into gData["set_checkbox"]
+   
+   local tASelected, tAImage, tAQuery
+   put selectedImages(tSelectCategory, tSelectTags) into tASelected
+   repeat with I = 1 to the number of elements in tASelected
+      put tASelected[I] into tAImage
+      put "_id_image_" & tAImage["id"] into tData["name"]
+      put tAImage["id"] into tData["id"]
+      put "accept" into tData["value"]
+      put FALSE into tData["checked"]
+      
+      put rigFormCheckbox(tData) after gData["choose_images"]
+      --  & rigFormLabel(tASelected[I]["name"], tAImage["name"])  
+      --    put tAImage["id"] && tAImage["name"] && tAImage["shortname"] after gData["choose_images"]
+      put tAImage["id"] && tAImage["name"] & "<br>" after gData["choose_images"]
+      put rigFormInput("shortname_" & tAImage["id"], tAImage["shortname"]) after gData["choose_images"]
+      put "<img src='/" & tAImage["folder"] & "/thumb/" & tAImage["filename"] & "'>" after gData["choose_images"]
+      put "<br>" & CR after gData["choose_images"]
+      --     put rigSubmitButton("media_command_" & tAImage["id"], "Update") after gData["choose_images"]
+      put rigFormLabel("Set Category", "select") && \
+            rigFormDropDown("set_category_" & tAImage["id"], tACategories, tAImage["category"]) after gData["choose_images"]
+      put makeTagsCheckboxes(tATags, tAImage["tags"], "set_" & tAImage["id"]) after gData["choose_images"]
+      put "<br><br>" & CR after gData["choose_images"]
+   end repeat
+   
+   pl "<h2>" & "Change / edit images" & "</H2>" 
+   pl gData["formOpenImages"]
+   
+   pl "<br>" & gData["images_submit"]
+   pl "<br>" & gData["choose_images"]
+   
+   pl "</form>"
+   
+   
+end media
+
+function showSome pText
+  put line 1 to 1 of pText into pText
+--  pl "start" && urlencode(pText)
+  replace numtochar(10) with CR in pText
+  replace "CR" with "<br>" & CR in pText
+--  pl "finish" && urlencode(pText)
+  return pText
+end showSome
+
+
+command showJSON
+   local tAQuery, tAA, tJ
+  get lcmsIfLoggedIn(sUserName, sIsAdmin)
+  commonConfigSettings
+  
+  put "Output form DB" into gData["pageTitle"]
+  
+  repeat for each item K in "boxes,images,Menus,Pages,Themes"
+    pl "<h3>" & K & "</h3>"
+    put rigDBGet(K) into tAQuery
+    repeat with i = 1 to tAQuery["numrows"]
+      put rigDBRow(i) into tAA
+      -- printarray K && i, tAA
+      put ArrayToJSON(tAA) into tJ
+      replace "<" with "&lt;" in tJ
+      replace "\n" with "<br>" in tJ
+      pl K && i && tJ
+    end repeat
+    pl "<br>"  
+  end repeat
+
+end showJSON
+
+-- ----------------------------------------------------------------------------------------------------
+-- Support functions for SINGLE style DBs
+
+local sAddURL, sASpec
+
+command startTable
+   put "<style>" &CR
+   put " table, th, td {" &CR
+   put "    border: 1px solid black;" &CR
+   put "   }" &CR
+   put "</style>" &CR
+   put "<table columns='5'>" &CR
+end startTable
+
+command myFormFillSingle pA
+   local tLength
+   set the itemDel to comma
+   -- Form filling
+   put empty into gData["formfill"]
+   
+   put lcmsFormStartGeneral("lcms_admin", "dbedit", gParams["_table"]) after gData["formfill"]
+   put lcmsFormHidden(pA, "ID,Testing") after gData["formfill"]
+   put "ID = " && pA["ID"] & "<br>" & CR after gData["formfill"]
+    
+   set the lineDel to ":"
+   replace CR with ":" in sASpec["spec"]
+   repeat for each line L in sASpec["spec"]
+      if L is empty then next repeat
+      put item 3 of L into tLength
+      switch item 2 of L
+         
+         case "Hidden"
+            put  lcmsFormHidden(pA, item 1 of L) after gData["formfill"]
+            break
+            
+         case empty
+            put 32 into tLength -- default type / size for fields
+         case "Input"
+            put lcmsFormInput(pA, item 1 of L, tLength) after gData["formfill"]
+            break
+            
+         case "Output"
+            put lcmsFormInput(pA, item 1 of L, tLength) after gData["formfill"]
+            break
+            
+         case "area"
+            put lcmsFormTextArea(pA, item 1 of L, tLength, item 4 of L) after gData["formfill"]
+            break
+            	
+         default
+            put "Can't understand line" && L &CR after gData["formfill"]
+      end switch
+   end repeat
+   
+   put lcmsFormButton("text_box_right", "Submit") after gData["formfill"]
+   put lcmsFormButton("text_box_right", "Cancel") after gData["formfill"]
+   
+   put lcmsFormEnd() after gData["formfill"]
+   
+end myFormFillSingle
+
+
+command showSummarySingle pMessage, pFilter
+   local tURL, tA, tColumns
+   if pMessage is not empty then
+      put "<strong>" & pMessage & "</strong><p><br>" &CR
+   end if
+   put sBaseURL & "/dbedit/" & gParams["_table"] into tURL
+   -- get all of them
+   put empty into tA
+   
+   put "<h1>Editing or viewing" && gParams["_table"] & "</h1>" & CR
+   put sAddURL &CR
+   
+   put "ID" & comma & sASpec["Summary"] into tColumns
+   
+   if rigDBFieldExists("STATUS", gParams["_table"]) then
+      put ",status" after tColumns
+   end if
+   rigDBSelect (tColumns)
+   
+   if sASpec["SortOrder"] is not empty then
+      rigDBOrderBy sASpec["SortOrder"]
+   else
+      repeat for each item II in sASpec["Summary"]
+         rigDBOrderBy II, "asc"
+      end repeat
+   end if
+   
+   local tAQuery
+   put rigDBGet(gParams["_table"]) into tAQuery
+   -- printarray "query", tAQuery
+   if tAQuery["numrows"] > 0 then
+      startTable
+      repeat with i = 1 to tAQuery["numrows"]
+         put rigDBRow(i) into tA
+         -- printarray "this", tA
+         put "<tr>" 
+         repeat for each item II in sASpec["Summary"]
+            if II = "Date" then
+               replace "0000-00-00" with empty in tA[II]
+               replace "00:00:00" with empty in tA[II]          
+            end if
+            put "<td><strong>" & tA[II] & "</strong></td>"
+         end repeat
+         put  CR
+         
+         repeat for each item II in "edit" -- "edit,view"
+            put "  <td><a href='" & tURL & "/" & tA["ID"] & "/" & II & "'>" & II & "</a></td>" & CR
+         end repeat
+         if rigDBFieldExists("STATUS", gParams["_table"]) then
+            repeat for each item II in "archive,publish,draft"
+               if II <> tA["STATUS"] then 
+                  put "  <td><a href='" & tURL & "/" & tA["ID"] & "/" & II & "'>" & II & "</a></td>" & CR
+               else
+                  put "<td> </td>" &CR
+               end if
+            end repeat
+         end if
+         put "</tr>" & CR
+      end repeat
+      put "</table><p><br>" & CR & CR
+   else
+      put "No matching records found" & cr
+   end if
+end showSummarySingle
+
+
+function exactlyTheSame pA, pB
+  set the casesensitive to true
+  return pA = pB
+end exactlyTheSame
+
+function maybeFetchSegment pN, pElse
+   local tt
+  put rigFetchSegment(pN) into tt
+  if tt is not false then
+    return tt
+  end if
+  return pElse
+end maybeFetchSegment
+
+-- ----------------------------------------------------------------------------------------------------
+-- DBEDIT 
+
+command dbedit
+   get lcmsIfLoggedIn(sUserName, sIsAdmin)
+   commonConfigSettings
+   pl showlocalCommand("Back to administration home", "") & "<br><br>" & cr
+   pl showlocalCommand("Edit a different database", "dbedit") & "<br><br>" & cr
+   
+   rigLoadHelper "form"
+   	
+   put getParams() into gParams
+   --	printarray "in dbedit", gParams
+   
+   put maybeFetchSegment(3, gParams["_table"]) into gParams["_table"]
+   put maybeFetchSegment(4, gParams["ID"]) into gParams["ID"]
+   put maybeFetchSegment(5, gParams["action"]) into gParams["action"]
+   --??--    put gParams["_detail"] into gParams["_table"]
+   --??--	printarray "gP", gParams
+   if gParams["_table"] is empty then 
+      -- no table specified - give list of table choices as urls
+      put files("user/objects") into tFiles
+      filter tFiles with "*.txt"
+      replace ".txt" with empty in tFiles
+      
+      put sBaseURL & "/dbedit" into tURL
+      repeat for each line L in tFiles
+         put "<p><strong>" & L & "</strong> " & "&nbsp;"  
+         put "<a href='" & tURL & "/" & L & "'>View</a> " & "&nbsp;"
+      end repeat
+      put "<br><br>" & CR
+      exit dbedit
+   end if
+   
+   -- OK so we have a table
+   put sBaseURL & "/dbedit/" & gParams["_table"] into tURL
+   put "<a href='" & tURL & "//plus'>Add an entry</a>" into sAddURL    
+   get rigLoadDatabase()
+   
+   -- get the editing specification for this table
+   put empty into tA
+   put empty into sASpec
+   put gParams["_table"] into tA["tablename"]
+
+   local tFile, tSpec
+   put "file:user/objects/" & tA["tablename"] & ".txt" into tFile
+   put URL tFile into tSpec
+   set the itemDel to ":"
+   repeat for each line L in tSpec
+     if the number of items in L = 1 then
+       put L & CR after sASpec["spec"]
+     else
+       put trim(item 2 of L) into sASpec[trim(item 1 of L)]
+     end if
+   end repeat
+   
+--   printarray "spec", sASpec
+   
+   -- this should have defined for us
+   --  summary (what to show in the summary page to allow selection)
+   --  spec (lines of column, type, details)
+   -- (optionally) sortorder (files and order of sort)
+   
+   -- NB we always use "ID" to identify one to be edited, so
+   --    if no ID specified, 
+   -- OR if we were editing, and did a "cancel" 
+   --     then we show the summary page with URL links
+   
+   -- TODO check files in the spec against those in the DB table
+   
+   if (gParams["ID"] is empty) then
+      showSummarySingle "", gParams["ID"] 
+      exit dbedit
+   end if
+   
+   local tFields, tARow, tAID
+   -- HERE when handling a specific item
+   if gParams["ID"] = "plus" then
+      put rigDbListFields(gParams["_table"]) into tFields
+      repeat for each key K in tFields
+         put empty into tARow[ tFields[K] ]
+      end repeat
+      put "plus" into tARow["ID"]
+   else
+      put empty into tAID
+      -- load the current item to be displayed
+      put gParams["ID"] into tAID["id"]
+      put rigDBGetWhere(gParams["_table"], tAID) into tAQuery
+      --printarray"qqq", tAQuery
+      put rigDbRow(1) into tARow
+   end if
+   --printarray "the row", tARow
+   
+   local tMessage, tData, tOut, tRes, tt, ttt
+   switch gParams["action"]
+      case "cancel"
+         put "Edit cancelled" into tMessage
+         showSummarySingle tMessage
+         exit dbedit
+         
+      case "Submit" 
+         -- this is the interesting one - changes submitted
+         -- if (valid) then store it
+         put empty into tData
+         set the wholeMatches to true
+         repeat for each key K in tARow
+            if NOT exactlyTheSame(gParams[K], tARow[K]) then 
+                            pl "updated entry " && K && "to" && gParams[K] && "::" && tARow[K]
+               put trim(unescapeHTMLChars(gParams[K])) into tData[K]
+            else
+                            pl "unchanged" && K && gParams[K]
+            end if
+         end repeat
+         if tData is an array then
+            pl "changes made !!"
+            put tData into tOut
+            put gParams["ID"] into tOut["ID"]
+            put gParams["_table"] && the internet date &CR into tRes
+            put outArray(tOut) after tRes
+            put tRes &CR &CR after URL("file:" & the defaultfolder & "/db_changes_log.txt")
+            
+            if gParams["ID"] = "plus" then
+               put rigDbInsert(gParams["_table"], tData) into ttt
+            else
+               rigDBWhere "id", gParams["ID"]
+               get rigDBUpdate(gParams["_table"], tData)
+            end if
+            put rigDBGetWhere(gParams["_table"], tAID) into tAQuery
+            put rigDbRow(1) into tARow
+         end if
+         showSummarySingle "Edit submitted successfully"
+         exit dbedit
+         break
+         
+      case "archive"
+      case "publish"
+      case "draft"
+         put empty into tData
+         put gParams["action"] into tData["STATUS"]
+         rigDBWhere "id", gParams["ID"]
+         get rigDBUpdate(gParams["_table"], tData)
+         put rigDBGetWhere(gParams["_table"], tAID) into tAQuery
+         --printarray"qqq", tAQuery
+         put rigDbRow(1) into tARow
+         showSummarySingle "Status of entry" && gParams["ID"] && "set to" && gParams["action"]
+         exit dbedit
+         
+      case "view"
+         showSummarySingle "action was set to View which currently does nothing"
+         exit dbedit
+         
+      default
+         -- not a submit - must be a first entry into edit mode
+   end switch
+   	  
+   	  
+   repeat for each key K in tARow
+      put tARow[K] into gData["params"][K]
+   end repeat
+   
+   myFormFillSingle tARow
+   	
+   --printarray "gdata before loading", gData
+   -- pl "and load view" && the number of chars in gData["formfill"]
+   
+   pl gData["formfill"]
+   
+   
+end dbedit
+

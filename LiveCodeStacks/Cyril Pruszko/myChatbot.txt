@@ -1,0 +1,13 @@
+hungry	What are you hungry for?
+hamburger	What do you like on your hamburger?
+school	I like school too, what is your favorite subject?
+math	I like math even though it was hard for me. 
+English	I did good in English. What other subjects do you like?
+science	That is a good subject
+cat	Tell me more about your pet
+parrot	Tell me more about your pet
+snake	Tell me more about your pet
+bird	Tell me more about your pet
+alligator	Tell me more about your pet
+verb	A word used to describe an action, state or occurrence.
+adverb	A word that modifies an adjective or verb

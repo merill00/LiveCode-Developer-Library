@@ -1,0 +1,18 @@
+
+
+revIgniter Tutorial
+
+Building dynamic web pages with revIgniter.
+
+------------------------------------------
+
+
+Don't forget to replace the action attributes in
+chatcontent.irev and chatlogin.irev with the proper URL.
+
+Make sure, that all settings in your database.irev file
+are correct, that gActiveRecord is set to TRUE and
+that your database contains the "chat" table
+(a database dump is included).
+
+ 

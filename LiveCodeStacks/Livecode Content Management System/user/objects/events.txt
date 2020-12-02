@@ -1,0 +1,7 @@
+Summary: Category,Headline
+SortOrder: Category asc,DateAndTime desc, Headline asc
+Headline,Input,120
+Category,Input,32
+DateAndTime,Input,20
+Contact,Input,100
+Content,Area,64,4

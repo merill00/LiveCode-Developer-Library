@@ -1,0 +1,283 @@
+Library: com.fmpromigrator.widget.buttonbar
+
+Type: widget
+
+Description:
+This widget is a button bar.
+
+Contributed by .com Solutions Inc.
+www.FmProMigrator.com
+
+Name: buttonClicked
+
+Type: message
+
+Syntax: on buttonClicked nameOfButtonClicked
+
+Summary: Sent when a button is clicked
+
+Example:
+on buttonClicked pButtonName
+   -- branch based upon name of clicked button
+   switch pButtonName
+      case "first"
+         break
+      case "previous"
+         break
+      case "next"
+         break
+      case "last"
+         break
+      default
+         -- do nothing if empty
+   end switch
+end buttonClicked
+
+Description:
+Handle the <buttonClicked> message in the widget's object script to respond to
+a button click made by the user.
+
+Name: showBorder
+
+Type: property
+
+Syntax: get the <showBorder> of <widget>
+
+Syntax: set the <showBorder> of <widget> to {true | false}
+
+Summary: Whether the dividing line at the top of the buttonbar is drawn or not
+
+Description:
+Use the <showBorder> property to determine whether the dividing line at the top
+of the buttonbar is drawn or not.
+
+
+
+Name: itemIcons
+
+Type: property
+
+Syntax: get the itemIcons of <widget>
+
+Syntax: set the itemIcons of <widget> to <pIcons>
+
+Summary: The icons for the button items when not highlighted
+
+Parameters: 
+
+pIcons: A comma delimited list of icon names.
+
+Description:
+The icons of the button items of the widget.  Adding an item to the
+<itemIcons> causes a new button item to be created with the default label
+and name.
+
+Each icon name must be one of the predefined graphics provided by the "IconSVG"
+library.  You can get a list of available predefined path names by running
+`put iconNames()` in the Message Box.
+
+**Note:** Removing an item from the <itemIcons> does not cause the
+corresponding item to be removed from the button items, but merely resets
+it to the default icon.
+
+
+
+Name: itemNames
+
+Type: property
+
+Syntax: get the itemNames of <widget>
+
+Syntax: set the itemNames of <widget> to <pNames>
+
+Summary: The names of the button items
+
+Parameters: 
+
+pNames: A comma delimited list of the button item names.
+
+Description:
+The names of the button items of the widget.
+
+Adding an item to the <itemNames> of the buttonbar causes a new button item to
+be created with the default icon and label. Removing an item from the
+<itemNames> causes the corresponding item to be removed from the button
+items.
+
+
+
+Name: opaque
+
+Type: property
+
+Syntax: get the <opaque> of <widget>
+
+Syntax: set the <opaque> of <widget> to {true | false}
+
+Summary: Whether the background of the buttonbar is opaque
+
+Description:
+If the <opaque> property is `false`, the background of the buttonbar will be
+transparent.
+
+
+
+Name: itemStyle
+
+Type: property
+
+Syntax: get the itemStyle of <widget>
+
+Syntax: set the itemStyle of <widget> to <pItemStyle>
+
+Summary: The display style of the widget
+
+Parameters: 
+
+pItemStyle:
+The display style
+-"icons": display icons only
+-"text": display names only
+-"both": display icons and names
+
+Description: Use the <itemStyle> property to control which elements of the button items are displayed.
+
+
+
+
+Name: desiredHeight
+
+Type: property
+
+Syntax: get the desiredHeight of <widget>
+
+Summary: The height that the widget ought to be displayed at
+
+Example:
+create widget as "com.fmpromigrator.widget.buttonbar"
+set the height of it to the desiredHeight of it
+
+Description: Returns the height that the widget ought to be displayed at
+
+
+
+
+Name: editMode
+
+Type: property
+
+Syntax: get the editMode of <widget>
+
+Syntax: set the editMode of <widget> to (true | false)
+
+Summary: Whether the widget is in edit mode or not
+
+Description:
+This is currently an experimental feature of the navigation bar, and allows the icons to
+be changed by clicking on the outlined regions, and new items to be added with the add button.
+
+
+
+Name: itemLabels
+
+Type: property
+
+Syntax: get the itemLabels of <widget>
+
+Syntax: set the itemLabels of <widget> to <pLabels>
+
+Summary: The labels displayed for the navigation items
+
+Parameters: 
+
+pLabels: A comma delimited list of labels.
+
+Description:
+The display labels for button items of the widget. Adding an item to the
+<itemLabels> causes a new button item to be created with the default icon
+and name.
+
+**Note:** Removing an item from the <itemLabels> does not cause the
+corresponding item to be removed from the button items, but merely resets
+it to the default label.
+
+
+
+Name: hilitedItemIcons
+
+Type: property
+
+Syntax: get the hilitedItemIcons of <widget>
+
+Syntax: set the hilitedItemIcons of <widget> to <pIcons>
+
+Summary: The icons for the navigation items when pressed (hilited)
+
+Parameters: 
+
+pIcons: A comma delimited list icon names.
+
+Description:
+The icons for the button items of the widget to be shown when the buttons are
+in the pressed state.  Adding an item to the <hilitedItemIcons> causes a new button
+item to be created with the default label and name.
+
+The name of an icon must be one of the names returned by the iconNames() function of the com.livecode.library.iconSVG library.
+
+Each icon name must be one of the predefined graphics provided by the "IconSVG"
+library.  You can get a list of available predefined path names by running
+`put iconNames()` in the Message Box.
+
+**Note:** Removing an item from the <hilitedItemIcons> does not cause the
+corresponding item to be removed from the button items, but merely resets
+it to the default icon.
+
+References: itemIcons (property)
+
+
+
+
+Name: itemArray
+
+Type: property
+
+Syntax: get the itemArray of <widget>
+
+Syntax: set the itemArray of <widget> to <pButtonArray>
+
+Summary: The <itemArray> is all the collective data of the icons and labels of the buttonbar
+
+Parameters: 
+
+pButtonArray: An array containing all the buttonbar data:
+
+Description:
+The <itemArray> is a numerically keyed array, each element of which contains
+an array describing the label and icons of the navigation item at that index.
+
+The structure of the <itemArray> is:
+
+```
+{ key (integer): The index of the navigation item
+	value (array): The array containing the data for the item at this index
+	{ key : "label"
+		value (string): The label of this item
+		key : "name"
+		value (string): The name of this item
+		key : "icon_name"
+		value (string) : The name of the icon to display when the item is not highlighted
+		key : "hilited_icon_name"
+		value (string) : The name of the icon to display when the item is highlighted
+	}
+}
+```
+
+Any individual keys ("label", "icon_name", "hilited_icon_name") missing when
+setting the <itemArray> will be added, and set to their defaults - "circle" for
+the icons, and "New Item" for the label.
+
+**Note:** Setting the <ButtonArrayData> to a non-numerically keyed array will cause an
+error to be thrown
+
+
+

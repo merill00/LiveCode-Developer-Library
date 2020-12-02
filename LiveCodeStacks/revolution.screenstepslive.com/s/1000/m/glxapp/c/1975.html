@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+<meta content='IE=edge' http-equiv='X-UA-Compatible'>
+<meta content='width=device-width, initial-scale=1' name='viewport'>
+<title>Application Helpers | GLX Application Framework 1.2 | GLX Application Framework</title>
+<meta name='description'>
+
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="Pu5CKyJnozrO6wcjYqhpveugakM8cJQPP2hRPI3sV5TvsbX7Ct1rUJHsB4YwdDkxXfMFWRrGQ+JWJkVDfjSCWA==" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="https://assets.screensteps.com/assets/themes/alpha-027b2e60ae75b9d8e6d6bcb32d3e6730dc3f6fe41be8479ef83e02168774766b.css" />
+<style type="text/css" media="all">/* headings */
+  h1,
+  h1.toc-heading,
+  h2.toc-heading {
+    color: #353938;
+  }
+
+  h2.toc-subheading,
+  h3.toc-subheading,
+  h4.toc-subheading,
+  h5.toc-subheading,
+  h6.toc-subheading {
+    color: #5a616c;
+  }
+
+  .screensteps-training-site [data-count-bubble]::after {
+    background-color: #5a616c;
+  }
+
+  .screensteps-article-content h2 {
+    color: #353938;
+  }
+
+  .screensteps-article-content h3,
+  .screensteps-article-content h4,
+  .screensteps-article-content h5,
+  .screensteps-article-content h6 {
+    color: #666e6c;
+  }
+
+  .screensteps-sidebar h3 {
+    color: #666e6c;
+  }
+
+  .sidebar-subheading {
+    color: #666e6c;
+  }
+
+  .comments-heading {
+    color: #666e6c;
+  }
+
+  /* base/_buttons */
+  input[type="button"],
+  input[type="reset"],
+  input[type="submit"],
+  button,
+  .screensteps-bg-action-color,
+  .screensteps-courses .screensteps-progress-bar::before,
+  .screensteps-courses .screensteps-courses-menu a:hover,
+  .screensteps-courses .screensteps-courses-menu .step-active a::before,
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #477dca;
+  }
+
+  input[type="button"]:hover,
+  input[type="reset"]:hover,
+  input[type="submit"]:hover,
+  button:hover,
+  button.screensteps-bg-action-color:hover,
+  a.screensteps-bg-action-color:hover {
+    background-color: #3061a7;
+  }
+
+  /* base/_forms */
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="password"]:focus,
+  input[type="search"]:focus,
+  input[type="tel"]:focus,
+  input[type="text"]:focus,
+  input[type="url"]:focus,
+  input[type="color"]:focus,
+  input[type="date"]:focus,
+  input[type="datetime"]:focus,
+  input[type="datetime-local"]:focus,
+  input[type="month"]:focus,
+  input[type="time"]:focus,
+  input[type="week"]:focus,
+  select[multiple=multiple]:focus,
+  textarea:focus {
+    border-color: #477dca;
+  }
+
+
+  .screensteps-training-site .screensteps-main-search .search-field:not(:placeholder-shown) {
+    box-shadow: 0 0 0 2px #7b808e;
+  }
+
+  /* base/_typography */
+  body {
+    background-color: #7b808e;
+    color: #515857;
+  }
+
+  a {
+    color: #477dca;
+  }
+
+
+
+  /* _screensteps-container */
+  .screensteps-container a:visited {
+    color: #3061a7;
+  }
+ .screensteps-container a:active,
+ .screensteps-container a:focus,
+ .screensteps-container a:hover {
+    color: #3061a7;
+  }
+
+  /* _screensteps-manual-contents */
+  .screensteps-manual-contents h2 a {
+    color: #477dca;
+  }
+  /* _screensteps-foldable-sections */
+  .screensteps-main-content .embedded-chapter-article > * {
+    color: #477dca;
+  }
+
+  /* screensteps-header */
+  .screensteps-branding h1,
+  .screensteps-header .screensteps-branding a,
+  .screensteps-training-site .screensteps-profile-subnav-toggle {
+    color: #ffffff;
+  }
+
+  .screensteps-header .screensteps-branding a:hover {
+    color: #2e3340;
+  }
+
+  /* meta data text */
+  .chapter-count,
+  .screensteps-comment-count,
+  .screensteps-lesson-details,
+  .nested-chapter-lessons .here a:after,
+  .screensteps-single-comment time {
+    color: #838c8b;
+  }
+
+  /* course tiles */
+  .screensteps-training-site .screensteps-group .asset-list--course a {
+    background-color: #4a4f56;
+    color: #fff;
+  }
+
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #2C5896;
+  }
+
+  .screensteps-training-site .screensteps-group .asset-list--course a:hover {
+    background-color: #565c64;
+  }
+</style>
+
+<link rel='icon'>
+<script src="https://assets.screensteps.com/assets/application-fe7915887e0874f95ef87940f513c239a27a71cc345a491bff7c3f92416a8111.js"></script>
+<script src="https://assets.screensteps.com/assets/vendor/jquery.fitvids-3e4679bfa1c083cec0d56c1f636f2038bf770ed13929e17d22bd1f417d3c94f8.js"></script>
+<script src="https://assets.screensteps.com/assets/theme-a161d6812c4179b27f1d00b86bb981be26e0733ede796eda0978b6a514ff216a.js"></script>
+<!--[if lt IE 9]>
+<script src="//assets.screensteps.com/assets/vendor/html5shiv.min-a280ac74b433afc5b6516368f5a678ceba501e0fb8b7987adee3b4e673674310.js"></script>
+<![endif]-->
+
+
+  <script type="text/javascript">
+    !function(name,path,ctx){
+      var latest,prev=name!=='Keen'&&window.Keen?window.Keen:false;ctx[name]=ctx[name]||{ready:function(fn){var h=document.getElementsByTagName('head')[0],s=document.createElement('script'),w=window,loaded;s.onload=s.onerror=s.onreadystatechange=function(){if((s.readyState&&!(/^c|loade/.test(s.readyState)))||loaded){return}s.onload=s.onreadystatechange=null;loaded=1;latest=w.Keen;if(prev){w.Keen=prev}else{try{delete w.Keen}catch(e){w.Keen=void 0}}ctx[name]=latest;ctx[name].ready(fn)};s.async=1;s.src=path;h.parentNode.insertBefore(s,h)}}
+    }('KeenAsync','https://d26b395fwzu5fz.cloudfront.net/keen-tracking-1.1.3.min.js',this);
+
+    KeenAsync.ready(function(){
+      // Configure a client instance
+      var client = new KeenAsync({
+        projectId: '591daac30935ce40a59fb7ab',
+        writeKey: 'C89A9A1A8DB4C585F119F8F81ABB9621940DBBADDA5C72C2B87B1BD3464890D23FD250B0FFA4A1056DCB210616545B7B6C9DDF2054167B5219A3DD81E8DF90A321BE0C1B35BA19F2E3E85730FB96C1F93F8C66D8CD449FE6EFE43D98453632D1'
+      });
+
+      // Record an event
+      client.recordEvent('pageviews', {
+        title: document.title,
+        ip_address: "${keen.ip}",
+        user_agent: "${keen.user_agent}",
+        user_id: null,
+        account_id: "2c1ab788fb",
+        site_id: 1000,
+        manual_id: 658,
+        article_id: null,
+        article_type_id: null,
+        course_id: null,
+        source_id: 1
+      });
+    });
+  </script>
+
+<link rel="alternate" type="application/rss+xml" title="RSS: All Lessons for GLX Application Framework" href="../../../../1000.rss" />
+<link rel="alternate" type="application/rss+xml" title="RSS: Lessons for manual GLX Application Framework 1.2" href="../../glxapp.rss" />
+
+</head>
+<body class='-body -header site-chapter  no-focus-outline' data-base-path='/s/1000/' data-content-template='2015' data-generating-pdf-text='Generating PDF...'>
+<div class='screensteps-admin-navigation'>
+<div data-logged-in-check-url='https://revolution.screenstepslive.com/s/1000/user_nav' id='screensteps-admin-bar'>
+<ul>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/sites/1000/manuals/658/chapters/1975">View in admin portal</a></li>
+</ul>
+</div>
+
+</div>
+<header class='screensteps-header' role='banner'>
+<a class='skip-navigation--link' href='#screensteps-main-content' id='skip-navigation'>
+Skip to main content
+</a>
+
+<div class='screensteps-branding'>
+<div class='logo-wrapper'>
+<h1 class='company-name'>Cross-Platform Application Development with LiveCode</h1>
+</div>
+</div>
+</header>
+
+<div class='screensteps-container-wrapper'>
+<main class='screensteps-container'>
+<div class='screensteps-site-title-wrapper'>
+<h1 class='screensteps-site-title toc-heading'>GLX Application Framework</h1>
+</div>
+<div class='screensteps-main-search' role='search'>
+<form id="screensteps-search-form" action="../../../searches.html" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+<div class='screensteps-search-form'>
+<label for="text">Search term</label>
+<input type="text" name="text" id="text" class="search-field" title="Enter a keyword or topic to search" />
+
+<input type="submit" name="commit" value="Search" class="search-submit" data-disable-with="Search" />
+</div>
+</form>
+
+
+</div>
+<script>
+  jQuery(document).ready(function($) {
+    jQuery('ul.nested-chapter-lessons').hide().siblings('.toggle-lessons').removeClass('open');
+  });
+</script>
+<div class='chapter left-sidebar screensteps-content-wrapper'>
+<div class='screensteps-main-content' role='main'>
+<header class='screensteps-title'>
+<div id="screensteps-breadcrumb" aria-label="breadcrumb" aria-level="3"><a href="../../../../1000.html">GLX Application Framework</a><a href="../../glxapp.html">GLX Application Framework 1.2</a>Application Helpers</div>
+<h1 class='manual' id='screensteps-main-content'>GLX Application Framework 1.2</h1>
+</header>
+<div class='screensteps-inner-content'>
+<ul class='screensteps-manual-contents'>
+<li class='chapter first' id='screensteps-chapter-1975'>
+<h2 class='chapter-title'><a href="1975.html">Application Helpers</a></h2>
+<ul class='chapter-contents'>
+<li id='lesson-5672'><a href="../l/5672-how-can-i-add-an-open-recent-item-to-my-file-menu.html">How Can I Add An &quot;Open Recent&quot; Item To My File Menu?</a></li>
+<li id='lesson-5673'><a href="../l/5673-how-do-i-determine-file-s-that-user-double-clicked-on-to-launch-my-application.html">How Do I Determine File(s) That User Double-Clicked On To Launch My Application?</a></li>
+</ul>
+</li>
+
+</ul>
+<div class='view-all-chapters'><a href="../../glxapp.html">View all chapters</a></div>
+</div>
+</div>
+<div aria-label='sidebar' class='screensteps-sidebar' role='complementary'>
+<div class='screensteps-sidebar-widget' id='sidebar-chapters'>
+<h3>Topics</h3>
+<ul id='sidebar-chapter-list'>
+<li class='chapter-list-item' data-section-id='1945'>
+<a class='toggle-lessons' href='1945.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Getting Started</span>
+<span class='chapter-count'>
+&nbsp;5
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='5544'><a href="../l/5544-what-is-the-glx-application-framework.html">What is the GLX Application Framework?</a></li>
+<li data-lesson-id='5545'><a href="../l/5545-understanding-how-the-framework-is-designed.html">Understanding How The Framework Is Designed</a></li>
+<li data-lesson-id='5546'><a href="../l/5546-properties-messages.html">Properties &amp; Messages</a></li>
+<li data-lesson-id='5489'><a href="../l/5489-installing-the-plugin.html">Installing the Plugin</a></li>
+<li data-lesson-id='5547'><a href="../l/5547-how-do-i-update-an-existing-application-to-use-the-latest-framework.html">How Do I Update An Existing Application To Use the Latest Framework?</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='1946'>
+<a class='toggle-lessons' href='1946.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Creating Your First Application</span>
+<span class='chapter-count'>
+&nbsp;3
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='5548'><a href="../l/5548-how-do-i-create-a-new-application-based-on-the-glx-application-framework.html">How Do I Create a New Application Based on the GLX Application Framework?</a></li>
+<li data-lesson-id='5549'><a href="../l/5549-how-do-i-build-standalones-for-supported-platforms.html">How Do I Build Standalones For Supported Platforms?</a></li>
+<li data-lesson-id='5550'><a href="../l/5550-how-do-i-open-an-application-in-the-ide-the-next-time-i-launch-revolution.html">How Do I Open An Application in the IDE The Next Time I Launch Revolution?</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2244'>
+<a class='toggle-lessons' href='2244.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Converting a Non-GLX Application Framework To Use The Framework</span>
+<span class='chapter-count'>
+&nbsp;2
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6698'><a href="../l/6698-incorporating-your-program-stack-into-the-framework-based-application.html">Incorporating Your Program Stack Into the Framework-Based Application</a></li>
+<li data-lesson-id='6699'><a href="../l/6699-move-application-logic-into-application-stack-script.html">Move Application Logic Into &#39;application&#39; Stack Script</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='1947'>
+<a class='toggle-lessons' href='1947.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Configuring Your Application</span>
+<span class='chapter-count'>
+&nbsp;14
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='5551'><a href="../l/5551-how-do-i-password-protect-my-application-stacks-when-deploying.html">How Do I Password Protect My Application Stacks When Deploying?</a></li>
+<li data-lesson-id='5552'><a href="../l/5552-how-do-i-add-stacks-to-my-application.html">How Do I Add Stacks to My Application?</a></li>
+<li data-lesson-id='6886'><a href="../l/6886-how-do-i-display-a-splash-screen-when-my-application-launches.html">How Do I Display A Splash Screen When My Application Launches?</a></li>
+<li data-lesson-id='5553'><a href="../l/5553-how-do-i-add-externals-to-my-application.html">How Do I Add Externals to My Application?</a></li>
+<li data-lesson-id='5560'><a href="../l/5560-how-do-i-use-revdb-with-the-application-framework.html">How Do I Use RevDB With The Application Framework?</a></li>
+<li data-lesson-id='5559'><a href="../l/5559-how-can-i-add-a-readme-file-to-my-application-distribution.html">How Can I Add A ReadMe File To My Application Distribution?</a></li>
+<li data-lesson-id='6887'><a href="../l/6887-what-is-the-best-way-to-include-the-data-grid-library.html">What is the Best Way To Include the Data Grid Library?</a></li>
+<li data-lesson-id='5554'><a href="../l/5554-if-my-application-is-password-protected-how-do-i-unlock-certain-stacks-at-runtime.html">If My Application Is Password Protected How Do I Unlock Certain Stacks At Runtime?</a></li>
+<li data-lesson-id='5555'><a href="../l/5555-how-can-i-specify-default-values-for-preferences-on-a-computer-that-has-never-run-my-application.html">How Can I Specify Default Values For Preferences On A Computer That Has Never Run My Application?</a></li>
+<li data-lesson-id='5556'><a href="../l/5556-how-can-i-notify-my-application-that-the-value-for-a-preference-has-been-changed.html">How Can I Notify My Application That The Value For A Preference Has Been Changed?</a></li>
+<li data-lesson-id='5557'><a href="../l/5557-how-do-i-configure-the-storage-locations-for-application-data-and-preferences.html">How Do I Configure The Storage Locations For Application Data and Preferences?</a></li>
+<li data-lesson-id='5558'><a href="../l/5558-how-do-i-include-supporting-files-folders-when-i-build-my-application.html">How Do I Include Supporting Files/Folders When I Build My Application? </a></li>
+<li data-lesson-id='5561'><a href="../l/5561-specifying-which-files-your-application-can-open.html">Specifying Which Files Your Application Can Open</a></li>
+<li data-lesson-id='5562'><a href="../l/5562-creating-advanced-file-type-filters.html">Creating Advanced File Type Filters</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='1948'>
+<a class='toggle-lessons' href='1948.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Managing Windows &amp; Palettes With the Framework</span>
+<span class='chapter-count'>
+&nbsp;2
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='5563'><a href="../l/5563-how-do-i-get-the-framework-to-manage-my-stack-windows.html">How Do I Get The Framework To Manage My Stack Windows?</a></li>
+<li data-lesson-id='5564'><a href="../l/5564-how-can-i-attach-a-palette-to-a-main-window-so-that-it-receives-messages-when-the-main-window-visible-state-changes.html">How Can I Attach A Palette To a Main Window So That It Receives Messages When the Main Window Visible State Changes?</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='1949'>
+<a class='toggle-lessons' href='1949.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Undo/Redo Manager</span>
+<span class='chapter-count'>
+&nbsp;3
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='5614'><a href="../l/5614-what-is-the-undo-manager.html">What is the Undo Manager?</a></li>
+<li data-lesson-id='5632'><a href="../l/5632-how-can-i-implement-undo-for-changes-made-to-a-field.html">How Can I Implement Undo For Changes Made To a Field?</a></li>
+<li data-lesson-id='5633'><a href="../l/5633-how-do-i-add-undo-redo-entries-to-the-edit-menu.html">How Do I Add Undo/Redo Entries To the Edit Menu?</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='1950'>
+<a class='toggle-lessons' href='1950.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Internet Integration</span>
+<span class='chapter-count'>
+&nbsp;6
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='5565'><a href="../l/5565-what-sorts-of-internet-features-does-the-framework-provide.html">What Sorts Of Internet Features Does the Framework Provide?</a></li>
+<li data-lesson-id='5615'><a href="../l/5615-how-do-i-install-the-custom-version-of-liburl.html">How Do I Install the Custom Version of libURL?</a></li>
+<li data-lesson-id='5616'><a href="../l/5616-how-can-i-make-head-requests.html">How Can I Make HEAD Requests?</a></li>
+<li data-lesson-id='5566'><a href="../l/5566-how-do-i-add-support-for-ntlm-authentication-to-my-application.html">How Do I Add Support For NTLM Authentication To My Application?</a></li>
+<li data-lesson-id='5567'><a href="../l/5567-how-can-i-specify-the-username-password-for-a-url-or-proxy-server.html">How Can I Specify the Username/Password For a URL or Proxy Server?</a></li>
+<li data-lesson-id='5617'><a href="../l/5617-custom-liburl-api.html">Custom libURL API</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='1951'>
+<a class='toggle-lessons' href='1951.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Broadcasting</span>
+<span class='chapter-count'>
+&nbsp;1
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='5634'><a href="../l/5634-what-is-broadcasting.html">What is Broadcasting?</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='1952'>
+<a class='toggle-lessons' href='1952.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Building Your Application</span>
+<span class='chapter-count'>
+&nbsp;5
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='5635'><a href="../l/5635-introduction-to-application-building.html">Introduction to Application Building</a></li>
+<li data-lesson-id='5668'><a href="../l/5668-how-do-i-package-my-application-for-use-with-an-installer-or-auto-update.html">How Do I Package My Application For Use With An Installer Or Auto Update?</a></li>
+<li data-lesson-id='5669'><a href="../l/5669-what-message-is-sent-to-my-application-during-packaging.html">What Message Is Sent To My Application During Packaging?</a></li>
+<li data-lesson-id='5670'><a href="../l/5670-how-can-i-protect-auto-updates-with-username-password-on-my-web-server.html">How Can I Protect Auto Updates With Username/Password on My Web Server?</a></li>
+<li data-lesson-id='5671'><a href="../l/5671-how-do-i-integrate-deployments-with-my-favorite-installers.html">How Do I Integrate Deployments with My Favorite Installers?</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='1953'>
+<a class='toggle-lessons' href='1953.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Auto Update</span>
+<span class='chapter-count'>
+&nbsp;1
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='5568'><a href="../l/5568-understanding-how-auto-update-is-designed.html">Understanding How Auto Update Is Designed</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='1975'>
+<a class='toggle-lessons' href='1975.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Application Helpers</span>
+<span class='chapter-count'>
+&nbsp;2
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='5672'><a href="../l/5672-how-can-i-add-an-open-recent-item-to-my-file-menu.html">How Can I Add An &quot;Open Recent&quot; Item To My File Menu?</a></li>
+<li data-lesson-id='5673'><a href="../l/5673-how-do-i-determine-file-s-that-user-double-clicked-on-to-launch-my-application.html">How Do I Determine File(s) That User Double-Clicked On To Launch My Application?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='manual-pdf'>
+<ul class='icon-links'>
+<li><a class="pdf manual-pdf" href="https://revolution.screenstepslive.com/s/1000/m/glxapp/pdf">Download Manual PDF</a></li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='other-assets'>
+<h3>Other Resources</h3>
+<ul class='asset-list '>
+<li class='manual'><a href="../../glxapp.html">GLX Application Framework 1.2</a></li>
+<li class='manual'><a href="../../convert_to_glxapp.html">Converting An Existing Application To Use The Framework</a></li>
+</ul>
+</div>
+
+</div>
+
+</div>
+
+</main>
+</div>
+<div aria-labelledby='modal-label' class='screensteps-modal' id='screensteps-modal' role='dialog'>
+<span id='modal-label'>
+Inline referenced article
+</span>
+<div class='screensteps-modal__box'>
+<a class='screensteps-modal__close' href='#'>
+×
+</a>
+<span class='screensteps-loading-wrapper'>
+<span class='screensteps-loading'></span>
+</span>
+<div class='screensteps-modal__content screensteps-article-content'></div>
+</div>
+</div>
+</body>
+</html>

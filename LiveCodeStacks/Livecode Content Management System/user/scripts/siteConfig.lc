@@ -1,0 +1,20 @@
+script "Site Config"
+
+global gData, gTheme
+
+command siteConfig
+  -- And set the site name (i.e. menu system) and theme
+
+  put "MDBootstrap" into gTheme["theme_name"]
+  -- put "BasicTheme" into gTheme["theme_name"]
+  -- put "retro" into gTheme["theme_name"]
+  
+  put "Web site for LCMS default install" into gData["pageDescription"]
+  put "LCMS sample" into gData["pageKeywords"]
+
+  put "LCMS sample" into gData["pageTitle"]
+  put "LCMS sample" into gData["pageHeader"]
+
+  put "LCMS sample" into gData["pageBanner"]
+  put "Website  for LCMS sample." into gData["pageBannerText"] 
+end siteConfig 

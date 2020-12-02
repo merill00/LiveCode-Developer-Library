@@ -1,0 +1,1 @@
+<img src='/<? return gData["image"]["folder"] & "/" & gData["image"]["size"] & "/" & gData["image"]["filename"] ?>'  alt='new photo' class='img-fluid z-depth-1'>

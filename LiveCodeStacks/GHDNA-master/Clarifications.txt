@@ -1,0 +1,26 @@
+This will create an app allowing the navigation of hierarcially organized data. For links, 
+details and descriptions scrollbars will appear for any field that contains too much data to fit 
+within the UI element. A single image can also be displayed for any given set of imformation.
+
+
+
+The file structure should include a Greetings text file with whatever initial desired data may be, 
+be it a description, introduction, or instructions etc, a text file labled 0.
+
+For any numerically labled text file that has an image there should be a similarly labeled 
+image in the same layer of the file heirarchy. Additionally, if the file indicates that it 
+links to other items, the parent file should have a folder with its designation on the same 
+level of the folder heirarchy, and within it there should be numerically labeled text files. 
+
+There is no specific limit to the number of items. Each page can have one image, but any number of links. 
+
+The text files, other than the greeting file should be formatted with an asterisk between each item. 
+
+details: 
+number of items*header*Page Description*Labels for hyperlinks to other items, seperated by more asterisks*
+Details of the item currently on display*0 or 1 indicating whether there is an image*image, currently only works for 
+png and jpg files.
+
+example:
+5*Fruit*Everything you ever wanted to know about Fruit!*Apple*Orange*Pinapple*Strawberry*Well, okay, 
+this isn't EVERYTHING about fruit, but it COULD be, if this weren't just an example!*1*.jpg

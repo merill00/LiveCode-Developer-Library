@@ -1,0 +1,170 @@
+body {
+	font: 12pt "Lucida Grande", Lucida, Verdana, Geneva, sans-serif;
+}
+
+.page_margins {
+	margin-top: 50px;
+}
+
+
+#login {
+	margin-left: auto;
+	margin-right: auto;
+	width: 400px;
+	height: 70px;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#E3E3E3, endColorstr=#A1A1A1);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#E3E3E3, endColorstr=#A1A1A1)";
+	background: -moz-linear-gradient(bottom, #A1A1A1, #E3E3E3);
+	background: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0, rgb(161,161,161)),
+    color-stop(1, rgb(227,227,227))
+);
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	color: #515151;
+	font-size: 83.33%;
+}
+
+
+#login form {
+	margin-top: 0px;
+}
+
+#login form, #login p {
+	padding-left: 78px;
+}
+
+#login p {
+	padding-top: 8px;
+	margin-bottom: 6px;
+}
+
+
+#chat {
+	width: 500px;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#E3E3E3, endColorstr=#A1A1A1);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#E3E3E3, endColorstr=#A1A1A1)";
+	background: -moz-linear-gradient(bottom, #A1A1A1, #E3E3E3);
+	background: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0, rgb(161,161,161)),
+    color-stop(1, rgb(227,227,227))
+);
+	margin-left: auto;
+	margin-right: auto;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	color: #515151;
+}
+
+
+#chatheader {
+	background-color: transparent;
+	height: 40px;
+}
+
+p#username {
+	float: left;
+	margin-left: 20px;
+	font-size: 83.33%;
+	margin-top: 12px;
+}
+
+p#logout {
+	text-align: right;
+	width: 100px;
+	float: right;
+	margin-right: 20px;
+	font-size: 83.33%;
+	margin-top: 12px;
+}
+
+a {
+	text-decoration: none;
+	color: #367ec9;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+
+#chatbody {
+	height: 214px;
+	overflow: auto;
+	background-color: transparent;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #48a2ff;
+	border-top: 1px solid #48a2ff;
+	clear: both;
+}
+
+
+#chatbody li {
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#3B3B3B, endColorstr=#4A4A4A);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#3B3B3B, endColorstr=#4A4A4A)";
+	background: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0, rgb(59,59,59)),
+    color-stop(0.1, rgb(107,107,107))
+);
+
+background: -moz-linear-gradient(
+    center bottom,
+    rgb(59,59,59) 0%,
+    rgb(107,107,107) 10%
+);
+
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+
+	color: #e0e0e0;
+	font-size: 75%;
+	height: 30px;
+	padding-left: 12px;
+	padding-top: 1px;
+	margin: 6px 20px 0 -20px;
+	list-style-type: none;
+}
+
+
+#chatfooter {
+	background-color: #919191;
+	margin-top: 20px;
+	
+	-webkit-border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-radius-bottomleft: 5px;
+	-moz-border-radius-bottomright: 5px;
+	padding: 20px;
+	height: 20px;
+}
+
+
+#userinput {
+	width: 360px;
+}
+
+#submitbtn {
+	/*float: right;*/
+	width: 60px;
+	margin-left: 28px;
+}
+
+
+#footer {
+	font-size: 58.33%;
+	text-align: center;
+	margin-top: 80px;
+}
+

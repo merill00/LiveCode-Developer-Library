@@ -1,0 +1,13 @@
+libraries:
+  - filename: sqlyoga.livecodescript
+  - filename: sqlyoga_schema.livecodescript
+  - filename: sqlyoga_loader.livecodescript
+frontscripts:
+  - filename: sqlyoga_development.livecodescript
+    distribute: false
+register components:
+  - key: sql yoga>configuration
+    kind: files
+    callback stackfile: sqlyoga_levure_callbacks.livecodescript
+    distribute: false
+packager callbacks stackfile: sqlyoga_levure_callbacks.livecodescript

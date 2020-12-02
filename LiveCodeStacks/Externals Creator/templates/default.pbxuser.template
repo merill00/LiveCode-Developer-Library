@@ -1,0 +1,88 @@
+// !$*UTF8*$!
+{
+	4DF42A990B0488B2003F2D95 /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 4DF42AF30B0489E7003F2D95 /* Test */;
+		activeTarget = 4DF42AA70B0488CE003F2D95 /* [[external.identifier]] */;
+		addToTargets = (
+			4DF42AA70B0488CE003F2D95 /* [[external.identifier]] */,
+		);
+		breakpointsGroup = 4DF42B000B048A8F003F2D95 /* XCBreakpointsBucket */;
+		codeSenseManager = 4DF42A9E0B0488B2003F2D95 /* Code sense */;
+		executables = (
+			4DF42AF30B0489E7003F2D95 /* Test */,
+		);
+		ignoreBreakpointsInProjectsDict = {
+		};
+		perUserDictionary = {
+		};
+		userBuildSettings = {
+		};
+	};
+	4DF42A9E0B0488B2003F2D95 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	4DF42AA70B0488CE003F2D95 /* [[external.identifier]] */ = {
+		activeExec = 0;
+	};
+	4DF42AF30B0489E7003F2D95 /* Test */ = {
+		isa = PBXExecutable;
+		activeArgIndex = 0;
+		activeArgIndices = (
+			YES,
+		);
+		argumentStrings = (
+			"\"$(SRCROOT)/[[external.identifier]]Test.rev\"",
+		);
+		autoAttachOnCrash = 1;
+		configStateDict = {
+			"PBXLSLaunchAction-0" = {
+				PBXLSLaunchAction = 0;
+				PBXLSLaunchStartAction = 1;
+				PBXLSLaunchStdioStyle = 2;
+				PBXLSLaunchStyle = 0;
+				class = PBXLSRunLaunchConfig;
+				displayName = "Executable Runner";
+				identifier = com.apple.Xcode.launch.runConfig;
+				remoteHostInfo = "";
+				startActionInfo = "";
+			};
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+			{
+				active = YES;
+				name = EXTERNAL_LIBRARY;
+				value = "$(SYMROOT)/$(CONFIGURATION)/[[external.identifier]].bundle";
+			},
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		launchableReference = 4DF42AF40B0489E7003F2D95 /* Revolution.app */;
+		libgmallocEnabled = 0;
+		name = Test;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+		startupPath = "[[tool.macosx.revolution_folder]]";
+	};
+	4DF42AF40B0489E7003F2D95 /* Revolution.app */ = {
+		isa = PBXFileReference;
+		explicitFileType = wrapper.application;
+		name = Revolution.app;
+		path = "[[tool.macosx.revolution_engine]]";
+		sourceTree = "<absolute>";
+	};
+	4DF42B000B048A8F003F2D95 /* XCBreakpointsBucket */ = {
+		isa = XCBreakpointsBucket;
+		name = "Project Breakpoints";
+		objects = (
+		);
+	};
+}

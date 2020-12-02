@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+<meta content='IE=edge' http-equiv='X-UA-Compatible'>
+<meta content='width=device-width, initial-scale=1' name='viewport'>
+<title>Knowing Which Stacks Are In Memory | Lessons | Tutorials &amp; Manuals</title>
+<meta content='In Revolution a stack file that is stored on disk contains a single main stack. If the stack file is accessed in your program then the main stack and it&#39;s substacks are loaded into memory. There are various ways to access a stack file. The following examples will load all stacks (the main stack and substacks) of a stack file into memory:
+
+put the uVersion of stack &quot;/path/to/stack.rev&quot; into theVersion
+go stack &quot;/path/to/stack.rev&quot;
+put there is a stack &quot;/path/to/stack.rev&quot; into theStackExists
+
+Below you will find a function that will the name of all stacks that are currently loaded in memory.' name='description'>
+
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="la3IiDJTA2mdSofRT6BxISSkoAMXMGz+P8HGz1ZnvgFE8j9YGunLA8JNh3QdfCGtkvfPGTGGuxNWj9Kwpb9rzQ==" />
+<link rel="stylesheet" media="screen" href="https://assets.screensteps.com/assets/themes/fonts/helvetica-e03d9e53b962f0a4e2fed42a4a318c29cf029d37f80397baaf14722853359e6a.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="https://assets.screensteps.com/assets/themes/alpha-027b2e60ae75b9d8e6d6bcb32d3e6730dc3f6fe41be8479ef83e02168774766b.css" />
+<style type="text/css" media="all">/* headings */
+  h1,
+  h1.toc-heading,
+  h2.toc-heading {
+    color: #;
+  }
+
+  h2.toc-subheading,
+  h3.toc-subheading,
+  h4.toc-subheading,
+  h5.toc-subheading,
+  h6.toc-subheading {
+    color: #;
+  }
+
+  .screensteps-training-site [data-count-bubble]::after {
+    background-color: #;
+  }
+
+  .screensteps-article-content h2 {
+    color: #;
+  }
+
+  .screensteps-article-content h3,
+  .screensteps-article-content h4,
+  .screensteps-article-content h5,
+  .screensteps-article-content h6 {
+    color: #;
+  }
+
+  .screensteps-sidebar h3 {
+    color: #;
+  }
+
+  .sidebar-subheading {
+    color: #;
+  }
+
+  .comments-heading {
+    color: #;
+  }
+
+  /* base/_buttons */
+  input[type="button"],
+  input[type="reset"],
+  input[type="submit"],
+  button,
+  .screensteps-bg-action-color,
+  .screensteps-courses .screensteps-progress-bar::before,
+  .screensteps-courses .screensteps-courses-menu a:hover,
+  .screensteps-courses .screensteps-courses-menu .step-active a::before,
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #216bb5;
+  }
+
+  input[type="button"]:hover,
+  input[type="reset"]:hover,
+  input[type="submit"]:hover,
+  button:hover,
+  button.screensteps-bg-action-color:hover,
+  a.screensteps-bg-action-color:hover {
+    background-color: #155596;
+  }
+
+  /* base/_forms */
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="password"]:focus,
+  input[type="search"]:focus,
+  input[type="tel"]:focus,
+  input[type="text"]:focus,
+  input[type="url"]:focus,
+  input[type="color"]:focus,
+  input[type="date"]:focus,
+  input[type="datetime"]:focus,
+  input[type="datetime-local"]:focus,
+  input[type="month"]:focus,
+  input[type="time"]:focus,
+  input[type="week"]:focus,
+  select[multiple=multiple]:focus,
+  textarea:focus {
+    border-color: #216bb5;
+  }
+
+
+  .screensteps-training-site .screensteps-main-search .search-field:not(:placeholder-shown) {
+    box-shadow: 0 0 0 2px #3793C8;
+  }
+
+  /* base/_typography */
+  body {
+    background-color: #3793C8;
+    color: #;
+  }
+
+  a {
+    color: #216bb5;
+  }
+
+
+
+  /* _screensteps-container */
+  .screensteps-container a:visited {
+    color: #155596;
+  }
+ .screensteps-container a:active,
+ .screensteps-container a:focus,
+ .screensteps-container a:hover {
+    color: #155596;
+  }
+
+  /* _screensteps-manual-contents */
+  .screensteps-manual-contents h2 a {
+    color: #216bb5;
+  }
+  /* _screensteps-foldable-sections */
+  .screensteps-main-content .embedded-chapter-article > * {
+    color: #216bb5;
+  }
+
+  /* screensteps-header */
+  .screensteps-branding h1,
+  .screensteps-header .screensteps-branding a,
+  .screensteps-training-site .screensteps-profile-subnav-toggle {
+    color: #ffffff;
+  }
+
+  .screensteps-header .screensteps-branding a:hover {
+    color: #2C7CAA;
+  }
+
+  /* meta data text */
+  .chapter-count,
+  .screensteps-comment-count,
+  .screensteps-lesson-details,
+  .nested-chapter-lessons .here a:after,
+  .screensteps-single-comment time {
+    color: #;
+  }
+
+  /* course tiles */
+  .screensteps-training-site .screensteps-group .asset-list--course a {
+    background-color: #;
+    color: #;
+  }
+
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #;
+  }
+
+  .screensteps-training-site .screensteps-group .asset-list--course a:hover {
+    background-color: #;
+  }
+</style>
+
+<link rel='icon'>
+<script src="https://assets.screensteps.com/assets/application-fe7915887e0874f95ef87940f513c239a27a71cc345a491bff7c3f92416a8111.js"></script>
+<script src="https://assets.screensteps.com/assets/vendor/jquery.fitvids-3e4679bfa1c083cec0d56c1f636f2038bf770ed13929e17d22bd1f417d3c94f8.js"></script>
+<script src="https://assets.screensteps.com/assets/theme-a161d6812c4179b27f1d00b86bb981be26e0733ede796eda0978b6a514ff216a.js"></script>
+<!--[if lt IE 9]>
+<script src="//assets.screensteps.com/assets/vendor/html5shiv.min-a280ac74b433afc5b6516368f5a678ceba501e0fb8b7987adee3b4e673674310.js"></script>
+<![endif]-->
+
+<style media=''></style>
+<script></script>
+
+  <script type="text/javascript">
+    !function(name,path,ctx){
+      var latest,prev=name!=='Keen'&&window.Keen?window.Keen:false;ctx[name]=ctx[name]||{ready:function(fn){var h=document.getElementsByTagName('head')[0],s=document.createElement('script'),w=window,loaded;s.onload=s.onerror=s.onreadystatechange=function(){if((s.readyState&&!(/^c|loade/.test(s.readyState)))||loaded){return}s.onload=s.onreadystatechange=null;loaded=1;latest=w.Keen;if(prev){w.Keen=prev}else{try{delete w.Keen}catch(e){w.Keen=void 0}}ctx[name]=latest;ctx[name].ready(fn)};s.async=1;s.src=path;h.parentNode.insertBefore(s,h)}}
+    }('KeenAsync','https://d26b395fwzu5fz.cloudfront.net/keen-tracking-1.1.3.min.js',this);
+
+    KeenAsync.ready(function(){
+      // Configure a client instance
+      var client = new KeenAsync({
+        projectId: '591daac30935ce40a59fb7ab',
+        writeKey: 'C89A9A1A8DB4C585F119F8F81ABB9621940DBBADDA5C72C2B87B1BD3464890D23FD250B0FFA4A1056DCB210616545B7B6C9DDF2054167B5219A3DD81E8DF90A321BE0C1B35BA19F2E3E85730FB96C1F93F8C66D8CD449FE6EFE43D98453632D1'
+      });
+
+      // Record an event
+      client.recordEvent('pageviews', {
+        title: document.title,
+        ip_address: "${keen.ip}",
+        user_agent: "${keen.user_agent}",
+        user_id: null,
+        account_id: "2c1ab788fb",
+        site_id: 18,
+        manual_id: 8910,
+        article_id: 1562,
+        article_type_id: 0,
+        course_id: null,
+        source_id: 1
+      });
+    });
+  </script>
+
+
+</head>
+<body class='helvetica-body helvetica-header site-article  no-focus-outline' data-base-path='/s/revolution/' data-content-template='2015' data-generating-pdf-text='Generating PDF...'>
+<div class='screensteps-admin-navigation'>
+<div data-logged-in-check-url='https://revolution.screenstepslive.com/s/18/user_nav' id='screensteps-admin-bar'>
+<ul>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/sites/18/manuals/8910/chapters/40611/articles/1562">View in admin portal</a></li>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/article-editor/1562">Edit content on web</a></li>
+<li><a href="screensteps://revolution.screenstepslive.com/open/s/18/m/8910/a/1562?checkout=1">Edit in desktop</a></li>
+</ul>
+</div>
+
+</div>
+<header class='screensteps-header' role='banner'>
+<a class='skip-navigation--link' href='#screensteps-main-content' id='skip-navigation'>
+Skip to main content
+</a>
+
+<div class='screensteps-branding'>
+<div class='logo-wrapper'>
+<h1 class='company-name'>Cross-Platform Application Development with LiveCode</h1>
+</div>
+</div>
+</header>
+
+<div class='screensteps-container-wrapper'>
+<main class='screensteps-container'>
+<div class='screensteps-site-title-wrapper'>
+<h1 class='screensteps-site-title toc-heading'>Tutorials &amp; Manuals</h1>
+</div>
+<div class='screensteps-main-search' role='search'>
+<form id="screensteps-search-form" action="../../../searches.html" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+<div class='screensteps-search-form'>
+<label for="text">Search term</label>
+<input type="text" name="text" id="text" class="search-field" title="Enter a keyword or topic to search" />
+
+<input type="submit" name="commit" value="Search" class="search-submit" data-disable-with="Search" />
+</div>
+</form>
+
+
+</div>
+<div class='left-sidebar lesson manual-lesson screensteps-content-wrapper'>
+<div class='screensteps-main-content' role='main'>
+<header class='screensteps-title'>
+<div id="screensteps-breadcrumb" aria-label="breadcrumb" aria-level="3"><a href="../../../../revolution.html">Tutorials &amp; Manuals</a><span class='manual-group-breadcrumb'><a href="../../../../revolution.html#How-tos">How-tos</a></span><a href="../../how-to.html">Lessons</a> <span class='chapter-breadcrumb'><a href="../c/40611.html">Miscellaneous</a></span>Knowing Which Stacks Are In Memory</div>
+</header>
+<div id='screensteps-main-content'>
+<div class='screensteps-article'>
+<div class="screensteps-article-content " data-article-id="1562" data-workflow=false>
+    <h1 class="lesson">Knowing Which Stacks Are In Memory</h1>
+    <div class="screensteps-steps" data-role="steps-container">
+          <div class="instructions screensteps-textblock screensteps-wrapper--introduction screensteps-wrapper">
+  <p>In Revolution a <em>stack file</em> that is stored on disk contains a single <em>main stack</em>. If the stack file is accessed in your program then the <em>main stack</em> and it's <em>substacks are</em> loaded into memory. There are various ways to access a stack file. The following examples will load all stacks (the <em>main stack</em> and<em> substacks</em>) of a <em>stack file</em> into memory:</p>
+<p><span style="color: rgb(127,127,0);"><strong>put</strong></span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">the</span><span style="color: rgb(0,0,0);"> uVersion </span><span style="color: rgb(127,0,127);">of</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">stack</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(0,0,127);">"/path/to/stack.rev"</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">into</span><span style="color: rgb(0,0,0);"> theVersion</span></p>
+<p><span style="color: rgb(127,127,0);"><strong>go</strong></span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">stack</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(0,0,127);">"/path/to/stack.rev"</span></p>
+<p><span style="color: rgb(127,127,0);"><strong>put</strong></span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">there</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">is</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">a</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">stack</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(0,0,127);">"/path/to/stack.rev"</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">into</span><span style="color: rgb(0,0,0);"> theStackExists</span></p>
+<p>Below you will find a function that will the name of all stacks that are currently loaded in memory.</p>
+</div>
+
+
+      <div class="step step-depth-1" data-step-uuid="45771eb9-df19-4498-9582-8f76a6cd2cc1" id="">
+      <h2 id="ListingStacksInMemory">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Listing Stacks in Memory" href="#ListingStacksInMemory"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Listing Stacks in Memory
+      </h2>
+      <div class="html-embed">
+  <pre class="source-code">
+<span class="storage storage_type storage_type_handler storage_type_handler_rev">function</span><span> StacksInMemory</span>
+<span>   </span><span class="entity entity_name entity_name_handler entity_name_handler_rev">local</span><span> theStack</span><span class="keyword keyword_operator keyword_operator_symbolic keyword_operator_symbolic_rev">,</span><span>theStacksInMemory</span><span class="keyword keyword_operator keyword_operator_symbolic keyword_operator_symbolic_rev">,</span><span>theSubstack </span>
+<span>   </span>
+<span>   </span><span class="keyword keyword_control keyword_control_rev">repeat</span><span> </span><span class="keyword keyword_control keyword_control_rev">for</span><span> </span><span class="keyword keyword_control keyword_control_rev">each</span><span> </span><span class="keyword keyword_control keyword_control_rev">line</span><span> theStack </span><span class="keyword keyword_control keyword_control_rev">in</span><span> </span><span class="keyword keyword_control keyword_control_rev">the</span><span> </span><span class="entity entity_name entity_name_handler entity_name_handler_rev">mainstacks</span><span> </span>
+<span>      </span><span class="entity entity_name entity_name_handler entity_name_handler_rev">put</span><span> theStack </span><span class="keyword keyword_operator keyword_operator_symbolic keyword_operator_symbolic_rev">&amp;</span><span> </span><span class="keyword keyword_control keyword_control_rev">cr</span><span> </span><span class="keyword keyword_control keyword_control_rev">after</span><span> theStacksInMemory </span>
+<span>      </span>
+<span>      </span><span class="keyword keyword_control keyword_control_rev">repeat</span><span> </span><span class="keyword keyword_control keyword_control_rev">for</span><span> </span><span class="keyword keyword_control keyword_control_rev">each</span><span> </span><span class="keyword keyword_control keyword_control_rev">line</span><span> theSubstack </span><span class="keyword keyword_control keyword_control_rev">in</span><span> </span><span class="keyword keyword_control keyword_control_rev">the</span><span> </span><span class="support support_command support_command_rev">substacks</span><span> </span><span class="keyword keyword_control keyword_control_rev">of</span><span> </span><span class="keyword keyword_control keyword_control_rev">stack</span><span> theStack </span>
+<span>         </span><span class="entity entity_name entity_name_handler entity_name_handler_rev">put</span><span> theSubstack </span><span class="keyword keyword_operator keyword_operator_symbolic keyword_operator_symbolic_rev">&amp;</span><span> </span><span class="keyword keyword_control keyword_control_rev">cr</span><span> </span><span class="keyword keyword_control keyword_control_rev">after</span><span> theStacksInMemory </span>
+<span>      </span><span class="keyword keyword_control keyword_control_rev">end</span><span> </span><span class="keyword keyword_control keyword_control_rev">repeat</span><span> </span>
+<span>   </span><span class="keyword keyword_control keyword_control_rev">end</span><span> </span><span class="keyword keyword_control keyword_control_rev">repeat</span><span> </span>
+<span>   </span><span class="entity entity_name entity_name_handler entity_name_handler_rev">delete</span><span> </span><span class="keyword keyword_control keyword_control_rev">the</span><span> </span><span class="keyword keyword_control keyword_control_rev">last</span><span> </span><span class="keyword keyword_control keyword_control_rev">char</span><span> </span><span class="keyword keyword_control keyword_control_rev">of</span><span> theStacksInMemory </span>
+<span>   </span><span class="entity entity_name entity_name_handler entity_name_handler_rev">return</span><span> theStacksinMemory </span>
+<span class="keyword keyword_control keyword_control_rev">end</span><span> StacksInMemory</span>
+</pre>
+</div>
+ 
+  </div>
+
+
+
+
+      
+    </div>
+</div>
+
+
+<div class='screensteps-next-prev-navigation' data-role='next-previous-nav'>
+<ul>
+<li class='previous'>
+<strong>Prev</strong>: <a href="249-creating-a-password-field.html">Creating a Password Field</a>
+</li>
+<li class='next'>
+<strong>Next</strong>: <a href="923-write-a-command-that-sets-the-result-and-it.html">Write A Command That Sets &#39;the result&#39; And &#39;it&#39;</a>
+</li>
+</ul>
+</div>
+
+<div class='no-comments screensteps-comments'>
+<h2 class='comments-heading'>
+<span class='screensteps-comment-count'>0</span>
+Comments
+</h2>
+
+<div class='screensteps-add-comment'>
+<h3 class='comment-heading'>Add your comment</h3>
+<script type="text/javascript" charset="utf-8">
+  ScreenStepsLiveSpamCheck = function() {
+      var key = document.getElementById('comment_spam_check_key').value;
+    var sig = '';
+    for (var x = 0; x< key.length; x++ ) {
+       sig += key.charCodeAt(x)+13;
+    }
+    document.getElementById('comment_spam_check_sig').value = sig; 
+    return true;
+  };
+</script>
+<div id='custom-comment-form-2015'></div>
+<form id="comment-form" class="comment-form" onclick="return ScreenStepsLiveSpamCheck();" action="../../../comments_lesson_id=1562-knowing-which-stacks-are-in-memory.html" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><div class='field-row name'>
+<label class="required" for="comment-name">Name*</label>
+<input id="comment-name" type="text" name="comment[name]" />
+</div>
+<div class='field-row email'>
+<label class="required" for="comment-email">Email*</label>
+<input id="comment-email" type="text" name="comment[email]" />
+</div>
+<input value="8910" type="hidden" name="comment[manual_id]" id="comment_manual_id" />
+<input value="18" type="hidden" name="comment[space_id]" id="comment_space_id" />
+<input value="ammiok8ckJh9" type="hidden" name="comment[spam_check_key]" id="comment_spam_check_key" />
+<input type="hidden" name="comment[spam_check_sig]" id="comment_spam_check_sig" />
+<div class='field-row'>
+<label class="required" for="comment-comment">Comment*</label>
+<textarea id="comment-comment" name="comment[comment]">
+</textarea>
+</div>
+<div class='field-row'>
+<label id="subscribe-label" for="comment_subscribe">Subscribe</label>
+<input name="comment[subscribe]" type="hidden" value="0" /><input type="checkbox" value="1" name="comment[subscribe]" id="comment_subscribe" />
+<span class='help'>E-Mail me when someone replies to this comment</span>
+</div>
+<div class='field-row'><label id="recaptcha-label" class="comment-label" for="recaptcha">Are you human?</label>
+<div id='recaptcha-wrapper'>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<div class="g-recaptcha" data-sitekey="6Le-4BAUAAAAAJnK4h5JcvgWReY9OxXoLjfqLP90"></div>
+          <noscript>
+            <div style="width: 302px; height: 352px;">
+              <div style="width: 302px; height: 352px; position: relative;">
+                <div style="width: 302px; height: 352px; position: absolute;">
+                  <iframe
+                    src="https://www.google.com/recaptcha/api/fallback?k=6Le-4BAUAAAAAJnK4h5JcvgWReY9OxXoLjfqLP90"
+                    frameborder="0" scrolling="no"
+                    style="width: 302px; height:352px; border-style: none;">
+                  </iframe>
+                </div>
+                <div style="width: 250px; height: 80px; position: absolute; border-style: none;
+                  bottom: 21px; left: 25px; margin: 0px; padding: 0px; right: 25px;">
+                  <textarea id="g-recaptcha-response" name="g-recaptcha-response"
+                    class="g-recaptcha-response"
+                    style="width: 250px; height: 80px; border: 1px solid #c1c1c1;
+                    margin: 0px; padding: 0px; resize: none;" value="">
+                  </textarea>
+                </div>
+              </div>
+            </div>
+          </noscript>
+
+</div>
+</div>
+<div class='field-row'><input type="submit" name="commit" value="Submit Comment" id="create-comment-button" data-disable-with="Submit Comment" /></div>
+</form>
+
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+<div aria-label='sidebar' class='screensteps-sidebar' role='complementary'>
+<div class='screensteps-sidebar-widget' id='sidebar-chapters'>
+<h3>Topics</h3>
+<ul id='sidebar-chapter-list'>
+<li class='chapter-list-item' data-section-id='40611'>
+<a class='toggle-lessons' href='../c/40611.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Miscellaneous</span>
+<span class='chapter-count'>
+&nbsp;23
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='174837'><a href="174837-filling-in-a-shape-with-another-color.html">Filling in a shape with another color</a></li>
+<li data-lesson-id='5706'><a href="5706-how-to-create-field-placeholder-text-using-behaviors.html">How To Create Field Placeholder Text Using Behaviors</a></li>
+<li data-lesson-id='6186'><a href="6186-upgrading-the-data-grid-library.html">Upgrading the Data Grid Library</a></li>
+<li data-lesson-id='5870'><a href="5870-zipping-unzipping-a-folder-using-revzip.html">Zipping/Unzipping a Folder Using RevZip</a></li>
+<li data-lesson-id='5705'><a href="5705-how-to-create-and-assign-a-behavior.html">How To Create And Assign A Behavior</a></li>
+<li data-lesson-id='567'><a href="567-adding-windows-vista-manifest-to-a-revolution-executable.html">Adding Windows Vista Manifest To a Revolution Executable</a></li>
+<li data-lesson-id='249'><a href="249-creating-a-password-field.html">Creating a Password Field</a></li>
+<li data-lesson-id='1562'><a href="1562-knowing-which-stacks-are-in-memory.html">Knowing Which Stacks Are In Memory</a></li>
+<li data-lesson-id='923'><a href="923-write-a-command-that-sets-the-result-and-it.html">Write A Command That Sets &#39;the result&#39; And &#39;it&#39;</a></li>
+<li data-lesson-id='4833'><a href="4833-installing-an-external.html">Installing An External</a></li>
+<li data-lesson-id='3627'><a href="3627-creating-a-custom-cursor.html">Creating a Custom Cursor</a></li>
+<li data-lesson-id='2034'><a href="2034-inability-to-send-messages-during-drag-operation-workaround.html">Inability To Send Messages During Drag Operation Workaround</a></li>
+<li data-lesson-id='2021'><a href="2021-querying-script-local-variables-during-development.html">Querying Script Local Variables During Development</a></li>
+<li data-lesson-id='1994'><a href="1994-the-defaultfolder-locks-folder-on-windows.html">the defaultFolder Locks Folder on Windows</a></li>
+<li data-lesson-id='1993'><a href="1993-using-shell-on-windows-with-unc-paths.html">Using shell() on Windows With UNC Paths</a></li>
+<li data-lesson-id='1349'><a href="1349-quickly-edit-a-palette-stack-in-the-ide.html">Quickly Edit a Palette Stack in the IDE</a></li>
+<li data-lesson-id='822'><a href="822-alternating-line-colors-in-a-list-field.html">Alternating Line Colors in a List Field</a></li>
+<li data-lesson-id='577'><a href="577-dropping-system-folders-on-fields.html">Dropping System Folders on Fields</a></li>
+<li data-lesson-id='525'><a href="525-running-revolution-as-cgi-on-debian-linux.html">Running Revolution as CGI on Debian Linux</a></li>
+<li data-lesson-id='442'><a href="442-getting-expected-results-when-setting-clipboarddata-html.html">Getting Expected Results When Setting clipboardData[&quot;html&quot;]</a></li>
+<li data-lesson-id='321'><a href="321-create-an-ansi-font-option-menu.html">Create an ANSI Font Option Menu</a></li>
+<li data-lesson-id='320'><a href="320-creating-a-color-picker-swatch.html">Creating a Color Picker Swatch</a></li>
+<li data-lesson-id='319'><a href="319-creating-a-toolbar-button.html">Creating a Toolbar Button</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='lesson-sidebar-info'>
+<h3>Last Updated</h3><p>Sep 02, 2016</p>
+
+<ul class='icon-links'>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='other-assets'>
+<h3>Other Resources</h3>
+<ul class='asset-list with-divider'>
+<li class='divider'><h4 class="sidebar-subheading">How-tos</h4></li>
+<li class='manual'><a href="../../how-to.html">Lessons</a></li>
+<li class='manual'><a href="../../10695.html">Signing Your Applications and Building Installers</a></li>
+<li class='divider'><h4 class="sidebar-subheading">GLX Application Framework</h4></li>
+<li class='manual'><a href="../../glxapp.html">GLX Application Framework 1.2</a></li>
+<li class='manual'><a href="../../convert_to_glxapp.html">Converting An Existing Application To Use The Framework</a></li>
+<li class='divider'><h4 class="sidebar-subheading">SQL Yoga</h4></li>
+<li class='manual'><a href="../../sqlyoga.html">SQL Yoga</a></li>
+<li class='manual'><a href="../../sqlyoga_examples.html">SQL Yoga Examples</a></li>
+<li class='manual'><a href="../../sqlyoga_sampleapp.html">SQL Yoga To-Do Application</a></li>
+<li class='manual'><a href="../../sqlyoga_plugin.html">SQL Yoga IDE Plugin</a></li>
+<li class='divider'><h4 class="sidebar-subheading">Plugins, Externals and Libraries</h4></li>
+<li class='manual'><a href="../../plugins.html">Plugins</a></li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='screensteps-rss'>
+<p><a href="../../../../revolution.rss">Subscribe to our feed</a></p>
+</div>
+
+</div>
+
+</div>
+<script type="text/javascript">
+  jQuery(document).ready(function(jQuery) {
+    var lesson_id = 1562;
+    var current_article_sidebar_text = '(Current Article)';
+    var section_id = 40611;
+    var expansion = 'all';
+    switch(expansion) {
+      case 'none':
+        jQuery('ul.nested-chapter-lessons').hide();
+        break;
+      case 'all':
+        jQuery('ul.nested-chapter-lessons').show();
+        jQuery('li.chapter-list-item a.toggle-lessons').addClass('open');
+        break;
+      case 'one':
+        jQuery('ul.nested-chapter-lessons').hide();
+        jQuery('li.chapter-list-item[data-section-id="' + section_id + '"] ul.nested-chapter-lessons').show();
+        jQuery('li.chapter-list-item[data-section-id="' + section_id + '"] a.toggle-lessons').addClass('open');
+        break;
+    }
+    jQuery('li.chapter-list-item[data-section-id="' + section_id + '"]').addClass('here');
+    jQuery('li[data-lesson-id="' + lesson_id + '"]').addClass('here');
+    jQuery('li[data-lesson-id="' + lesson_id + '"] a').attr('data-current-article-text', current_article_sidebar_text);
+  });
+</script>
+<noscript>Enable javascript to expand/contract chapters</noscript>
+
+
+</main>
+</div>
+<div aria-labelledby='modal-label' class='screensteps-modal' id='screensteps-modal' role='dialog'>
+<span id='modal-label'>
+Inline referenced article
+</span>
+<div class='screensteps-modal__box'>
+<a class='screensteps-modal__close' href='#'>
+×
+</a>
+<span class='screensteps-loading-wrapper'>
+<span class='screensteps-loading'></span>
+</span>
+<div class='screensteps-modal__content screensteps-article-content'></div>
+</div>
+</div>
+</body>
+</html>

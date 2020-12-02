@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="Global"
+	OutputDirectory="$(SolutionDir)_build\$(ConfigurationName)"
+	IntermediateDirectory="$(SolutionDir)_cache\$(ProjectName)\$(ConfigurationName)"
+	BuildLogFile="$(SolutionDir)_cache\$(ProjectName)\$(ConfigurationName)\BuildLog.htm"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories="$(SolutionDir)_build\$(ConfigurationName)\headers"
+		PreprocessorDefinitions="_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_DEPRECATE;_WINDOWS"
+		ExceptionHandling="0"
+		BufferSecurityCheck="false"
+		RuntimeTypeInfo="false"
+		ObjectFile="$(IntDir)\"
+		XMLDocumentationFileName="$(IntDir)\"
+		WarningLevel="3"
+		Detect64BitPortabilityProblems="false"
+	/>
+</VisualStudioPropertySheet>

@@ -1,0 +1,177 @@
+﻿script "LCMS_shim"
+-- shim layer for LCMS
+-- a bunch of functions which  convert into either revIgniter or local library calls
+
+global LCMS_context
+global gAdminConfig
+global gData
+
+on librarystack
+   put TRUE into LCMS_context
+   if environment() = "server" then
+    -- we can assume the revIgniter is in use, so DBetc. already covered
+   else
+      -- we assum we are in use by a LCMS stack, so DB already handled.
+   end if
+   
+end librarystack
+
+on lcmsDBWhere pCol, pVal
+   if environment() = "server" then
+      rigDBWhere pCol, pVal
+   else
+      DBWhere pCol, pVal
+   end if
+end lcmsDBWhere
+   
+on lcmsDBLike pCol, pVal
+   if environment() = "server" then
+      rigDBLike pCol, pVal
+   else
+      DBLike pCol, pVal
+   end if
+end lcmsDBLike
+
+on lcmsDBOrderBy pCol, pVal
+   if environment() = "server" then
+      rigDBOrderBy pCol, pVal
+   else
+      DBOrderBy pCol, pVal
+   end if
+end lcmsDBOrderBy
+
+function lcmsDBGet pTable
+   if environment() = "server" then
+      return rigDBGet(pTable)
+   else
+      local tA
+      put DBGet(pTable) into tA
+      put the number of elements in tA into tA["numrows"]
+      return tA
+   end if
+end lcmsDBGet
+      
+function lcmsDBRow pNum, pA
+   if environment() = "server" then
+      return rigDBRow(pNum)
+   else
+      return pA[pNum]
+   end if
+end lcmsDBRow
+
+local sLoaded, sCached
+private function rLoadView pName, pIgnore
+   local tt, tResult
+   if NOT (sLoaded[pName]) then
+      put the defaultfolder into tt
+      put URL ("file:user/themes/" & pName & ".lc") into sCached[pName]
+      if sCached[pName] is empty then
+        put URL ("file:lcms/themes/" & pName & ".lc") into sCached[pName]
+      end if
+      if sCached[pName] is empty then
+        lcmsLogMessage "debug", "empty theme entry " & pName
+      end if
+      put TRUE into sLoaded[pName]
+   end if
+   put merge(sCached[pName]) into tResult
+   return tResult
+end rLoadView
+
+function lcmsFetchSegment pN
+   if environment() = "server" then
+      return rigFetchSegment(pN)
+   else
+      local tt
+      ask "Enter segment" && pN
+      put it into tt
+      return tt
+   end if
+end lcmsFetchSegment
+
+
+function lcmsLoadDatabase 
+   if environment() = "server" then
+      return rigLoadDatabase()
+   else
+      get revOpenDatabase("sqlite", "lcms.sqlite")
+      if it is a number then 
+         dbSetDefaultConnectionID it
+      end if
+   end if
+end lcmsLoadDatabase
+
+-- this used to use rigLoadView in server context - but no longer does
+function lcmsLoadView pView
+   return rLoadView(pView)
+end lcmsLoadView
+
+command lcmsPutCookie pMessage, pScope, pOther
+  put Cookie "upload_photo_messages" for "/" with "OK"
+end lcmsPutCookie
+
+function lcmsIfLoggedIn @pUsername, @pIsAdmin, pAlwaysReturn
+   if environment() = "server" then
+      -- check if we are currently logged in
+      -- if not, either exit or return FALSE, depending on setting of (optional) pAlwaysReturn
+      -- if returning TRUE, then also return the current Username and boolean for whether we are an admin
+      
+      local tHelpers, tQueryResult, tUserRow, tUserID
+      put "url" into tHelpers
+      rigLoadHelper tHelpers
+      rigLoaderLoadLibrary "Authentication"
+      
+      -- CHECK IF USER IS LOGGED IN
+      if rigAuthLoggedIn() is FALSE then
+         if pAlwaysReturn then
+            return FALSE
+         else
+            -- REDIRECT TO LOGIN PAGE AND KEEP FLASHDATA IN CASE THERE IS ANY
+            if rigSessFlashdata("message") <> FALSE then
+               rigKeepSessFlashdata "message"					
+            end if
+            put "Not logged in!! Please login first at <a href='/igniter.lc/auth/login'>Login page</a>"
+            
+            exit to top
+         end if
+      end if
+      
+      put rigAuthUser() into tQueryResult
+      if (tQueryResult <> FALSE) and (tQueryResult is an array) then
+         put rigDbRow() into tUserRow
+         put tUserRow["id"] into tUserID
+         put tUserRow["username"] into pUserName
+         put rigAuthIsAdmin() into pIsAdmin
+         if pIsAdmin is FALSE then
+            if pAlwaysReturn then
+               put FALSE into pIsAdmin
+               return TRUE
+            end if
+            -- not an admin, and not always return, so logout and give error message
+            rigAuthLogout						
+            put "As user " & pUsername & " you are not allowed to edit directly! "
+            put "<br>You have been logged out."
+            put "<br>Please login first at <a href='/igniter.lc/auth/login'>Login page</a>"
+            
+            exit to top
+         end if
+      else
+         return TRUE
+      end if
+      
+   else
+      put gAdminConfig["username"] into pUserName
+      put gAdminConfig["isadmin"] into pUserName
+      return TRUE
+   end if
+end lcmsIfLoggedIn
+
+command lcmsLogMessage pLevel, pMessage
+   if environment() = "server" then
+      rigLogMessage pLevel, pMessage
+      if (pLevel = "error") OR (pLevel = "debug") then
+        pl pLevel && pMessage
+      end if
+   else
+      put pLevel && pMessage &CR after msg
+   end if
+end lcmsLogMessage

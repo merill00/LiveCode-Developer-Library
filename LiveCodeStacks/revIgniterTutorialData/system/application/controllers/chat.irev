@@ -1,0 +1,141 @@
+<?rev
+
+global gControllerHandlers, gData
+
+put "index,chat,addmsg,view,logout" into gControllerHandlers
+
+
+command chat
+	# LIBRARIES
+	rigLoaderLoadLibrary "Jquery"
+	rigLoaderLoadLibrary "Session"
+	
+	# DATABASE
+	get rigLoadDatabase()
+	
+	# HELPERS
+	rigLoadHelper "asset"
+
+	# MODEL
+	rigLoadModel "chatmodel"
+	
+	# SET PAGE TITLE
+	put "revIgniter Chat Application Tutorial" into gData["pageTitle"]
+end chat
+
+
+command index
+	# CHECK IF USER SENT A NAME OR IF THERE IS AN ITEM "NAME" IN THE SESSION DATA
+	if rigSessUserdata("name") <> FALSE then
+		put rigSessUserdata("name") into gData["user"]
+		put FALSE into tLogin
+	else
+		put rigVarPost("name", TRUE) into tPOSTname
+		if tPOSTname <> FALSE then
+			rigSetSessUserdata "name", tPOSTname
+			put tPOSTname into gData["user"]
+			put FALSE into tLogin
+		else
+			put TRUE into tLogin
+		end if
+	end if
+	
+	
+	if tLogin is FALSE then
+		# USER SENT A NAME
+		rigJQopen
+			# LOAD MESSAGES FUNCTION
+			rigJQfunctionOpen "loadMessages"
+				rigJQvar "previousScroll," & rigJQgetR("'#chatbody'", "attr", "'scrollHeight'")
+				
+				put "chat/view" into tAjax["url"]
+				put "false" into tAjax["cache"]
+				put rigJQsetR("'#chatbody'", "html", "data") & \
+				rigJQvarR("currentScroll," & rigJQgetR("'#chatbody'", "attr", "'scrollHeight'")) & \
+				rigJQconditionR("currentScroll > previousScroll", rigJQanimateR("'#chatbody'", "scrollTop: currentScroll", "'normal'")) into tAjax["success"]
+				rigJQajax tAjax
+			rigJQcb
+			
+			# ADD MESSAGE TO MESSAGES LIST STATEMENTS
+			rigJQeventOpen "'#submitbtn'", "'click'", TRUE
+				rigJQxhRequest "post", "chat/addmsg", "userinput:" && rigJQgetR("'#userinput'", "attr", "'value'")
+				rigJQset "'#userinput'", "attr", "'value', ''"
+			rigJQeventClose
+			
+			# LOGOUT STATEMENTS
+			rigJQeventOpen "'#logout'", "'click'"
+				rigJQvar "logout,confirm('Are you sure you want to end the chat session?');"
+				rigJQcondition "logout==true", "window.location = 'logout';"
+			rigJQeventClose
+			
+			rigJQaddStatement "setInterval (loadMessages, 2500);"
+			
+		# THE FOLLOWING COMMAND RETURNS THE JQUERY SCRIPT
+		rigJQclose
+		put the result into gData["JQscript"]
+		
+		# GET DATA FROM DATABASE
+		put getMsgData() into gData["msgList"]
+
+	end if
+	
+	rigSetHeader "Cache-Control: no-cache"
+
+	# LOAD THE VIEW FILES
+	get rigLoadView("chatheader")
+	if tLogin is TRUE then
+		get rigLoadView("chatlogin")
+	else
+		get rigLoadView("chatcontent")
+	end if
+	get rigLoadView("chatfooter")
+end index
+
+
+
+command addmsg
+	# ADD MESSAGE DATA TO DATABASE
+	put rigSessUserdata("name") into tName
+	put rigVarPost("userinput") into tMsg
+	
+	if (tMsg <> FALSE) and (tMsg <> "") then
+		_addMsg tName, tMsg
+	end if
+end addmsg
+
+
+
+command view 
+	# GET DATA FROM DATABASE
+	put getMsgData() into gData["msgList"]
+	
+	get rigLoadView("chatlist")
+end view
+
+
+
+
+command logout
+	# ADD "user left" MESSAGE TO THE DATABASE
+	# IF SESSION DATA NAME HAS A VALUE
+	put rigSessUserdata("name") into tName
+	if tName <> FALSE then
+		put "User" && tName && "has left the chat session." into tMsg
+		_addMsg tName, tMsg
+	end if
+	
+	#DESTROY SESSION DATA
+	rigSessDestroy
+	
+	# LOAD THE VIEW FILES
+	get rigLoadView("chatheader")
+	get rigLoadView("chatlogin")
+	get rigLoadView("chatfooter")
+end logout
+
+
+
+
+--| END OF chat.irev
+--| Location: ./system/application/controllers/chat.irev
+----------------------------------------------------------------------

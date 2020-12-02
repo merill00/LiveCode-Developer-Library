@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+<meta content='IE=edge' http-equiv='X-UA-Compatible'>
+<meta content='width=device-width, initial-scale=1' name='viewport'>
+<title>Chapter Overview | SQL Yoga To-Do Application | Tutorials &amp; Manuals</title>
+<meta content='Here are the major subjects we are going to cover in this chapter.' name='description'>
+
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="JCAoEXpMRa9z9AicZc9Ab7yHaENaNqP7zDADTgp2Zt31f9/BUvaNxSzzCDk3ExDjCtQHWXyAdBalfhcx+a6zEQ==" />
+<link rel="stylesheet" media="screen" href="https://assets.screensteps.com/assets/themes/fonts/helvetica-e03d9e53b962f0a4e2fed42a4a318c29cf029d37f80397baaf14722853359e6a.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="https://assets.screensteps.com/assets/themes/alpha-027b2e60ae75b9d8e6d6bcb32d3e6730dc3f6fe41be8479ef83e02168774766b.css" />
+<style type="text/css" media="all">/* headings */
+  h1,
+  h1.toc-heading,
+  h2.toc-heading {
+    color: #;
+  }
+
+  h2.toc-subheading,
+  h3.toc-subheading,
+  h4.toc-subheading,
+  h5.toc-subheading,
+  h6.toc-subheading {
+    color: #;
+  }
+
+  .screensteps-training-site [data-count-bubble]::after {
+    background-color: #;
+  }
+
+  .screensteps-article-content h2 {
+    color: #;
+  }
+
+  .screensteps-article-content h3,
+  .screensteps-article-content h4,
+  .screensteps-article-content h5,
+  .screensteps-article-content h6 {
+    color: #;
+  }
+
+  .screensteps-sidebar h3 {
+    color: #;
+  }
+
+  .sidebar-subheading {
+    color: #;
+  }
+
+  .comments-heading {
+    color: #;
+  }
+
+  /* base/_buttons */
+  input[type="button"],
+  input[type="reset"],
+  input[type="submit"],
+  button,
+  .screensteps-bg-action-color,
+  .screensteps-courses .screensteps-progress-bar::before,
+  .screensteps-courses .screensteps-courses-menu a:hover,
+  .screensteps-courses .screensteps-courses-menu .step-active a::before,
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #216bb5;
+  }
+
+  input[type="button"]:hover,
+  input[type="reset"]:hover,
+  input[type="submit"]:hover,
+  button:hover,
+  button.screensteps-bg-action-color:hover,
+  a.screensteps-bg-action-color:hover {
+    background-color: #155596;
+  }
+
+  /* base/_forms */
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="password"]:focus,
+  input[type="search"]:focus,
+  input[type="tel"]:focus,
+  input[type="text"]:focus,
+  input[type="url"]:focus,
+  input[type="color"]:focus,
+  input[type="date"]:focus,
+  input[type="datetime"]:focus,
+  input[type="datetime-local"]:focus,
+  input[type="month"]:focus,
+  input[type="time"]:focus,
+  input[type="week"]:focus,
+  select[multiple=multiple]:focus,
+  textarea:focus {
+    border-color: #216bb5;
+  }
+
+
+  .screensteps-training-site .screensteps-main-search .search-field:not(:placeholder-shown) {
+    box-shadow: 0 0 0 2px #3793C8;
+  }
+
+  /* base/_typography */
+  body {
+    background-color: #3793C8;
+    color: #;
+  }
+
+  a {
+    color: #216bb5;
+  }
+
+
+
+  /* _screensteps-container */
+  .screensteps-container a:visited {
+    color: #155596;
+  }
+ .screensteps-container a:active,
+ .screensteps-container a:focus,
+ .screensteps-container a:hover {
+    color: #155596;
+  }
+
+  /* _screensteps-manual-contents */
+  .screensteps-manual-contents h2 a {
+    color: #216bb5;
+  }
+  /* _screensteps-foldable-sections */
+  .screensteps-main-content .embedded-chapter-article > * {
+    color: #216bb5;
+  }
+
+  /* screensteps-header */
+  .screensteps-branding h1,
+  .screensteps-header .screensteps-branding a,
+  .screensteps-training-site .screensteps-profile-subnav-toggle {
+    color: #ffffff;
+  }
+
+  .screensteps-header .screensteps-branding a:hover {
+    color: #2C7CAA;
+  }
+
+  /* meta data text */
+  .chapter-count,
+  .screensteps-comment-count,
+  .screensteps-lesson-details,
+  .nested-chapter-lessons .here a:after,
+  .screensteps-single-comment time {
+    color: #;
+  }
+
+  /* course tiles */
+  .screensteps-training-site .screensteps-group .asset-list--course a {
+    background-color: #;
+    color: #;
+  }
+
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #;
+  }
+
+  .screensteps-training-site .screensteps-group .asset-list--course a:hover {
+    background-color: #;
+  }
+</style>
+
+<link rel='icon'>
+<script src="https://assets.screensteps.com/assets/application-fe7915887e0874f95ef87940f513c239a27a71cc345a491bff7c3f92416a8111.js"></script>
+<script src="https://assets.screensteps.com/assets/vendor/jquery.fitvids-3e4679bfa1c083cec0d56c1f636f2038bf770ed13929e17d22bd1f417d3c94f8.js"></script>
+<script src="https://assets.screensteps.com/assets/theme-a161d6812c4179b27f1d00b86bb981be26e0733ede796eda0978b6a514ff216a.js"></script>
+<!--[if lt IE 9]>
+<script src="//assets.screensteps.com/assets/vendor/html5shiv.min-a280ac74b433afc5b6516368f5a678ceba501e0fb8b7987adee3b4e673674310.js"></script>
+<![endif]-->
+
+<style media=''></style>
+<script></script>
+
+  <script type="text/javascript">
+    !function(name,path,ctx){
+      var latest,prev=name!=='Keen'&&window.Keen?window.Keen:false;ctx[name]=ctx[name]||{ready:function(fn){var h=document.getElementsByTagName('head')[0],s=document.createElement('script'),w=window,loaded;s.onload=s.onerror=s.onreadystatechange=function(){if((s.readyState&&!(/^c|loade/.test(s.readyState)))||loaded){return}s.onload=s.onreadystatechange=null;loaded=1;latest=w.Keen;if(prev){w.Keen=prev}else{try{delete w.Keen}catch(e){w.Keen=void 0}}ctx[name]=latest;ctx[name].ready(fn)};s.async=1;s.src=path;h.parentNode.insertBefore(s,h)}}
+    }('KeenAsync','https://d26b395fwzu5fz.cloudfront.net/keen-tracking-1.1.3.min.js',this);
+
+    KeenAsync.ready(function(){
+      // Configure a client instance
+      var client = new KeenAsync({
+        projectId: '591daac30935ce40a59fb7ab',
+        writeKey: 'C89A9A1A8DB4C585F119F8F81ABB9621940DBBADDA5C72C2B87B1BD3464890D23FD250B0FFA4A1056DCB210616545B7B6C9DDF2054167B5219A3DD81E8DF90A321BE0C1B35BA19F2E3E85730FB96C1F93F8C66D8CD449FE6EFE43D98453632D1'
+      });
+
+      // Record an event
+      client.recordEvent('pageviews', {
+        title: document.title,
+        ip_address: "${keen.ip}",
+        user_agent: "${keen.user_agent}",
+        user_id: null,
+        account_id: "2c1ab788fb",
+        site_id: 18,
+        manual_id: 764,
+        article_id: 6656,
+        article_type_id: 0,
+        course_id: null,
+        source_id: 1
+      });
+    });
+  </script>
+
+
+</head>
+<body class='helvetica-body helvetica-header site-article  no-focus-outline' data-base-path='/s/revolution/' data-content-template='2015' data-generating-pdf-text='Generating PDF...'>
+<div class='screensteps-admin-navigation'>
+<div data-logged-in-check-url='https://revolution.screenstepslive.com/s/18/user_nav' id='screensteps-admin-bar'>
+<ul>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/sites/18/manuals/764/chapters/2223/articles/6656">View in admin portal</a></li>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/article-editor/6656">Edit content on web</a></li>
+<li><a href="screensteps://revolution.screenstepslive.com/open/s/18/m/764/a/6656?checkout=1">Edit in desktop</a></li>
+</ul>
+</div>
+
+</div>
+<header class='screensteps-header' role='banner'>
+<a class='skip-navigation--link' href='#screensteps-main-content' id='skip-navigation'>
+Skip to main content
+</a>
+
+<div class='screensteps-branding'>
+<div class='logo-wrapper'>
+<h1 class='company-name'>Cross-Platform Application Development with LiveCode</h1>
+</div>
+</div>
+</header>
+
+<div class='screensteps-container-wrapper'>
+<main class='screensteps-container'>
+<div class='screensteps-site-title-wrapper'>
+<h1 class='screensteps-site-title toc-heading'>Tutorials &amp; Manuals</h1>
+</div>
+<div class='screensteps-main-search' role='search'>
+<form id="screensteps-search-form" action="../../../searches.html" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+<div class='screensteps-search-form'>
+<label for="text">Search term</label>
+<input type="text" name="text" id="text" class="search-field" title="Enter a keyword or topic to search" />
+
+<input type="submit" name="commit" value="Search" class="search-submit" data-disable-with="Search" />
+</div>
+</form>
+
+
+</div>
+<div class='left-sidebar lesson manual-lesson screensteps-content-wrapper'>
+<div class='screensteps-main-content' role='main'>
+<header class='screensteps-title'>
+<div id="screensteps-breadcrumb" aria-label="breadcrumb" aria-level="3"><a href="../../../../revolution.html">Tutorials &amp; Manuals</a><span class='manual-group-breadcrumb'><a href="../../../../revolution.html#SQLYoga">SQL Yoga</a></span><a href="../../sqlyoga_sampleapp.html">SQL Yoga To-Do Application</a> <span class='chapter-breadcrumb'><a href="../c/2223.html">Creating Records In and Displaying Records From A Database</a></span>Chapter Overview</div>
+</header>
+<div id='screensteps-main-content'>
+<div class='screensteps-article'>
+<div class="screensteps-article-content " data-article-id="6656" data-workflow=false>
+    <h1 class="lesson">Chapter Overview</h1>
+    <div class="screensteps-steps" data-role="steps-container">
+          <div class="instructions screensteps-textblock screensteps-wrapper--introduction screensteps-wrapper">
+  <p>Here are the major subjects we are going to cover in this chapter.</p>
+</div>
+
+
+    <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/139/247/original/media_1253894626384.png 212w" data-src="https://media.screensteps.com/image_assets/assets/000/139/247/original/media_1253894626384.png" class="lazyload lazypreload" style="max-width:212px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/139/247/original/media_1253894626384.png" /><noscript><img alt="" width="212" src="https://media.screensteps.com/image_assets/assets/000/139/247/original/media_1253894626384.png" /></noscript>
+</div>
+
+
+
+
+      
+    </div>
+</div>
+
+
+<div class='screensteps-next-prev-navigation' data-role='next-previous-nav'>
+<ul>
+<li class='previous'>
+<strong>Prev</strong>: <a href="6568-initializing-sql-yoga-at-launch.html">Initializing SQL Yoga At Launch</a>
+</li>
+<li class='next'>
+<strong>Next</strong>: <a href="6625-creating-a-project.html">Creating a Project</a>
+</li>
+</ul>
+</div>
+
+<div class='screensteps-comments'>
+<h2 class='comments-heading'>
+<span class='screensteps-comment-count'>2</span>
+Comments
+</h2>
+<div class='screensteps-single-comment' id='comment-33480'>
+<header class='comment-heading'>
+<h2 class='name'>Vaughn Clement</h2>
+<time>Saturday Jan 11 2014 at 06:07 AM</time>
+</header>
+<div class='comment-body'><p>I am doing my first project using FM Migratore Plat, and I have a few questions:
+<br />I am assuming that the stack I am to add to the App is the sql_yoga stack?
+<br />I have not tried to add or connect a substack outside of using the File Menu in LC. I am guessing that I open my main stack and then sql_Yoga then using the general properties set the sql_yoga stack as a substack?
+<br />I next wanted to enter the serial number for yoga into the properties on my main stack in the custom properties, but the directions did not state which part of the custom property to use?</p></div>
+</div>
+<div class='screensteps-single-comment' id='comment-33487'>
+<header class='comment-heading'>
+<h2 class='name'>Trevor DeVore</h2>
+<time>Saturday Jan 11 2014 at 09:00 AM</time>
+</header>
+<div class='comment-body'><p>Yes, the sql_yoga.rev file contains the libSQLYoga stack you need to add to your project. You would open the property inspector for the libSQLYoga stack and assign the mainstack property to your main stack. This will make libSQLYoga a substack of your main stack.</p>
+
+<p>Instructions on unlocking SQL Yoga can be found here:</p>
+
+<p><a rel="nofollow" href="../../sqlyoga/l/6858-unlocking-the-sql-yoga-library.html">http://revolution.screenstepslive.com/s/revolution/m/sqlyoga/l/6858-unlocking-the-sql-yoga-library</a></p>
+
+<p>You don't set any custom properties. Just make a call to a SQL Yoga command.</p></div>
+</div>
+
+<div class='screensteps-add-comment'>
+<h3 class='comment-heading'>Add your comment</h3>
+<script type="text/javascript" charset="utf-8">
+  ScreenStepsLiveSpamCheck = function() {
+      var key = document.getElementById('comment_spam_check_key').value;
+    var sig = '';
+    for (var x = 0; x< key.length; x++ ) {
+       sig += key.charCodeAt(x)+13;
+    }
+    document.getElementById('comment_spam_check_sig').value = sig; 
+    return true;
+  };
+</script>
+<div id='custom-comment-form-2015'></div>
+<form id="comment-form" class="comment-form" onclick="return ScreenStepsLiveSpamCheck();" action="../../../comments_lesson_id=6656-chapter-overview.html" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><div class='field-row name'>
+<label class="required" for="comment-name">Name*</label>
+<input id="comment-name" type="text" name="comment[name]" />
+</div>
+<div class='field-row email'>
+<label class="required" for="comment-email">Email*</label>
+<input id="comment-email" type="text" name="comment[email]" />
+</div>
+<input value="764" type="hidden" name="comment[manual_id]" id="comment_manual_id" />
+<input value="18" type="hidden" name="comment[space_id]" id="comment_space_id" />
+<input value="ammiok8ckJh9" type="hidden" name="comment[spam_check_key]" id="comment_spam_check_key" />
+<input type="hidden" name="comment[spam_check_sig]" id="comment_spam_check_sig" />
+<div class='field-row'>
+<label class="required" for="comment-comment">Comment*</label>
+<textarea id="comment-comment" name="comment[comment]">
+</textarea>
+</div>
+<div class='field-row'>
+<label id="subscribe-label" for="comment_subscribe">Subscribe</label>
+<input name="comment[subscribe]" type="hidden" value="0" /><input type="checkbox" value="1" name="comment[subscribe]" id="comment_subscribe" />
+<span class='help'>E-Mail me when someone replies to this comment</span>
+</div>
+<div class='field-row'><label id="recaptcha-label" class="comment-label" for="recaptcha">Are you human?</label>
+<div id='recaptcha-wrapper'>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<div class="g-recaptcha" data-sitekey="6Le-4BAUAAAAAJnK4h5JcvgWReY9OxXoLjfqLP90"></div>
+          <noscript>
+            <div style="width: 302px; height: 352px;">
+              <div style="width: 302px; height: 352px; position: relative;">
+                <div style="width: 302px; height: 352px; position: absolute;">
+                  <iframe
+                    src="https://www.google.com/recaptcha/api/fallback?k=6Le-4BAUAAAAAJnK4h5JcvgWReY9OxXoLjfqLP90"
+                    frameborder="0" scrolling="no"
+                    style="width: 302px; height:352px; border-style: none;">
+                  </iframe>
+                </div>
+                <div style="width: 250px; height: 80px; position: absolute; border-style: none;
+                  bottom: 21px; left: 25px; margin: 0px; padding: 0px; right: 25px;">
+                  <textarea id="g-recaptcha-response" name="g-recaptcha-response"
+                    class="g-recaptcha-response"
+                    style="width: 250px; height: 80px; border: 1px solid #c1c1c1;
+                    margin: 0px; padding: 0px; resize: none;" value="">
+                  </textarea>
+                </div>
+              </div>
+            </div>
+          </noscript>
+
+</div>
+</div>
+<div class='field-row'><input type="submit" name="commit" value="Submit Comment" id="create-comment-button" data-disable-with="Submit Comment" /></div>
+</form>
+
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+<div aria-label='sidebar' class='screensteps-sidebar' role='complementary'>
+<div class='screensteps-sidebar-widget' id='sidebar-chapters'>
+<h3>Topics</h3>
+<ul id='sidebar-chapter-list'>
+<li class='chapter-list-item' data-section-id='2188'>
+<a class='toggle-lessons' href='../c/2188.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Introduction</span>
+<span class='chapter-count'>
+&nbsp;3
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6653'><a href="6653-introduction-what-we-are-going-to-create.html">Introduction: What We Are Going to Create</a></li>
+<li data-lesson-id='6566'><a href="6566-before-you-get-started.html">Before You Get Started</a></li>
+<li data-lesson-id='6624'><a href="6624-the-to-do-application-database-schema.html">The To-Do Application Database Schema</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2233'>
+<a class='toggle-lessons' href='../c/2233.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Getting Started</span>
+<span class='chapter-count'>
+&nbsp;5
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6654'><a href="6654-chapter-overview.html">Chapter Overview</a></li>
+<li data-lesson-id='6567'><a href="6567-open-blank-application-template.html">Open Blank Application Template</a></li>
+<li data-lesson-id='6437'><a href="6437-unlocking-the-sql-yoga-library.html">Unlocking the SQL Yoga Library</a></li>
+<li data-lesson-id='6434'><a href="6434-creating-a-sql-yoga-database-object.html">Creating A SQL Yoga Database Object</a></li>
+<li data-lesson-id='6568'><a href="6568-initializing-sql-yoga-at-launch.html">Initializing SQL Yoga At Launch</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2223'>
+<a class='toggle-lessons' href='../c/2223.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Creating Records In and Displaying Records From A Database</span>
+<span class='chapter-count'>
+&nbsp;6
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6656'><a href="6656-chapter-overview.html">Chapter Overview</a></li>
+<li data-lesson-id='6625'><a href="6625-creating-a-project.html">Creating a Project</a></li>
+<li data-lesson-id='6626'><a href="6626-display-projects-in-the-ui.html">Display Projects in the UI</a></li>
+<li data-lesson-id='6627'><a href="6627-creating-a-to-do-item.html">Creating a To-Do Item</a></li>
+<li data-lesson-id='6628'><a href="6628-display-to-do-items-in-the-ui.html">Display To-Do Items in the UI</a></li>
+<li data-lesson-id='6629'><a href="6629-creating-a-person-and-updating-left-column-display.html">Creating A Person And Updating Left Column Display</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2224'>
+<a class='toggle-lessons' href='../c/2224.html' role='button'>
+<span class='chapter-link sidebar-subheading'>More With Displaying Database Records</span>
+<span class='chapter-count'>
+&nbsp;3
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6657'><a href="6657-chapter-overview.html">Chapter Overview</a></li>
+<li data-lesson-id='6630'><a href="6630-tell-sql-yoga-about-table-relationships.html">Tell SQL Yoga About Table Relationships</a></li>
+<li data-lesson-id='6631'><a href="6631-update-the-ui-code-to-account-for-people.html">Update the UI Code to Account For People</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2225'>
+<a class='toggle-lessons' href='../c/2225.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Linking and Deleting Records</span>
+<span class='chapter-count'>
+&nbsp;4
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6658'><a href="6658-chapter-overview.html">Chapter Overview</a></li>
+<li data-lesson-id='6632'><a href="6632-associating-a-person-with-a-to-do-item.html">Associating a Person With a To-Do Item</a></li>
+<li data-lesson-id='6633'><a href="6633-removing-a-person-associated-with-a-to-do-item.html">Removing a Person Associated With a To-Do Item</a></li>
+<li data-lesson-id='6634'><a href="6634-deleting-projects-people-and-to-do-items.html">Deleting Projects, People and To-Do Items</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2226'>
+<a class='toggle-lessons' href='../c/2226.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Updating Database Records</span>
+<span class='chapter-count'>
+&nbsp;3
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6659'><a href="6659-chapter-overview.html">Chapter Overview</a></li>
+<li data-lesson-id='6635'><a href="6635-editing-a-project-person-or-to-do-name.html">Editing a Project, Person or To-Do Name</a></li>
+<li data-lesson-id='6636'><a href="6636-updating-a-to-do-items-completed-state.html">Updating a To-Do Items Completed State</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2227'>
+<a class='toggle-lessons' href='../c/2227.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Adding Search Functionality</span>
+<span class='chapter-count'>
+&nbsp;3
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6660'><a href="6660-chapter-overview.html">Chapter Overview</a></li>
+<li data-lesson-id='6637'><a href="6637-defining-scopes-to-make-aggregating-search-filters-easier.html">Defining Scopes To Make Aggregating Search Filters Easier</a></li>
+<li data-lesson-id='6638'><a href="6638-search-for-to-dos-using-scopes.html">Search for To-Dos Using Scopes</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2232'>
+<a class='toggle-lessons' href='../c/2232.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Conclusion</span>
+<span class='chapter-count'>
+&nbsp;1
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6651'><a href="6651-test-the-standalone-version.html">Test The Standalone Version</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='lesson-sidebar-info'>
+<h3>Last Updated</h3><p>Sep 02, 2016</p>
+
+<ul class='icon-links'>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='other-assets'>
+<h3>Other Resources</h3>
+<ul class='asset-list with-divider'>
+<li class='divider'><h4 class="sidebar-subheading">How-tos</h4></li>
+<li class='manual'><a href="../../how-to.html">Lessons</a></li>
+<li class='manual'><a href="../../10695.html">Signing Your Applications and Building Installers</a></li>
+<li class='divider'><h4 class="sidebar-subheading">GLX Application Framework</h4></li>
+<li class='manual'><a href="../../glxapp.html">GLX Application Framework 1.2</a></li>
+<li class='manual'><a href="../../convert_to_glxapp.html">Converting An Existing Application To Use The Framework</a></li>
+<li class='divider'><h4 class="sidebar-subheading">SQL Yoga</h4></li>
+<li class='manual'><a href="../../sqlyoga.html">SQL Yoga</a></li>
+<li class='manual'><a href="../../sqlyoga_examples.html">SQL Yoga Examples</a></li>
+<li class='manual'><a href="../../sqlyoga_sampleapp.html">SQL Yoga To-Do Application</a></li>
+<li class='manual'><a href="../../sqlyoga_plugin.html">SQL Yoga IDE Plugin</a></li>
+<li class='divider'><h4 class="sidebar-subheading">Plugins, Externals and Libraries</h4></li>
+<li class='manual'><a href="../../plugins.html">Plugins</a></li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='screensteps-rss'>
+<p><a href="../../../../revolution.rss">Subscribe to our feed</a></p>
+</div>
+
+</div>
+
+</div>
+<script type="text/javascript">
+  jQuery(document).ready(function(jQuery) {
+    var lesson_id = 6656;
+    var current_article_sidebar_text = '(Current Article)';
+    var section_id = 2223;
+    var expansion = 'one';
+    switch(expansion) {
+      case 'none':
+        jQuery('ul.nested-chapter-lessons').hide();
+        break;
+      case 'all':
+        jQuery('ul.nested-chapter-lessons').show();
+        jQuery('li.chapter-list-item a.toggle-lessons').addClass('open');
+        break;
+      case 'one':
+        jQuery('ul.nested-chapter-lessons').hide();
+        jQuery('li.chapter-list-item[data-section-id="' + section_id + '"] ul.nested-chapter-lessons').show();
+        jQuery('li.chapter-list-item[data-section-id="' + section_id + '"] a.toggle-lessons').addClass('open');
+        break;
+    }
+    jQuery('li.chapter-list-item[data-section-id="' + section_id + '"]').addClass('here');
+    jQuery('li[data-lesson-id="' + lesson_id + '"]').addClass('here');
+    jQuery('li[data-lesson-id="' + lesson_id + '"] a').attr('data-current-article-text', current_article_sidebar_text);
+  });
+</script>
+<noscript>Enable javascript to expand/contract chapters</noscript>
+
+
+</main>
+</div>
+<div aria-labelledby='modal-label' class='screensteps-modal' id='screensteps-modal' role='dialog'>
+<span id='modal-label'>
+Inline referenced article
+</span>
+<div class='screensteps-modal__box'>
+<a class='screensteps-modal__close' href='#'>
+×
+</a>
+<span class='screensteps-loading-wrapper'>
+<span class='screensteps-loading'></span>
+</span>
+<div class='screensteps-modal__content screensteps-article-content'></div>
+</div>
+</div>
+</body>
+</html>

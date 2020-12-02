@@ -1,0 +1,22 @@
+﻿script "Array Json Lib"
+--> all handlers
+
+-- stuff that is already there on desktop !!
+
+function ArrayToJSON pArray,pForceRootType,pPretty
+    repeat for each key tKey in pArray
+        if pArray[tKey] is an array then
+            put "}"&ArrayToJSON(pArray[tKey]) into pArray[tKey]
+        end if
+    end repeat
+    return(mergJSONEncode("pArray",pForceRootType,pPretty))
+end ArrayToJSON
+
+function JSONToArray pJSON
+    local tArray,tKeys
+    repeat for each line tKey in mergJSONDecode(pJSON,"tArray")
+        put JSONToArray(tArray[tKey]) into tArray[tKey]
+    end repeat
+    return tArray
+end JSONToArray
+    

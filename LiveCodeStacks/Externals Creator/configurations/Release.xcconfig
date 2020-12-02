@@ -1,0 +1,9 @@
+#include "Global.xcconfig"
+ARCHS = i386 ppc
+COPY_PHASE_STRIP = YES
+GCC_VERSION_i386 = 4.0
+GCC_VERSION_ppc = 3.3
+MACOSX_DEPLOYMENT_TARGET_i386 = 10.4
+MACOSX_DEPLOYMENT_TARGET_ppc = 10.2
+SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk
+SDKROOT_ppc = /Developer/SDKs/MacOSX10.2.8.sdk

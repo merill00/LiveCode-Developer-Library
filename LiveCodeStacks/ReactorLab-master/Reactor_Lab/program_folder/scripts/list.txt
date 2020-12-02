@@ -1,0 +1,1 @@
+START SESSION (Directory openStack) at 1591558940.836455 seconds from 1-Jan-1970 GMT3:42:20 PM, start session

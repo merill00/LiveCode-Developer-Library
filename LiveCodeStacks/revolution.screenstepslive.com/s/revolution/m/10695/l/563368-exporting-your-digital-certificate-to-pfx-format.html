@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+<meta content='IE=edge' http-equiv='X-UA-Compatible'>
+<meta content='width=device-width, initial-scale=1' name='viewport'>
+<title>Exporting Your Digital Certificate to PFX Format | Signing Your Applications and Building Installers | Tutorials &amp; Manuals</title>
+<meta name='description'>
+
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="Q8Zj1awb7u+Vs8H8L9F+b6ke5mH5OyB3uT1IdQ4JfJNgJsU1vuDECq3ndiRzDZRc4PGwEZRk71o4D6hihLVRSw==" />
+<link rel="stylesheet" media="screen" href="https://assets.screensteps.com/assets/themes/fonts/helvetica-e03d9e53b962f0a4e2fed42a4a318c29cf029d37f80397baaf14722853359e6a.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="https://assets.screensteps.com/assets/themes/alpha-027b2e60ae75b9d8e6d6bcb32d3e6730dc3f6fe41be8479ef83e02168774766b.css" />
+<style type="text/css" media="all">/* headings */
+  h1,
+  h1.toc-heading,
+  h2.toc-heading {
+    color: #;
+  }
+
+  h2.toc-subheading,
+  h3.toc-subheading,
+  h4.toc-subheading,
+  h5.toc-subheading,
+  h6.toc-subheading {
+    color: #;
+  }
+
+  .screensteps-training-site [data-count-bubble]::after {
+    background-color: #;
+  }
+
+  .screensteps-article-content h2 {
+    color: #;
+  }
+
+  .screensteps-article-content h3,
+  .screensteps-article-content h4,
+  .screensteps-article-content h5,
+  .screensteps-article-content h6 {
+    color: #;
+  }
+
+  .screensteps-sidebar h3 {
+    color: #;
+  }
+
+  .sidebar-subheading {
+    color: #;
+  }
+
+  .comments-heading {
+    color: #;
+  }
+
+  /* base/_buttons */
+  input[type="button"],
+  input[type="reset"],
+  input[type="submit"],
+  button,
+  .screensteps-bg-action-color,
+  .screensteps-courses .screensteps-progress-bar::before,
+  .screensteps-courses .screensteps-courses-menu a:hover,
+  .screensteps-courses .screensteps-courses-menu .step-active a::before,
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #216bb5;
+  }
+
+  input[type="button"]:hover,
+  input[type="reset"]:hover,
+  input[type="submit"]:hover,
+  button:hover,
+  button.screensteps-bg-action-color:hover,
+  a.screensteps-bg-action-color:hover {
+    background-color: #155596;
+  }
+
+  /* base/_forms */
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="password"]:focus,
+  input[type="search"]:focus,
+  input[type="tel"]:focus,
+  input[type="text"]:focus,
+  input[type="url"]:focus,
+  input[type="color"]:focus,
+  input[type="date"]:focus,
+  input[type="datetime"]:focus,
+  input[type="datetime-local"]:focus,
+  input[type="month"]:focus,
+  input[type="time"]:focus,
+  input[type="week"]:focus,
+  select[multiple=multiple]:focus,
+  textarea:focus {
+    border-color: #216bb5;
+  }
+
+
+  .screensteps-training-site .screensteps-main-search .search-field:not(:placeholder-shown) {
+    box-shadow: 0 0 0 2px #3793C8;
+  }
+
+  /* base/_typography */
+  body {
+    background-color: #3793C8;
+    color: #;
+  }
+
+  a {
+    color: #216bb5;
+  }
+
+
+
+  /* _screensteps-container */
+  .screensteps-container a:visited {
+    color: #155596;
+  }
+ .screensteps-container a:active,
+ .screensteps-container a:focus,
+ .screensteps-container a:hover {
+    color: #155596;
+  }
+
+  /* _screensteps-manual-contents */
+  .screensteps-manual-contents h2 a {
+    color: #216bb5;
+  }
+  /* _screensteps-foldable-sections */
+  .screensteps-main-content .embedded-chapter-article > * {
+    color: #216bb5;
+  }
+
+  /* screensteps-header */
+  .screensteps-branding h1,
+  .screensteps-header .screensteps-branding a,
+  .screensteps-training-site .screensteps-profile-subnav-toggle {
+    color: #ffffff;
+  }
+
+  .screensteps-header .screensteps-branding a:hover {
+    color: #2C7CAA;
+  }
+
+  /* meta data text */
+  .chapter-count,
+  .screensteps-comment-count,
+  .screensteps-lesson-details,
+  .nested-chapter-lessons .here a:after,
+  .screensteps-single-comment time {
+    color: #;
+  }
+
+  /* course tiles */
+  .screensteps-training-site .screensteps-group .asset-list--course a {
+    background-color: #;
+    color: #;
+  }
+
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #;
+  }
+
+  .screensteps-training-site .screensteps-group .asset-list--course a:hover {
+    background-color: #;
+  }
+</style>
+
+<link rel='icon'>
+<script src="https://assets.screensteps.com/assets/application-fe7915887e0874f95ef87940f513c239a27a71cc345a491bff7c3f92416a8111.js"></script>
+<script src="https://assets.screensteps.com/assets/vendor/jquery.fitvids-3e4679bfa1c083cec0d56c1f636f2038bf770ed13929e17d22bd1f417d3c94f8.js"></script>
+<script src="https://assets.screensteps.com/assets/theme-a161d6812c4179b27f1d00b86bb981be26e0733ede796eda0978b6a514ff216a.js"></script>
+<!--[if lt IE 9]>
+<script src="//assets.screensteps.com/assets/vendor/html5shiv.min-a280ac74b433afc5b6516368f5a678ceba501e0fb8b7987adee3b4e673674310.js"></script>
+<![endif]-->
+
+<style media=''></style>
+<script></script>
+
+  <script type="text/javascript">
+    !function(name,path,ctx){
+      var latest,prev=name!=='Keen'&&window.Keen?window.Keen:false;ctx[name]=ctx[name]||{ready:function(fn){var h=document.getElementsByTagName('head')[0],s=document.createElement('script'),w=window,loaded;s.onload=s.onerror=s.onreadystatechange=function(){if((s.readyState&&!(/^c|loade/.test(s.readyState)))||loaded){return}s.onload=s.onreadystatechange=null;loaded=1;latest=w.Keen;if(prev){w.Keen=prev}else{try{delete w.Keen}catch(e){w.Keen=void 0}}ctx[name]=latest;ctx[name].ready(fn)};s.async=1;s.src=path;h.parentNode.insertBefore(s,h)}}
+    }('KeenAsync','https://d26b395fwzu5fz.cloudfront.net/keen-tracking-1.1.3.min.js',this);
+
+    KeenAsync.ready(function(){
+      // Configure a client instance
+      var client = new KeenAsync({
+        projectId: '591daac30935ce40a59fb7ab',
+        writeKey: 'C89A9A1A8DB4C585F119F8F81ABB9621940DBBADDA5C72C2B87B1BD3464890D23FD250B0FFA4A1056DCB210616545B7B6C9DDF2054167B5219A3DD81E8DF90A321BE0C1B35BA19F2E3E85730FB96C1F93F8C66D8CD449FE6EFE43D98453632D1'
+      });
+
+      // Record an event
+      client.recordEvent('pageviews', {
+        title: document.title,
+        ip_address: "${keen.ip}",
+        user_agent: "${keen.user_agent}",
+        user_id: null,
+        account_id: "2c1ab788fb",
+        site_id: 18,
+        manual_id: 10695,
+        article_id: 563368,
+        article_type_id: 0,
+        course_id: null,
+        source_id: 1
+      });
+    });
+  </script>
+
+
+</head>
+<body class='helvetica-body helvetica-header site-article  no-focus-outline' data-base-path='/s/revolution/' data-content-template='2015' data-generating-pdf-text='Generating PDF...'>
+<div class='screensteps-admin-navigation'>
+<div data-logged-in-check-url='https://revolution.screenstepslive.com/s/18/user_nav' id='screensteps-admin-bar'>
+<ul>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/sites/18/manuals/10695/chapters/47281/articles/563368">View in admin portal</a></li>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/article-editor/563368">Edit content on web</a></li>
+<li><a href="screensteps://revolution.screenstepslive.com/open/s/18/m/10695/a/563368?checkout=1">Edit in desktop</a></li>
+</ul>
+</div>
+
+</div>
+<header class='screensteps-header' role='banner'>
+<a class='skip-navigation--link' href='#screensteps-main-content' id='skip-navigation'>
+Skip to main content
+</a>
+
+<div class='screensteps-branding'>
+<div class='logo-wrapper'>
+<h1 class='company-name'>Cross-Platform Application Development with LiveCode</h1>
+</div>
+</div>
+</header>
+
+<div class='screensteps-container-wrapper'>
+<main class='screensteps-container'>
+<div class='screensteps-site-title-wrapper'>
+<h1 class='screensteps-site-title toc-heading'>Tutorials &amp; Manuals</h1>
+</div>
+<div class='screensteps-main-search' role='search'>
+<form id="screensteps-search-form" action="../../../searches.html" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+<div class='screensteps-search-form'>
+<label for="text">Search term</label>
+<input type="text" name="text" id="text" class="search-field" title="Enter a keyword or topic to search" />
+
+<input type="submit" name="commit" value="Search" class="search-submit" data-disable-with="Search" />
+</div>
+</form>
+
+
+</div>
+<div class='left-sidebar lesson manual-lesson screensteps-content-wrapper'>
+<div class='screensteps-main-content' role='main'>
+<header class='screensteps-title'>
+<div id="screensteps-breadcrumb" aria-label="breadcrumb" aria-level="3"><a href="../../../../revolution.html">Tutorials &amp; Manuals</a><span class='manual-group-breadcrumb'><a href="../../../../revolution.html#How-tos">How-tos</a></span><a href="../../10695.html">Signing Your Applications and Building Installers</a> <span class='chapter-breadcrumb'><a href="../c/47281.html">Code Signing On Windows</a></span>Exporting Your Digital Certificate to PFX Format</div>
+</header>
+<div id='screensteps-main-content'>
+<div class='screensteps-article'>
+<div class="screensteps-article-content " data-article-id="563368" data-workflow=false>
+    <div class="screensteps-description">
+      <h1 class="lesson">
+        Exporting Your Digital Certificate to PFX Format
+      </h1>
+      <div class='description'>
+<p>In order to sign your executables using a tool like SignTool.exe you will need to export a PFX file. It is also a good idea to export a PFX file in order to back up your code signing certificate.</p>
+</div>
+
+    </div>
+    <div class="screensteps-steps">
+      <div class='step' data-step-uuid='52C33BA0-9C7A-425E-898B-13ED8252F27C' id=''>
+<h2 id="OpenInternetOptions"><a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Open Internet Options" href="#OpenInternetOptions"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>Open Internet Options</h2>
+<div>
+<div class="instructions"><p>Type <strong>internet options</strong> in the Start menu search box to quickly locate the <strong>Internet Options</strong> application.</p></div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="1835455" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/10695/l/563368-exporting-your-digital-certificate-to-pfx-format/show_image?image_id=1835455"><img alt="Open Internet Options" src="https://media.screensteps.com/images/revolution/94973/1/rendered/FFE5D456-C854-4BBB-83EA-AF5D6C8EDF00_display.png" /></a>
+</div>
+
+<div class='clear'></div>
+</div>
+</div>
+<div class='step' data-step-uuid='4CA81256-4396-4300-BE49-274EA9509215' id=''>
+<h2 id="OpenCertificatesWindow"><a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Open Certificates Window" href="#OpenCertificatesWindow"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>Open Certificates Window</h2>
+<div>
+<div class="instructions"><p>From the <strong>Content</strong> tab click on <strong>Certificates</strong>.</p></div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="1835458" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/10695/l/563368-exporting-your-digital-certificate-to-pfx-format/show_image?image_id=1835458"><img alt="Open Certificates Window" src="https://media.screensteps.com/images/revolution/94973/1/rendered/8F06BE0C-9A81-47DB-9FC6-79FA04DF727A_display.png" /></a>
+</div>
+
+<div class='clear'></div>
+</div>
+</div>
+<div class='step' data-step-uuid='B56C49DA-5181-4AD6-B703-BF0967E2E938' id=''>
+<h2 id="ExportCertificate"><a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Export Certificate" href="#ExportCertificate"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>Export Certificate</h2>
+<div>
+<div class="instructions"><p>Your Comodo certificate will be listed under the <strong>Personal</strong> tab. Select it and click the <strong>Export</strong> button.</p></div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="1835461" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/10695/l/563368-exporting-your-digital-certificate-to-pfx-format/show_image?image_id=1835461"><img alt="Export Certificate" src="https://media.screensteps.com/images/revolution/94973/1/rendered/9518FA98-AFE6-40B2-9BAA-87F9229603A4_display.png" /></a>
+</div>
+
+<div class='clear'></div>
+</div>
+</div>
+<div class='step' data-step-uuid='A9A38D73-D3B6-474D-B0A8-081E33CC60F0' id=''>
+<h2 id="TheExportWizard"><a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for The Export Wizard" href="#TheExportWizard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>The Export Wizard</h2>
+<div>
+<div class="instructions"><p>The export wizard will open and you can step through the process.</p></div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="1835464" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/10695/l/563368-exporting-your-digital-certificate-to-pfx-format/show_image?image_id=1835464"><img alt="The Export Wizard" src="https://media.screensteps.com/images/revolution/94973/1/rendered/A800036F-211C-43B8-A5C6-DA3FB826E59C_display.png" /></a>
+</div>
+
+<div class='clear'></div>
+</div>
+</div>
+<div class='step' data-step-uuid='F0449E77-8D9F-4E58-9DE0-9A5C7C015484' id=''>
+<h2 id="ExportThePrivateKey"><a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Export the Private Key" href="#ExportThePrivateKey"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>Export the Private Key</h2>
+<div>
+<div class="instructions"><p></p></div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="1835467" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/10695/l/563368-exporting-your-digital-certificate-to-pfx-format/show_image?image_id=1835467"><img alt="Export the Private Key" src="https://media.screensteps.com/images/revolution/94973/1/rendered/7F9C4EE9-080F-426E-935D-F55CB1DD41EA_display.png" /></a>
+</div>
+
+<div class='clear'></div>
+</div>
+</div>
+<div class='step' data-step-uuid='0BD80451-28DF-4CB3-9EDD-6BA92DBCEA6C' id=''>
+<h2 id="ExportAsPfx(PersonalInformationExchange)"><a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Export as PFX (Personal Information Exchange)" href="#ExportAsPfx(PersonalInformationExchange)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>Export as PFX (Personal Information Exchange)</h2>
+<div>
+<div class="instructions"><p>Check <strong>Include all certificates...</strong> and <strong>Export all extended properties</strong>.</p></div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="1835470" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/10695/l/563368-exporting-your-digital-certificate-to-pfx-format/show_image?image_id=1835470"><img alt="Export as PFX (Personal Information Exchange)" src="https://media.screensteps.com/images/revolution/94973/1/rendered/C8C91573-2486-4F72-BD19-60E76C0876F6_display.png" /></a>
+</div>
+
+<div class='clear'></div>
+</div>
+</div>
+<div class='step' data-step-uuid='87B26F64-F321-4B8F-B627-CE91865D4EDD' id=''>
+<h2 id="AssignAPassword"><a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Assign a Password" href="#AssignAPassword"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>Assign a Password</h2>
+<div>
+<div class="instructions"><p>Assign a password to protect the private key. This password will be required when you sign your applications using the PFX file you are generating.</p></div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="1835473" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/10695/l/563368-exporting-your-digital-certificate-to-pfx-format/show_image?image_id=1835473"><img alt="Assign a Password" src="https://media.screensteps.com/images/revolution/94973/1/rendered/9755A0B2-8434-4623-835E-BB9BC48FBA33_display.png" /></a>
+</div>
+
+<div class='clear'></div>
+</div>
+</div>
+<div class='step' data-step-uuid='9143B5C3-62E8-4025-AF62-C30CA1F416B4' id=''>
+<h2 id="SpecifyThePath"><a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Specify the Path" href="#SpecifyThePath"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>Specify the Path</h2>
+<div>
+<div class="instructions"><p>I export mine to the C:\ drive.</p></div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="1835476" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/10695/l/563368-exporting-your-digital-certificate-to-pfx-format/show_image?image_id=1835476"><img alt="Specify the Path" src="https://media.screensteps.com/images/revolution/94973/1/rendered/63CD237C-3920-4AEA-B8F6-A27D79CBFB87_display.png" /></a>
+</div>
+
+<div class='clear'></div>
+</div>
+</div>
+<div class='step' data-step-uuid='7B6AB566-F983-4CE3-BEF7-55B483043063' id=''>
+<h2 id="Finish"><a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Finish" href="#Finish"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>Finish</h2>
+<div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="1835479" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/10695/l/563368-exporting-your-digital-certificate-to-pfx-format/show_image?image_id=1835479"><img alt="Finish" src="https://media.screensteps.com/images/revolution/94973/1/rendered/3131A15D-34CE-42F4-BEBA-6EDDD7759FAB_display.png" /></a>
+</div>
+
+
+<div class='clear'></div>
+<div class='sub-step' data-step-uuid='E6A3ACBD-2666-463B-995D-6C326763B799'>
+
+<div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="1835482" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/10695/l/563368-exporting-your-digital-certificate-to-pfx-format/show_image?image_id=1835482"><img alt="" src="https://media.screensteps.com/images/revolution/94973/1/rendered/E2D7081A-DC76-41B2-8C10-FFB54C49DBEA_display.png" /></a>
+</div>
+
+
+<div class='clear'></div>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+</div>
+
+
+<div class='screensteps-next-prev-navigation' data-role='next-previous-nav'>
+<ul>
+<li class='previous'>
+<strong>Prev</strong>: <a href="563367-retrieving-your-certificate.html">Retrieving Your Certificate</a>
+</li>
+<li class='next'>
+<strong>Next</strong>: <a href="112948-installing-signtool-exe.html">Installing signtool.exe</a>
+</li>
+</ul>
+</div>
+
+<div class='screensteps-comments'>
+<h2 class='comments-heading'>
+<span class='screensteps-comment-count'>8</span>
+Comments
+</h2>
+<div class='screensteps-single-comment' id='comment-67844'>
+<header class='comment-heading'>
+<h2 class='name'>Hiren Patel</h2>
+<time>Saturday Mar 02 2019 at 05:55 PM</time>
+</header>
+<div class='comment-body'><p>I've ePass2003 Token. How do I export the certificate in PFX format from the same ???</p></div>
+</div>
+<div class='screensteps-single-comment' id='comment-67845'>
+<header class='comment-heading'>
+<h2 class='name'>Hiren Patel</h2>
+<time>Saturday Mar 02 2019 at 05:57 PM</time>
+</header>
+<div class='comment-body'><p>While I try to export the Certificate from IE-11 i'm not getting the Option "Yes Export the Private Kry" enabled in Internet Explorer-11</p></div>
+</div>
+<div class='screensteps-single-comment' id='comment-67915'>
+<header class='comment-heading'>
+<h2 class='name'>Trevor DeVore</h2>
+<time>Tuesday Mar 05 2019 at 06:20 AM</time>
+</header>
+<div class='comment-body'><p>@Hiren - I don't know. I haven't worked with ePass2003 tokens before.</p></div>
+</div>
+<div class='screensteps-single-comment' id='comment-75011'>
+<header class='comment-heading'>
+<h2 class='name'>MP</h2>
+<time>Thursday Aug 29 2019 at 11:05 PM</time>
+</header>
+<div class='comment-body'><p>How did your Comodo certificate appear under personal? Is this a .cer that was created for you? Did you have to save the code signing certificate under a specific location? I have a Certificate.cer which I want to convert to a .pfx file. </p></div>
+</div>
+<div class='screensteps-single-comment' id='comment-75015'>
+<header class='comment-heading'>
+<h2 class='name'>Trevor DeVore</h2>
+<time>Friday Aug 30 2019 at 01:43 AM</time>
+</header>
+<div class='comment-body'><p>@MP - see the previous article in this manual which explains how to retrieve the certificate from Tucows: <a rel="nofollow" href="563367-retrieving-your-certificate.html">https://revolution.screenstepslive.com/s/revolution/m/10695/l/563367-retrieving-your-certificate</a>
+<br />The .cer was installed during that process.</p></div>
+</div>
+<div class='screensteps-single-comment' id='comment-75578'>
+<header class='comment-heading'>
+<h2 class='name'>Ramji gupta</h2>
+<time>Saturday Sep 14 2019 at 03:48 PM</time>
+</header>
+<div class='comment-body'><p>I've ePass2003 Token. How do I export the certificate in PFX format from the same ???</p></div>
+</div>
+<div class='screensteps-single-comment' id='comment-75591'>
+<header class='comment-heading'>
+<h2 class='name'>Trevor DeVore</h2>
+<time>Sunday Sep 15 2019 at 07:07 AM</time>
+</header>
+<div class='comment-body'><p>@Ramji - Unfortunately I'm not familiar with that format so I can't offer any guidance.</p></div>
+</div>
+<div class='screensteps-single-comment' id='comment-82884'>
+<header class='comment-heading'>
+<h2 class='name'>basant</h2>
+<time>Thursday Mar 19 2020 at 10:22 PM</time>
+</header>
+<div class='comment-body'><p>While I try to export the Certificate from IE-11 i'm not getting the Option "Yes Export the Private Kry" enabled in Internet Explorer-11</p></div>
+</div>
+
+<div class='screensteps-add-comment'>
+<h3 class='comment-heading'>Add your comment</h3>
+<script type="text/javascript" charset="utf-8">
+  ScreenStepsLiveSpamCheck = function() {
+      var key = document.getElementById('comment_spam_check_key').value;
+    var sig = '';
+    for (var x = 0; x< key.length; x++ ) {
+       sig += key.charCodeAt(x)+13;
+    }
+    document.getElementById('comment_spam_check_sig').value = sig; 
+    return true;
+  };
+</script>
+<div id='custom-comment-form-2015'></div>
+<form id="comment-form" class="comment-form" onclick="return ScreenStepsLiveSpamCheck();" action="../../../comments_lesson_id=563368-exporting-your-digital-certificate-to-pfx-format.html" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><div class='field-row name'>
+<label class="required" for="comment-name">Name*</label>
+<input id="comment-name" type="text" name="comment[name]" />
+</div>
+<div class='field-row email'>
+<label class="required" for="comment-email">Email*</label>
+<input id="comment-email" type="text" name="comment[email]" />
+</div>
+<input value="10695" type="hidden" name="comment[manual_id]" id="comment_manual_id" />
+<input value="18" type="hidden" name="comment[space_id]" id="comment_space_id" />
+<input value="ammiok8ckJh9" type="hidden" name="comment[spam_check_key]" id="comment_spam_check_key" />
+<input type="hidden" name="comment[spam_check_sig]" id="comment_spam_check_sig" />
+<div class='field-row'>
+<label class="required" for="comment-comment">Comment*</label>
+<textarea id="comment-comment" name="comment[comment]">
+</textarea>
+</div>
+<div class='field-row'>
+<label id="subscribe-label" for="comment_subscribe">Subscribe</label>
+<input name="comment[subscribe]" type="hidden" value="0" /><input type="checkbox" value="1" name="comment[subscribe]" id="comment_subscribe" />
+<span class='help'>E-Mail me when someone replies to this comment</span>
+</div>
+<div class='field-row'><label id="recaptcha-label" class="comment-label" for="recaptcha">Are you human?</label>
+<div id='recaptcha-wrapper'>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<div class="g-recaptcha" data-sitekey="6Le-4BAUAAAAAJnK4h5JcvgWReY9OxXoLjfqLP90"></div>
+          <noscript>
+            <div style="width: 302px; height: 352px;">
+              <div style="width: 302px; height: 352px; position: relative;">
+                <div style="width: 302px; height: 352px; position: absolute;">
+                  <iframe
+                    src="https://www.google.com/recaptcha/api/fallback?k=6Le-4BAUAAAAAJnK4h5JcvgWReY9OxXoLjfqLP90"
+                    frameborder="0" scrolling="no"
+                    style="width: 302px; height:352px; border-style: none;">
+                  </iframe>
+                </div>
+                <div style="width: 250px; height: 80px; position: absolute; border-style: none;
+                  bottom: 21px; left: 25px; margin: 0px; padding: 0px; right: 25px;">
+                  <textarea id="g-recaptcha-response" name="g-recaptcha-response"
+                    class="g-recaptcha-response"
+                    style="width: 250px; height: 80px; border: 1px solid #c1c1c1;
+                    margin: 0px; padding: 0px; resize: none;" value="">
+                  </textarea>
+                </div>
+              </div>
+            </div>
+          </noscript>
+
+</div>
+</div>
+<div class='field-row'><input type="submit" name="commit" value="Submit Comment" id="create-comment-button" data-disable-with="Submit Comment" /></div>
+</form>
+
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+<div aria-label='sidebar' class='screensteps-sidebar' role='complementary'>
+<div class='screensteps-sidebar-widget' id='sidebar-chapters'>
+<h3>Topics</h3>
+<ul id='sidebar-chapter-list'>
+<li class='chapter-list-item' data-section-id='47281'>
+<a class='toggle-lessons' href='../c/47281.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Code Signing On Windows</span>
+<span class='chapter-count'>
+&nbsp;5
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='563366'><a href="563366-purchasing-a-code-signing-certificate-for-windows-from-tucows.html">Purchasing a Code Signing Certificate for Windows From Tucows</a></li>
+<li data-lesson-id='563367'><a href="563367-retrieving-your-certificate.html">Retrieving Your Certificate</a></li>
+<li data-lesson-id='563368'><a href="563368-exporting-your-digital-certificate-to-pfx-format.html">Exporting Your Digital Certificate to PFX Format</a></li>
+<li data-lesson-id='112948'><a href="112948-installing-signtool-exe.html">Installing signtool.exe</a></li>
+<li data-lesson-id='563370'><a href="563370-signing-with-signtool-exe.html">Signing with signtool.exe</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='47280'>
+<a class='toggle-lessons' href='../c/47280.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Code Signing on OS X</span>
+<span class='chapter-count'>
+&nbsp;2
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='112989'><a href="112989-getting-code-signing-certificates.html">Getting code signing certificates</a></li>
+<li data-lesson-id='112706'><a href="112706-signing-an-application.html">Signing an application</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='47283'>
+<a class='toggle-lessons' href='../c/47283.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Inno Setup</span>
+<span class='chapter-count'>
+&nbsp;2
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='112695'><a href="112695-getting-inno-setup.html">Getting Inno Setup</a></li>
+<li data-lesson-id='563371'><a href="563371-signing-installers-you-create-with-inno-setup.html">Signing Installers You Create with Inno Setup</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='47282'>
+<a class='toggle-lessons' href='../c/47282.html' role='button'>
+<span class='chapter-link sidebar-subheading'>DropDMG</span>
+<span class='chapter-count'>
+&nbsp;3
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='112696'><a href="112696-installing-dropdmg.html">Installing DropDMG</a></li>
+<li data-lesson-id='112685'><a href="112685-before-you-create-a-dmg.html">Before you create a DMG</a></li>
+<li data-lesson-id='112684'><a href="112684-creating-a-dmg-using-the-command-line.html">Creating a DMG using the command line</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='lesson-sidebar-info'>
+<h3>Last Updated</h3><p>Jan 22, 2013</p>
+
+<ul class='icon-links'>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='other-assets'>
+<h3>Other Resources</h3>
+<ul class='asset-list with-divider'>
+<li class='divider'><h4 class="sidebar-subheading">How-tos</h4></li>
+<li class='manual'><a href="../../how-to.html">Lessons</a></li>
+<li class='manual'><a href="../../10695.html">Signing Your Applications and Building Installers</a></li>
+<li class='divider'><h4 class="sidebar-subheading">GLX Application Framework</h4></li>
+<li class='manual'><a href="../../glxapp.html">GLX Application Framework 1.2</a></li>
+<li class='manual'><a href="../../convert_to_glxapp.html">Converting An Existing Application To Use The Framework</a></li>
+<li class='divider'><h4 class="sidebar-subheading">SQL Yoga</h4></li>
+<li class='manual'><a href="../../sqlyoga.html">SQL Yoga</a></li>
+<li class='manual'><a href="../../sqlyoga_examples.html">SQL Yoga Examples</a></li>
+<li class='manual'><a href="../../sqlyoga_sampleapp.html">SQL Yoga To-Do Application</a></li>
+<li class='manual'><a href="../../sqlyoga_plugin.html">SQL Yoga IDE Plugin</a></li>
+<li class='divider'><h4 class="sidebar-subheading">Plugins, Externals and Libraries</h4></li>
+<li class='manual'><a href="../../plugins.html">Plugins</a></li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='screensteps-rss'>
+<p><a href="../../../../revolution.rss">Subscribe to our feed</a></p>
+</div>
+
+</div>
+
+</div>
+<script type="text/javascript">
+  jQuery(document).ready(function(jQuery) {
+    var lesson_id = 563368;
+    var current_article_sidebar_text = '(Current Article)';
+    var section_id = 47281;
+    var expansion = 'none';
+    switch(expansion) {
+      case 'none':
+        jQuery('ul.nested-chapter-lessons').hide();
+        break;
+      case 'all':
+        jQuery('ul.nested-chapter-lessons').show();
+        jQuery('li.chapter-list-item a.toggle-lessons').addClass('open');
+        break;
+      case 'one':
+        jQuery('ul.nested-chapter-lessons').hide();
+        jQuery('li.chapter-list-item[data-section-id="' + section_id + '"] ul.nested-chapter-lessons').show();
+        jQuery('li.chapter-list-item[data-section-id="' + section_id + '"] a.toggle-lessons').addClass('open');
+        break;
+    }
+    jQuery('li.chapter-list-item[data-section-id="' + section_id + '"]').addClass('here');
+    jQuery('li[data-lesson-id="' + lesson_id + '"]').addClass('here');
+    jQuery('li[data-lesson-id="' + lesson_id + '"] a').attr('data-current-article-text', current_article_sidebar_text);
+  });
+</script>
+<noscript>Enable javascript to expand/contract chapters</noscript>
+
+
+</main>
+</div>
+<div aria-labelledby='modal-label' class='screensteps-modal' id='screensteps-modal' role='dialog'>
+<span id='modal-label'>
+Inline referenced article
+</span>
+<div class='screensteps-modal__box'>
+<a class='screensteps-modal__close' href='#'>
+×
+</a>
+<span class='screensteps-loading-wrapper'>
+<span class='screensteps-loading'></span>
+</span>
+<div class='screensteps-modal__content screensteps-article-content'></div>
+</div>
+</div>
+</body>
+</html>

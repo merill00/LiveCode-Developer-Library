@@ -1,0 +1,431 @@
+/**
+This widget allows either single or multiple choice from a list of values
+rendered in a grid.
+**/
+
+widget com.alilloyd.widget.multiplechoicetwo
+
+use com.livecode.canvas
+use com.livecode.widget
+use com.livecode.engine
+use com.livecode.library.widgetutils
+use com.livecode.library.iconSVG
+
+metadata author is "Ali Lloyd"
+metadata version is "1.0.0"
+metadata title is "Multiple Choice"
+metadata preferredSize is "200,200"
+
+/* OUTLINE
+ *
+ * The multiple choice widget is to be used to display check and radio fields.
+ *
+ * These fields allow either selection of multiple values (check), or a single
+ * value (radio) from a return-delimited list of choices.
+ *
+ * Choices are rendered in columns, starting at top-left, in order of the
+ * provided choices list.
+ *
+ * The width of each column is determined from the maximum width of the text
+ * of each choice in the column.
+ *
+ * Each choice consists of an icon which shows whether the choice
+ * is selected or not to the left, and the text of the choice to the right.
+ *
+ */
+
+/* PROPERTIES
+ *
+ * The text of each choice should be rendered using 'my font' of the widget (i.e.
+ * using the normal text properties LiveCode controls have).
+ *
+ * The color of the text of each choice should be rendered using 'my text color'
+ * of the widget (i.e. the LiveCode textColor property).
+ *
+ * The metrics of each row will be determined by the following properties:
+ *   choiceHeight - the height of each row
+ *
+ * The metrics of each icon will be determined by the following properties:
+ *   iconSize - number - the width / height of the icon
+ *
+ * The display of the icon will be determined by three style arrays as follows:
+ *   normalIcon - array - describes the icon in 'normal' state
+ *   checkedIcon - array - describes the icon in 'checked' state
+ *
+ * The choices to display are determined by the 'choices' property - this is a
+ * return-delimited string list of values.
+ *
+ * The choices which are selected are determined by the 'selectedChoices' property -
+ * this is a comma delimited list of integers, referencing lines in the choices property.
+ *
+ */
+
+/* LAYOUT / RENDERING
+ *
+ * The choices form a grid laid out top-to-bottom, left-to-right.
+ *
+ * The height of each row is determined by the choiceHeight property.
+ *
+ * The width of each column is determined by the maximum width of all choices
+ * in the column.
+ *
+ * Each choice is a rectangle of size:
+ *   height = choiceHeight
+ *   width = iconSize + width(choice text)
+ *
+ * The contents of a choice are rendered relative to the choice rectangle:
+ *
+ *   icon rect = 0, 0, iconSize, iconSize
+ *   label rect = iconSize, 0, width, height
+ *
+ */
+
+variable mNormalIcon as optional String
+variable mCheckedIcon as optional String
+variable mChoices as List
+variable mSelectedChoices as List
+variable mChoiceHeight as Integer
+variable mIconSize as Integer
+variable mColumnWidths as optional List
+
+property normalIcon get getNormalIcon set setNormalIcon
+metadata normalIcon.editor is "com.livecode.pi.svgicon"
+metadata normalIcon.default is "check empty"
+
+property checkedIcon get getCheckedIcon set setCheckedIcon
+metadata checkedIcon.editor is "com.livecode.pi.svgicon"
+metadata checkedIcon.default is "check sign"
+
+property choices get getChoices set setChoices
+metadata choices.editor is "com.livecode.pi.text"
+
+property choiceHeight get mChoiceHeight set setChoiceHeight
+property selectedChoices get getSelectedChoices set setSelectedChoices
+metadata selectedChoices.editor is "com.alilloyd.widget.multiplechoicetwo.editor.selectedChoices"
+
+property iconSize get mIconSize set setIconSize
+
+public handler OnCreate()
+    put ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven"] into mChoices
+    put 25 into mIconSize
+    put "check sign" into mCheckedIcon
+    put "check empty" into mNormalIcon
+    put 40 into mChoiceHeight
+end handler
+
+public handler OnLoad(in pProps as Array)
+end handler
+
+public handler OnSave(out rProps as Array)
+end handler
+
+handler ComputeNumRows() returns Integer
+    variable tHeight as Integer
+    put my height into tHeight
+
+    // Calculate number of rows
+    return the minimum of the floor of (tHeight / mChoiceHeight) and \
+            the number of elements in mChoices
+end handler
+
+constant kPadding is 5
+public handler OnPaint()
+    variable tWidth as Integer
+    variable tColumnLeft as Integer
+    variable tRowTop as Integer
+
+    variable tRows as Integer
+    variable tColumnWidth as Integer
+
+    variable tIndex as Number
+    variable tChoice as String
+
+    variable tIconRect as Rectangle
+    variable tLabelRect as Rectangle
+    variable tChoiceRect as Rectangle
+    variable tLabelLeft
+    variable tLabelTop
+    variable tLabelRight
+    variable tLabelBottom
+
+    variable tAscent as Number
+    put -the top of the layout bounds of text "y" with my font into tAscent
+
+    put my width into tWidth
+
+    put 0 into tColumnLeft
+    put 0 into tIndex
+
+    // Calculate number of rows
+    put ComputeNumRows() into tRows
+
+    computeVisibleColumnWidths()
+
+    // Draw each list item
+    repeat for each element tColumnWidth in mColumnWidths
+        put 0 into tRowTop
+        repeat tRows times
+            add 1 to tIndex
+
+            if tIndex > the number of elements in mChoices then
+                exit repeat
+            end if
+
+            /* Fetch the choice string */
+            put mChoices[tIndex] into tChoice
+
+            // Choice area: icon and label
+            put rectangle [tColumnLeft, \
+                tRowTop, \
+                tColumnLeft + tColumnWidth, \
+                tRowTop + mChoiceHeight] into tChoiceRect
+
+            // Icon area
+            put rectangle [tColumnLeft, \
+                tRowTop, \
+                tColumnLeft + mIconSize, \
+                tRowTop + mIconSize] into tIconRect
+
+            // Label area
+            put tColumnLeft + mIconSize + kPadding into tLabelLeft
+            put tRowTop into tLabelTop
+            put tColumnLeft + tColumnWidth into tLabelRight
+            put tRowTop + mChoiceHeight into tLabelBottom
+            put rectangle [tLabelLeft, tLabelTop, tLabelRight, tLabelBottom] into tLabelRect
+
+            // Draw the icon
+            if tIndex is in mSelectedChoices then
+                // Checked
+                if mCheckedIcon is not nothing then
+                    drawIconInRect(mCheckedIcon, tIconRect)
+                end if
+            else
+                if mNormalIcon is not nothing then
+                    drawIconInRect(mNormalIcon, tIconRect)
+                end if
+            end if
+
+            // Set text color
+            set the paint of this canvas to my foreground paint
+            fill text tChoice at point [tLabelLeft, tLabelTop + tAscent] on this canvas
+
+            add mChoiceHeight to tRowTop
+        end repeat
+
+        add tColumnWidth to tColumnLeft
+    end repeat
+end handler
+
+handler drawIconInRect(in pIcon as String, in pRect as Rectangle)
+    -- get the named icon
+    variable tPathString as String
+    put iconSVGPathFromName(pIcon) into tPathString
+
+    -- create the path
+    variable tPath as Path
+    put path tPathString into tPath
+
+    -- scale the path to fit within the bounds of the widget
+    constrainPathToRect(pRect, tPath)
+
+    -- fill the path
+    fill tPath on this canvas
+end handler
+
+public handler OnGeometryChanged()
+    put nothing into mColumnWidths
+end handler
+
+public handler OnParentPropertyChanged()
+    put nothing into mColumnWidths
+end handler
+
+/* Update the column widths property - this the width of each visible column*/
+private handler computeVisibleColumnWidths()
+    // No property change has caused column widths to need recomputation
+    if mColumnWidths is not nothing then
+        return
+    end if
+
+    variable tWidth as Integer
+    put my width into tWidth
+
+    // Calculate number of rows
+    variable tRows as Integer
+    put ComputeNumRows() into tRows
+
+    variable tRowCount as Integer
+    put the floor of (my height / mChoiceHeight) into tRowCount
+
+    // Calculate total number of logical columns
+    variable tLogicalColumnCount as Integer
+    put the floor of (the number of elements in mChoices / tRowCount) into tLogicalColumnCount
+
+    // Iterate until we overshoot the right hand side of the widget */
+    variable tColumnWidths as List
+    variable tLeft as Integer
+    put 0 into tLeft
+    variable tIndex as Integer
+    put 1 into tIndex
+    repeat while tLeft < tWidth
+        variable tColumnWidth as Integer
+        put columnWidth(tIndex, tRowCount) into tColumnWidth
+        push tColumnWidth onto back of tColumnWidths
+        add tRowCount to tIndex
+        add tColumnWidth to tLeft
+    end repeat
+
+    // Update mColumnWidths
+    put tColumnWidths into mColumnWidths
+end handler
+
+public handler columnWidth(in pIndex as Integer, in pRowCount as Integer) returns Integer
+    // Render column and measure
+    // Simulate a complicated rendering process
+    variable tDummy as Integer
+    put 0 into tDummy
+    repeat 30000 times
+        add 1 to tDummy
+    end repeat
+
+    variable tMaxWidth as Integer
+    variable tTextBounds
+    variable tLabelWidth as Integer
+    variable tChoice as String
+    variable tIndex as Integer
+
+    // Find the maximum width required for a column
+    put 0 into tMaxWidth
+    repeat with tIndex from pIndex up to (pIndex + pRowCount-1)
+        if tIndex <= the number of elements in mChoices then
+            put element tIndex of mChoices into tChoice
+            measure tChoice on this canvas
+            put the result into tTextBounds
+            put the width of tTextBounds into tLabelWidth
+
+            if tLabelWidth > tMaxWidth then
+                put tLabelWidth into tMaxWidth
+            end if
+        end if
+    end repeat
+
+    return tMaxWidth + mIconSize + 2 * kPadding
+end handler
+
+public handler OnClick() returns nothing
+    variable tClickPos as Point
+    put the click position into tClickPos
+
+    variable tRows as Integer
+    put computeNumRows() into tRows
+
+    variable tColumn as Integer
+    variable tColumnRight as Integer
+    put 0 into tColumnRight
+    put 1 into tColumn
+    repeat forever
+        if tColumn > the number of elements in mColumnWidths then
+            return
+        end if
+        add mColumnWidths[tColumn] to tColumnRight
+
+        if the x of tClickPos < tColumnRight then
+            exit repeat
+        end if
+        add 1 to tColumn
+    end repeat
+
+    variable tRow as Integer
+    put the floor of (the y of tClickPos / mChoiceHeight) + 1 into tRow
+
+    variable tChoice as Integer
+    put tRow + (tColumn - 1) * tRows into tChoice
+
+    if tRow > tRows then
+        return
+    end if
+
+    if tChoice > the number of elements in mChoices then
+        return
+    end if
+
+    // Clicked on a choice
+    toggleChoice(tChoice)
+end handler
+
+private handler toggleChoice(in pChoice as Integer)
+    variable tIndex as Integer
+    put the index of pChoice in mSelectedChoices into tIndex
+
+    if tIndex is 0 then
+        push pChoice onto back of mSelectedChoices
+    else
+        delete element tIndex of mSelectedChoices
+    end if
+
+    post "selectionChanged"
+    redraw all
+end handler
+
+private handler getNormalIcon() returns String
+    return mNormalIcon
+end handler
+
+private handler setNormalIcon(in pIcon as String) returns nothing
+    put pIcon into mNormalIcon
+    redraw all
+end handler
+
+private handler getCheckedIcon() returns String
+    return mCheckedIcon
+end handler
+
+private handler setCheckedIcon(in pIcon as String) returns nothing
+    put pIcon into mCheckedIcon
+    redraw all
+end handler
+
+private handler getChoices() returns String
+    variable tChoices
+    combine mChoices with newline into tChoices
+    return tChoices
+end handler
+
+public handler setChoices(in pChoices as String) returns nothing
+    put nothing into mColumnWidths
+    split pChoices by newline into mChoices
+    redraw all
+end handler
+
+private handler getSelectedChoices() returns String
+    variable tSelectedChoices as List
+    put [] into tSelectedChoices
+    variable tChoice as Integer
+    repeat for each element tChoice in mSelectedChoices
+        push tChoice formatted as string onto back of tSelectedChoices
+    end repeat
+    variable tChoicesString as String
+    combine tSelectedChoices with "," into tChoicesString
+    return tChoicesString
+end handler
+
+public handler setSelectedChoices(in pSelectedChoices as String) returns nothing
+    variable tChoices
+    split pSelectedChoices by "," into tChoices
+    put tChoices parsed as list of number into mSelectedChoices
+    redraw all
+end handler
+
+private handler setChoiceHeight(in pHeight as Integer) returns nothing
+    put nothing into mColumnWidths
+    put pHeight into mChoiceHeight
+    redraw all
+end handler
+
+private handler setIconSize(in pSize as Integer) returns nothing
+    put nothing into mColumnWidths
+    put pSize into mIconSize
+    redraw all
+end handler
+
+end widget

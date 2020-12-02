@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+
+	<channel>    
+		<title>revIgniter RSS Feed</title>
+		<link>https://revigniter.com</link>
+		<description>Announcements regarding revIgniter</description>
+		<language>en-US</language>
+		<copyright>copyright 2020, revigniter.com</copyright>
+		<atom:link href="https://revigniter.com/rssfeed" rel="self" type="application/rss+xml" />
+		<item>
+<title>revIgniter v2.1.6 Released</title>
+<link>https://revigniter.com/news/newsitem/revIgniter_v2.1.6_Released</link>
+<guid>https://revigniter.com/news/newsitem/revIgniter_v2.1.6_Released</guid>
+<description>revIgniter v2.1.6 has been released. Controllers can now be run via the command-line interface. To get more informations please read the Change Log of the User Guide.</description>
+<pubDate>Wed, 11 Mar 2020 19:42:28 -0400</pubDate>
+</item>
+<item>
+<title>revIgniter v2.1.5 Released</title>
+<link>https://revigniter.com/news/newsitem/revIgniter_v2.1.5_Released</link>
+<guid>https://revigniter.com/news/newsitem/revIgniter_v2.1.5_Released</guid>
+<description>revIgniter v2.1.5 has been released. This release adds CSP (Content Security Policy) support to AJAX pagination, to the Galleria helper and to the Asset helper.</description>
+<pubDate>Sat, 18 Jan 2020 17:57:00 -0500</pubDate>
+</item>
+<item>
+<title>revIgniter v2.1.4 Released</title>
+<link>https://revigniter.com/news/newsitem/revIgniter_v2.1.4_Released</link>
+<guid>https://revigniter.com/news/newsitem/revIgniter_v2.1.4_Released</guid>
+<description>revIgniter v2.1.4 has been released. This maintenance release implements the
+"SameSite" cookie attribute.</description>
+<pubDate>Mon, 21 Oct 2019 19:03:19 -0400</pubDate>
+</item>
+<item>
+<title>TM bundles v2.4.0 Released</title>
+<link>https://revigniter.com/news/newsitem/TM_bundles_v2.4.0_Released</link>
+<guid>https://revigniter.com/news/newsitem/TM_bundles_v2.4.0_Released</guid>
+<description>This release adds dark themes "revIgniterDark" and "LiveCodeDark". Please read README.md included in the bundle.</description>
+<pubDate>Wed, 25 Sep 2019 17:31:00 -0400</pubDate>
+</item>
+<item>
+<title>revIgniter v2.1.3 Released</title>
+<link>https://revigniter.com/news/newsitem/revIgniter_v2.1.3_Released</link>
+<guid>https://revigniter.com/news/newsitem/revIgniter_v2.1.3_Released</guid>
+<description>revIgniter v2.1.3 has been released. This release fixes a bug in the authentication library which prevented the registration of new users.</description>
+<pubDate>Mon, 23 Sep 2019 13:24:00 -0400</pubDate>
+</item>
+<item>
+<title>revIgniter v2.1.2 Released</title>
+<link>https://revigniter.com/news/newsitem/revIgniter_v2.1.2_Released</link>
+<guid>https://revigniter.com/news/newsitem/revIgniter_v2.1.2_Released</guid>
+<description>revIgniter v2.1.2 has been released. This housekeeping release includes some minor changes e.g. database inserts and updates no longer set table fields to empty if the corresponding array element passed to the active record library is empty.</description>
+<pubDate>Thu, 12 Sep 2019 19:58:46 -0400</pubDate>
+</item>
+<item>
+<title>revIgniter v2.1.1 Released</title>
+<link>https://revigniter.com/news/newsitem/revIgniter_v2.1.1_Released</link>
+<guid>https://revigniter.com/news/newsitem/revIgniter_v2.1.1_Released</guid>
+<description>revIgniter v2.1.1 has been released. This maintenance release includes an extra variant to retrieve URI strings.</description>
+<pubDate>Wed, 28 Aug 2019 19:12:00 -0400</pubDate>
+</item>
+<item>
+<title>TM bundles v2.3.0 Released</title>
+<link>https://revigniter.com/news/newsitem/TM_bundles_v2.3.0_Released</link>
+<guid>https://revigniter.com/news/newsitem/TM_bundles_v2.3.0_Released</guid>
+<description>This release adds tab triggers for the new handlers related to two-factor authentication. Please read README.</description>
+<pubDate>Mon, 1 Jul 2019 17:51:00 -0400</pubDate>
+</item>
+<item>
+<title>revIgniter v2.1.0 Released</title>
+<link>https://revigniter.com/news/newsitem/revIgniter_v2.1.0_Released</link>
+<guid>https://revigniter.com/news/newsitem/revIgniter_v2.1.0_Released</guid>
+<description>revIgniter v2.1.0 has been released. This release adds two-factor authentication and a one-time password (OTP) helper conforming to RFC6238.</description>
+<pubDate>Fri, 28 Jun 2019 19:09:00 -0400</pubDate>
+</item>
+<item>
+<title>revIgniter v2.0.5 Released</title>
+<link>https://revigniter.com/news/newsitem/revIgniter_v2.0.5_Released</link>
+<guid>https://revigniter.com/news/newsitem/revIgniter_v2.0.5_Released</guid>
+<description>revIgniter v2.0.5 has been released. This release improves the Config library and fixes an issue with sub libraries.</description>
+<pubDate>Tue, 7 May 2019 16:21:00 -0400</pubDate>
+</item>
+    
+	</channel>
+</rss>

@@ -1,0 +1,89 @@
+﻿script "Forms Lib"
+--> all handlers
+
+-- Forms Library
+constant kLibraryName = "LCMS Forms Library"
+constant kLibraryVersion = 1.0
+
+function lcmsFormsVersion
+   return kLibraryName && kLibraryVersion
+end lcmsFormsVersion
+
+function lcmsFormStartGeneral pController -- and further params()
+   local tResult
+
+   put "<div>" & CR into tResult
+   put "<form method='post' action='/igniter.lc/" & pController after tResult
+   repeat with i = 2 to paramcount()
+      put "/" & param(i) after tResult
+   end repeat
+   put "'>" & CR after tResult
+   return tResult
+
+end lcmsFormStartGeneral
+
+function lcmsFormEnd 
+   local tResult
+   put "</form> </div>" & CR into tResult
+   return tResult
+end lcmsFormEnd
+
+function lcmsFormHidden pA, pNames
+   local tResult
+   put empty into tResult
+   repeat for each item I in pNames
+      put rigFormHidden(I, pA[I]) after tResult
+   end repeat
+   return tResult
+end lcmsFormHidden
+
+function lcmsFormInput pA, pName, pSize, pLabel
+   local tResult, ppVal
+   if pLabel is empty then put pName into pLabel
+   if pA is an array then
+     put pA[pName] into ppVal
+   else
+     put pA into ppVal
+   end if
+   put " <p><label>" && pLabel &CR after tResult
+   put "      <input type='text' name='" & pName & "' value='" & escapeHTMLChars(ppVal) & "' size='" & pSize & "'/>" &CR after tResult
+   put "    </label>" &CR &CR after tResult
+   return tResult
+end lcmsFormInput
+
+
+function lcmsFormSelect pName, pFormID, pChoices, pDefault
+   local tResult, tt
+   put "<p><select name='" & pName & "' " into tResult
+   if pFormID is not empty then
+     put "form='" & pFormID after tResult
+   end if
+   put  "'>" & CR after tResult
+   repeat for each item I in pChoices
+      if I = pDefault then 
+         put " selected" into tt
+      else
+         put empty into tt
+      end if
+      put "  <option value='" & I & "'" & tt & ">" & I & "</option>" &CR after tResult
+   end repeat
+   put "</select>" &CR after tResult
+   return tResult
+end lcmsFormSelect
+
+function lcmsFormTextArea pA, pName, pSize, pLines
+   local tResult
+   put "  <p><label>" && pName &CR after tResult
+   put "      <p><textarea name='" & pName & "' cols='" & pSize & "' rows='" & pLines & "' />" &CR after tResult
+   put escapeHTMLChars(pA[pName]) after tResult
+   put "</textarea>" &CR after tResult
+   put "    </label>" &CR &CR after tResult
+   return tResult
+end lcmsFormTextArea
+
+function lcmsFormButton pDivID, pValue
+   local tResult
+   put "	<div id='" & pDivID & "'><input type='submit' name='action' value='" & pValue & "' /></div>" &CR into tResult
+   return tResult
+end lcmsFormButton
+

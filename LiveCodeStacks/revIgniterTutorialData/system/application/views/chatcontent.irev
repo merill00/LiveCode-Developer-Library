@@ -1,0 +1,19 @@
+<div id="chat">
+	<div id="chatheader">
+		<p id="username">Welcome, <b>[[gData["user"] ]]</b></p>
+		<p id="logout"><a href="#">Logout</a></p>
+	</div>
+	
+	<div id="chatbody">
+		<ul>
+			[[gData["msgList"] ]]
+		</ul>
+	</div>
+
+	<div id="chatfooter">
+		<form action="http://example.com/chat/addMsg" method="post">
+			<input name="userinput" type="text" id="userinput" size="64" maxlength="100" placeholder="Message" />
+			<input name="submitbtn" type="submit"  id="submitbtn" value="Send" />
+		</form>
+	</div>
+</div>

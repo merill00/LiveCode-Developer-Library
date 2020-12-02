@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Tutorials &amp; Manuals - Recent Lessons</title>
+    <description>Recently created lessons from Tutorials &amp; Manuals</description>
+    <link>https://revolution.screenstepslive.com/s/revolution</link>
+    <item>
+      <title>Creating a Password Field</title>
+      <description>&lt;p&gt;Learn how to create a password entry field using a a custom font and revFontLoad. You can download the PasswordEntry.ttf font &lt;a href="http://www.bluemangolearning.com/download/revolution/tutorials/passwordentry.zip"&gt;here&lt;/a&gt;.&lt;/p&gt;</description>
+      <pubDate>Wed, 23 Jan 2019 18:43:11 -0800</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/how-to/l/249-creating-a-password-field</link>
+    </item>
+    <item>
+      <title>Zipping/Unzipping a Folder Using RevZip</title>
+      <description>&lt;p&gt;The revZIP external is great if you need a cross-platform means of creating ZIP archives. Unfortunately there is no built in handler that will ZIP an entire folder for you. This lesson contains handlers that will ZIP up a folder and decompress a ZIP archive to a folder. All of the supporting handlers are included as well.&lt;/p&gt;</description>
+      <pubDate>Sat, 21 Jul 2018 07:36:06 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/how-to/l/5870-zipping-unzipping-a-folder-using-revzip</link>
+    </item>
+    <item>
+      <title>Creating a Project</title>
+      <description>&lt;p&gt;Let's begin by learning how to create a record in the database. We will start by creating a new project in the &lt;strong&gt;projects &lt;/strong&gt;table.&lt;/p&gt;</description>
+      <pubDate>Fri, 16 Feb 2018 15:59:23 -0800</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_sampleapp/l/6625-creating-a-project</link>
+    </item>
+    <item>
+      <title>Initializing SQL Yoga At Launch</title>
+      <description>&lt;p&gt;Now that you have configured a SQL Yoga Database and Connection object we will look at how to initialize your Database object each time the application launches.&lt;/p&gt;</description>
+      <pubDate>Fri, 16 Feb 2018 15:57:38 -0800</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_sampleapp/l/6568-initializing-sql-yoga-at-launch</link>
+    </item>
+    <item>
+      <title>Creating A SQL Yoga Database Object</title>
+      <description>&lt;p&gt;The first time you incorporate SQL Yoga into one of your applications you will need to perform a couple of tasks before you get to work. This lesson will walk you through those tasks.&lt;/p&gt;
+
+
+&lt;p&gt;Note that you should not have any other SQL Yoga projects open when performing the following steps (unless you already know what you are doing). You should start with a freshly launched IDE that only has the tutorial application open just to make sure you don't run into any problems.&lt;/p&gt;
+
+
+&lt;p&gt;To get started, open the Message Box by choosing the &lt;strong&gt;Tools &amp;gt; Message Box &lt;/strong&gt;menu.&lt;/p&gt;</description>
+      <pubDate>Fri, 16 Feb 2018 15:53:40 -0800</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_sampleapp/l/6434-creating-a-sql-yoga-database-object</link>
+    </item>
+    <item>
+      <title>The To-Do Application Database Schema</title>
+      <description>&lt;p&gt;The To-Do application uses a SQLite database for storing information. The database has four tables:&lt;/p&gt;
+
+
+&lt;p&gt;1) projects&lt;br /&gt;
+2) todo_items&lt;br /&gt;
+3) people&lt;br /&gt;
+4) people_todo&lt;/p&gt;
+
+
+&lt;p&gt;Projects can have many todo_items and any number of people can be linked with any number of todo_items through the people_todo table.&lt;/p&gt;
+
+
+&lt;p&gt;You will find the &lt;strong&gt;to-do.sqlite&lt;/strong&gt; database file in the ./components/ folder in the tutorials distribution. The &lt;strong&gt;to-do TEMPLATE.sqlite &lt;/strong&gt;file serves as a backup if you need an empty database to start with.&lt;/p&gt;</description>
+      <pubDate>Fri, 16 Feb 2018 15:50:11 -0800</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_sampleapp/l/6624-the-to-do-application-database-schema</link>
+    </item>
+    <item>
+      <title>Before You Get Started</title>
+      <description>&lt;p&gt;This manual will walk you through how to create a To-Do application using SQL Yoga. As we walk through creating the application you will be shown how to use SQL Yoga to get things done.&lt;/p&gt;
+
+
+&lt;p&gt;We will use the GLX Application Framework as the foundation for the application. Before you continue you should download the To-Do Application tutorial files.&lt;/p&gt;</description>
+      <pubDate>Fri, 16 Feb 2018 15:48:02 -0800</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_sampleapp/l/6566-before-you-get-started</link>
+    </item>
+    <item>
+      <title>Introduction: What We Are Going to Create</title>
+      <description>&lt;p&gt;SQL Yoga extends the simplicity of Revolution to databases by allowing you to treat your database like an object. Stop wrestling with SQL and see how easy database integration can be:&lt;/p&gt;
+
+
+&lt;p&gt;&amp;bull; Set properties rather than writing SQL&lt;br /&gt;
+&amp;bull; Define searches using english words rather than arcane wild card symbols&lt;br /&gt;
+&amp;bull; Manipulate arrays, not cursors&lt;br /&gt;
+&amp;bull; Easily generate searches from complex search UIs&lt;br /&gt;
+&amp;bull; Tap into database table relationships to simplify code&lt;/p&gt;
+
+
+&lt;p&gt;To get the latest information, learning materials and SQL Yoga library visit the SQL Yoga web page:&lt;/p&gt;
+
+
+&lt;p&gt;&lt;a href="http://www.bluemangolearning.com/revolution/software/libraries/sql-yoga/"&gt;http://www.bluemangolearning.com/revolution/software/libraries/sql-yoga/&lt;/a&gt;&lt;/p&gt;</description>
+      <pubDate>Fri, 16 Feb 2018 15:47:14 -0800</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_sampleapp/l/6653-introduction-what-we-are-going-to-create</link>
+    </item>
+    <item>
+      <title>How Do I Add Custom Properties To Tables?</title>
+      <description>&lt;p&gt;Once you have created a Table object you can define your own properties for the table. For example, if a table has a &lt;em&gt;FirstName&lt;/em&gt; and &lt;em&gt;LastName&lt;/em&gt; field you might define a custom property called &lt;em&gt;Name&lt;/em&gt; that combined those two fields in order to return the full name.&lt;/p&gt;
+&lt;p&gt;Table properties that you define can be accessed when working with SQL Record objects as a SQL Record object is an instance of a record in a table.&lt;/p&gt;</description>
+      <pubDate>Fri, 16 Feb 2018 15:43:16 -0800</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga/l/7369-how-do-i-add-custom-properties-to-tables</link>
+    </item>
+    <item>
+      <title>Signing an application</title>
+      <description>&lt;p&gt;Signing applications on OS X is done using the codesign command line tool.&lt;/p&gt;</description>
+      <pubDate>Fri, 16 Jun 2017 07:37:34 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/10695/l/112706-signing-an-application</link>
+    </item>
+    <item>
+      <title>Setting the Default Connection Object</title>
+      <description>&lt;p&gt;A Database object has a &lt;strong&gt;default connection&lt;/strong&gt; property. The value of the property is the name of the Connection object that is assumed for all dbconn_ calls. This makes calls to the library shorter as you don't have to provide the name of the connection each time.&lt;/p&gt;
+&lt;p&gt;This lesson will show you how to set the default connection. &lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 08:10:14 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_plugin/l/8595-setting-the-default-connection-object</link>
+    </item>
+    <item>
+      <title>Logging SQL Queries</title>
+      <description>&lt;p&gt;SQL Yoga allows you to specify a field where all SQL queries are logged. This can help you troubleshoot various issues or get an idea of what SQL the library is generating.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 08:10:04 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_plugin/l/8594-logging-sql-queries</link>
+    </item>
+    <item>
+      <title>Saving the Database Object and Stack</title>
+      <description>&lt;p&gt;Any changes you make to a Database object are not saved until you explicitly call dbobject_save. In addition, if you are storing the Database object in a button you need to save the stack the button is on in order to make the changes permanent. &lt;/p&gt;
+&lt;p&gt;You can quickly save the Database object using the plugin and this lesson will show you how.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Before saving a Database object using the plugin you must set the &lt;a href="http://www.bluemangolearning.com/revolution/docs/sql_yoga/api_docs/Documents/stack_libSQLYoga_command_dbobject_set.htm" target="_blank"&gt;storage object&lt;/a&gt; or &lt;a href="http://www.bluemangolearning.com/revolution/docs/sql_yoga/api_docs/Documents/stack_libSQLYoga_command_dbobject_set.htm" target="_blank"&gt;storage file&lt;/a&gt; properties using script.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 08:09:50 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_plugin/l/8593-saving-the-database-object-and-stack</link>
+    </item>
+    <item>
+      <title>Setting the Default Database Object</title>
+      <description>&lt;p&gt;The SQL Yoga library has a default database property (sqlyoga_getDefaultDatabase/sqlyoga_setDefaultDatabase). The value of the property is the name of the Database object that is assumed for all API calls. This makes calls to the library shorter as you don't have to provide the name of the Database object each time.&lt;/p&gt;
+&lt;p&gt;This lesson will show you how to set the default Database object. &lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 08:09:39 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_plugin/l/8592-setting-the-default-database-object</link>
+    </item>
+    <item>
+      <title>Reloading the Database Schema or Table Objects Definitions</title>
+      <description>&lt;p&gt;Whenever you make changes to your database schema or table object definitions you need to let SQL Yoga know about it. &lt;/p&gt;
+&lt;p&gt;SQL Yoga uses an internal representation of your database schema to carry out many of the operations it performs so it is important to keep SQL Yoga up to date.&lt;/p&gt;
+&lt;p&gt;This lesson will show you how the plugin can help you update the schema in SQL Yoga as well refresh the table objects after you have made changes to the &amp;quot;table objects behavior&amp;quot; script. &lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 08:09:27 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_plugin/l/8591-reloading-the-database-schema-or-table-objects-definitions</link>
+    </item>
+    <item>
+      <title>Creating Table Objects</title>
+      <description>&lt;p&gt;When you want to work with some of the more advanced SQL Yoga features you need to create table objects. The plugin will export the code to the clipboard that you need to add to the &amp;quot;table objects behavior&amp;quot; script.&lt;/p&gt;
+&lt;p&gt;Note that you must have already connected to your database at least once before following these steps. Otherwise SQL Yoga will not have had a chance to import the tables in your database.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 08:09:17 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_plugin/l/8590-creating-table-objects</link>
+    </item>
+    <item>
+      <title>Creating Connection Objects</title>
+      <description>&lt;p&gt;The plugin can create new Connection objects for you automatically. This lesson will show you how.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 08:09:01 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_plugin/l/8589-creating-connection-objects</link>
+    </item>
+    <item>
+      <title>Creating a Database Object</title>
+      <description>&lt;p&gt;The plugin can create new Database Objects for you. This lesson will show you how.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 08:08:38 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_plugin/l/8588-creating-a-database-object</link>
+    </item>
+    <item>
+      <title>Saving A Database Object Across Sessions</title>
+      <description></description>
+      <pubDate>Thu, 08 Sep 2016 08:08:03 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga/l/6795-saving-a-database-object-across-sessions</link>
+    </item>
+    <item>
+      <title>Cleanup</title>
+      <description>&lt;p&gt;That about does it for the conversion. The &lt;strong&gt;Article Maestro&lt;/strong&gt; application is now running on top of the GLX Application Framework and can take advantage of all the features the framework provides. There is just a little cleanup to perform before we are done.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 07:52:56 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6962-cleanup</link>
+    </item>
+    <item>
+      <title>Rework Stack (or Card) Script Using Framework Messages</title>
+      <description>&lt;p&gt;Now I'm going to rework some of your existing application handlers (preOpenStack and resizeStack) to take advantage of framework messages.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 07:52:43 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6961-rework-stack-or-card-script-using-framework-messages</link>
+    </item>
+    <item>
+      <title>Tell Framework to Manage Application Window</title>
+      <description>&lt;p&gt;Now that I have a working application let's look at how to tell the framework to manage the Article Maestro window. The framework will send special messages and manage the size and position of the window across sessions.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 07:52:16 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6960-tell-framework-to-manage-application-window</link>
+    </item>
+    <item>
+      <title>Build Standalones</title>
+      <description>&lt;p&gt;Now that I have finished configuring the &lt;strong&gt;glxappLauncher&lt;/strong&gt; stack I can build a standalone executable with it.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 07:51:56 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6959-build-standalones</link>
+    </item>
+    <item>
+      <title>Configure Standalone Settings</title>
+      <description>&lt;p&gt;Now that I have finished basic configuration I am going to build standalone executables. The standalone executables will enable me to test the standalone versions of the application while working on it in the IDE.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 07:51:38 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6958-configure-standalone-settings</link>
+    </item>
+    <item>
+      <title>Tell Framework About New Application Stack</title>
+      <description>&lt;p&gt;While I've added the &lt;strong&gt;Article Maestro.rev&lt;/strong&gt; stack file to the components folder, the framework still needs to know that the &lt;strong&gt;Article Maestro&lt;/strong&gt; stack file is part of the application.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 07:51:11 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6957-tell-framework-about-new-application-stack</link>
+    </item>
+    <item>
+      <title>Begin Integrating Existing Stack</title>
+      <description>&lt;p&gt;Now that I have created a new application it is time to integrate the existing &lt;strong&gt;Article Maestro.rev&lt;/strong&gt; stack file into it.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 07:50:52 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6956-begin-integrating-existing-stack</link>
+    </item>
+    <item>
+      <title>Configure Application Settings</title>
+      <description>&lt;p&gt;Now it is time to configure the application settings in the &lt;strong&gt;General&lt;/strong&gt; tab of the plugin.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 07:50:22 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6955-configure-application-settings</link>
+    </item>
+    <item>
+      <title>Creating A New GLX Framework Application</title>
+      <description>&lt;p&gt;To begin I will create a new application using the framework IDE plugin.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 07:50:06 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6954-creating-a-new-glx-framework-application</link>
+    </item>
+    <item>
+      <title>Introduction</title>
+      <description>&lt;p&gt;This manual will show how an existing Revolution application can be converted to use the GLX Application Framework. The application I will be converting is Article Maestro by &lt;a href="http://www.maplecommerce.com/"&gt;MapleCommerce&lt;/a&gt;.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 07:49:35 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6953-introduction</link>
+    </item>
+    <item>
+      <title>What is the Best Way To Include the Data Grid Library?</title>
+      <description>&lt;p&gt;When using Data Grids in your application you need to include the revDataGridLibrary.rev stack file in order for the Data Grids to work. This lesson will show you how to do this with the application framework.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 07:49:23 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/glxapp/l/6887-what-is-the-best-way-to-include-the-data-grid-library</link>
+    </item>
+    <item>
+      <title>How Do I Display A Splash Screen When My Application Launches?</title>
+      <description>&lt;p&gt;This lesson will show you how to create a splash window that displays while your application launches.&lt;/p&gt;
+&lt;p&gt;You should have your application open in the IDE before starting this lesson.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 07:38:47 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/glxapp/l/6886-how-do-i-display-a-splash-screen-when-my-application-launches</link>
+    </item>
+    <item>
+      <title>Database Schema</title>
+      <description></description>
+      <pubDate>Fri, 02 Sep 2016 08:28:28 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_examples/l/6793-database-schema</link>
+    </item>
+    <item>
+      <title>Incorporating Your Program Stack Into the Framework-Based Application</title>
+      <description>&lt;p&gt;This lesson will explain how to take existing stack files and use them with the GLX Application Framework. To begin, &lt;a href="http://revolution.screenstepslive.com/spaces/revolution/manuals/glxapp/lessons/5548-How-Do-I-Create-a-New-Application-Based-on-the-GLX-Application-Framework-"&gt;create a new GLX Application&lt;/a&gt;.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 08:25:07 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/glxapp/l/6698-incorporating-your-program-stack-into-the-framework-based-application</link>
+    </item>
+    <item>
+      <title>Chapter Overview</title>
+      <description>&lt;p&gt;Here are the major subjects we are going to cover in this chapter.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 08:21:53 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_sampleapp/l/6660-chapter-overview</link>
+    </item>
+    <item>
+      <title>Chapter Overview</title>
+      <description>&lt;p&gt;Here are the major subjects we are going to cover in this chapter.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 08:21:50 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_sampleapp/l/6659-chapter-overview</link>
+    </item>
+    <item>
+      <title>Chapter Overview</title>
+      <description>&lt;p&gt;Here are the major subjects we are going to cover in this chapter.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 08:21:45 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_sampleapp/l/6658-chapter-overview</link>
+    </item>
+    <item>
+      <title>Chapter Overview</title>
+      <description>&lt;p&gt;Here are the major subjects we are going to cover in this chapter.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 08:21:39 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_sampleapp/l/6657-chapter-overview</link>
+    </item>
+    <item>
+      <title>Chapter Overview</title>
+      <description>&lt;p&gt;Here are the major subjects we are going to cover in this chapter.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 08:21:36 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_sampleapp/l/6656-chapter-overview</link>
+    </item>
+    <item>
+      <title>Chapter Overview</title>
+      <description>&lt;p&gt;Here are the major subjects we are going to cover in this chapter.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 08:21:31 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_sampleapp/l/6654-chapter-overview</link>
+    </item>
+    <item>
+      <title>Test The Standalone Version</title>
+      <description>&lt;p&gt;Now that you have put together the To-Do application you can launch the OS X or Windows standalone. Just make sure and save your work in the IDE first.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 08:21:21 -0700</pubDate>
+      <link>https://revolution.screenstepslive.com/s/revolution/m/sqlyoga_sampleapp/l/6651-test-the-standalone-version</link>
+    </item>
+  </channel>
+</rss>

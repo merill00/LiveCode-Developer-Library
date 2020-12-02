@@ -1,0 +1,338 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4DF42ABA0B0488E2003F2D95 /* [[external.main]] in Sources */ = {isa = PBXBuildFile; fileRef = 4DF42AB90B0488E2003F2D95 /* [[external.main]] */; };
+		4DF42AED0B0489AF003F2D95 /* libexternal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DF42AEC0B0489A5003F2D95 /* libexternal.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4DF42AEB0B0489A5003F2D95 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DF42AE40B0489A5003F2D95 /* libexternal.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4DF42A430B048617003F2D95 /* libexternal.a */;
+			remoteInfo = external;
+		};
+		4DF42AEE0B0489B4003F2D95 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DF42AE40B0489A5003F2D95 /* libexternal.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DF42A420B048617003F2D95 /* external */;
+			remoteInfo = external;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4DF42AA80B0488CE003F2D95 /* [[external.identifier]].bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = [[external.identifier]].bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DF42AAA0B0488CE003F2D95 /* [[external.identifier]]-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "[[external.identifier]]-Info.plist"; sourceTree = "<group>"; };
+		4DF42AB90B0488E2003F2D95 /* [[external.main]] */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = [[external.main]]; path = src/[[external.main]]; sourceTree = "<group>"; };
+		4DF42ABE0B0488ED003F2D95 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
+		4DF42ABF0B0488ED003F2D95 /* Global.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; name = Global.xcconfig; path = ../configurations/Global.xcconfig; sourceTree = SOURCE_ROOT; };
+		4DF42AC00B0488ED003F2D95 /* Release PowerPC-32.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; name = "Release PowerPC-32.xcconfig"; path = "../configurations/Release PowerPC-32.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4DF42AC10B0488ED003F2D95 /* Release x86-32.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; name = "Release x86-32.xcconfig"; path = "../configurations/Release x86-32.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4DF42AC20B0488ED003F2D95 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
+		4DF42AE40B0489A5003F2D95 /* libexternal.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libexternal.xcodeproj; path = ../libexternal/libexternal.xcodeproj; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4DF42AA60B0488CE003F2D95 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DF42AED0B0489AF003F2D95 /* libexternal.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4DF42A970B0488B1003F2D95 = {
+			isa = PBXGroup;
+			children = (
+				4DF42AD90B04899A003F2D95 /* References */,
+				4DF42AAF0B0488D7003F2D95 /* Source */,
+				4DF42AA30B0488B6003F2D95 /* Configurations */,
+				4DF42AA90B0488CE003F2D95 /* Products */,
+				4DF42AAA0B0488CE003F2D95 /* [[external.identifier]]-Info.plist */,
+			);
+			sourceTree = "<group>";
+		};
+		4DF42AA30B0488B6003F2D95 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				4DF42ABE0B0488ED003F2D95 /* Debug.xcconfig */,
+				4DF42ABF0B0488ED003F2D95 /* Global.xcconfig */,
+				4DF42AC00B0488ED003F2D95 /* Release PowerPC-32.xcconfig */,
+				4DF42AC10B0488ED003F2D95 /* Release x86-32.xcconfig */,
+				4DF42AC20B0488ED003F2D95 /* Release.xcconfig */,
+			);
+			name = Configurations;
+			sourceTree = "<group>";
+		};
+		4DF42AA90B0488CE003F2D95 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4DF42AA80B0488CE003F2D95 /* [[external.identifier]].bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4DF42AAF0B0488D7003F2D95 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				4DF42AB90B0488E2003F2D95 /* [[external.main]] */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		4DF42AD90B04899A003F2D95 /* References */ = {
+			isa = PBXGroup;
+			children = (
+				4DF42AE40B0489A5003F2D95 /* libexternal.xcodeproj */,
+			);
+			name = References;
+			sourceTree = "<group>";
+		};
+		4DF42AE50B0489A5003F2D95 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4DF42AEC0B0489A5003F2D95 /* libexternal.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4DF42AA70B0488CE003F2D95 /* [[external.identifier]] */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4DF42AAC0B0488CF003F2D95 /* Build configuration list for PBXNativeTarget "[[external.identifier]]" */;
+			buildPhases = (
+				4DF42AA50B0488CE003F2D95 /* Sources */,
+				4DF42AA60B0488CE003F2D95 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4DF42AEF0B0489B4003F2D95 /* PBXTargetDependency */,
+			);
+			name = [[external.identifier]];
+			productName = [[external.identifier]];
+			productReference = 4DF42AA80B0488CE003F2D95 /* [[external.identifier]].bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4DF42A990B0488B2003F2D95 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 4DF42A9A0B0488B2003F2D95 /* Build configuration list for PBXProject "[[external.identifier]]" */;
+			hasScannedForEncodings = 0;
+			mainGroup = 4DF42A970B0488B1003F2D95;
+			productRefGroup = 4DF42AA90B0488CE003F2D95 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4DF42AE50B0489A5003F2D95 /* Products */;
+					ProjectRef = 4DF42AE40B0489A5003F2D95 /* libexternal.xcodeproj */;
+				},
+			);
+			targets = (
+				4DF42AA70B0488CE003F2D95 /* [[external.identifier]] */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4DF42AEC0B0489A5003F2D95 /* libexternal.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libexternal.a;
+			remoteRef = 4DF42AEB0B0489A5003F2D95 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4DF42AA50B0488CE003F2D95 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DF42ABA0B0488E2003F2D95 /* [[external.main]] in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4DF42AEF0B0489B4003F2D95 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = external;
+			targetProxy = 4DF42AEE0B0489B4003F2D95 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		4DF42A9B0B0488B2003F2D95 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DF42ABE0B0488ED003F2D95 /* Debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		4DF42A9C0B0488B2003F2D95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DF42AC20B0488ED003F2D95 /* Release.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		4DF42AAD0B0488CF003F2D95 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				EXPORTED_SYMBOLS_FILE = "$(SRCROOT)/[[external.identifier]].exports";
+				INFOPLIST_FILE = "[[external.identifier]]-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = [[external.identifier]];
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = YES;
+				[[external.macosx_options]]
+			};
+			name = Debug;
+		};
+		4DF42AAE0B0488CF003F2D95 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				EXPORTED_SYMBOLS_FILE = "$(SRCROOT)/[[external.identifier]].exports";
+				INFOPLIST_FILE = "[[external.identifier]]-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = [[external.identifier]];
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+				[[external.macosx_options]]
+			};
+			name = Release;
+		};
+		4DF42AC80B048941003F2D95 /* Release PowerPC-32 */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				EXPORTED_SYMBOLS_FILE = "$(SRCROOT)/[[external.identifier]].exports";
+				INFOPLIST_FILE = "[[external.identifier]]-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = [[external.identifier]];
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+				[[external.macosx_options]]
+			};
+			name = "Release PowerPC-32";
+		};
+		4DF42AC90B048941003F2D95 /* Release x86-32 */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				EXPORTED_SYMBOLS_FILE = "$(SRCROOT)/[[external.identifier]].exports";
+				INFOPLIST_FILE = "[[external.identifier]]-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = [[external.identifier]];
+				WRAPPER_EXTENSION = bundle;
+				ZERO_LINK = NO;
+				[[external.macosx_options]]
+			};
+			name = "Release x86-32";
+		};
+		4DF42ACA0B048941003F2D95 /* Release PowerPC-32 */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DF42AC00B0488ED003F2D95 /* Release PowerPC-32.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release PowerPC-32";
+		};
+		4DF42ACB0B048941003F2D95 /* Release x86-32 */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DF42AC10B0488ED003F2D95 /* Release x86-32.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release x86-32";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4DF42A9A0B0488B2003F2D95 /* Build configuration list for PBXProject "[[external.identifier]]" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DF42A9B0B0488B2003F2D95 /* Debug */,
+				4DF42A9C0B0488B2003F2D95 /* Release */,
+				4DF42ACA0B048941003F2D95 /* Release PowerPC-32 */,
+				4DF42ACB0B048941003F2D95 /* Release x86-32 */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4DF42AAC0B0488CF003F2D95 /* Build configuration list for PBXNativeTarget "[[external.identifier]]" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DF42AAD0B0488CF003F2D95 /* Debug */,
+				4DF42AAE0B0488CF003F2D95 /* Release */,
+				4DF42AC80B048941003F2D95 /* Release PowerPC-32 */,
+				4DF42AC90B048941003F2D95 /* Release x86-32 */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+
+/* End XCConfigurationList section */
+	};
+
+	rootObject = 4DF42A990B0488B2003F2D95 /* Project object */;
+}

@@ -1,0 +1,2 @@
+# Worksheet-Inventor
+Program that allows you to make custom 10 item rows of any text you want (i.e., letters, words, math facts). The language is in "LiveCode" so you can't directly modify the code on GitHub. I've attached the LiveCode source code and the published program. You can just download and use the program and/or use the source code to modify the program to your liking. All of this will have to occur on your desktop though. 

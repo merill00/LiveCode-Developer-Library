@@ -1,0 +1,1 @@
+ <!--slide [[gData["carousel"]["number"]]]-->        <div class="carousel-item active">            <img class="d-block w-100" src="[[gData["carousel"]["slide_path"]]]" alt="slide [[gData["carousel"]["number"]]]">        </div>        <!--/slide [[gData["carousel"]["number"]]]-->

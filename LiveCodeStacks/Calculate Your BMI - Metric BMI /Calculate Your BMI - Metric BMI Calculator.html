@@ -1,0 +1,537 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0066)https://www.nhlbi.nih.gov/health/educational/lose_wt/BMI/bmi-m.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+	 <title>Calculate Your BMI - Metric BMI Calculator</title>
+	 <link rel="shortcut icon" href="https://www.nhlbi.nih.gov/favicon.ico">	 
+	 <link rel="stylesheet" href="./Calculate Your BMI - Metric BMI Calculator_files/globalstyle.css" type="text/css">
+	 
+	 <meta name="keywords" content="NHLBI, body mass index, bmi, weight, obesity, overweight, heart disease, stroke">
+	 <meta name="description" content="Metric Body Mass Index calculator.">
+	 <!-- Meta Data: Ownership -->
+<meta name="Owner" content="raschkam">
+<meta name="Approver" content="knightlm">
+<meta name="Editor" content="mchalek">
+<meta name="Audience" content="Public;Health Pros;Researchers;Partners;NHLBI staff">
+<meta name="Last.Revised" content="7/6/2016">
+<meta name="Date.Published" content="1/18/2013">
+<meta name="Language" content="">
+
+
+ <style type="text/css">
+<!--
+	@import "/health/educational/lose_wt/styles/aimstyle.css";
+-->
+   </style> 
+   
+ <script async="" src="./Calculate Your BMI - Metric BMI Calculator_files/analytics.js"></script><script language="Javascript" type="text/javascript">
+<!--
+function cal_bmi(kg, htc){
+
+
+   m = htc/100;
+   h2 = m * m;
+
+   bmi = kg/h2;
+
+
+   f_bmi = Math.floor(bmi);
+
+   diff  = bmi - f_bmi;
+   diff = diff * 10;
+
+   diff = Math.round(diff);
+   if (diff == 10){
+      // Need to bump up the whole thing instead
+      f_bmi += 1;
+      diff = 0;
+   }
+   bmi = f_bmi + "." + diff;
+
+   return bmi;
+}
+function compute(){
+   var f = self.document.forms[0];
+
+   // Set up variables for calculation
+   w = f.kg.value;
+//   i = parseInt(f.htc.value);
+   i = f.htc.value;
+
+   // Do validation checking to ensure existence of values
+
+   if (!chkw(i)){
+     alert("Please enter a number for your height.");
+     f.htc.focus();
+     return;
+   }
+   if (!chkw(w)){
+     alert("Please enter a number for your weight.");
+     f.kg.focus();
+     return;
+   }
+
+   f.bmi.value = cal_bmi(w, i);
+   f.bmi.focus();
+}
+function chkw(w){
+  // if (isNaN(parseInt(w))){
+   if (isNaN(w)){
+	  return false;
+   } else if (w < 0){
+  return false;
+  }
+  else{
+  return true;
+  }
+}
+// -->
+</script>
+   
+ <style type="text/css">
+<!--
+
+-->
+     </style>  
+   
+   
+   
+ <script src="./Calculate Your BMI - Metric BMI Calculator_files/gateway.min.js" type="text/javascript" async="true" data-vendor="fs" data-role="gateway"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="//gateway.foresee.com/code/19.6.3/fs.feedback.js" data-vendor="fs" src="./Calculate Your BMI - Metric BMI Calculator_files/fs.feedback.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="//gateway.foresee.com/code/19.6.3/fs.survey.js" data-vendor="fs" src="./Calculate Your BMI - Metric BMI Calculator_files/fs.survey.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="//gateway.foresee.com/code/19.6.3/fs.utils.js" data-vendor="fs" src="./Calculate Your BMI - Metric BMI Calculator_files/fs.utils.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="//gateway.foresee.com/code/19.6.3/fs.trigger.js" data-vendor="fs" src="./Calculate Your BMI - Metric BMI Calculator_files/fs.trigger.js"></script><link id="fs-css-1" rel="stylesheet" type="text/css" href="./Calculate Your BMI - Metric BMI Calculator_files/main.css"></head> 
+ 
+<body> <div class="container">
+
+<!--allows for spacing above and below date-->
+<table width="1002px" summary="layout table">
+ <tbody><tr> 
+  <td> 
+   
+<script>
+	 section="public_inactive" 
+</script>
+ 
+<!-- Header Include File -->
+
+<link rel="stylesheet" type="text/css" href="./Calculate Your BMI - Metric BMI Calculator_files/header.css">
+<div id="block-sitebranding-2" class="contextual-region block block-system block-system-branding-block">
+    <div id="banner">
+        <span>U.S. Department of Health &amp; Human Services</span>
+    </div>
+      <div id="block-mainnavigation">
+        <div id="main-site-logo">
+            <a href="https://www.nhlbi.nih.gov/">
+                <img src="./Calculate Your BMI - Metric BMI Calculator_files/NHLBI_Logo_Vector.svg" title="Home">
+            </a>
+        </div>
+        <div id="main-navbar">
+
+            <ul class="menu-level-0">
+                <li>
+                    <a href="https://www.nhlbi.nih.gov/health-topics" class="level-0-link">Health Topics</a>
+                </li>
+                <li>
+                    <a href="https://www.nhlbi.nih.gov/science" class="level-0-link">The Science</a>
+                </li>
+                <li>
+                    <a href="https://www.nhlbi.nih.gov/grants-and-training" class="level-0-link">Grants and Training</a>
+                </li>
+                <li>
+                    <a href="https://www.nhlbi.nih.gov/news" class="level-0-link">News and Events</a>
+                </li>
+                <li>
+                    <a href="https://www.nhlbi.nih.gov/about" class="level-0-link">About NHLBI</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+  <script language="JavaScript" type="text/javascript" src="./Calculate Your BMI - Metric BMI Calculator_files/setOmn.js"></script>
+<!--Digital Analytics Program (DAP) Tracking Code  DO NOT REMOVE   -->
+  <script async="" type="text/javascript" id="_fed_an_ua_tag" src="./Calculate Your BMI - Metric BMI Calculator_files/Universal-Federated-Analytics-Min.js"></script>
+<!-- Foresee Survey Script -->
+<script type="text/javascript">
+  // Instructions: please embed this snippet directly into every page in your website template.
+  // For optimal performance, this must be embedded directly into the template, not referenced
+  // as an external file.
+
+  // ForeSee Embed Script v2.00
+  // DO NOT MODIFY BELOW THIS LINE *****************************************
+  ;(function (g) {
+  var d = document, am = d.createElement('script'), h = d.head || d.getElementsByTagName("head")[0], fsr = 'fsReady',
+  aex = {
+  "src": "//gateway.foresee.com/sites/nhlbi-gov/staging/gateway.min.js",
+  "type": "text/javascript",
+  "async": "true",
+  "data-vendor": "fs",
+  "data-role": "gateway"
+  };
+  for (var attr in aex){am.setAttribute(attr, aex[attr]);}h.appendChild(am);g[fsr] = function () {var aT = '__' + fsr + '_stk__';g[aT] = g[aT] || [];g[aT].push(arguments);};
+  })(window);
+  // DO NOT MODIFY ABOVE THIS LINE *****************************************
+</script>
+
+
+
+
+
+
+  </td>
+ </tr>
+ <tr> 
+  <td> <table width="995px" border="0" cellpadding="0" cellspacing="0" summary="layout table" style="margin-left:5px;">
+    <tbody><tr> 
+     <td colspan="2"> <div id="Breadcrumbs"> 
+      <a href="https://www.nhlbi.nih.gov/index.htm">Home</a> » <a href="https://www.nhlbi.nih.gov/health/index.htm">Health Information for the Public</a> » <a href="https://www.nhlbi.nih.gov/health/educational/">Educational Campaigns &amp; Programs</a> » <a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/">Aim for a Healthy Weight</a> » <a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/BMI/">Healthy Weight Tools</a> » BMI Calculator (Metric)
+       <!--breadcrumbs end--></div>
+      </td>
+    </tr>
+    <tr valign="top"> 
+     <td bgcolor="#FFFFFF" width="200"><br><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/BMI/bmi-m.htm#content" name="skip"><img src="./Calculate Your BMI - Metric BMI Calculator_files/spacer.gif" width="200" height="1" border="0" alt="Skip left side navigation and go to content"></a>
+     <div id="leftside"> <a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/index.htm"><img src="./Calculate Your BMI - Metric BMI Calculator_files/AimLogo.gif" alt="Aim for a Healthy Weight" width="193" height="102" border="0"></a>
+    <div id="leftnav">
+        <ul>
+            <li><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/index.htm">Home</a></li>
+            <li><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/risk.htm">Assessing Your Weight and Health Risk</a></li>
+            <li><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/control.htm">Control Your Weight</a></li>
+            <li><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/eat/index.htm">Eat Right</a></li>
+            <li><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/physical.htm">Be Physically Active</a></li>
+            <li><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/BMI/index.htm">Healthy Weight Tools</a>
+                <ul>
+                    <li><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/BMI/bmicalc.htm">BMI Calculator</a></li>
+                    <li><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/menuplanner.html">Menu Plans</a></li>
+                    <li><a href="https://www.nhlbi.nih.gov/health/educational/wecan/eat-right/distortion.htm">Portion Distortion</a></li>
+                </ul>
+            </li>
+            <li><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/recommen.htm">Key Recommendations</a></li>
+            <li><a href="https://www.nhlbi.nih.gov/health/educational/wecan/index.htm">Healthy Weight Resources for Parents/Families<br>
+                (<em>We Can!</em>)</a></li>
+            <li class="last"><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/profmats.htm">Health Professional Resources</a></li>
+        </ul>
+    </div>
+</div>
+</td>
+     <td width="795"><div id="aimtxt"><br>
+     <table border="0" cellpadding="4" cellspacing="0" summary="layout table">
+       <tbody><tr valign="top"> 
+        <td width="795" style="padding-left:28px; padding-right:28px; "> 
+         <a name="content"></a> 
+         <!--Start Body Text-->
+         
+         
+         
+         
+          <h1>Calculate Your Body Mass Index</h1>
+                  <p>Body mass index (BMI) is a measure
+						  of body fat based on height and weight that applies to  adult men
+					  and women. </p> 
+        <ul> 
+						  <li>Enter your weight and height using <a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/BMI/bmicalc.htm">standard</a> or
+							 metric measures. </li> 
+						  <li>Select "Compute BMI" and your BMI will appear below. </li> 
+					  </ul> 
+                  
+                  <table summary="This table is used for layout purposes only." style="margin:auto;" class="bmibkg" width="520"> 
+		<tbody><tr> 
+		  <td> 
+			 <form name="bmi_input"> 
+				<table border="0" cellpadding="4" cellspacing="0" width="510" summary="This table is used for layout purposes only."> 
+				  <tbody><tr> 
+                  <td width="250" valign="top" style="margin:auto;"> 
+						<p align="center"><strong><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/BMI/bmi-m_sp.htm">Español</a></strong></p> 
+                          
+                          <table border="0" cellpadding="0" cellspacing="0" width="200" summary="This table is used for layout purposes only." class="bmiCalc" style="margin:auto;"> 
+						  <tbody><tr> 
+							 <td bgcolor="#6F48B3" width="200" colspan="3"> 
+								<table width="209" border="0" cellpadding="0" cellspacing="0" summary="This table is used for layout purposes only."> 
+								  <tbody><tr> 
+									 <td bgcolor="#FFFFFF"><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/BMI/bmicalc.htm">
+										<img src="./Calculate Your BMI - Metric BMI Calculator_files/bmi-m_01.gif" border="0" alt="View Standard Measurements" width="105" height="28"></a></td> 
+									 <td bgcolor="#FFFFFF">
+										<img src="./Calculate Your BMI - Metric BMI Calculator_files/bmi-m_02.gif" border="0" alt="Metric Measurements" width="104" height="28"></td> 
+								  </tr> 
+								</tbody></table>
+                      <!-- End ImageReady Slices --></td> 
+						  </tr> 
+						  <tr> 
+							 <td bgcolor="#6F48B3" width="13">
+								<img border="0" src="./Calculate Your BMI - Metric BMI Calculator_files/spacer.gif" width="12" height="1" alt=" "></td> 
+							 <td bgcolor="#6F48B3" width="184"> 
+								<table border="0" cellspacing="0" width="185" bgcolor="#FFFFFF" cellpadding="2" summary="This table is used for layout purposes only."> 
+								  <tbody><tr> 
+									 <td width="50%" style="text-align:right;"><b><label for="htc">Your
+										Height:</label></b></td> 
+									 <td width="50%" align="left">
+										<input type="text" name="htc" size="5" id="htc"></td> 
+								  </tr> 
+								  <tr> 
+									 <td width="50%">&nbsp;</td> 
+									 <td width="50%" align="left"><b> (centimeters)</b></td> 
+								  </tr> 
+								  <tr> 
+									 <td width="50%" colspan="2"><img src="./Calculate Your BMI - Metric BMI Calculator_files/spacer.gif" width="1" height="6" border="0" alt=" "></td> 
+								  </tr> 
+								  <tr> 
+									 <td width="50%" style="text-align:right;"><b><label for="kg">&nbsp;Your
+										Weight:</label></b></td> 
+									 <td width="50%" align="left">
+										<input type="text" name="kg" size="5" id="kg"></td> 
+								  </tr> 
+								  <tr> 
+									 <td width="50%">&nbsp;</td> 
+									 <td width="50%" align="left"><b> (kilograms)</b></td> 
+								  </tr> 
+								  <tr> 
+									 <td colspan="2" align="center" class="colcenter" style="padding-top:5px;"><span class="colcenter" style="padding-top:5px;">
+									   <input type="button" value="Compute BMI" onclick="self.compute();">
+									 </span></td> 
+								  </tr> 
+								  <tr> 
+									 <td colspan="2" align="center" class="colcenter"> 
+										<table cellspacing="0" cellpadding="0" border="0" width="150" summary="This table is used for layout purposes only."> 
+										  <tbody><tr> 
+											 <td align="LEFT" width="122" colspan="3" style="background-image: url(images/oeilogo.gif); background-repeat: no-repeat; background-position: center top" height="201"> 
+												<div style="margin-left: 45px; margin-top: -3px"><label for="yourbmi"><span style="font-size: .9em; font-weight:bold;"> Your
+												  BMI:</span></label><br><input name="bmi" type="text" size="4" id="yourbmi" style="text-align: center"></div></td> 
+										  </tr> 
+										</tbody></table></td> 
+								  </tr> 
+								</tbody></table>
+                                </td> 
+							 <td bgcolor="#6F48B3" width="13">
+								<img border="0" src="./Calculate Your BMI - Metric BMI Calculator_files/spacer.gif" width="12" height="1" alt=" "></td> 
+						  </tr> 
+						  <tr>
+                            <td bgcolor="#6F48B3" colspan="3" width="100%" align="center">&nbsp;</td>
+                          </tr>
+						</tbody></table>
+                          
+                          
+                          
+						</td>
+                  <td valign="top"> 
+						
+						<p><b>BMI Categories: </b><br> 
+						Underweight = &lt;18.5<br> 
+						  Normal weight = 18.5–24.9 <br> 
+						 Overweight = 25–29.9 <br> 
+						  Obesity = BMI of 30 or greater </p> 
+						
+						<p><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/BMI/bmi_tbl.htm"><strong>The BMI
+						  Tables</strong></a></p> 
+                 
+                        
+                        
+                        
+                        <p><a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/index.htm"><strong>Aim for a Healthy Weight</strong></a>:<br>
+                      
+                          <a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/risk.htm#limitations">Limitations of the BMI</a><br>
+                          <a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/risk.htm">Assessing Your Risk</a> <br>
+                          <a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/control.htm">Controlling Your Weight</a><br>
+                          <a href="https://www.nhlbi.nih.gov/health/educational/lose_wt/eat/recipes.htm">Recipes</a></p>
+                          <p>Download the BMI calculator app today (available for <a href="https://itunes.apple.com/at/app/nhlbi-bmi-calculator/id446441346?l=en&amp;mt=8">iPhone</a><a href="https://www.nhlbi.nih.gov/about/contact/link-disclaimer.htm"><img src="./Calculate Your BMI - Metric BMI Calculator_files/external-link.png" alt="external disclaimer"></a> and <a href="https://play.google.com/store/apps/details?id=gov.nih.nhlbi.bmicalc&amp;hl=en">Android</a><a href="https://www.nhlbi.nih.gov/about/contact/link-disclaimer.htm"><img src="./Calculate Your BMI - Metric BMI Calculator_files/external-link.png" alt="external disclaimer"></a>).</p>
+                      <!-- <p><img src="images/phoneicon.gif" alt=" " style="padding-top:5px; padding-right:5px;" align="left"><a href="https://itunes.apple.com/us/app/nhlbi-bmi-calculator/id446441346?mt=8"><strong>Download the BMI <br />
+                        Calculator iPhone App</strong></a></p> -->
+                      
+                      
+                      </td> 
+				  </tr> 
+				</tbody></table> </form>			 </td> 
+		</tr> 
+	 </tbody></table>
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         <!--End Body Text--></td>
+       
+       </tr>
+       <!--RIGHT-HAND COLUMN -->
+     </tbody></table>
+     <!--END Aimtxt --></div></td>
+    </tr>
+    
+  </tbody></table></td>
+ </tr>
+</tbody></table>
+<br>
+
+ 
+ <!--Digital Analytics Program (DAP) Tracking Code  DO NOT REMOVE   --->
+ <script async="" type="text/javascript" id="_fed_an_ua_tag" src="./Calculate Your BMI - Metric BMI Calculator_files/Universal-Federated-Analytics-Min(1).js"></script>
+ 
+ 
+     <link rel="stylesheet" type="text/css" href="./Calculate Your BMI - Metric BMI Calculator_files/footer.css">
+     <link href="./Calculate Your BMI - Metric BMI Calculator_files/css" rel="stylesheet" type="text/css">
+
+     <nav role="navigation" aria-labelledby="block-footer-menu" id="block-footer" class="contextual-region block block-menu navigation menu--footer" xmlns="http://www.w3.org/1999/html">
+
+
+
+         <footer id="footer-bottom">
+             <div id="footer-main-wrapper">
+                 <div id="footer-wrapper-top">
+
+                     <div id="desktop-3-col">
+                         <div id="column1">
+                             <div id="footer-block-logo">
+                                 <img href="/" src="./Calculate Your BMI - Metric BMI Calculator_files/NHLBI_HHS_Lockup_white.svg" alt="Home" class="footer__logo-image">
+                                 <div id="nhlbi_address" class="bodytext">
+                                     <p>Building 31</p>
+                                     <p>31 Center Drive</p>
+                                     <p>Bethesda, MD 20892</p>
+                                 </div>
+                                 <div class="footerbody link-title"><a href="https://www.nih.gov/about-nih/visitor-information/getting-nih" title="learn more about NIH">Learn more about getting to NIH</a></div>
+                             </div>
+
+
+                         </div>
+                         <div id="column2">
+                             <div id="footer-block-alerts">
+                                 <h3 class="bodytext">Get Email Alerts</h3>
+                                 <div class="footerbody">Receive automatic alerts about NHLBI related news and highlights from across the Institute.</div>
+                                 <span class="footerbody link-title"><a href="https://www.nhlbi.nih.gov/news-and-events/email-alerts">Learn More</a></span>
+                                 <form action="https://www.nhlbi.nih.gov/news-and-events/email-subscriptions" method="post">
+                                     <input id="emailAddress" type="email" name="email" oninvalid="this.setCustomValidity(&#39;Make sure you entered a &quot;name@email.com&quot; format&#39;)" placeholder="Email">
+                                     <input type="submit" class="sign-up" value="Sign Up">
+                                 </form>
+                             </div>
+
+
+                             <div id="footer-block-social">
+                                 <h3 class="bodytext">Connect With Us</h3>
+                                 <ul id="footer-social">
+                                     <li><a id="facebooklink" href="https://www.facebook.com/NHLBI/"><img src="./Calculate Your BMI - Metric BMI Calculator_files/ico-facebook-white.svg" alt="Facebook icon"></a></li>
+                                     <li><a id="twitterlink" href="https://twitter.com/nih_nhlbi?lang=en"><img src="./Calculate Your BMI - Metric BMI Calculator_files/ico-twitter-white.svg" alt="Twitter icon"></a></li>
+                                     <li><a id="youtubelink" href="https://www.youtube.com/user/NHLBI"><img src="./Calculate Your BMI - Metric BMI Calculator_files/ico-youtube-white.svg" alt="Facebook icon"></a></li>
+                                     <li><a id="googlepluslink" href="https://plus.google.com/+nhlbi"><img src="./Calculate Your BMI - Metric BMI Calculator_files/ico-googleplus-white.svg" alt="Linkedin icon"></a></li>
+                                 </ul>
+                                 <div class="footerbody link-title"><a href="https://www.nhlbi.nih.gov/about/contact">Contact Us Directly</a></div>
+                             </div>
+
+
+                         </div>
+                         <div id="column3">
+                             <div id="footer-block-policy">
+                                 <h3 class="bodytext">Policies</h3>
+
+
+
+                                 <ul class="menu">
+                                     <li class="menu-item">
+                                         <a href="https://www.nhlbi.nih.gov/about/contact/website-privacy-and-accessibility#ui-id-4">Privacy Policy</a>
+                                     </li>
+                                     <li class="menu-item">
+                                         <a href="https://www.nhlbi.nih.gov/about/contact/website-privacy-and-accessibility#ui-id-8">Freedom of Information Act (FOIA)</a>
+                                     </li>
+                                     <li class="menu-item">
+                                         <a href="https://www.nhlbi.nih.gov/about/contact/website-privacy-and-accessibility#ui-id-12">Accessibility</a>
+                                     </li>
+                                     <li class="menu-item">
+                                         <a href="https://www.nhlbi.nih.gov/about/contact/trademark-branding-and-logo">Copyright and Usage</a>
+                                     </li>
+                                     <li class="menu-item">
+                                         <a href="https://www.edi.nih.gov/no-fear-act">No FEAR Act</a>
+                                     </li>
+                                     <li class="menu-item">
+                                         <a href="https://www.nhlbi.nih.gov/grants-and-training/policies-procedures-and-guidelines">Grants and Funding</a>
+                                     </li>
+                                 </ul>
+
+                             </div>
+
+
+                         </div>
+                     </div>
+
+
+
+
+
+
+                 </div>
+                 <div id="footer-wrapper-bottom">
+                     <div id="footer-block-5">
+                         <div>
+
+
+                             <ul class="menu">
+                                 <li class="menu-item">
+                                     <a href="https://www.nhlbi.nih.gov/about/contact/health-information-and-clinical-trials">Customer Service/Center for Health Information</a>
+                                 </li>
+                                 <li class="menu-item">
+                                     <a href="https://www.nhlbi.nih.gov/news-and-events/email-alerts">Email Alerts</a>
+                                 </li>
+                                 <li class="menu-item">
+                                     <a href="https://www.nhlbi.nih.gov/about/working-at-nhlbi">Jobs and Careers</a>
+                                 </li>
+                                 <li class="menu-item">
+                                     <a href="https://www.nhlbi.nih.gov/siteindex">Site Index</a>
+                                 </li>
+                             </ul>
+
+                         </div>
+                         <div>
+
+                             <ul class="menu">
+                                 <li class="menu-item">
+                                     <a href="https://www.nhlbi.nih.gov/about">About NHLBI</a>
+                                 </li>
+                                 <li class="menu-item">
+                                     <a href="https://www.nih.gov/">National Institute of Health</a>
+                                 </li>
+                                 <li class="menu-item">
+                                     <a href="https://www.hhs.gov/">Department of Health and Human Services </a>
+                                 </li>
+                                 <li class="menu-item">
+                                     <a href="https://oig.hhs.gov/">OIG</a>
+                                 </li>
+                                 <li class="menu-item">
+                                     <a href="https://www.usa.gov/">USA.gov</a>
+                                 </li>
+                             </ul>
+
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+
+         </footer>
+
+
+     </nav>
+  <!-- SiteCatalyst code version: H.22.1.
+Copyright 1996-2010 Adobe, Inc. All Rights Reserved
+More info Available at http://www.omniture.com -->
+  <script language="JavaScript" type="text/javascript" src="./Calculate Your BMI - Metric BMI Calculator_files/channel_code_02_24_11.js"></script>
+  <script language="JavaScript" type="text/javascript" src="./Calculate Your BMI - Metric BMI Calculator_files/s_code_SEMPHONIC_02_24_11.js"></script>
+  <script language="JavaScript" type="text/javascript">
+	/* You may give each page an identifying name, server, and channel on the next lines. */
+
+	/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+	var s_code=s.t();if(s_code)document.write(s_code)
+	if(navigator.appVersion.indexOf('MSIE')>=0)document.write(unescape('%3C')+'\!-'+'-')
+
+  </script>
+  <noscript>
+   <img src="http://nhlbi.122.2o7.net/b/ss/nhlbiglobal/1/H.22.1--NS/0?[AQB]&amp;cdp=3&amp;[AQE]" height="1" width="1" border="0" alt="">
+  </noscript>
+  <!-- End SiteCatalyst code version: H.22.1. -->
+
+
+
+
+ 
+
+
+</div>
+
+
+</body></html>

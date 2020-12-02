@@ -1,0 +1,36 @@
+{
+	"Name": "Restaurant",
+	"Description": "This is an app that allows users to rate restaurants. It uses CRUD, query, and blob. It also showcases relationship between 2 tables.",
+	"Image": "Screenshot.png",
+	"Stack": "restaurant.livecode",
+	"Password":"true",
+	"Tables": [{
+		"Name": "Restaurants",
+		"Keys": "Name,Location,Price,Type,Comments,Pictures,Rating",
+		"Values": [{
+			"Name": "3rd & Bourbon",
+			"Location": "12 3rd street",
+			"Price": "4",
+			"Type": "Bars"
+		},{
+			"Name": "Bahn Mi Oven",
+			"Location": "9214 Oven road",
+			"Price": "2",
+			"Type": "Vietnamese"
+		},{
+			"Name": "The City Fish",
+			"Location": "3474 Ocean ave",
+			"Price": "3",
+			"Type": "Seafood"
+		},{
+			"Name": "Angeloud's Mexican Grill",
+			"Location": "515 Taco road",
+			"Price": "1",
+			"Type": "Mexican"
+		}]
+	},{		
+		"Name": "Comments",
+		"Keys": "RestaurantID,UserID,Rating,Comment",
+		"Values": []
+	}]
+}

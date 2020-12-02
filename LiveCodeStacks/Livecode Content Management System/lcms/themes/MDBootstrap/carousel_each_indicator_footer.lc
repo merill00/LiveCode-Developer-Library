@@ -1,0 +1,1 @@
+  <li data-target="#[[gData["carousel"]["name"]]]" data-slide-to="[[gData["carousel"]["number"]]]"></li>

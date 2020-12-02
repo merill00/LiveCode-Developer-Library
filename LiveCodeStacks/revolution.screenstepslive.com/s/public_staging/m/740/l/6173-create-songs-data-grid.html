@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+<meta content='IE=edge' http-equiv='X-UA-Compatible'>
+<meta content='width=device-width, initial-scale=1' name='viewport'>
+<title>Create Songs Data Grid | RunRevLive | Public Staging</title>
+<meta content='A Data Grid table that we design from a data point of view.' name='description'>
+
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="ZhiV3oHLwAARIBXRVudCpSoq4XRVwORSEdrtxljdmyy3R2IOqXEIak4nFXQEOxIpnHmObnN2M794lPm5qwVO4A==" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="https://assets.screensteps.com/assets/themes/alpha-027b2e60ae75b9d8e6d6bcb32d3e6730dc3f6fe41be8479ef83e02168774766b.css" />
+<style type="text/css" media="all">/* headings */
+  h1,
+  h1.toc-heading,
+  h2.toc-heading {
+    color: #353938;
+  }
+
+  h2.toc-subheading,
+  h3.toc-subheading,
+  h4.toc-subheading,
+  h5.toc-subheading,
+  h6.toc-subheading {
+    color: #5a616c;
+  }
+
+  .screensteps-training-site [data-count-bubble]::after {
+    background-color: #5a616c;
+  }
+
+  .screensteps-article-content h2 {
+    color: #353938;
+  }
+
+  .screensteps-article-content h3,
+  .screensteps-article-content h4,
+  .screensteps-article-content h5,
+  .screensteps-article-content h6 {
+    color: #666e6c;
+  }
+
+  .screensteps-sidebar h3 {
+    color: #666e6c;
+  }
+
+  .sidebar-subheading {
+    color: #666e6c;
+  }
+
+  .comments-heading {
+    color: #666e6c;
+  }
+
+  /* base/_buttons */
+  input[type="button"],
+  input[type="reset"],
+  input[type="submit"],
+  button,
+  .screensteps-bg-action-color,
+  .screensteps-courses .screensteps-progress-bar::before,
+  .screensteps-courses .screensteps-courses-menu a:hover,
+  .screensteps-courses .screensteps-courses-menu .step-active a::before,
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #477dca;
+  }
+
+  input[type="button"]:hover,
+  input[type="reset"]:hover,
+  input[type="submit"]:hover,
+  button:hover,
+  button.screensteps-bg-action-color:hover,
+  a.screensteps-bg-action-color:hover {
+    background-color: #3061a7;
+  }
+
+  /* base/_forms */
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="password"]:focus,
+  input[type="search"]:focus,
+  input[type="tel"]:focus,
+  input[type="text"]:focus,
+  input[type="url"]:focus,
+  input[type="color"]:focus,
+  input[type="date"]:focus,
+  input[type="datetime"]:focus,
+  input[type="datetime-local"]:focus,
+  input[type="month"]:focus,
+  input[type="time"]:focus,
+  input[type="week"]:focus,
+  select[multiple=multiple]:focus,
+  textarea:focus {
+    border-color: #477dca;
+  }
+
+
+  .screensteps-training-site .screensteps-main-search .search-field:not(:placeholder-shown) {
+    box-shadow: 0 0 0 2px #7b808e;
+  }
+
+  /* base/_typography */
+  body {
+    background-color: #7b808e;
+    color: #515857;
+  }
+
+  a {
+    color: #477dca;
+  }
+
+
+
+  /* _screensteps-container */
+  .screensteps-container a:visited {
+    color: #3061a7;
+  }
+ .screensteps-container a:active,
+ .screensteps-container a:focus,
+ .screensteps-container a:hover {
+    color: #3061a7;
+  }
+
+  /* _screensteps-manual-contents */
+  .screensteps-manual-contents h2 a {
+    color: #477dca;
+  }
+  /* _screensteps-foldable-sections */
+  .screensteps-main-content .embedded-chapter-article > * {
+    color: #477dca;
+  }
+
+  /* screensteps-header */
+  .screensteps-branding h1,
+  .screensteps-header .screensteps-branding a,
+  .screensteps-training-site .screensteps-profile-subnav-toggle {
+    color: #ffffff;
+  }
+
+  .screensteps-header .screensteps-branding a:hover {
+    color: #2e3340;
+  }
+
+  /* meta data text */
+  .chapter-count,
+  .screensteps-comment-count,
+  .screensteps-lesson-details,
+  .nested-chapter-lessons .here a:after,
+  .screensteps-single-comment time {
+    color: #838c8b;
+  }
+
+  /* course tiles */
+  .screensteps-training-site .screensteps-group .asset-list--course a {
+    background-color: #4a4f56;
+    color: #fff;
+  }
+
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #2C5896;
+  }
+
+  .screensteps-training-site .screensteps-group .asset-list--course a:hover {
+    background-color: #565c64;
+  }
+</style>
+
+<link rel='icon'>
+<script src="https://assets.screensteps.com/assets/application-fe7915887e0874f95ef87940f513c239a27a71cc345a491bff7c3f92416a8111.js"></script>
+<script src="https://assets.screensteps.com/assets/vendor/jquery.fitvids-3e4679bfa1c083cec0d56c1f636f2038bf770ed13929e17d22bd1f417d3c94f8.js"></script>
+<script src="https://assets.screensteps.com/assets/theme-a161d6812c4179b27f1d00b86bb981be26e0733ede796eda0978b6a514ff216a.js"></script>
+<!--[if lt IE 9]>
+<script src="//assets.screensteps.com/assets/vendor/html5shiv.min-a280ac74b433afc5b6516368f5a678ceba501e0fb8b7987adee3b4e673674310.js"></script>
+<![endif]-->
+
+<style media=''></style>
+<script></script>
+
+  <script type="text/javascript">
+    !function(name,path,ctx){
+      var latest,prev=name!=='Keen'&&window.Keen?window.Keen:false;ctx[name]=ctx[name]||{ready:function(fn){var h=document.getElementsByTagName('head')[0],s=document.createElement('script'),w=window,loaded;s.onload=s.onerror=s.onreadystatechange=function(){if((s.readyState&&!(/^c|loade/.test(s.readyState)))||loaded){return}s.onload=s.onreadystatechange=null;loaded=1;latest=w.Keen;if(prev){w.Keen=prev}else{try{delete w.Keen}catch(e){w.Keen=void 0}}ctx[name]=latest;ctx[name].ready(fn)};s.async=1;s.src=path;h.parentNode.insertBefore(s,h)}}
+    }('KeenAsync','https://d26b395fwzu5fz.cloudfront.net/keen-tracking-1.1.3.min.js',this);
+
+    KeenAsync.ready(function(){
+      // Configure a client instance
+      var client = new KeenAsync({
+        projectId: '591daac30935ce40a59fb7ab',
+        writeKey: 'C89A9A1A8DB4C585F119F8F81ABB9621940DBBADDA5C72C2B87B1BD3464890D23FD250B0FFA4A1056DCB210616545B7B6C9DDF2054167B5219A3DD81E8DF90A321BE0C1B35BA19F2E3E85730FB96C1F93F8C66D8CD449FE6EFE43D98453632D1'
+      });
+
+      // Record an event
+      client.recordEvent('pageviews', {
+        title: document.title,
+        ip_address: "${keen.ip}",
+        user_agent: "${keen.user_agent}",
+        user_id: null,
+        account_id: "2c1ab788fb",
+        site_id: 732,
+        manual_id: 740,
+        article_id: 6173,
+        article_type_id: 0,
+        course_id: null,
+        source_id: 1
+      });
+    });
+  </script>
+
+
+</head>
+<body class='-body -header site-article  no-focus-outline' data-base-path='/s/public_staging/' data-content-template='2015' data-generating-pdf-text='Generating PDF...'>
+<div class='screensteps-admin-navigation'>
+<div data-logged-in-check-url='https://revolution.screenstepslive.com/s/732/user_nav' id='screensteps-admin-bar'>
+<ul>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/sites/732/manuals/740/chapters/2126/articles/6173">View in admin portal</a></li>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/article-editor/6173">Edit content on web</a></li>
+<li><a href="screensteps://revolution.screenstepslive.com/open/s/732/m/740/a/6173?checkout=1">Edit in desktop</a></li>
+</ul>
+</div>
+
+</div>
+<header class='screensteps-header' role='banner'>
+<a class='skip-navigation--link' href='#screensteps-main-content' id='skip-navigation'>
+Skip to main content
+</a>
+
+<div class='screensteps-branding'>
+<div class='logo-wrapper'>
+<h1 class='company-name'>Cross-Platform Application Development with LiveCode</h1>
+</div>
+</div>
+</header>
+
+<div class='screensteps-container-wrapper'>
+<main class='screensteps-container'>
+<div class='screensteps-site-title-wrapper'>
+<h1 class='screensteps-site-title toc-heading'>Public Staging</h1>
+</div>
+<div class='screensteps-main-search' role='search'>
+<form id="screensteps-search-form" action="../../../searches.html" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+<div class='screensteps-search-form'>
+<label for="text">Search term</label>
+<input type="text" name="text" id="text" class="search-field" title="Enter a keyword or topic to search" />
+
+<input type="submit" name="commit" value="Search" class="search-submit" data-disable-with="Search" />
+</div>
+</form>
+
+
+</div>
+<div class='left-sidebar lesson manual-lesson screensteps-content-wrapper'>
+<div class='screensteps-main-content' role='main'>
+<header class='screensteps-title'>
+<div id="screensteps-breadcrumb" aria-label="breadcrumb" aria-level="3"><a href="../../740.html">RunRevLive</a> <span class='chapter-breadcrumb'><a href="../c/2126.html">Creating a Music Library Interface Part I</a></span>Create Songs Data Grid</div>
+</header>
+<div id='screensteps-main-content'>
+<div class='screensteps-article'>
+<div class="screensteps-article-content " data-article-id="6173" data-workflow=false>
+    <h1 class="lesson">Create Songs Data Grid</h1>
+    <div class="screensteps-steps" data-role="steps-container">
+          <div class="instructions screensteps-textblock screensteps-wrapper--introduction screensteps-wrapper">
+  <p>A Data Grid table that we design from a data point of view.</p>
+</div>
+
+
+      <div class="step step-depth-1" data-step-uuid="b68235de-fa5c-486a-83dd-124f62a342fa" id="">
+      <h2 id="AddDataGridToCard">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Add Data Grid to Card" href="#AddDataGridToCard"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Add Data Grid to Card
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/971/original/media_1251509737833.png 487w" data-src="https://media.screensteps.com/image_assets/assets/000/138/971/original/media_1251509737833.png" class="lazyload lazypreload" style="max-width:487px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/971/original/media_1251509737833.png" /><noscript><img alt="" width="487" src="https://media.screensteps.com/image_assets/assets/000/138/971/original/media_1251509737833.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="2ff03cc6-ddc2-43d3-86e3-15a767fd0b54" id="">
+      <h2 id="RenameDataGrid">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Rename Data Grid" href="#RenameDataGrid"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Rename Data Grid
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/139/000/original/media_1251510174391.png 380w" data-src="https://media.screensteps.com/image_assets/assets/000/139/000/original/media_1251510174391.png" class="lazyload lazypreload" style="max-width:380px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/139/000/original/media_1251510174391.png" /><noscript><img alt="" width="380" src="https://media.screensteps.com/image_assets/assets/000/139/000/original/media_1251510174391.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="e77a6a8d-7c6b-42da-875d-2243f63ca49a" id="">
+      <h2 id="TurnOffEditingAndPersistentData">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Turn Off Editing and Persistent Data" href="#TurnOffEditingAndPersistentData"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Turn Off Editing and Persistent Data
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/987/original/media_1251516884481.png 254w" data-src="https://media.screensteps.com/image_assets/assets/000/138/987/original/media_1251516884481.png" class="lazyload lazypreload" style="max-width:254px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/987/original/media_1251516884481.png" /><noscript><img alt="" width="254" src="https://media.screensteps.com/image_assets/assets/000/138/987/original/media_1251516884481.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="61a6292e-1337-4456-91af-40d43d70beda" id="">
+      <h2 id="DetermineColumnsDataGridNeeds">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Determine Columns Data Grid Needs" href="#DetermineColumnsDataGridNeeds"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Determine Columns Data Grid Needs
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/993/original/media_1251510518534.png 464w" data-src="https://media.screensteps.com/image_assets/assets/000/138/993/original/media_1251510518534.png" class="lazyload lazypreload" style="max-width:464px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/993/original/media_1251510518534.png" /><noscript><img alt="" width="464" src="https://media.screensteps.com/image_assets/assets/000/138/993/original/media_1251510518534.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="ee7a6de1-b91b-497a-a987-aecfec8845e4" id="">
+      <h2 id="CreateColumns">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Create Columns" href="#CreateColumns"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Create Columns
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/985/original/media_1251513018674.png 399w" data-src="https://media.screensteps.com/image_assets/assets/000/138/985/original/media_1251513018674.png" class="lazyload lazypreload" style="max-width:399px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/985/original/media_1251513018674.png" /><noscript><img alt="" width="399" src="https://media.screensteps.com/image_assets/assets/000/138/985/original/media_1251513018674.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="c230940a-ea10-4927-8056-ef57daebe43b" id="">
+      <h2 id="EnterTestData">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Enter Test Data" href="#EnterTestData"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Enter Test Data
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/139/004/original/media_1251511041780.png 465w" data-src="https://media.screensteps.com/image_assets/assets/000/139/004/original/media_1251511041780.png" class="lazyload lazypreload" style="max-width:465px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/139/004/original/media_1251511041780.png" /><noscript><img alt="" width="465" src="https://media.screensteps.com/image_assets/assets/000/139/004/original/media_1251511041780.png" /></noscript>
+</div>
+
+ 
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/975/original/media_1251511071954.png 472w" data-src="https://media.screensteps.com/image_assets/assets/000/138/975/original/media_1251511071954.png" class="lazyload lazypreload" style="max-width:472px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/975/original/media_1251511071954.png" /><noscript><img alt="" width="472" src="https://media.screensteps.com/image_assets/assets/000/138/975/original/media_1251511071954.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="230394f8-b32a-4e13-b529-f540e106c639" id="">
+      <h2 id="CustomizeTimeColumn">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Customize Time Column" href="#CustomizeTimeColumn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Customize Time Column
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/976/original/media_1251511148518.png 317w" data-src="https://media.screensteps.com/image_assets/assets/000/138/976/original/media_1251511148518.png" class="lazyload lazypreload" style="max-width:317px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/976/original/media_1251511148518.png" /><noscript><img alt="" width="317" src="https://media.screensteps.com/image_assets/assets/000/138/976/original/media_1251511148518.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="ef8cbe69-4cb4-493f-8703-9c3eb7d90b7a" id="">
+      <h2 id="RenameCardWithRowTemplate">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Rename Card With Row Template" href="#RenameCardWithRowTemplate"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Rename Card With Row Template
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/962/original/media_1251511205707.png 497w" data-src="https://media.screensteps.com/image_assets/assets/000/138/962/original/media_1251511205707.png" class="lazyload lazypreload" style="max-width:497px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/962/original/media_1251511205707.png" /><noscript><img alt="" width="497" src="https://media.screensteps.com/image_assets/assets/000/138/962/original/media_1251511205707.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="b74692aa-ec17-48a8-b5c4-6d101bb887fa" id="">
+      <h2 id="NewGroupNamedAfterColumnIsCreated">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for New Group Named After Column Is Created" href="#NewGroupNamedAfterColumnIsCreated"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      New Group Named After Column Is Created
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/983/original/media_1251511238425.png 377w" data-src="https://media.screensteps.com/image_assets/assets/000/138/983/original/media_1251511238425.png" class="lazyload lazypreload" style="max-width:377px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/983/original/media_1251511238425.png" /><noscript><img alt="" width="377" src="https://media.screensteps.com/image_assets/assets/000/138/983/original/media_1251511238425.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="c8d23baf-168d-482e-a54d-2b7ba2783737" id="">
+      <h2 id="EditTimeColumnBehaviorScript">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Edit Time Column Behavior Script" href="#EditTimeColumnBehaviorScript"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Edit Time Column Behavior Script
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/139/006/original/media_1251511639313.png 352w" data-src="https://media.screensteps.com/image_assets/assets/000/139/006/original/media_1251511639313.png" class="lazyload lazypreload" style="max-width:352px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/139/006/original/media_1251511639313.png" /><noscript><img alt="" width="352" src="https://media.screensteps.com/image_assets/assets/000/139/006/original/media_1251511639313.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="c93cbf37-2b1d-46e4-96b7-c83cc26e4e04" id="">
+      <h2 id="ConvertDataPassedInToTimeString">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Convert Data Passed In To Time String" href="#ConvertDataPassedInToTimeString"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Convert Data Passed In To Time String
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/981/original/media_1251511655935.png 556w" data-src="https://media.screensteps.com/image_assets/assets/000/138/981/original/media_1251511655935.png" class="lazyload lazypreload" style="max-width:556px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/981/original/media_1251511655935.png" /><noscript><img alt="" width="556" src="https://media.screensteps.com/image_assets/assets/000/138/981/original/media_1251511655935.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="38f6e3e4-3dd2-4841-962d-474222435847" id="">
+      <h2 id="PreviewChange">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Preview Change" href="#PreviewChange"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Preview Change
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/972/original/media_1251511704741.png 462w" data-src="https://media.screensteps.com/image_assets/assets/000/138/972/original/media_1251511704741.png" class="lazyload lazypreload" style="max-width:462px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/972/original/media_1251511704741.png" /><noscript><img alt="" width="462" src="https://media.screensteps.com/image_assets/assets/000/138/972/original/media_1251511704741.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="2fbb0e50-6af3-44fc-8f68-4631d15d52a5" id="">
+      <h2 id="CustomizeRatingColumn">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Customize Rating Column" href="#CustomizeRatingColumn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Customize Rating Column
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/978/original/media_1251511739023.png 253w" data-src="https://media.screensteps.com/image_assets/assets/000/138/978/original/media_1251511739023.png" class="lazyload lazypreload" style="max-width:253px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/978/original/media_1251511739023.png" /><noscript><img alt="" width="253" src="https://media.screensteps.com/image_assets/assets/000/138/978/original/media_1251511739023.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="4c8a8369-a2e7-4c58-9a45-0b4e54d0d3e5" id="">
+      <h2 id="ImportStarImage">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Import Star Image" href="#ImportStarImage"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Import Star Image
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/139/008/original/media_1251512169141.png 447w" data-src="https://media.screensteps.com/image_assets/assets/000/139/008/original/media_1251512169141.png" class="lazyload lazypreload" style="max-width:447px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/139/008/original/media_1251512169141.png" /><noscript><img alt="" width="447" src="https://media.screensteps.com/image_assets/assets/000/139/008/original/media_1251512169141.png" /></noscript>
+</div>
+
+ 
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/980/original/media_1251512207509.png 560w" data-src="https://media.screensteps.com/image_assets/assets/000/138/980/original/media_1251512207509.png" class="lazyload lazypreload" style="max-width:560px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/980/original/media_1251512207509.png" /><noscript><img alt="" width="560" src="https://media.screensteps.com/image_assets/assets/000/138/980/original/media_1251512207509.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="19a467fd-d45a-4faa-a8bf-d832ce4967d3" id="">
+      <h2 id="EditRatingGroup">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Edit Rating Group" href="#EditRatingGroup"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Edit Rating Group
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/139/002/original/media_1251512314595.png 355w" data-src="https://media.screensteps.com/image_assets/assets/000/139/002/original/media_1251512314595.png" class="lazyload lazypreload" style="max-width:355px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/139/002/original/media_1251512314595.png" /><noscript><img alt="" width="355" src="https://media.screensteps.com/image_assets/assets/000/139/002/original/media_1251512314595.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="8a6a2aa0-6add-4d19-b732-577ee5349d6c" id="">
+      <h2 id="Create"EventCatcher"Button">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Create &quot;EventCatcher&quot; Button" href="#Create%22EventCatcher%22Button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Create "EventCatcher" Button
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/966/original/media_1251512457254.png 364w" data-src="https://media.screensteps.com/image_assets/assets/000/138/966/original/media_1251512457254.png" class="lazyload lazypreload" style="max-width:364px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/966/original/media_1251512457254.png" /><noscript><img alt="" width="364" src="https://media.screensteps.com/image_assets/assets/000/138/966/original/media_1251512457254.png" /></noscript>
+</div>
+
+ 
+      <div class="instructions screensteps-textblock ">
+  <p>21 px high</p>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="e61a1bea-b56a-4c14-802c-8e06c84c17ff" id="">
+      <h2 id="CreateButtonsForStarIcon">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Create Buttons For Star Icon" href="#CreateButtonsForStarIcon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Create Buttons For Star Icon
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/991/original/media_1251512472726.png 354w" data-src="https://media.screensteps.com/image_assets/assets/000/138/991/original/media_1251512472726.png" class="lazyload lazypreload" style="max-width:354px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/991/original/media_1251512472726.png" /><noscript><img alt="" width="354" src="https://media.screensteps.com/image_assets/assets/000/138/991/original/media_1251512472726.png" /></noscript>
+</div>
+
+ 
+      <div class="instructions screensteps-textblock ">
+  <p>21 px high</p>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="636399b2-5f42-4beb-bd69-9fb6088b0dc3" id="">
+      <h2 id="TheRatingColumnTemplateGroup">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for The Rating Column Template Group" href="#TheRatingColumnTemplateGroup"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      The Rating Column Template Group
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/969/original/media_1251512495296.png 340w" data-src="https://media.screensteps.com/image_assets/assets/000/138/969/original/media_1251512495296.png" class="lazyload lazypreload" style="max-width:340px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/969/original/media_1251512495296.png" /><noscript><img alt="" width="340" src="https://media.screensteps.com/image_assets/assets/000/138/969/original/media_1251512495296.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="06e1b575-eeb4-4a74-8b7a-ed193a75f571" id="">
+      <h2 id="EditRatingColumnBehaviorScript">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Edit Rating Column Behavior Script" href="#EditRatingColumnBehaviorScript"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Edit Rating Column Behavior Script
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/998/original/media_1251512547431.png 351w" data-src="https://media.screensteps.com/image_assets/assets/000/138/998/original/media_1251512547431.png" class="lazyload lazypreload" style="max-width:351px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/998/original/media_1251512547431.png" /><noscript><img alt="" width="351" src="https://media.screensteps.com/image_assets/assets/000/138/998/original/media_1251512547431.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="10a8631e-9f98-4738-8d11-0cd9157c3892" id="">
+      <h2 id="AdjustIconBasedOnRatingColumnValue">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Adjust Icon Based On Rating Column Value" href="#AdjustIconBasedOnRatingColumnValue"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Adjust Icon Based On Rating Column Value
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/974/original/media_1251605616928.png 544w" data-src="https://media.screensteps.com/image_assets/assets/000/138/974/original/media_1251605616928.png" class="lazyload lazypreload" style="max-width:544px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/974/original/media_1251605616928.png" /><noscript><img alt="" width="544" src="https://media.screensteps.com/image_assets/assets/000/138/974/original/media_1251605616928.png" /></noscript>
+</div>
+
+ 
+      <div class="instructions screensteps-textblock ">
+  <p>Value from 0 to 100</p>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="d313f984-8be1-4578-9adf-410fd2e10b1f" id="">
+      <h2 id="CommentOutLayoutcontrolCode">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Comment Out LayoutControl Code" href="#CommentOutLayoutcontrolCode"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Comment Out LayoutControl Code
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/997/original/media_1251512661805.png 460w" data-src="https://media.screensteps.com/image_assets/assets/000/138/997/original/media_1251512661805.png" class="lazyload lazypreload" style="max-width:460px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/997/original/media_1251512661805.png" /><noscript><img alt="" width="460" src="https://media.screensteps.com/image_assets/assets/000/138/997/original/media_1251512661805.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="e3d7b15f-8032-4b79-8866-15dc45cf2d37" id="">
+      <h2 id="PreviewChange">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Preview Change" href="#PreviewChange"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Preview Change
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/964/original/media_1251512711453.png 464w" data-src="https://media.screensteps.com/image_assets/assets/000/138/964/original/media_1251512711453.png" class="lazyload lazypreload" style="max-width:464px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/964/original/media_1251512711453.png" /><noscript><img alt="" width="464" src="https://media.screensteps.com/image_assets/assets/000/138/964/original/media_1251512711453.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="6d97a198-bfab-4679-966e-c121143149c0" id="">
+      <h2 id="TightenUpColumn">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Tighten Up Column" href="#TightenUpColumn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Tighten Up Column
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/995/original/media_1251512756796.png 351w" data-src="https://media.screensteps.com/image_assets/assets/000/138/995/original/media_1251512756796.png" class="lazyload lazypreload" style="max-width:351px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/995/original/media_1251512756796.png" /><noscript><img alt="" width="351" src="https://media.screensteps.com/image_assets/assets/000/138/995/original/media_1251512756796.png" /></noscript>
+</div>
+
+ 
+      <div class="instructions screensteps-textblock ">
+  <p>Adjust EventCatcher button to 72 pixels wide</p>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="b20a00ec-0202-48e8-ab03-ffbf6b57ebf3" id="">
+      <h2 id="AdjustWidthAndPropertiesOfRatingColumn">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Adjust Width and Properties Of Rating Column" href="#AdjustWidthAndPropertiesOfRatingColumn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Adjust Width and Properties Of Rating Column
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/989/original/media_1251512796707.png 390w" data-src="https://media.screensteps.com/image_assets/assets/000/138/989/original/media_1251512796707.png" class="lazyload lazypreload" style="max-width:390px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/989/original/media_1251512796707.png" /><noscript><img alt="" width="390" src="https://media.screensteps.com/image_assets/assets/000/138/989/original/media_1251512796707.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="c1952a86-4ad8-4d1a-b390-f59748d2a0ee" id="">
+      <h2 id="PreviewChanges">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Preview Changes" href="#PreviewChanges"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Preview Changes
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/138/967/original/media_1251512811176.png 412w" data-src="https://media.screensteps.com/image_assets/assets/000/138/967/original/media_1251512811176.png" class="lazyload lazypreload" style="max-width:412px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/138/967/original/media_1251512811176.png" /><noscript><img alt="" width="412" src="https://media.screensteps.com/image_assets/assets/000/138/967/original/media_1251512811176.png" /></noscript>
+</div>
+
+ 
+  </div>
+
+
+
+
+      
+    </div>
+</div>
+
+
+<div class='screensteps-next-prev-navigation' data-role='next-previous-nav'>
+<ul>
+<li class='previous'>
+<strong>Prev</strong>: <a href="6172-create-playlist-data-grid.html">Create Playlist Data Grid</a>
+</li>
+<li class='next'>
+<strong>Next</strong>: <a href="6174-write-handlers-for-populating-grids.html">Write Handlers For Populating Grids</a>
+</li>
+</ul>
+</div>
+
+<div class='no-comments screensteps-comments'>
+<h2 class='comments-heading'>
+<span class='screensteps-comment-count'>0</span>
+Comments
+</h2>
+
+<div class='screensteps-add-comment'>
+<h3 class='comment-heading'>Add your comment</h3>
+<script type="text/javascript" charset="utf-8">
+  ScreenStepsLiveSpamCheck = function() {
+      var key = document.getElementById('comment_spam_check_key').value;
+    var sig = '';
+    for (var x = 0; x< key.length; x++ ) {
+       sig += key.charCodeAt(x)+13;
+    }
+    document.getElementById('comment_spam_check_sig').value = sig; 
+    return true;
+  };
+</script>
+<div id='custom-comment-form-2015'></div>
+<form id="comment-form" class="comment-form" onclick="return ScreenStepsLiveSpamCheck();" action="../../../comments_lesson_id=6173-create-songs-data-grid.html" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><div class='field-row name'>
+<label class="required" for="comment-name">Name*</label>
+<input id="comment-name" type="text" name="comment[name]" />
+</div>
+<div class='field-row email'>
+<label class="required" for="comment-email">Email*</label>
+<input id="comment-email" type="text" name="comment[email]" />
+</div>
+<input value="740" type="hidden" name="comment[manual_id]" id="comment_manual_id" />
+<input value="732" type="hidden" name="comment[space_id]" id="comment_space_id" />
+<input value="ammiok8ckJh9" type="hidden" name="comment[spam_check_key]" id="comment_spam_check_key" />
+<input type="hidden" name="comment[spam_check_sig]" id="comment_spam_check_sig" />
+<div class='field-row'>
+<label class="required" for="comment-comment">Comment*</label>
+<textarea id="comment-comment" name="comment[comment]">
+</textarea>
+</div>
+<div class='field-row'>
+<label id="subscribe-label" for="comment_subscribe">Subscribe</label>
+<input name="comment[subscribe]" type="hidden" value="0" /><input type="checkbox" value="1" name="comment[subscribe]" id="comment_subscribe" />
+<span class='help'>E-Mail me when someone replies to this comment</span>
+</div>
+<div class='field-row'><label id="recaptcha-label" class="comment-label" for="recaptcha">Are you human?</label>
+<div id='recaptcha-wrapper'>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<div class="g-recaptcha" data-sitekey="6Le-4BAUAAAAAJnK4h5JcvgWReY9OxXoLjfqLP90"></div>
+          <noscript>
+            <div style="width: 302px; height: 352px;">
+              <div style="width: 302px; height: 352px; position: relative;">
+                <div style="width: 302px; height: 352px; position: absolute;">
+                  <iframe
+                    src="https://www.google.com/recaptcha/api/fallback?k=6Le-4BAUAAAAAJnK4h5JcvgWReY9OxXoLjfqLP90"
+                    frameborder="0" scrolling="no"
+                    style="width: 302px; height:352px; border-style: none;">
+                  </iframe>
+                </div>
+                <div style="width: 250px; height: 80px; position: absolute; border-style: none;
+                  bottom: 21px; left: 25px; margin: 0px; padding: 0px; right: 25px;">
+                  <textarea id="g-recaptcha-response" name="g-recaptcha-response"
+                    class="g-recaptcha-response"
+                    style="width: 250px; height: 80px; border: 1px solid #c1c1c1;
+                    margin: 0px; padding: 0px; resize: none;" value="">
+                  </textarea>
+                </div>
+              </div>
+            </div>
+          </noscript>
+
+</div>
+</div>
+<div class='field-row'><input type="submit" name="commit" value="Submit Comment" id="create-comment-button" data-disable-with="Submit Comment" /></div>
+</form>
+
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+<div aria-label='sidebar' class='screensteps-sidebar' role='complementary'>
+<div class='screensteps-sidebar-widget' id='sidebar-chapters'>
+<h3>Topics</h3>
+<ul id='sidebar-chapter-list'>
+<li class='chapter-list-item' data-section-id='2126'>
+<a class='toggle-lessons' href='../c/2126.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Creating a Music Library Interface Part I</span>
+<span class='chapter-count'>
+&nbsp;7
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6172'><a href="6172-create-playlist-data-grid.html">Create Playlist Data Grid</a></li>
+<li data-lesson-id='6173'><a href="6173-create-songs-data-grid.html">Create Songs Data Grid</a></li>
+<li data-lesson-id='6174'><a href="6174-write-handlers-for-populating-grids.html">Write Handlers For Populating Grids</a></li>
+<li data-lesson-id='6175'><a href="6175-update-songs-when-playlist-selection-changes.html">Update Songs When Playlist Selection Changes</a></li>
+<li data-lesson-id='6176'><a href="6176-load-song-info-when-user-double-clicks-on-a-song.html">Load Song Info When User Double-Clicks On A Song</a></li>
+<li data-lesson-id='6177'><a href="6177-remove-songs-from-playlist.html">Remove Songs From Playlist</a></li>
+<li data-lesson-id='6178'><a href="6178-adding-a-contextual-menu.html">Adding a Contextual Menu</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2127'>
+<a class='toggle-lessons' href='../c/2127.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Creating a Music Library Part II</span>
+<span class='chapter-count'>
+&nbsp;7
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6179'><a href="6179-prepare-for-utf8-support.html">Prepare For UTF8 Support</a></li>
+<li data-lesson-id='6180'><a href="6180-update-songs-table-to-display-utf8-and-trail-off-long-text.html">Update Songs Table to Display UTF8 And Trail Off Long Text</a></li>
+<li data-lesson-id='6181'><a href="6181-update-playlists-form-to-display-utf8.html">Update Playlists Form to Display UTF8</a></li>
+<li data-lesson-id='6182'><a href="6182-update-playlists-to-edit-utf8.html">Update Playlists To Edit UTF8</a></li>
+<li data-lesson-id='6183'><a href="6183-add-songs-to-playlists-by-dragging.html">Add Songs To Playlists By Dragging</a></li>
+<li data-lesson-id='6184'><a href="6184-change-rating-by-clicking-on-stars.html">Change Rating By Clicking on Stars</a></li>
+<li data-lesson-id='6185'><a href="6185-reording-songs-in-a-playlist.html">Reording Songs in a Playlist</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='lesson-sidebar-info'>
+<h3>Last Updated</h3><p>Sep 02, 2016</p>
+
+<ul class='icon-links'>
+<li>
+<a class='print-article' href='#' onclick='printArticle();' target='_blank'>
+Print Article
+</a>
+</li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='sidebar-comments'>
+<h3>Comments</h3>
+<p id='comments-count'><a href='#comments-wrapper'>Liquid error: internal</a> for this article</p>
+</div>
+
+</div>
+
+</div>
+<script type="text/javascript">
+  jQuery(document).ready(function(jQuery) {
+    var lesson_id = 6173;
+    var current_article_sidebar_text = '(Current Article)';
+    var section_id = 2126;
+    var expansion = 'none';
+    switch(expansion) {
+      case 'none':
+        jQuery('ul.nested-chapter-lessons').hide();
+        break;
+      case 'all':
+        jQuery('ul.nested-chapter-lessons').show();
+        jQuery('li.chapter-list-item a.toggle-lessons').addClass('open');
+        break;
+      case 'one':
+        jQuery('ul.nested-chapter-lessons').hide();
+        jQuery('li.chapter-list-item[data-section-id="' + section_id + '"] ul.nested-chapter-lessons').show();
+        jQuery('li.chapter-list-item[data-section-id="' + section_id + '"] a.toggle-lessons').addClass('open');
+        break;
+    }
+    jQuery('li.chapter-list-item[data-section-id="' + section_id + '"]').addClass('here');
+    jQuery('li[data-lesson-id="' + lesson_id + '"]').addClass('here');
+    jQuery('li[data-lesson-id="' + lesson_id + '"] a').attr('data-current-article-text', current_article_sidebar_text);
+  });
+</script>
+<noscript>Enable javascript to expand/contract chapters</noscript>
+
+
+</main>
+</div>
+<div aria-labelledby='modal-label' class='screensteps-modal' id='screensteps-modal' role='dialog'>
+<span id='modal-label'>
+Inline referenced article
+</span>
+<div class='screensteps-modal__box'>
+<a class='screensteps-modal__close' href='#'>
+×
+</a>
+<span class='screensteps-loading-wrapper'>
+<span class='screensteps-loading'></span>
+</span>
+<div class='screensteps-modal__content screensteps-article-content'></div>
+</div>
+</div>
+</body>
+</html>

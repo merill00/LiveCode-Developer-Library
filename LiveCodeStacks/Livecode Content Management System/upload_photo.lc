@@ -1,0 +1,198 @@
+<?rev
+
+set the errormode to inline
+start using stack "./libraryscripts/common_script.livecode"
+
+global gDebugLogInfo
+
+function ArrayToJSON pArray,pForceRootType,pPretty
+    repeat for each key tKey in pArray
+        if pArray[tKey] is an array then
+            put "}"&ArrayToJSON(pArray[tKey]) into pArray[tKey]
+        end if
+    end repeat
+    return(mergJSONEncode("pArray",pForceRootType,pPretty))
+end ArrayToJSON
+
+function JSONToArray pJSON
+    local tArray,tKeys
+    repeat for each line tKey in mergJSONDecode(pJSON,"tArray")
+        put JSONToArray(tArray[tKey]) into tArray[tKey]
+    end repeat
+    return tArray
+end JSONToArray
+    
+command debuglog pp
+  put pp &CR after gDebugLogInfo
+end debuglog
+
+function short_name pName
+  set itemDel to "."
+  return item 1 to -2 of pName
+end short_name
+
+function regularize_name pName
+  put short_name(pName) into tName
+  return pName & ".jpg"
+end regularize_name
+
+function storeFile pAFile, pPathToFile, pBinExtensions, pTextExtensions
+   local tResult
+
+   put pBinExtensions & "," & pTextExtensions into pExtensions
+   if pAFile["error"] is empty then
+      put pAFile["name_to_use_on_disk"] into tFile
+      debuglog "filename is" && tFile &"::" & pExtensions & "<br>"
+      set the itemDel to "."
+      put item -1 of tFile into tExt
+      put item 1 to -2 of tFile into tFile
+      set the itemDel to ","
+      if tExt is among the items of pExtensions then
+         put pPathToFile & "/" & tFile & "." & tExt into tFileName
+         if tExt is among the items of pBinExtensions then
+           put "binfile:" into tPrefix
+         else
+           put "file:" & tPrefix
+         end if
+         debuglog "<br>copy file" &" :: " & the defaultfolder && "::" && tPrefix & pAFile["filename"] &" :: "& tPrefix & tFileName
+         put URL (tPrefix & pAFile["filename"]) into tBin
+         put tBin into URL (tPrefix & tFileName)
+      else
+         return "File does not have a valid extension."
+      end if
+   else
+      return "No file specified" 
+   end if
+  return empty
+end storeFile
+
+command normalizeFileName @pAFile, pBinExtensions, pTextExtensions
+   put pBinExtensions & "," & pTextExtensions into pExtensions
+
+   put pAFile["name"] into tFile
+   debuglog "filename is" && tFile &"::" & pExtensions & "<br>"
+   set the itemDel to "."
+   put item -1 of tFile into tExt
+   if tExt = "jpeg" then put "jpg" into tExt
+   put item 1 to -2 of tFile into tFile
+   put md5hash(tFile) & "." & tExt into pAFile["name_to_use_on_disk"]
+end normalizeFileName
+  
+function resize_file pPathToFile, pFile, pSizes
+--  pl "resize file : path to file :" & pPathToFile & ":<br>" & CR
+--  pl "resize file : file :" & pFile & ":<br>" & CR
+--  pl "resize file : sizes :" & pSizes & ":<br>" & CR
+  put pPathToFile into tt
+  set the defaultFolder to tt
+  if not (the defaultfolder ends with tt )  then 
+    return "fail because original folder does not exist :" && pPathToFile && ":" && the defaultfolder && ":" && tt
+  end if
+  
+  put the defaultfolder into tOriginalsFolder
+  debuglog "doing file " && pPathToFile & "/" & pFile
+  
+  set the itemDel to COMMA
+  repeat for each line L in pSizes
+    set the defaultfolder to tOriginalsFolder 
+    debuglog "size" && L  & "<br>" & CR
+    set the defaultfolder to "../" & item 1 of L
+    if not (the defaultfolder ends with item 1 of L )  then 
+      return "fail because new folder does not exist :" && pPathToFile && ":" && the defaultfolder && ":" && item 1 of L
+    end if
+    debuglog "ready to go to" && the defaultfolder
+    set the defaultfolder to tOriginalsFolder 
+    debuglog "<br>about to resize, orig + default =" && tOriginalsFolder & "+" & the defaultfolder
+    put resizeImageFile(pFile, ("../" & item 1 of L & "/" & pFile), item 2 of L, item 3 of L) into tPossible
+    if tPossible is not empty then
+      put tPossible &  "<br>" & CR after tOutput
+      put empty into tPossible
+    end if
+  end repeat
+  return tOutput
+end resize_file
+
+command redirect pURL
+  put header "HTTP/1.1 307 temporary redirect"
+  put header "Location: " & pURL
+  put "redirecting ..."
+  exit to top
+end redirect
+
+
+
+------------------------------ start of code ----------------
+-- empty if there are no errors
+put empty into tErrorMessage
+put empty into tRequestArray
+
+put $_SERVER["REQUEST_URI"] into tScriptName
+
+getparams
+
+-- fill in defaults
+put empty into tPassword
+put empty into tFileToUpload
+
+put the defaultfolder & "/" into sPathToProjects
+
+put $_FILES into tRequestArray
+
+-- Check that the values match
+put $_POST["Password"] into t1
+put $_POST["checkdigits"] into t2
+
+if md5hash(t1) <> t2 then
+  putCookie "upload_photo_messages", "password failed"  && t1 && t2 && md5hash(t1)
+  redirect "igniter.lc/lcms_admin/upload"
+end if 
+
+put todayAsSQL(TRUE,TRUE) into tTimeStamp
+put $_POST["folder"] & "/" & char 1 to 7 of tTimestamp & "/originals" into tPathToFile
+
+put the defaultfolder into tStartingFolder
+
+put empty into tAInfo
+-- then get all the tags
+repeat for each key K in $_POST
+  if K begins with "_tag_" AND $_POST[K] = "accept" then
+    put K & "_" after tTags
+  end if
+end repeat
+replace "_tag_" with "_" in tTags
+
+repeat with i = 1 to 4
+  set the defaultfolder to tStartingFolder  
+  put tRequestArray["userfile" & i]["name"] into tRequestArray["userfile" & i]["name_the_user_had"]
+  if tRequestArray["userfile" & i]["name_the_user_had"] is not empty then 
+    -- tRequestArray has entries
+    --    ["filename"] - where the file is currently stored (i.e. some temp thing)
+    --    ["name"] - desired name for the file (e,g, IMGP1245.jpg)
+    --    ["name_the_user_had"] = desired name etc.
+
+    normalizeFileName tRequestArray["userfile" & i], "jpg,png", "txt"
+    -- now we also have   ["name_to_use_on_disk"]
+
+    put storeFile(tRequestArray["userfile" & i], tPathToFile, "jpg,png", "txt") after tMessage
+    if tRequestArray["userfile" & i]["name_to_use_on_disk"] ends with ".jpg" then
+      put resize_file(tPathToFile, tRequestArray["userfile" & i]["name_to_use_on_disk"], $_POST["sizes"]) after tMessage
+    end if
+    -- and update the image database accordingly - by passing the info to lcm_admin
+    put empty into tAInfo[i]
+    put tRequestArray["shortname" & i] into tAInfo[i]["shortname"]
+    put tRequestArray["userfile" & i]["name_the_user_had"] into tAInfo[i]["name"]
+    put tRequestArray["userfile" & i]["name_to_use_on_disk"] into tAInfo[i]["filename"]
+    put tPathToFile into tAInfo[i]["folder"]
+    replace "/originals" with empty in tAInfo[i]["folder"]
+    put $_POST["category"] into tAInfo[i]["category"]
+    put tTags into tAInfo[i]["tags"]
+    -- and get a transaction id (!?)
+    put random(123456) into tAInfo[i]["transaction"]    
+  end if
+end repeat
+
+put arraytoJSON(TaInfo) into tJInfo
+putCookie "image_info", tJInfo
+
+--put tMessage
+putCookie "upload_photo_messages", tMessage --  && t1 && t2 && md5hash(t1)
+redirect "../igniter.lc/lcms_admin/upload"

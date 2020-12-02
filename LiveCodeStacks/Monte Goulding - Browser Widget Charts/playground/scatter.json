@@ -1,0 +1,101 @@
+{
+  "data": {
+    "datasets": [
+      {
+        "backgroundColor": "rgba(255, 99, 132, 0.2)",
+        "borderColor": "rgba(255, 99, 132, 1)",
+        "borderWidth": 1,
+        "data": [
+          {
+            "x": 14.199999999999999,
+            "y": 215
+          },
+          {
+            "x": 16.399999999999999,
+            "y": 325
+          },
+          {
+            "x": 11.9,
+            "y": 185
+          },
+          {
+            "x": 15.199999999999999,
+            "y": 332
+          },
+          {
+            "x": 18.5,
+            "y": 406
+          },
+          {
+            "x": 22.100000000000001,
+            "y": 522
+          },
+          {
+            "x": 19.399999999999999,
+            "y": 412
+          },
+          {
+            "x": 25.100000000000001,
+            "y": 614
+          },
+          {
+            "x": 23.399999999999999,
+            "y": 544
+          },
+          {
+            "x": 18.100000000000001,
+            "y": 421
+          },
+          {
+            "x": 22.600000000000001,
+            "y": 445
+          },
+          {
+            "x": 17.199999999999999,
+            "y": 408
+          }
+        ],
+        "hoverBorderWidth": 3,
+        "pointStyle": "star"
+      }
+    ]
+  },
+  "options": {
+    "legend": {
+      "display": false
+    },
+    "scales": {
+      "xAxes": [
+        {
+          "scaleLabel": {
+            "display": true,
+            "labelString": "Temperature (C)"
+          },
+          "ticks": {
+            "beginAtZero": true
+          }
+        }
+      ],
+      "yAxes": [
+        {
+          "scaleLabel": {
+            "display": true,
+            "labelString": "Ice Cream Sales ($)"
+          },
+          "ticks": {
+            "beginAtZero": true
+          }
+        }
+      ]
+    },
+    "title": {
+      "display": true,
+      "text": "Ice Cream Sales vs Temperature"
+    },
+    "tooltips": {
+      "intersect": true,
+      "mode": "nearest"
+    }
+  },
+  "type": "scatter"
+}

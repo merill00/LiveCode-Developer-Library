@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+<meta content='IE=edge' http-equiv='X-UA-Compatible'>
+<meta content='width=device-width, initial-scale=1' name='viewport'>
+<title>Tell Framework to Manage Application Window | Converting An Existing Application To Use The Framework | Tutorials &amp; Manuals</title>
+<meta content='Now that I have a working application let&#39;s look at how to tell the framework to manage the Article Maestro window. The framework will send special messages and manage the size and position of the window across sessions.' name='description'>
+
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="OcvQzreHC1s+FnRpcoN0BVVG792CoU0PtuQysO38KvfolCcenz3DMWERdMwgXySJ4xWAx6QXmuLfqibPHiT/Ow==" />
+<link rel="stylesheet" media="screen" href="https://assets.screensteps.com/assets/themes/fonts/helvetica-e03d9e53b962f0a4e2fed42a4a318c29cf029d37f80397baaf14722853359e6a.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="https://assets.screensteps.com/assets/themes/alpha-027b2e60ae75b9d8e6d6bcb32d3e6730dc3f6fe41be8479ef83e02168774766b.css" />
+<style type="text/css" media="all">/* headings */
+  h1,
+  h1.toc-heading,
+  h2.toc-heading {
+    color: #;
+  }
+
+  h2.toc-subheading,
+  h3.toc-subheading,
+  h4.toc-subheading,
+  h5.toc-subheading,
+  h6.toc-subheading {
+    color: #;
+  }
+
+  .screensteps-training-site [data-count-bubble]::after {
+    background-color: #;
+  }
+
+  .screensteps-article-content h2 {
+    color: #;
+  }
+
+  .screensteps-article-content h3,
+  .screensteps-article-content h4,
+  .screensteps-article-content h5,
+  .screensteps-article-content h6 {
+    color: #;
+  }
+
+  .screensteps-sidebar h3 {
+    color: #;
+  }
+
+  .sidebar-subheading {
+    color: #;
+  }
+
+  .comments-heading {
+    color: #;
+  }
+
+  /* base/_buttons */
+  input[type="button"],
+  input[type="reset"],
+  input[type="submit"],
+  button,
+  .screensteps-bg-action-color,
+  .screensteps-courses .screensteps-progress-bar::before,
+  .screensteps-courses .screensteps-courses-menu a:hover,
+  .screensteps-courses .screensteps-courses-menu .step-active a::before,
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #216bb5;
+  }
+
+  input[type="button"]:hover,
+  input[type="reset"]:hover,
+  input[type="submit"]:hover,
+  button:hover,
+  button.screensteps-bg-action-color:hover,
+  a.screensteps-bg-action-color:hover {
+    background-color: #155596;
+  }
+
+  /* base/_forms */
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="password"]:focus,
+  input[type="search"]:focus,
+  input[type="tel"]:focus,
+  input[type="text"]:focus,
+  input[type="url"]:focus,
+  input[type="color"]:focus,
+  input[type="date"]:focus,
+  input[type="datetime"]:focus,
+  input[type="datetime-local"]:focus,
+  input[type="month"]:focus,
+  input[type="time"]:focus,
+  input[type="week"]:focus,
+  select[multiple=multiple]:focus,
+  textarea:focus {
+    border-color: #216bb5;
+  }
+
+
+  .screensteps-training-site .screensteps-main-search .search-field:not(:placeholder-shown) {
+    box-shadow: 0 0 0 2px #3793C8;
+  }
+
+  /* base/_typography */
+  body {
+    background-color: #3793C8;
+    color: #;
+  }
+
+  a {
+    color: #216bb5;
+  }
+
+
+
+  /* _screensteps-container */
+  .screensteps-container a:visited {
+    color: #155596;
+  }
+ .screensteps-container a:active,
+ .screensteps-container a:focus,
+ .screensteps-container a:hover {
+    color: #155596;
+  }
+
+  /* _screensteps-manual-contents */
+  .screensteps-manual-contents h2 a {
+    color: #216bb5;
+  }
+  /* _screensteps-foldable-sections */
+  .screensteps-main-content .embedded-chapter-article > * {
+    color: #216bb5;
+  }
+
+  /* screensteps-header */
+  .screensteps-branding h1,
+  .screensteps-header .screensteps-branding a,
+  .screensteps-training-site .screensteps-profile-subnav-toggle {
+    color: #ffffff;
+  }
+
+  .screensteps-header .screensteps-branding a:hover {
+    color: #2C7CAA;
+  }
+
+  /* meta data text */
+  .chapter-count,
+  .screensteps-comment-count,
+  .screensteps-lesson-details,
+  .nested-chapter-lessons .here a:after,
+  .screensteps-single-comment time {
+    color: #;
+  }
+
+  /* course tiles */
+  .screensteps-training-site .screensteps-group .asset-list--course a {
+    background-color: #;
+    color: #;
+  }
+
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #;
+  }
+
+  .screensteps-training-site .screensteps-group .asset-list--course a:hover {
+    background-color: #;
+  }
+</style>
+
+<link rel='icon'>
+<script src="https://assets.screensteps.com/assets/application-fe7915887e0874f95ef87940f513c239a27a71cc345a491bff7c3f92416a8111.js"></script>
+<script src="https://assets.screensteps.com/assets/vendor/jquery.fitvids-3e4679bfa1c083cec0d56c1f636f2038bf770ed13929e17d22bd1f417d3c94f8.js"></script>
+<script src="https://assets.screensteps.com/assets/theme-a161d6812c4179b27f1d00b86bb981be26e0733ede796eda0978b6a514ff216a.js"></script>
+<!--[if lt IE 9]>
+<script src="//assets.screensteps.com/assets/vendor/html5shiv.min-a280ac74b433afc5b6516368f5a678ceba501e0fb8b7987adee3b4e673674310.js"></script>
+<![endif]-->
+
+<style media=''></style>
+<script></script>
+
+  <script type="text/javascript">
+    !function(name,path,ctx){
+      var latest,prev=name!=='Keen'&&window.Keen?window.Keen:false;ctx[name]=ctx[name]||{ready:function(fn){var h=document.getElementsByTagName('head')[0],s=document.createElement('script'),w=window,loaded;s.onload=s.onerror=s.onreadystatechange=function(){if((s.readyState&&!(/^c|loade/.test(s.readyState)))||loaded){return}s.onload=s.onreadystatechange=null;loaded=1;latest=w.Keen;if(prev){w.Keen=prev}else{try{delete w.Keen}catch(e){w.Keen=void 0}}ctx[name]=latest;ctx[name].ready(fn)};s.async=1;s.src=path;h.parentNode.insertBefore(s,h)}}
+    }('KeenAsync','https://d26b395fwzu5fz.cloudfront.net/keen-tracking-1.1.3.min.js',this);
+
+    KeenAsync.ready(function(){
+      // Configure a client instance
+      var client = new KeenAsync({
+        projectId: '591daac30935ce40a59fb7ab',
+        writeKey: 'C89A9A1A8DB4C585F119F8F81ABB9621940DBBADDA5C72C2B87B1BD3464890D23FD250B0FFA4A1056DCB210616545B7B6C9DDF2054167B5219A3DD81E8DF90A321BE0C1B35BA19F2E3E85730FB96C1F93F8C66D8CD449FE6EFE43D98453632D1'
+      });
+
+      // Record an event
+      client.recordEvent('pageviews', {
+        title: document.title,
+        ip_address: "${keen.ip}",
+        user_agent: "${keen.user_agent}",
+        user_id: null,
+        account_id: "2c1ab788fb",
+        site_id: 18,
+        manual_id: 812,
+        article_id: 6960,
+        article_type_id: 0,
+        course_id: null,
+        source_id: 1
+      });
+    });
+  </script>
+
+
+</head>
+<body class='helvetica-body helvetica-header site-article  no-focus-outline' data-base-path='/s/revolution/' data-content-template='2015' data-generating-pdf-text='Generating PDF...'>
+<div class='screensteps-admin-navigation'>
+<div data-logged-in-check-url='https://revolution.screenstepslive.com/s/18/user_nav' id='screensteps-admin-bar'>
+<ul>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/sites/18/manuals/812/chapters/2328/articles/6960">View in admin portal</a></li>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/article-editor/6960">Edit content on web</a></li>
+<li><a href="screensteps://revolution.screenstepslive.com/open/s/18/m/812/a/6960?checkout=1">Edit in desktop</a></li>
+</ul>
+</div>
+
+</div>
+<header class='screensteps-header' role='banner'>
+<a class='skip-navigation--link' href='#screensteps-main-content' id='skip-navigation'>
+Skip to main content
+</a>
+
+<div class='screensteps-branding'>
+<div class='logo-wrapper'>
+<h1 class='company-name'>Cross-Platform Application Development with LiveCode</h1>
+</div>
+</div>
+</header>
+
+<div class='screensteps-container-wrapper'>
+<main class='screensteps-container'>
+<div class='screensteps-site-title-wrapper'>
+<h1 class='screensteps-site-title toc-heading'>Tutorials &amp; Manuals</h1>
+</div>
+<div class='screensteps-main-search' role='search'>
+<form id="screensteps-search-form" action="../../../searches.html" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+<div class='screensteps-search-form'>
+<label for="text">Search term</label>
+<input type="text" name="text" id="text" class="search-field" title="Enter a keyword or topic to search" />
+
+<input type="submit" name="commit" value="Search" class="search-submit" data-disable-with="Search" />
+</div>
+</form>
+
+
+</div>
+<div class='left-sidebar lesson manual-lesson screensteps-content-wrapper'>
+<div class='screensteps-main-content' role='main'>
+<header class='screensteps-title'>
+<div id="screensteps-breadcrumb" aria-label="breadcrumb" aria-level="3"><a href="../../../../revolution.html">Tutorials &amp; Manuals</a><span class='manual-group-breadcrumb'><a href="../../../../revolution.html#GLXApplicationFramework">GLX Application Framework</a></span><a href="../../convert_to_glxapp.html">Converting An Existing Application To Use The Framework</a> <span class='chapter-breadcrumb'><a href="../c/2328.html">Converting Article Maestro To Use The GLX Application Framework</a></span>Tell Framework to Manage Application Window</div>
+</header>
+<div id='screensteps-main-content'>
+<div class='screensteps-article'>
+<div class="screensteps-article-content " data-article-id="6960" data-workflow=false>
+    <div class="screensteps-description">
+      <h1 class="lesson">
+        Tell Framework to Manage Application Window
+      </h1>
+      <div class='description'>
+<p>Now that I have a working application let's look at how to tell the framework to manage the Article Maestro window. The framework will send special messages and manage the size and position of the window across sessions.</p>
+</div>
+
+    </div>
+    <div class="screensteps-steps">
+      <div class='step' data-step-uuid='fd8fc122-bb9f-4b8e-bad6-c520a1bb31c7' id=''>
+<h2 id=""><a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Edit Article Maestro Properties" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>Edit Article Maestro Properties</h2>
+<div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="9640638" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6960-tell-framework-to-manage-application-window/show_image?image_id=9640638"><img alt="Edit Article Maestro Properties" src="https://media.screensteps.com/images/revolution/6960/1/rendered/media_1255612088450_display.png" /></a>
+</div>
+
+<div class="instructions"><p>I right-click on the <strong>Article Maestro</strong> stack in the Application Browser and choose <strong>Property Inspector</strong> from the menu.</p></div>
+<div class='clear'></div>
+</div>
+</div>
+<div class='step' data-step-uuid='6eff5f79-a45d-4062-a31a-a341be29ef9e' id=''>
+<h2 id=""><a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Add Custom Property Set" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>Add Custom Property Set</h2>
+<div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="9640641" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6960-tell-framework-to-manage-application-window/show_image?image_id=9640641"><img alt="Add Custom Property Set" src="https://media.screensteps.com/images/revolution/6960/1/rendered/media_1255612102767_display.png" /></a>
+</div>
+
+<div class="instructions"><p>I click on the + button to add a new custom property set.</p></div>
+<div class='clear'></div>
+</div>
+</div>
+<div class='step' data-step-uuid='0df16b8f-c56a-4850-8d15-10e90d187492' id=''>
+
+<div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="9640644" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6960-tell-framework-to-manage-application-window/show_image?image_id=9640644"><img alt="" src="https://media.screensteps.com/images/revolution/6960/1/rendered/media_1255612131880_display.png" /></a>
+</div>
+
+<div class="instructions"><p>I name the custom property set <strong>uGLXApp</strong>.</p></div>
+<div class='clear'></div>
+</div>
+</div>
+<div class='step' data-step-uuid='c0d18142-d733-42d6-a52e-2cb132f21f93' id=''>
+<h2 id=""><a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Add Custom Property" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>Add Custom Property</h2>
+<div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="9640647" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6960-tell-framework-to-manage-application-window/show_image?image_id=9640647"><img alt="Add Custom Property" src="https://media.screensteps.com/images/revolution/6960/1/rendered/media_1255612150272_display.png" /></a>
+</div>
+
+<div class="instructions"><p>I click on the + button to add a custom property to the <strong>uGLXApp</strong> custom property set.</p></div>
+<div class='clear'></div>
+</div>
+</div>
+<div class='step' data-step-uuid='34304883-fdac-4a50-ad1d-9ef1ac86d4c8' id=''>
+
+<div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="9640650" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6960-tell-framework-to-manage-application-window/show_image?image_id=9640650"><img alt="" src="https://media.screensteps.com/images/revolution/6960/1/rendered/media_1255612161845_display.png" /></a>
+</div>
+
+<div class="instructions"><p>I name the property <strong>manage window</strong>.</p></div>
+<div class='clear'></div>
+</div>
+</div>
+<div class='step' data-step-uuid='1cd12cb5-dfd9-429b-a3a5-a036dc01e803' id=''>
+
+<div>
+<div class='image clearfix'>
+<a rel="prettyPhoto" alt="" data-role="screensteps-image-preview" data-image-id="9640653" data-legacy="true" href="https://revolution.screenstepslive.com/s/revolution/m/convert_to_glxapp/l/6960-tell-framework-to-manage-application-window/show_image?image_id=9640653"><img alt="" src="https://media.screensteps.com/images/revolution/6960/1/rendered/media_1255612171862_display.png" /></a>
+</div>
+
+<div class="instructions"><p>I set the value to <strong>true</strong>.</p></div>
+<div class='clear'></div>
+</div>
+</div>
+
+    </div>
+</div>
+
+
+<div class='screensteps-next-prev-navigation' data-role='next-previous-nav'>
+<ul>
+<li class='previous'>
+<strong>Prev</strong>: <a href="6959-build-standalones.html">Build Standalones</a>
+</li>
+<li class='next'>
+<strong>Next</strong>: <a href="6961-rework-stack-or-card-script-using-framework-messages.html">Rework Stack (or Card) Script Using Framework Messages</a>
+</li>
+</ul>
+</div>
+
+<div class='no-comments screensteps-comments'>
+<h2 class='comments-heading'>
+<span class='screensteps-comment-count'>0</span>
+Comments
+</h2>
+
+<div class='screensteps-add-comment'>
+<h3 class='comment-heading'>Add your comment</h3>
+<script type="text/javascript" charset="utf-8">
+  ScreenStepsLiveSpamCheck = function() {
+      var key = document.getElementById('comment_spam_check_key').value;
+    var sig = '';
+    for (var x = 0; x< key.length; x++ ) {
+       sig += key.charCodeAt(x)+13;
+    }
+    document.getElementById('comment_spam_check_sig').value = sig; 
+    return true;
+  };
+</script>
+<div id='custom-comment-form-2015'></div>
+<form id="comment-form" class="comment-form" onclick="return ScreenStepsLiveSpamCheck();" action="../../../comments_lesson_id=6960-tell-framework-to-manage-application-window.html" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><div class='field-row name'>
+<label class="required" for="comment-name">Name*</label>
+<input id="comment-name" type="text" name="comment[name]" />
+</div>
+<div class='field-row email'>
+<label class="required" for="comment-email">Email*</label>
+<input id="comment-email" type="text" name="comment[email]" />
+</div>
+<input value="812" type="hidden" name="comment[manual_id]" id="comment_manual_id" />
+<input value="18" type="hidden" name="comment[space_id]" id="comment_space_id" />
+<input value="ammiok8ckJh9" type="hidden" name="comment[spam_check_key]" id="comment_spam_check_key" />
+<input type="hidden" name="comment[spam_check_sig]" id="comment_spam_check_sig" />
+<div class='field-row'>
+<label class="required" for="comment-comment">Comment*</label>
+<textarea id="comment-comment" name="comment[comment]">
+</textarea>
+</div>
+<div class='field-row'>
+<label id="subscribe-label" for="comment_subscribe">Subscribe</label>
+<input name="comment[subscribe]" type="hidden" value="0" /><input type="checkbox" value="1" name="comment[subscribe]" id="comment_subscribe" />
+<span class='help'>E-Mail me when someone replies to this comment</span>
+</div>
+<div class='field-row'><label id="recaptcha-label" class="comment-label" for="recaptcha">Are you human?</label>
+<div id='recaptcha-wrapper'>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<div class="g-recaptcha" data-sitekey="6Le-4BAUAAAAAJnK4h5JcvgWReY9OxXoLjfqLP90"></div>
+          <noscript>
+            <div style="width: 302px; height: 352px;">
+              <div style="width: 302px; height: 352px; position: relative;">
+                <div style="width: 302px; height: 352px; position: absolute;">
+                  <iframe
+                    src="https://www.google.com/recaptcha/api/fallback?k=6Le-4BAUAAAAAJnK4h5JcvgWReY9OxXoLjfqLP90"
+                    frameborder="0" scrolling="no"
+                    style="width: 302px; height:352px; border-style: none;">
+                  </iframe>
+                </div>
+                <div style="width: 250px; height: 80px; position: absolute; border-style: none;
+                  bottom: 21px; left: 25px; margin: 0px; padding: 0px; right: 25px;">
+                  <textarea id="g-recaptcha-response" name="g-recaptcha-response"
+                    class="g-recaptcha-response"
+                    style="width: 250px; height: 80px; border: 1px solid #c1c1c1;
+                    margin: 0px; padding: 0px; resize: none;" value="">
+                  </textarea>
+                </div>
+              </div>
+            </div>
+          </noscript>
+
+</div>
+</div>
+<div class='field-row'><input type="submit" name="commit" value="Submit Comment" id="create-comment-button" data-disable-with="Submit Comment" /></div>
+</form>
+
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+<div aria-label='sidebar' class='screensteps-sidebar' role='complementary'>
+<div class='screensteps-sidebar-widget' id='sidebar-chapters'>
+<h3>Topics</h3>
+<ul id='sidebar-chapter-list'>
+<li class='chapter-list-item' data-section-id='2328'>
+<a class='toggle-lessons' href='../c/2328.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Converting Article Maestro To Use The GLX Application Framework</span>
+<span class='chapter-count'>
+&nbsp;10
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6953'><a href="6953-introduction.html">Introduction</a></li>
+<li data-lesson-id='6954'><a href="6954-creating-a-new-glx-framework-application.html">Creating A New GLX Framework Application</a></li>
+<li data-lesson-id='6955'><a href="6955-configure-application-settings.html">Configure Application Settings</a></li>
+<li data-lesson-id='6956'><a href="6956-begin-integrating-existing-stack.html">Begin Integrating Existing Stack</a></li>
+<li data-lesson-id='6957'><a href="6957-tell-framework-about-new-application-stack.html">Tell Framework About New Application Stack</a></li>
+<li data-lesson-id='6958'><a href="6958-configure-standalone-settings.html">Configure Standalone Settings</a></li>
+<li data-lesson-id='6959'><a href="6959-build-standalones.html">Build Standalones</a></li>
+<li data-lesson-id='6960'><a href="6960-tell-framework-to-manage-application-window.html">Tell Framework to Manage Application Window</a></li>
+<li data-lesson-id='6961'><a href="6961-rework-stack-or-card-script-using-framework-messages.html">Rework Stack (or Card) Script Using Framework Messages</a></li>
+<li data-lesson-id='6962'><a href="6962-cleanup.html">Cleanup</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='lesson-sidebar-info'>
+<h3>Last Updated</h3><p>Sep 08, 2016</p>
+
+<ul class='icon-links'>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='other-assets'>
+<h3>Other Resources</h3>
+<ul class='asset-list with-divider'>
+<li class='divider'><h4 class="sidebar-subheading">How-tos</h4></li>
+<li class='manual'><a href="../../how-to.html">Lessons</a></li>
+<li class='manual'><a href="../../10695.html">Signing Your Applications and Building Installers</a></li>
+<li class='divider'><h4 class="sidebar-subheading">GLX Application Framework</h4></li>
+<li class='manual'><a href="../../glxapp.html">GLX Application Framework 1.2</a></li>
+<li class='manual'><a href="../../convert_to_glxapp.html">Converting An Existing Application To Use The Framework</a></li>
+<li class='divider'><h4 class="sidebar-subheading">SQL Yoga</h4></li>
+<li class='manual'><a href="../../sqlyoga.html">SQL Yoga</a></li>
+<li class='manual'><a href="../../sqlyoga_examples.html">SQL Yoga Examples</a></li>
+<li class='manual'><a href="../../sqlyoga_sampleapp.html">SQL Yoga To-Do Application</a></li>
+<li class='manual'><a href="../../sqlyoga_plugin.html">SQL Yoga IDE Plugin</a></li>
+<li class='divider'><h4 class="sidebar-subheading">Plugins, Externals and Libraries</h4></li>
+<li class='manual'><a href="../../plugins.html">Plugins</a></li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='screensteps-rss'>
+<p><a href="../../../../revolution.rss">Subscribe to our feed</a></p>
+</div>
+
+</div>
+
+</div>
+<script type="text/javascript">
+  jQuery(document).ready(function(jQuery) {
+    var lesson_id = 6960;
+    var current_article_sidebar_text = '(Current Article)';
+    var section_id = 2328;
+    var expansion = 'none';
+    switch(expansion) {
+      case 'none':
+        jQuery('ul.nested-chapter-lessons').hide();
+        break;
+      case 'all':
+        jQuery('ul.nested-chapter-lessons').show();
+        jQuery('li.chapter-list-item a.toggle-lessons').addClass('open');
+        break;
+      case 'one':
+        jQuery('ul.nested-chapter-lessons').hide();
+        jQuery('li.chapter-list-item[data-section-id="' + section_id + '"] ul.nested-chapter-lessons').show();
+        jQuery('li.chapter-list-item[data-section-id="' + section_id + '"] a.toggle-lessons').addClass('open');
+        break;
+    }
+    jQuery('li.chapter-list-item[data-section-id="' + section_id + '"]').addClass('here');
+    jQuery('li[data-lesson-id="' + lesson_id + '"]').addClass('here');
+    jQuery('li[data-lesson-id="' + lesson_id + '"] a').attr('data-current-article-text', current_article_sidebar_text);
+  });
+</script>
+<noscript>Enable javascript to expand/contract chapters</noscript>
+
+
+</main>
+</div>
+<div aria-labelledby='modal-label' class='screensteps-modal' id='screensteps-modal' role='dialog'>
+<span id='modal-label'>
+Inline referenced article
+</span>
+<div class='screensteps-modal__box'>
+<a class='screensteps-modal__close' href='#'>
+×
+</a>
+<span class='screensteps-loading-wrapper'>
+<span class='screensteps-loading'></span>
+</span>
+<div class='screensteps-modal__content screensteps-article-content'></div>
+</div>
+</div>
+</body>
+</html>

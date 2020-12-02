@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <script src='https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js'></script>
+  </head>
+  <body>
+    <canvas id='myChart' width='[[ tWidth ]]' height='[[ tHeight ]]'></canvas>
+    <script>var ctx = document.getElementById('myChart').getContext('2d');
+    Chart.defaults.global.defaultFontColor = '[[ tFontColor ]]';
+    Chart.defaults.global.defaultFontFamily = '[[ tFontFamily ]]';
+    Chart.defaults.global.defaultFontSize = [[ tFontSize ]];
+    Chart.defaults.global.defaultFontStyle = '[[ tFontStyle ]]';
+    Chart.plugins.register({
+      beforeDraw: function(chartInstance) {
+        var ctx = chartInstance.chart.ctx;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
+      }
+    });
+    var myChart = new Chart(ctx, {
+      type: '[[ tType ]]',
+      data: [[ tData ]],
+      options: [[ tOptions ]],
+        maintainAspectRatio: false,
+        responsive: false,
+        onClick:function(e){
+          var activePoint = myChart.getElementAtEvent(e)[0];
+          var data = activePoint._chart.data;
+          var datasetIndex = activePoint._datasetIndex;
+          var selectedIndex = activePoint._index;
+          var lcSelectedDataset = datasetIndex + 1;
+          var lcSelectedIndex = selectedIndex + 1;
+          var label = '';
+          if(data.datasets[datasetIndex].hasOwnProperty('label')){
+            label = data.datasets[datasetIndex].label;}
+            var value = JSON.stringify(data.datasets[datasetIndex].data[activePoint._index]);
+            liveCode.elementClicked(lcSelectedDataset.toString(), lcSelectedIndex.toString(), label, value);
+          },
+          onHover:function(e){
+            var activePoint = myChart.getElementAtEvent(e)[0];
+            var data = activePoint._chart.data;
+            var datasetIndex = activePoint._datasetIndex;
+            var selectedIndex = activePoint._index;
+            var lcSelectedDataset = datasetIndex + 1;
+            var lcSelectedIndex = selectedIndex + 1;
+            var label = '';
+            if(data.datasets[datasetIndex].hasOwnProperty('label')){
+              label = data.datasets[datasetIndex].label;}
+              var value = JSON.stringify(data.datasets[datasetIndex].data[activePoint._index]);
+              liveCode.elementHover(lcSelectedDataset.toString(), lcSelectedIndex.toString(), label, value);
+            },
+          }});
+      </script>
+    </body>
+</html>

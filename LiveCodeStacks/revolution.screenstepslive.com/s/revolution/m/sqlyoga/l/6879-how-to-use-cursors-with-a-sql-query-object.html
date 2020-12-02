@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+<meta content='IE=edge' http-equiv='X-UA-Compatible'>
+<meta content='width=device-width, initial-scale=1' name='viewport'>
+<title>How To Use Cursors With a SQL Query Object | SQL Yoga | Tutorials &amp; Manuals</title>
+<meta content='After setting properties for a SQL Query object you can use sqlquery_retrieveAsArray, sqlquery_retrieveAsData and sqlquery_retrieveAsRecords to retrieve your data without having to fuss with a database cursor. But what do you do if you need to access the database cursor for a query? This lesson will show you.' name='description'>
+
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="g2O7ht7nNbS3XBr7CQ1tvk0MQxR3Roxn0QtJUcvLZltSPExW9l393uhbGl5b0T0y+18sDlHwW4q4RV0uOBOzlw==" />
+<link rel="stylesheet" media="screen" href="https://assets.screensteps.com/assets/themes/fonts/helvetica-e03d9e53b962f0a4e2fed42a4a318c29cf029d37f80397baaf14722853359e6a.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="https://assets.screensteps.com/assets/themes/alpha-027b2e60ae75b9d8e6d6bcb32d3e6730dc3f6fe41be8479ef83e02168774766b.css" />
+<style type="text/css" media="all">/* headings */
+  h1,
+  h1.toc-heading,
+  h2.toc-heading {
+    color: #;
+  }
+
+  h2.toc-subheading,
+  h3.toc-subheading,
+  h4.toc-subheading,
+  h5.toc-subheading,
+  h6.toc-subheading {
+    color: #;
+  }
+
+  .screensteps-training-site [data-count-bubble]::after {
+    background-color: #;
+  }
+
+  .screensteps-article-content h2 {
+    color: #;
+  }
+
+  .screensteps-article-content h3,
+  .screensteps-article-content h4,
+  .screensteps-article-content h5,
+  .screensteps-article-content h6 {
+    color: #;
+  }
+
+  .screensteps-sidebar h3 {
+    color: #;
+  }
+
+  .sidebar-subheading {
+    color: #;
+  }
+
+  .comments-heading {
+    color: #;
+  }
+
+  /* base/_buttons */
+  input[type="button"],
+  input[type="reset"],
+  input[type="submit"],
+  button,
+  .screensteps-bg-action-color,
+  .screensteps-courses .screensteps-progress-bar::before,
+  .screensteps-courses .screensteps-courses-menu a:hover,
+  .screensteps-courses .screensteps-courses-menu .step-active a::before,
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #216bb5;
+  }
+
+  input[type="button"]:hover,
+  input[type="reset"]:hover,
+  input[type="submit"]:hover,
+  button:hover,
+  button.screensteps-bg-action-color:hover,
+  a.screensteps-bg-action-color:hover {
+    background-color: #155596;
+  }
+
+  /* base/_forms */
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="password"]:focus,
+  input[type="search"]:focus,
+  input[type="tel"]:focus,
+  input[type="text"]:focus,
+  input[type="url"]:focus,
+  input[type="color"]:focus,
+  input[type="date"]:focus,
+  input[type="datetime"]:focus,
+  input[type="datetime-local"]:focus,
+  input[type="month"]:focus,
+  input[type="time"]:focus,
+  input[type="week"]:focus,
+  select[multiple=multiple]:focus,
+  textarea:focus {
+    border-color: #216bb5;
+  }
+
+
+  .screensteps-training-site .screensteps-main-search .search-field:not(:placeholder-shown) {
+    box-shadow: 0 0 0 2px #3793C8;
+  }
+
+  /* base/_typography */
+  body {
+    background-color: #3793C8;
+    color: #;
+  }
+
+  a {
+    color: #216bb5;
+  }
+
+
+
+  /* _screensteps-container */
+  .screensteps-container a:visited {
+    color: #155596;
+  }
+ .screensteps-container a:active,
+ .screensteps-container a:focus,
+ .screensteps-container a:hover {
+    color: #155596;
+  }
+
+  /* _screensteps-manual-contents */
+  .screensteps-manual-contents h2 a {
+    color: #216bb5;
+  }
+  /* _screensteps-foldable-sections */
+  .screensteps-main-content .embedded-chapter-article > * {
+    color: #216bb5;
+  }
+
+  /* screensteps-header */
+  .screensteps-branding h1,
+  .screensteps-header .screensteps-branding a,
+  .screensteps-training-site .screensteps-profile-subnav-toggle {
+    color: #ffffff;
+  }
+
+  .screensteps-header .screensteps-branding a:hover {
+    color: #2C7CAA;
+  }
+
+  /* meta data text */
+  .chapter-count,
+  .screensteps-comment-count,
+  .screensteps-lesson-details,
+  .nested-chapter-lessons .here a:after,
+  .screensteps-single-comment time {
+    color: #;
+  }
+
+  /* course tiles */
+  .screensteps-training-site .screensteps-group .asset-list--course a {
+    background-color: #;
+    color: #;
+  }
+
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #;
+  }
+
+  .screensteps-training-site .screensteps-group .asset-list--course a:hover {
+    background-color: #;
+  }
+</style>
+
+<link rel='icon'>
+<script src="https://assets.screensteps.com/assets/application-fe7915887e0874f95ef87940f513c239a27a71cc345a491bff7c3f92416a8111.js"></script>
+<script src="https://assets.screensteps.com/assets/vendor/jquery.fitvids-3e4679bfa1c083cec0d56c1f636f2038bf770ed13929e17d22bd1f417d3c94f8.js"></script>
+<script src="https://assets.screensteps.com/assets/theme-a161d6812c4179b27f1d00b86bb981be26e0733ede796eda0978b6a514ff216a.js"></script>
+<!--[if lt IE 9]>
+<script src="//assets.screensteps.com/assets/vendor/html5shiv.min-a280ac74b433afc5b6516368f5a678ceba501e0fb8b7987adee3b4e673674310.js"></script>
+<![endif]-->
+
+<style media=''></style>
+<script></script>
+
+  <script type="text/javascript">
+    !function(name,path,ctx){
+      var latest,prev=name!=='Keen'&&window.Keen?window.Keen:false;ctx[name]=ctx[name]||{ready:function(fn){var h=document.getElementsByTagName('head')[0],s=document.createElement('script'),w=window,loaded;s.onload=s.onerror=s.onreadystatechange=function(){if((s.readyState&&!(/^c|loade/.test(s.readyState)))||loaded){return}s.onload=s.onreadystatechange=null;loaded=1;latest=w.Keen;if(prev){w.Keen=prev}else{try{delete w.Keen}catch(e){w.Keen=void 0}}ctx[name]=latest;ctx[name].ready(fn)};s.async=1;s.src=path;h.parentNode.insertBefore(s,h)}}
+    }('KeenAsync','https://d26b395fwzu5fz.cloudfront.net/keen-tracking-1.1.3.min.js',this);
+
+    KeenAsync.ready(function(){
+      // Configure a client instance
+      var client = new KeenAsync({
+        projectId: '591daac30935ce40a59fb7ab',
+        writeKey: 'C89A9A1A8DB4C585F119F8F81ABB9621940DBBADDA5C72C2B87B1BD3464890D23FD250B0FFA4A1056DCB210616545B7B6C9DDF2054167B5219A3DD81E8DF90A321BE0C1B35BA19F2E3E85730FB96C1F93F8C66D8CD449FE6EFE43D98453632D1'
+      });
+
+      // Record an event
+      client.recordEvent('pageviews', {
+        title: document.title,
+        ip_address: "${keen.ip}",
+        user_agent: "${keen.user_agent}",
+        user_id: null,
+        account_id: "2c1ab788fb",
+        site_id: 18,
+        manual_id: 710,
+        article_id: 6879,
+        article_type_id: 0,
+        course_id: null,
+        source_id: 1
+      });
+    });
+  </script>
+
+
+</head>
+<body class='helvetica-body helvetica-header site-article  no-focus-outline' data-base-path='/s/revolution/' data-content-template='2015' data-generating-pdf-text='Generating PDF...'>
+<div class='screensteps-admin-navigation'>
+<div data-logged-in-check-url='https://revolution.screenstepslive.com/s/18/user_nav' id='screensteps-admin-bar'>
+<ul>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/sites/18/manuals/710/chapters/2057/articles/6879">View in admin portal</a></li>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/article-editor/6879">Edit content on web</a></li>
+<li><a href="screensteps://revolution.screenstepslive.com/open/s/18/m/710/a/6879?checkout=1">Edit in desktop</a></li>
+</ul>
+</div>
+
+</div>
+<header class='screensteps-header' role='banner'>
+<a class='skip-navigation--link' href='#screensteps-main-content' id='skip-navigation'>
+Skip to main content
+</a>
+
+<div class='screensteps-branding'>
+<div class='logo-wrapper'>
+<h1 class='company-name'>Cross-Platform Application Development with LiveCode</h1>
+</div>
+</div>
+</header>
+
+<div class='screensteps-container-wrapper'>
+<main class='screensteps-container'>
+<div class='screensteps-site-title-wrapper'>
+<h1 class='screensteps-site-title toc-heading'>Tutorials &amp; Manuals</h1>
+</div>
+<div class='screensteps-main-search' role='search'>
+<form id="screensteps-search-form" action="../../../searches.html" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+<div class='screensteps-search-form'>
+<label for="text">Search term</label>
+<input type="text" name="text" id="text" class="search-field" title="Enter a keyword or topic to search" />
+
+<input type="submit" name="commit" value="Search" class="search-submit" data-disable-with="Search" />
+</div>
+</form>
+
+
+</div>
+<div class='left-sidebar lesson manual-lesson screensteps-content-wrapper'>
+<div class='screensteps-main-content' role='main'>
+<header class='screensteps-title'>
+<div id="screensteps-breadcrumb" aria-label="breadcrumb" aria-level="3"><a href="../../../../revolution.html">Tutorials &amp; Manuals</a><span class='manual-group-breadcrumb'><a href="../../../../revolution.html#SQLYoga">SQL Yoga</a></span><a href="../../sqlyoga.html">SQL Yoga</a> <span class='chapter-breadcrumb'><a href="../c/2057.html">SQL Query Objects</a></span>How To Use Cursors With a SQL Query Object</div>
+</header>
+<div id='screensteps-main-content'>
+<div class='screensteps-article'>
+<div class="screensteps-article-content " data-article-id="6879" data-workflow=false>
+    <div class="screensteps-description">
+      <h1 class="lesson">
+        How To Use Cursors With a SQL Query Object
+      </h1>
+      <div class='description'>
+<p>After setting properties for a SQL Query object you can use sqlquery_retrieveAsArray, sqlquery_retrieveAsData and sqlquery_retrieveAsRecords to retrieve your data without having to fuss with a database cursor. But what do you do if you need to access the database cursor for a query? This lesson will show you.</p>
+</div>
+
+    </div>
+    <div class="screensteps-steps">
+      <div class='step' data-step-uuid='a92e55c6-a3c9-4636-800f-a2029c19c5b7' id=''>
+<h2 id=""><a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for sqlquery_retrieve" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>sqlquery_retrieve</h2>
+<div>
+
+<div class="instructions"><p>A SQL Query object can open a database cursor using <strong>sqlquery_retrieve</strong>. This command generates a SQL query using the SQL Query object properties and then opens the database cursor. You are then responsible for closing the database cursor using <strong>sqlquery_close</strong>.</p>
+<p>You can access the RevDB cursor id through the "cursor" property:</p>
+<p><span style="color: rgb(127,127,0);"><strong>put</strong></span><span style="color: rgb(0,0,0);"> sqlquery_get(theQueryA, </span><span style="color: rgb(0,0,127);">"cursor"</span><span style="color: rgb(0,0,0);">) </span><span style="color: rgb(127,0,127);">into</span><span style="color: rgb(0,0,0);"> theCursor</span></p>
+<p><span style="color: rgb(127,127,0);"><strong>put</strong></span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">the</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">result</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">into</span><span style="color: rgb(0,0,0);"> theError</span></p>
+<p><span style="color: rgb(0,127,0);"><strong>## Do something with the cursor</strong></span></p>
+<p><span style="color: rgb(0,0,0);">sqlquery_close theQueryA</span></p></div>
+<div class='clear'></div>
+</div>
+</div>
+<div class='step' data-step-uuid='0558d0eb-0a42-4e14-92e1-9af0ac771edc' id=''>
+<h2 id=""><a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Navigating the Cursor" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>Navigating the Cursor</h2>
+<div>
+
+<div class="instructions"><p>Once you have opened a database cursor there are a couple of SQL Query object handlers that help navigate the cursor. They are:</p>
+<p>• sqlquery_moveToFirstRecord</p>
+<p>• sqlquery_moveToLastRecord</p>
+<p>• sqlquery_moveToNextRecord</p>
+<p>• sqlquery_moveToPreviousRecord</p>
+<p>• sqlquery_moveToRecord</p>
+<p>Here is an example:</p>
+<p><span style="color: rgb(127,127,0);"><strong>put</strong></span><span style="color: rgb(0,0,0);"> sqlquery_createObject(</span><span style="color: rgb(0,0,127);">"lessons"</span><span style="color: rgb(0,0,0);">) </span><span style="color: rgb(127,0,127);">into</span><span style="color: rgb(0,0,0);"> theQueryA</span></p>
+<p><span style="color: rgb(0,0,0);">sqlquery_set theQueryA, </span><span style="color: rgb(0,0,127);">"conditions"</span><span style="color: rgb(0,0,0);">, </span><span style="color: rgb(0,0,127);">"id &lt; 4"</span></p>
+<p><span style="color: rgb(0,0,0);">sqlquery_retrieve theQueryA</span></p>
+<p><span style="color: rgb(127,127,0);"><strong>put</strong></span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">the</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">result</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">into</span><span style="color: rgb(0,0,0);"> theError</span></p>
+<p><span style="color: rgb(0,0,0);"><strong>if</strong></span><span style="color: rgb(0,0,0);"> theError </span><span style="color: rgb(127,0,127);">is</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">empty</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(0,0,0);"><strong>then</strong></span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	sqlquery_moveToNextRecord theQueryA</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span><span style="color: rgb(0,0,0);"><strong>if</strong></span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">the</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">result</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">is</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(127,0,127);">true</span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(0,0,0);"><strong>then</strong></span></p>
+<p class="indent2"><span style="color: rgb(0,0,0);">		</span><span style="color: rgb(0,127,0);"><strong>## You are now on the second record in the result set.</strong></span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span><span style="color: rgb(0,0,0);"><strong>end</strong></span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(0,0,0);"><strong>if</strong></span></p>
+<p><span style="color: rgb(0,0,0);"><strong>end</strong></span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(0,0,0);"><strong>if</strong></span></p></div>
+<div class='clear'></div>
+</div>
+</div>
+
+    </div>
+</div>
+
+
+<div class='screensteps-next-prev-navigation' data-role='next-previous-nav'>
+<ul>
+<li class='previous'>
+<strong>Prev</strong>: <a href="8815-how-do-i-delete-records-from-the-database-table-using-a-sql-query-object.html">How Do I Delete Records From the Database Table Using a SQL Query Object?</a>
+</li>
+<li class='next'>
+<strong>Next</strong>: <a href="7367-how-can-i-convert-a-user-search-string-into-an-and-or-search-when-generating-a-query.html">How Can I Convert a User Search String Into An AND/OR Search When Generating a Query?</a>
+</li>
+</ul>
+</div>
+
+<div class='no-comments screensteps-comments'>
+<h2 class='comments-heading'>
+<span class='screensteps-comment-count'>0</span>
+Comments
+</h2>
+
+<div class='screensteps-add-comment'>
+<h3 class='comment-heading'>Add your comment</h3>
+<script type="text/javascript" charset="utf-8">
+  ScreenStepsLiveSpamCheck = function() {
+      var key = document.getElementById('comment_spam_check_key').value;
+    var sig = '';
+    for (var x = 0; x< key.length; x++ ) {
+       sig += key.charCodeAt(x)+13;
+    }
+    document.getElementById('comment_spam_check_sig').value = sig; 
+    return true;
+  };
+</script>
+<div id='custom-comment-form-2015'></div>
+<form id="comment-form" class="comment-form" onclick="return ScreenStepsLiveSpamCheck();" action="../../../comments_lesson_id=6879-how-to-use-cursors-with-a-sql-query-object.html" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><div class='field-row name'>
+<label class="required" for="comment-name">Name*</label>
+<input id="comment-name" type="text" name="comment[name]" />
+</div>
+<div class='field-row email'>
+<label class="required" for="comment-email">Email*</label>
+<input id="comment-email" type="text" name="comment[email]" />
+</div>
+<input value="710" type="hidden" name="comment[manual_id]" id="comment_manual_id" />
+<input value="18" type="hidden" name="comment[space_id]" id="comment_space_id" />
+<input value="ammiok8ckJh9" type="hidden" name="comment[spam_check_key]" id="comment_spam_check_key" />
+<input type="hidden" name="comment[spam_check_sig]" id="comment_spam_check_sig" />
+<div class='field-row'>
+<label class="required" for="comment-comment">Comment*</label>
+<textarea id="comment-comment" name="comment[comment]">
+</textarea>
+</div>
+<div class='field-row'>
+<label id="subscribe-label" for="comment_subscribe">Subscribe</label>
+<input name="comment[subscribe]" type="hidden" value="0" /><input type="checkbox" value="1" name="comment[subscribe]" id="comment_subscribe" />
+<span class='help'>E-Mail me when someone replies to this comment</span>
+</div>
+<div class='field-row'><label id="recaptcha-label" class="comment-label" for="recaptcha">Are you human?</label>
+<div id='recaptcha-wrapper'>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<div class="g-recaptcha" data-sitekey="6Le-4BAUAAAAAJnK4h5JcvgWReY9OxXoLjfqLP90"></div>
+          <noscript>
+            <div style="width: 302px; height: 352px;">
+              <div style="width: 302px; height: 352px; position: relative;">
+                <div style="width: 302px; height: 352px; position: absolute;">
+                  <iframe
+                    src="https://www.google.com/recaptcha/api/fallback?k=6Le-4BAUAAAAAJnK4h5JcvgWReY9OxXoLjfqLP90"
+                    frameborder="0" scrolling="no"
+                    style="width: 302px; height:352px; border-style: none;">
+                  </iframe>
+                </div>
+                <div style="width: 250px; height: 80px; position: absolute; border-style: none;
+                  bottom: 21px; left: 25px; margin: 0px; padding: 0px; right: 25px;">
+                  <textarea id="g-recaptcha-response" name="g-recaptcha-response"
+                    class="g-recaptcha-response"
+                    style="width: 250px; height: 80px; border: 1px solid #c1c1c1;
+                    margin: 0px; padding: 0px; resize: none;" value="">
+                  </textarea>
+                </div>
+              </div>
+            </div>
+          </noscript>
+
+</div>
+</div>
+<div class='field-row'><input type="submit" name="commit" value="Submit Comment" id="create-comment-button" data-disable-with="Submit Comment" /></div>
+</form>
+
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+<div aria-label='sidebar' class='screensteps-sidebar' role='complementary'>
+<div class='screensteps-sidebar-widget' id='sidebar-chapters'>
+<h3>Topics</h3>
+<ul id='sidebar-chapter-list'>
+<li class='chapter-list-item' data-section-id='2056'>
+<a class='toggle-lessons' href='../c/2056.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Introduction</span>
+<span class='chapter-count'>
+&nbsp;1
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='5871'><a href="5871-about-sql-yoga-and-this-manual.html">About SQL Yoga and This Manual</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2930'>
+<a class='toggle-lessons' href='../c/2930.html' role='button'>
+<span class='chapter-link sidebar-subheading'>SQL Yoga Primer</span>
+<span class='chapter-count'>
+&nbsp;3
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='8812'><a href="8812-the-primer-stack.html">The Primer Stack</a></li>
+<li data-lesson-id='8813'><a href="8813-connect-to-a-database-by-creating-database-and-connection-objects.html">Connect to a Database By Creating Database and Connection Objects</a></li>
+<li data-lesson-id='8814'><a href="8814-getting-data-from-the-database-and-displaying-it-in-the-ui.html">Getting Data From the Database and Displaying It in the UI</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2311'>
+<a class='toggle-lessons' href='../c/2311.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Notes on Error Reporting</span>
+<span class='chapter-count'>
+&nbsp;3
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6888'><a href="6888-how-sql-yoga-reports-errors.html">How SQL Yoga Reports Errors</a></li>
+<li data-lesson-id='6889'><a href="6889-errors-thrown-from-password-protected-stacks.html">Errors Thrown From Password Protected Stacks</a></li>
+<li data-lesson-id='6890'><a href="6890-revolution-message-box.html">Revolution Message Box</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2931'>
+<a class='toggle-lessons' href='../c/2931.html' role='button'>
+<span class='chapter-link sidebar-subheading'>General Concepts</span>
+<span class='chapter-count'>
+&nbsp;4
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6794'><a href="6794-how-to-use-the-sql_yoga-rev-stack-file-in-the-ide.html">How To Use the sql_yoga.rev Stack File In the IDE</a></li>
+<li data-lesson-id='6858'><a href="6858-unlocking-the-sql-yoga-library.html">Unlocking The SQL Yoga Library</a></li>
+<li data-lesson-id='24241'><a href="24241-building-a-standalone-application-with-sql-yoga.html">Building a Standalone Application With SQL Yoga</a></li>
+<li data-lesson-id='9369'><a href="9369-how-sql-yoga-represents-objects.html">How SQL Yoga Represents Objects</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2060'>
+<a class='toggle-lessons' href='../c/2060.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Database Objects</span>
+<span class='chapter-count'>
+&nbsp;5
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6870'><a href="6870-introduction-to-the-database-object-and-database-schema.html">Introduction to the Database Object and Database Schema</a></li>
+<li data-lesson-id='5861'><a href="5861-creating-a-database-object.html">Creating A Database Object</a></li>
+<li data-lesson-id='6795'><a href="6795-saving-a-database-object-across-sessions.html">Saving A Database Object Across Sessions</a></li>
+<li data-lesson-id='5862'><a href="5862-loading-the-database-object-when-your-stack-opens.html">Loading The Database Object When Your Stack Opens</a></li>
+<li data-lesson-id='7230'><a href="7230-how-to-work-with-multiple-database-objects.html">How To Work With Multiple Database Objects</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2061'>
+<a class='toggle-lessons' href='../c/2061.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Database Connections</span>
+<span class='chapter-count'>
+&nbsp;5
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='7231'><a href="7231-introduction-to-connection-objects.html">Introduction to Connection Objects</a></li>
+<li data-lesson-id='6796'><a href="6796-connecting-to-a-database-using-a-connection-object.html">Connecting to a Database Using a Connection Object</a></li>
+<li data-lesson-id='6809'><a href="6809-telling-sql-yoga-when-your-database-schema-changes.html">Telling SQL Yoga When Your Database Schema Changes</a></li>
+<li data-lesson-id='7232'><a href="7232-how-to-work-with-multiple-connection-objects.html">How To Work With Multiple Connection Objects</a></li>
+<li data-lesson-id='10764'><a href="10764-my-database-schema-has-columns-tables-that-are-reserved-words-what-can-i-do.html">My Database Schema Has Columns/Tables That Are Reserved Words? What Can I Do?</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2057'>
+<a class='toggle-lessons' href='../c/2057.html' role='button'>
+<span class='chapter-link sidebar-subheading'>SQL Query Objects</span>
+<span class='chapter-count'>
+&nbsp;6
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='5863'><a href="5863-introduction-to-sql-query-objects.html">Introduction to SQL Query Objects</a></li>
+<li data-lesson-id='5864'><a href="5864-creating-a-sql-query-object.html">Creating A SQL Query Object</a></li>
+<li data-lesson-id='11270'><a href="11270-how-do-i-create-records-in-a-database-table-using-a-sql-query-object.html">How Do I Create Records In a Database Table Using a SQL Query Object?</a></li>
+<li data-lesson-id='8815'><a href="8815-how-do-i-delete-records-from-the-database-table-using-a-sql-query-object.html">How Do I Delete Records From the Database Table Using a SQL Query Object?</a></li>
+<li data-lesson-id='6879'><a href="6879-how-to-use-cursors-with-a-sql-query-object.html">How To Use Cursors With a SQL Query Object</a></li>
+<li data-lesson-id='7367'><a href="7367-how-can-i-convert-a-user-search-string-into-an-and-or-search-when-generating-a-query.html">How Can I Convert a User Search String Into An AND/OR Search When Generating a Query?</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2059'>
+<a class='toggle-lessons' href='../c/2059.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Record Objects</span>
+<span class='chapter-count'>
+&nbsp;5
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='5865'><a href="5865-introduction-to-sql-record-objects.html">Introduction to SQL Record Objects</a></li>
+<li data-lesson-id='5866'><a href="5866-create-records-in-the-database-using-sql-record-objects.html">Create Records in the Database Using SQL Record Objects</a></li>
+<li data-lesson-id='5867'><a href="5867-retrieve-records-from-the-database-using-sql-record-objects.html">Retrieve Records from the Database Using SQL Record Objects</a></li>
+<li data-lesson-id='5868'><a href="5868-update-records-in-the-database-using-sql-record-objects.html">Update Records in the Database Using SQL Record Objects</a></li>
+<li data-lesson-id='5869'><a href="5869-delete-records-from-the-database-using-sql-record-objects.html">Delete Records from the Database Using SQL Record Objects</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2062'>
+<a class='toggle-lessons' href='../c/2062.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Table Objects</span>
+<span class='chapter-count'>
+&nbsp;4
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='7368'><a href="7368-introduction-to-table-objects.html">Introduction to Table Objects</a></li>
+<li data-lesson-id='9913'><a href="9913-familiarizing-yourself-with-the-table-objects-behavior-property.html">Familiarizing Yourself  With The &quot;table objects behavior&quot; Property</a></li>
+<li data-lesson-id='9914'><a href="9914-creating-a-table-object.html">Creating a Table Object</a></li>
+<li data-lesson-id='7369'><a href="7369-how-do-i-add-custom-properties-to-tables.html">How Do I Add Custom Properties To Tables?</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2064'>
+<a class='toggle-lessons' href='../c/2064.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Table Relationships</span>
+<span class='chapter-count'>
+&nbsp;3
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='7374'><a href="7374-introduction-to-relationship-objects.html">Introduction to Relationship Objects</a></li>
+<li data-lesson-id='9917'><a href="9917-creating-a-relationship-object.html">Creating a Relationship Object</a></li>
+<li data-lesson-id='7375'><a href="7375-how-can-i-use-relationship-objects-when-generating-queries.html">How Can I Use Relationship Objects When Generating Queries?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='lesson-sidebar-info'>
+<h3>Last Updated</h3><p>Jun 01, 2015</p>
+
+<ul class='icon-links'>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='other-assets'>
+<h3>Other Resources</h3>
+<ul class='asset-list with-divider'>
+<li class='divider'><h4 class="sidebar-subheading">How-tos</h4></li>
+<li class='manual'><a href="../../how-to.html">Lessons</a></li>
+<li class='manual'><a href="../../10695.html">Signing Your Applications and Building Installers</a></li>
+<li class='divider'><h4 class="sidebar-subheading">GLX Application Framework</h4></li>
+<li class='manual'><a href="../../glxapp.html">GLX Application Framework 1.2</a></li>
+<li class='manual'><a href="../../convert_to_glxapp.html">Converting An Existing Application To Use The Framework</a></li>
+<li class='divider'><h4 class="sidebar-subheading">SQL Yoga</h4></li>
+<li class='manual'><a href="../../sqlyoga.html">SQL Yoga</a></li>
+<li class='manual'><a href="../../sqlyoga_examples.html">SQL Yoga Examples</a></li>
+<li class='manual'><a href="../../sqlyoga_sampleapp.html">SQL Yoga To-Do Application</a></li>
+<li class='manual'><a href="../../sqlyoga_plugin.html">SQL Yoga IDE Plugin</a></li>
+<li class='divider'><h4 class="sidebar-subheading">Plugins, Externals and Libraries</h4></li>
+<li class='manual'><a href="../../plugins.html">Plugins</a></li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='screensteps-rss'>
+<p><a href="../../../../revolution.rss">Subscribe to our feed</a></p>
+</div>
+
+</div>
+
+</div>
+<script type="text/javascript">
+  jQuery(document).ready(function(jQuery) {
+    var lesson_id = 6879;
+    var current_article_sidebar_text = '(Current Article)';
+    var section_id = 2057;
+    var expansion = 'one';
+    switch(expansion) {
+      case 'none':
+        jQuery('ul.nested-chapter-lessons').hide();
+        break;
+      case 'all':
+        jQuery('ul.nested-chapter-lessons').show();
+        jQuery('li.chapter-list-item a.toggle-lessons').addClass('open');
+        break;
+      case 'one':
+        jQuery('ul.nested-chapter-lessons').hide();
+        jQuery('li.chapter-list-item[data-section-id="' + section_id + '"] ul.nested-chapter-lessons').show();
+        jQuery('li.chapter-list-item[data-section-id="' + section_id + '"] a.toggle-lessons').addClass('open');
+        break;
+    }
+    jQuery('li.chapter-list-item[data-section-id="' + section_id + '"]').addClass('here');
+    jQuery('li[data-lesson-id="' + lesson_id + '"]').addClass('here');
+    jQuery('li[data-lesson-id="' + lesson_id + '"] a').attr('data-current-article-text', current_article_sidebar_text);
+  });
+</script>
+<noscript>Enable javascript to expand/contract chapters</noscript>
+
+
+</main>
+</div>
+<div aria-labelledby='modal-label' class='screensteps-modal' id='screensteps-modal' role='dialog'>
+<span id='modal-label'>
+Inline referenced article
+</span>
+<div class='screensteps-modal__box'>
+<a class='screensteps-modal__close' href='#'>
+×
+</a>
+<span class='screensteps-loading-wrapper'>
+<span class='screensteps-loading'></span>
+</span>
+<div class='screensteps-modal__content screensteps-article-content'></div>
+</div>
+</div>
+</body>
+</html>

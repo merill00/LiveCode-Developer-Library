@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Data Grid Conversions &gt; Converting the Stock Program 2 : Recent Lessons</title>
+    <description>Recently created lessons from Data Grid Conversions : Converting the Stock Program 2</description>
+    <link>https://revolution.screenstepslive.com/s/datagrid_conversions/m/398</link>
+    <item>
+      <title>The End Result</title>
+      <description></description>
+      <pubDate>Fri, 02 Sep 2016 10:51:58 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/datagrid_conversions/m/398/l/3494-the-end-result</link>
+    </item>
+    <item>
+      <title>Customize Column Templates</title>
+      <description>&lt;p&gt;Now that you have created and configured the data grid table you can customize any columns that need to display data in a special way.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:51:52 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/datagrid_conversions/m/398/l/3493-customize-column-templates</link>
+    </item>
+    <item>
+      <title>Create the Data Grid Table</title>
+      <description>&lt;p&gt;We will begin by creating a data grid table and configuring it.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:51:19 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/datagrid_conversions/m/398/l/3492-create-the-data-grid-table</link>
+    </item>
+    <item>
+      <title>Original UI</title>
+      <description>&lt;p&gt;These lessons you will show you how Karen Hughes' stock program was converted to use the data grid. &lt;/p&gt;
+
+
+&lt;p&gt;This is what the original UI looks like. We are going to convert the the list of stocks from a field to a data grid table.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 10:51:04 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/datagrid_conversions/m/398/l/3491-original-ui</link>
+    </item>
+  </channel>
+</rss>

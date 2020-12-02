@@ -1,0 +1,36 @@
+<?rev
+-- PUT YOUR METHOD NAMES  INTO THE GLOBAL gControllerHandlers AS A COMMA SEPARATED LIST
+put "index,showpage,testgdata,email" into gControllerHandlers
+
+-- DO NOT UPDATE THE LINES ABOVE HERE within LC IDE
+-- DO NOT USE include OR in-ine STATEMENTS or risk losing using LCMS Tester
+
+-- this file (lcms.lc) should be usable on any site
+--    i.e. they are unvarying, and have *NO* site-specific code
+--
+-- NB include siteConfig.lc for its specific content
+
+global gParams, gData, gTheme
+
+if there is a file ("user/libraryscripts/lcms_script.livecode") then
+  put ("user/libraryscripts/lcms_script.livecode") into tt
+else
+  put ("lcms/libraryscripts/lcms_script.livecode") into tt
+end if
+start using stack tt
+
+repeat for each word W in "LCMS_shim common forms arrayjson"
+  put W & "_script.livecode" into tFile
+  if there is a file ("user/libraryscripts" & tFile) then
+    put ("user/libraryscripts/" & tFile) into tt
+  else
+    put ("lcms/libraryscripts/" & tFile) into tt
+  end if
+  start using stack tt
+end repeat 
+
+put "user/scripts/siteConfig.lc" into tt  
+if there is a file tt then
+  start using stack tt
+  siteConfig pPageName, pExtraSegment
+end if

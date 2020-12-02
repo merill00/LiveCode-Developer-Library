@@ -1,0 +1,21 @@
+{
+	"Name": "Simple CRUD",
+	"Description": "This sample stack demonstrates the \"CRUD\" (Create, Read, Update, Delete) functionality of the LiveCloud Database. The stack uses the LiveCloud \"cloud\" APIs to save and retrieve data. This means if you deploy multiple copies of the stack, they will all have access the same data.",
+	"Image": "Screenshot.png",
+	"Stack": "Simple",
+	"Tables": [{
+		"Name": "Users",
+		"Keys": "firstName,lastName,dob",
+		"Values": [{
+			"firstName": "John",
+			"lastName": "Swift",
+			"dob": "10-12-1985"
+		},
+		{
+			"firstName": "Erin",
+			"lastName": "Lee",
+			"dob": "1-30-1935"
+		}
+		]
+	}]
+}

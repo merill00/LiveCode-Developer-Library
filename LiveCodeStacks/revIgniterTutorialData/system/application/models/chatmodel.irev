@@ -1,0 +1,58 @@
+<?rev
+put gBASEPATH into gBASEPATH
+
+if gBASEPATH is "gBASEPATH" then
+	put "No direct script access allowed."
+	exit to top
+end if
+
+
+
+function getMsgData
+	rigDbOrderBy "id", "ASC"
+	put rigDbGet("chat") into tQueryResult
+	
+	if tQueryResult["numrows"] > 0 then
+		# DELETE OLD MESSAGES
+		if tQueryResult["numrows"] > 20 then
+			get rigDbQuery("DELETE LOW_PRIORITY FROM chat ORDER BY id ASC LIMIT 11")
+			
+			rigDbOrderBy "id", "ASC"
+			put rigDbGet("chat") into tQueryResult
+		end if
+		
+		repeat with i = 1 to tQueryResult["numrows"]
+			put rigDbRow(i) into tRowData
+			put tRowData["time"] into tTime
+			convert tTime to short time
+			
+			# BUILD MESSAGES LIST
+			if tRowData["msg"] is "User" && tRowData["user"] && "has left the chat session." then
+				put "<li><i>(" & tTime & ")" && tRowData["msg"] & "</i></li>" & return after tMsgData
+			else
+			
+				put "<li>(" & tTime & ") <b>" & tRowData["user"] & "</b>: " & tRowData["msg"] & "</li>" & return after tMsgData
+			end if
+		end repeat
+		return tMsgData
+	end if
+
+	return "There are currently no messages."
+end getMsgData
+
+
+
+command _addMsg pName pMsg
+	put pName into tData["user"]
+	put pMsg into tData["msg"]
+	put the seconds into tData["time"]
+	get rigDbInsert("chat", tData)
+end _addMsg
+
+
+
+
+
+--| END OF chatmodel.irev
+--| Location:  ./system/application/models/chatmodel.irev
+----------------------------------------------------------------------

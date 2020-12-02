@@ -1,0 +1,1029 @@
+﻿script "lcms"
+global gParams, gData, gTheme
+
+command commonConfigSettings pPageName, pExtraSegment
+  local tFile, tt, NN
+  put "/igniter.lc/lcms" into gData["baseURL"]
+  put "set Banner Carousel mdl html image items files display region title header" into gData["actionTable"]
+    
+  put getparams() into gParams
+  put tolower(pPageName) into gData["page"]
+
+  put 3 into NN
+  if pExtraSegment then
+    	put lcmsFetchSegment(NN) into gData["page"]
+    	if gData["page"] is empty OR gData["page"] is false then
+     	  put "home" into gData["page"]
+     	end if
+    	add 1 to NN
+    	put "/" & pPageName after gData["baseURL"]
+  end if
+  put lcmsFetchSegment(NN, empty) into tt
+  if tt is FALSE then put empty into tt
+  if gParams["detail"] is empty AND tt is not empty then
+    put tt into gParams["detail"]
+  end if
+  
+--  printarray "gp", gParams
+--  printarray "gd", gData
+  put gData["page"] into gData["activePage"]
+  put gData["page"] into gParams["page"]
+	
+  get lcmsLoadDatabase()
+
+  put "MAINMARKDOWN being used in error!!" into gData["mainMarkDown"]    
+    
+  -- and load any other user scripts
+  local tScripts
+  put files("user/scripts") into tScripts
+  repeat for each line L in tScripts
+    if L ends with ".livecodescript" OR L ends with "_script.livecode" then
+      put ("user/scripts/" & L) into tt
+      start using stack tt
+    end if
+  end repeat
+  
+  siteConfig
+    
+  -- email contact form is on every page
+  put empty into gData["email"]["message"]
+  put empty into gData["email"]["name"]
+  put empty into gData["email"]["email"]
+
+  put random(10) into gData["email"]["sum1"]
+  put random(10) into gData["email"]["sum2"]
+  put gData["email"]["sum1"] + gData["email"]["sum2"] into gData["email"]["correct"]
+        
+end commonConfigSettings
+
+
+-- THIS COMMAND WILL BE CALLED IF NONE IS SPECIFIED IN THE URI
+command index
+  showpage
+end index
+
+command email
+   local tResult, tA, tTemplate
+   commonConfigSettings "email"
+   
+   put empty into tA
+   put todayAsSQL(TRUE) into tA["initial_date"]
+   put gParams["message"] into tA["content"]
+   put gParams["name"] into tA["user_name"]
+   put gParams["email"] into tA["user_email"]
+   put "Initial" into tA["status"]
+   
+   if (gParams["correct"] is empty) OR (gParams["correct"] <> gParams["math_input"]) then
+      put "Sorry, that arithmetic is not right - please try again" into gData["email"]["error"]
+      put gParams["message"] into tA["message"]
+      put gParams["name"] into tA["name"]
+      put gParams["email"] into tA["email"]
+      
+      put random(10) into tA["sum1"]
+      put random(10) into tA["sum2"]
+      put tA["sum1"] + tA["sum2"] into tA["correct"]
+      
+      put getTemplate("email_fail") into tTemplate
+      put filltemplate(gData["email"], tTemplate) into tA["error_message"]
+   else
+      put CR & CR & the internet date &CR into tResult
+      put outArray(tA) after tResult
+      put tResult &CR &CR after URL("file:" & the defaultfolder & "/email_log.txt")
+      get lcmsDBInsert("contact_emails", tA)
+   end if
+   
+   put getTemplate("email_fail") into tTemplate
+   put filltemplate(tA, tTemplate) into gData["mainMarkdown"]
+   
+end email
+
+
+command testgdata
+	-- REMEMBER TO PUT ALL THE VARIABLES TO BE MERGED WITH VIEWS INTO THE ARRAY VARIABLE gData
+
+	simple "Test"
+  
+end testgdata
+
+
+
+private function isItACommand pLine, pLineNum
+local p1, p3, tCommand, tFunction
+  put trim(pLine) into pLine
+  if char 1 of pLine <> "[" then return empty
+
+  if decompose2(pLine, "[", "]", p1, tCommand, p3) then
+    if p1 & p3 is not empty then 
+      pl "Extra characters before / after a command"  && pLineNum && pLine
+      return empty
+    end if
+    put word 1 of item 1 of tCommand into tFunction
+    if tFunction is not among the words of gData["actiontable"] then
+      pl "Bad command line" && pLineNum && pLine
+    return empty
+    end if
+    -- success !!
+    return tCommand
+  else
+    return empty
+  end if
+
+end isItACommand
+
+local sTime1, sTime2, sTime3
+
+local sCurrentRegion, sCurrentRegionCount
+
+command showpage
+   put the millisecs into sTime1
+   commonConfigSettings "showpage", TRUE
+   
+   if gParams["page"] is empty then 
+      put "Home" into gParams["page"]
+   else
+      if gParams["detail"] is not empty then
+         put "_" & gParams["detail"] after gParams["page"]
+      end if
+   end if
+   
+   local tFolder
+   put the defaultfolder into tFolder
+   
+   getMenus
+   set the defaultFolder to "user/pages"
+   local tt
+   put files() into tt
+   local tFound, tFound1
+   
+   filter tt with ("*" & gParams["page"] & ".txt")
+   set the itemDel to "-"
+   put empty into tFound
+   repeat for each line L in tt
+      if item -1 of L = gParams["page"] & ".txt" then
+         put URL ("file:" & L) into tFound
+         exit repeat
+      end if
+   end repeat     
+   set the defaultfolder to tFolder
+   
+   put the millisecs into sTime2
+   --  pl "before theme" && sTime2 - sTime1
+   
+   local tResult
+   
+   put empty into tResult
+   
+   put the millisecs into sTime3
+   --  pl "after theme" && sTime3 - sTime1 && sTime3 - sTime2
+   put the millisecs into sTime2
+   
+   -- double=-dip in case of embedded directives with MDL
+   put interpretContent(tFound) into tFound1
+   
+   put the millisecs into sTime3
+   --  pl "after one" && sTime3 - sTime1 && sTime3 - sTime2
+   put the millisecs into sTime2
+   
+   put interpretContent(tFound1) after tResult
+   
+   put the millisecs into sTime3
+   --  pl "after interpret " && sTime3 - sTime1 && sTime3 - sTime2
+   put the millisecs into sTime2
+   
+   if NOT (sCurrentRegion is empty OR sCurrentRegion = 0) then
+      put fromTheme("region", "footer") after tResult
+      put fromTheme("allow_regions", "footer") after tResult
+   end if
+   
+
+   -- every page begins (and ends) with the page header (footer)
+   --    NB ensure headers are done *after* the page has been interpretted
+   local t1
+   put fromTheme("page", "header") into t1
+   put fromTheme("page", "footer") after tResult
+   
+   put t1 before tResult
+   
+   put the millisecs into sTime3
+   --  pl "after all" && sTime3 - sTime1 && sTime3 - sTime2
+   put the millisecs into sTime2
+   put tResult into gData["result"]
+   put tResult
+end showpage
+
+function interpretContent pContent
+   local tAPageContent, tLineNum, tCommand, tFunction
+   split pContent with CR -- as a numeric array
+   put pContent into tAPageContent
+   put 1 into tLineNum
+   
+   --    put true into pDebug
+   local tDoit, tLN, pDebug, tRes, tResult
+   repeat forever
+      -- put the millisecs into sTime3
+      -- pl "interpreting" && tLineNum && sTime3 - sTime1 && sTime3 - sTime2 && tAPageContent[tLineNum]
+      -- put the millisecs into sTime2
+      if tLineNum > item 2 of the extents of tAPageContent then exit repeat
+      put isItACommand(tAPageContent[tLineNum], tLineNum) into tCommand
+      if tCommand is not empty then
+         put word 1 of item 1 of tCommand into tFunction
+         put "put" && ("do" & tFunction) & "(tLineNum, tAPageContent, tCommand) into tRes" into tDoIt
+         put tLineNum into tLN
+         if pDebug then   pl tLN && tDoit
+         do tDoIt  -- NB this should increment @tLineNum beyond this command
+         if tLineNum <= tLN then add 1 to tLineNum  -- check it did, and force an increment if needed
+         if pDebug then   pl "res::" && tRes && "::"
+         put tRes after tResult
+      else
+         put tAPageContent[tLineNum] &CR after tResult
+         add 1 to tLineNum
+      end if
+   end repeat
+   if pDebug then pl "have interpreted" && tResult
+   return tResult
+end interpretContent
+
+-- handle the "custom" clause in a command to filter/modify a CO set.
+private function customise pAobjects, pADetail
+   local tt, tANew, tError
+   
+--   pl "about to do " & pADetail["custom"]
+   repeat for each item I in pADetail["custom"]
+      put "put " & I & "(pAObjects, pADetail) into tANew" into tt
+--      pl "doing" && tt
+      try 
+         do tt
+      catch tError	
+      end try
+--      printarray "having done" && I, tANew
+      put tANew into pAObjects
+   end repeat
+   return tANew
+end customise
+
+private function processAndOutputObjects pAObjects, pADetail
+  local t_local_debug
+  if t_local_debug then
+    printarray "start proc - details", pADetail
+    pl the number of lines in the keys of pAObjects
+    printarray "start proc", pAObjects
+  end if
+  
+   if pADetail["custom"] is not empty then
+      put customise(pAObjects, pADetail) into pAObjects
+      if t_local_debug then printarray "after custom", pAObjects
+   end if
+   
+   local tResult
+   
+   if pADetail["assign"] is empty then
+      -- and output this as a grid
+      put outMultipleObjects( pAObjects, pADetail, pADetail["template"] ) &CR after tResult
+   else
+      if char 1 of pADetail["assign"] = "+" then
+         delete char 1 of pADetail["assign"]
+         appendNumericArrays gData["display"][pADetail["assign"]], pAObjects
+ if t_local_debug then 
+   printarray "added", pAObjects
+ end if
+      else
+         put pAObjects into gData["display"][pADetail["assign"]]
+      end if
+      put empty into tResult
+   end if
+   return tResult
+end processAndOutputObjects
+
+-- ----------- doFunctions - one per cmmand -----------
+
+-- [title + text]   or [title text]
+function doTitle @pLNum, pAText, pCommand
+   local tA, tAObjects, tResult
+   put splitEntries(pCommand) into tA
+   
+   if char 1 of tA["title"] = "+" then
+     put char 2 to -1 of tA["title"] after gData["pageTitle"]
+   else
+     put tA["title"] into gData["pageTitle"]
+   end if
+   return empty
+end doTitle
+
+-- [header + text]   or [header text]
+function doHeader @pLNum, pAText, pCommand
+   local tA, tAObjects, tResult
+   put splitEntries(pCommand) into tA
+
+   if char 1 of tA["header"] = "+" then
+     put char 2 to -1 of tA["header"] after gData["pageHeader"]
+   else
+     put tA["header"] into gData["pageHeader"]
+   end if
+   return empty
+end doHeader
+
+-- [banner,  where ..., orderby ...] e.g. [banner where Category=banner, orderby id=random]
+function doBanner @pLNum, pAText, pCommand
+   local tA, tAObjects, tResult
+   put splitEntries(pCommand) into tA
+   
+   -- get this set from the DB of images
+   put getMultipleObjects( "images", tA ) into tAObjects
+   
+   -- and output this as a full-width banner image
+   put fromTheme("full_width", "header") after tResult
+   
+   put tAObjects[1] into gData["image"]
+   put "large" into gData["image"]["size"]
+   put fromTheme("image", "header") after tResult
+   
+   put fromTheme("full_width", "footer") after tResult
+   
+   add 1 to pLNum
+   return tResult
+end doBanner
+
+-- [carousel , where ..., size small|medium|large, name somename]
+function doCarousel @pLNum, pAText, pCommand
+   -- TODO the list version !!
+   local t_local_debug
+   local tA, tSize, tName, tAObjects, tResult
+   put splitEntries(pCommand) into tA
+   
+   put putWithDefault( tA["size"], "medium" ) into tSize
+   
+   put putWithDefault( tA["name"], "this_carousel" ) into tName
+   put tName into gData["carousel"]["name"]
+   
+   -- get this set from the DB of images
+   put getMultipleObjects( "images", tA ) into tAObjects
+   
+   if t_local_debug then printarray "carousel", gData["carousel"]
+   
+   -- and output this as a carousel
+   put fromTheme("carousel", "header") after tResult
+   
+   -- do indicators
+   put fromTheme("carousel_indicators", "header") after tResult
+   repeat with i = 1 to the number of elements in tAObjects
+      put i-1 into gData["carousel"]["number"]
+      if i=1 then
+         put fromTheme("carousel_each_indicator", "header") after tResult
+      else
+         put fromTheme("carousel_each_indicator", "footer") after tResult
+      end if
+   end repeat
+   put fromTheme("carousel_indicators", "footer") after tResult
+   
+   -- do slides
+   put fromTheme("carousel_slides", "header") after tResult
+   repeat with i = 1 to the number of elements in tAobjects
+      put i-1 into gData["carousel"]["number"]
+      put "/" & tAObjects[i]["folder"] & "/" & tSize & "/" & tAObjects[i]["filename"] into gData["carousel"]["slide_path"]
+      if i=1 then
+         put fromTheme("carousel_each_slide", "header") after tResult
+      else
+         put fromTheme("carousel_each_slide", "footer") after tResult
+      end if
+   end repeat
+   put fromTheme("carousel_slides", "footer") after tResult
+   
+   -- do controls - no individual parts
+   put fromTheme("carousel_controls", "header") after tResult
+   put fromTheme("carousel_controls", "footer") after tResult
+   
+   put fromTheme("carousel", "footer") after tResult
+   
+   add 1 to pLNum
+   return tResult
+end doCarousel
+
+--- [display custom_object_set, template template_name]
+function doDisplay @pLNum, pAText, pCommand
+   local tA, tAObjects, tResult
+   put splitEntries(pCommand) into tA
+   
+   -- get this set from the DB
+   put gData["display"][tA["display"]] into tAObjects
+   
+   -- and process these and output this as a grid
+   put processAndOutputObjects( tAObjects, tA ) &CR after tResult
+   add 1 to pLNum
+   return tResult
+end doDisplay
+
+-- [files 'names'|???, count N, template template_name]
+function doFiles @pLNum, pAText, pCommand
+   local tA, tFiles, tObj, tAObjects, tResult
+   put splitEntries(pCommand) into tA
+   
+  switch tA["files"]
+  case "names"
+    put files(tA["folder"]) into tFiles
+    filter tFiles with ("*" & tA["type"])
+    put 1 into tObj
+    repeat for each line L in tFiles
+      put tA["folder"] into tAObjects[tObj]["folder"]
+      put L into tAObjects[tObj]["file"]
+      put L into tAObjects[tObj]["content"]
+      replace tA["type"] with empty in tAObjects[tObj]["content"]
+      add 1 to tObj
+    end repeat
+    break
+  end switch
+  
+  -- and process these and output this as a grid
+  put processAndOutputObjects( tAObjects, tA ) &CR after tResult
+
+  add 1 to pLNum
+  return tResult
+end doFiles
+
+-- [html type] where 'type' can be "text_section" or empty
+function doHTML @pLNum, pAText, pCommand
+   local tResult, tMax, tText
+   if word 2 of pCommand = "text_section" then
+      put fromTheme("text_section", "header") after tResult
+   end if
+   put item 2 of the extents of pAText into tMax
+   repeat until pLNum > tMax
+      add 1 to pLNum
+      if trim( pAText[pLNum] ) begins with "[html end]" then exit repeat
+      put pAText[pLNum] &CR after tText
+   end repeat
+   put tText after tResult  
+   if word 2 of pCommand = "text_section" then
+      put fromTheme("text_section", "footer") after tResult
+   end if
+   add 1 to pLNum
+   return tResult
+end doHTML
+
+-- [image size id-or-name] e.g. [image wide 25]
+function doImage @pLNum, pAText, pCommand
+   local tSize, tAltText, tAQuery, tResult
+   local t_local_debug
+--   put TRUE into t_local_debug
+   put word 2 of pCommand into tSize
+   if word 3 of pCommand is a number then
+      lcmsDBWhere "id", word 3 of pCommand
+   else
+      lcmsDBWhere "shortname", word 3 of pCommand
+   end if
+   put word 4 to -1 of pCommand into tAltText
+   
+   put lcmsDBGet("images") into tAQuery
+   if tAQuery["numrows"] = 1 then
+      put lcmsDBRow(1, tAQuery) into gData["image"]
+      put putWithDefault( gData["image"]["alt"], tAltText ) into gData["image"]["alt"] 
+      put tSize into gData["image"]["size"]
+      if t_local_debug then printarray "doimage image", gData["image"]
+      put fromTheme("image", "header") after tResult
+   end if
+   
+   add 1 to pLNum
+   return tResult
+end doImage
+
+-- [items  count n, template templatename] - defne a list of items separated by "--""
+function doItems @pLNum, pAText, pCommand
+   local tA, tObj, tMax, tAObjects, tResult
+   put splitEntries(pCommand) into tA
+   
+  -- read from page until end of item list   
+  put 1 into tObj
+  put item 2 of the extents of pAText into tMax
+  repeat until pLNum > tMax
+    add 1 to pLNum
+    if trim( pAText[pLNum] ) begins with "[items end]" then exit repeat
+    if trim( pAText[pLNum] ) begins with "--" then
+      add 1 to tObj
+      next repeat
+    end if
+    put pAText[pLNum] &CR after tAobjects[tObj]["description"]
+  end repeat
+      
+  -- and process these and output this as a grid
+  put processAndOutputObjects( tAObjects, tA ) &CR after tResult
+
+  add 1 to pLNum
+  return tResult
+end doItems
+
+-- [mdl type] where 'type' can be text_section or empty
+function doMDL @pLNum, pAText, pCommand
+   local tResult, tMax, tText
+   if word 2 of pCommand = "text_section" then
+      put fromTheme("text_section", "header") after tResult
+   end if
+   put item 2 of the extents of pAText into tMax
+   repeat until pLNum > tMax
+      add 1 to pLNum
+      if trim( pAText[pLNum] ) begins with "[mdl end]" then exit repeat
+      put pAText[pLNum] &CR after tText
+   end repeat
+   put markDownToHtml(tText) &CR after tResult  
+   put "<!--- end of mdl ---->" &CR after tResult
+   if word 2 of pCommand = "text_section" then
+      put fromTheme("text_section", "footer") after tResult
+   end if
+   add 1 to pLNum
+   return tResult
+end doMDL
+
+
+-- [region Name] e.g. lregion narrow | medium | wide]
+function doRegion @pLNum, pAText, pCommand
+   local tA, tResult
+   put splitEntries(pCommand) into tA
+   
+   if sCurrentRegion is empty then
+     put 0 into sCurrentRegionCount
+     put fromTheme("allow_regions", "header") after tResult
+   else
+     put fromTheme("region", "footer") after tResult
+   end if
+
+   if tA["region"] = "end" then
+     put fromTheme("allow_regions", "footer") after tResult
+     put 0 into sCurrentRegion
+     return tResult
+   end if
+   
+   put tA["region"] into sCurrentRegion
+   -- determine the width needed
+   switch
+     case sCurrentRegion = "narrow"
+       put 3 into gData["region"]["width"]
+       break
+     case sCurrentRegion = "medium"
+       put 6 into gData["region"]["width"]
+       break
+     case sCurrentRegion = "wide"
+       put 9 into gData["region"]["width"]
+       break
+     default
+       put sCurrentRegion into gData["region"]["width"]
+   end switch
+   
+   -- and return the start for this type of region
+   put fromTheme( "region", "header" ) &CR after tResult
+   add gData["region"]["width"] to sCurrentRegionCount
+   add 1 to pLNum
+   return tResult
+end doRegion
+
+--- [set DBTable, where col=val;col=val, count N, template template_name]
+function doSet @pLNum, pAText, pCommand
+   local t_local_debug
+   local tA, tAObjects, tResult
+   put splitEntries(pCommand) into tA
+
+   put FALSE into t_local_debug
+
+   if t_local_debug then printarray "getting", tA   
+   -- get this set from the DB
+   put getMultipleObjects( tA["set"], tA ) into tAObjects
+
+   if t_local_debug then printarray "got ocjects", tAObjects
+   
+   -- and process these and output this as a grid
+   put processAndOutputObjects( tAObjects, tA ) &CR after tResult
+   add 1 to pLNum
+   return tResult
+end doSet
+
+
+
+function fromTheme pName, pWhichEnd
+   local tResult
+   put lcmsLoadView(gTheme["theme_name"] & "/" & pName & "_" & pWhichend) &CR after tResult
+   return tResult
+end fromTheme
+
+-- --------------- TEMPLATES -------------------
+private function getTemplate pTemplate
+   -- get the template
+   local tt, tResult
+   if pTemplate is empty then
+     -- supply a default template to show just the 'description'
+     put "[[tA['description'] ]]" into tResult
+     replace "'" with quote in tResult
+   else
+     put "user/templates/" & pTemplate & ".txt" into tt
+     if there is a file tt then
+        put URL ("file:" & tt) into tResult
+        filter tResult without "--*"
+     else
+        lcmsLogMessage "error", "bad template name" && pTemplate
+     end if
+   end if
+   return tResult
+end getTemplate
+
+function fillTemplate pA, pTemplate  
+   local tA, tL, p1, p2, p2a, p2b, p3, temp, temp1, temp2, tResult
+  markdown pA
+  put pA into tA
+  repeat for each line L in pTemplate
+    put L into tL
+    if decompose2(tL, "{{", "}}", p1, p2, p3) then
+      if decompose1(p2, ":", p2a, p2b) then
+        if tA[p2a] is not empty then
+          replace ("{" & p2a & "}") with "[[tA[" & p2a & "]]]" in p2b          
+          put p1 & p2b & p3 into tL
+        else
+          put p1 & p3 into tL
+        end if
+      end if
+    end if
+    put tL & CR after temp
+  end repeat
+  put merge(temp) into temp1
+  replace (CR & "]") with "]" in temp1
+  local pDebug
+  if pDebug then pl "filling ::" & temp1 & "::::"
+  put interpretContent(temp1) into temp2
+  put temp2 after tResult
+  return tResult
+end fillTemplate
+
+-- makeButton - usually called from a Template !!
+function makeButton pTitle, pAction, pType
+   local tResult
+  if pTitle is empty then return empty
+  put pTitle into gData["button_title"]
+  put pAction into gData["button_action"]
+  -- pType is for future use ??
+  put fromTheme("button", "header") & fromTheme("button", "footer") into tResult
+  return tResult
+end makeButton
+
+
+function getMultipleObjects pObjects, pDetail
+   -- get  multiple objects from DB
+   -- pObjects - the object type required (i.e. DB table name)
+   -- pDetail - details, e.g. where clause (usually say Category=service)
+   local t_local_debug
+   --  put TRUE into t_local_debug
+   if pDetail["where"] is not empty then
+      if t_local_debug then  pl "get multi" && pDetail["where"]
+      local tWhere
+      put pDetail["where"]  into tWhere
+      replace ";" with CR in tWhere
+      local tVal
+      repeat for each line L in tWhere
+         if t_local_debug then pl "where" && L 
+         if token 2 of L = "~" then   -- use this for 'LIKE"
+            lcmsDBLike token 1 of L, token 3 to -1 of L
+         else  
+            put token 3 to -1 of L into tVal
+            if tVal = "today()" then
+              put todayAsSQL() into tVal
+            end if
+            lcmsDBWhere (token 1 of L & SPACE & token 2 of L), tVal
+         end if
+      end repeat
+   end if
+   if pDetail["orderby"] is not empty then
+      split pDetail["orderby"] by ";" and "="
+      repeat for each key K in pDetail["orderby"]
+         lcmsDBOrderBy K, pDetail["orderby"][K]
+      end repeat
+      if t_local_debug then pl "oby" && K && pDetail["orderby"][K]
+   end if
+   if pDetail["limit"] is not empty then
+      -- TODO
+   end if
+   
+   local tAQuery, tNumItems, tAObj
+   put lcmsDBGet(pObjects) into tAQuery
+   if tAQuery["numrows"] = 0 then
+      return empty
+   end if
+   -- number of rows in the query result == the number of items to be output
+   put tAQuery["numrows"] into tNumItems
+   if t_local_debug then pl "getmultipleobjects found" && tNumItems
+   repeat with i = 1 to tNumItems
+      put lcmsDBRow(i, tAQuery) into tAObj[i]
+   end repeat
+   return tAObj
+end getMultipleObjects
+
+function outMultipleObjects pAObjects, pDetail, pTPL
+   -- output for multiple objects 
+   -- pAObjects - the objects themselves as an array
+   -- pDetail - details, such as values to overwrite
+   -- pTPL - the template name
+   local t_local_debug
+   local tResult
+
+   put TRUE into t_local_debug
+      
+   switch pDetail["style"]
+      case empty
+         put "grid" into pDetail["style"]
+      case "grid"
+      case "list"
+      case "accordion"
+         break
+      case "debug"
+         put "outputting multiple objects" into tResult
+         printarray "objobj", pAObjects
+         put formatArray(pAObjects,  " ", " ") after tResult
+         return tResult
+         break
+      default
+         printarray "bad style", pDetail
+   end switch
+   
+   if pDetail["overwrite"] is not empty then
+      if t_local_debug then pl "overwrite" && pDetail["overwrite"]
+      split pDetail["overwrite"] by "," and "="
+      -- this will be used later - search for 'overwrite'
+   end if
+   
+   put pDetail["title"] into gData["section_header_title"]
+   
+   local tTemplate
+   put getTemplate(pTpl) into tTemplate
+   
+   local tNPerRow, tNumToDo, tCount, tA
+   put putWithDefault(pDetail["count"], 3) into tNPerRow  -- defaulting to 3-grid !!
+   
+   put empty into tResult
+   
+   put tNPerRow into gData["nPerRow"]
+   put the number of elements in pAObjects into tNumToDo
+   if pDetail["display_limit"] is not empty AND pDetail["display_limit"] < tNumToDo then
+      put pDetail["display_limit"] into tNumToDo 
+   end if
+   
+   switch pDetail["style"]
+      case "grid"
+         put fromTheme("variable_section", "header") after tResult
+         
+         put 0 into tCount
+         --  if t_local_debug then pl the number of elements in pAObjects && pDetail["display_limit"] && "--->" && tNumToDo
+         repeat with i = 1 to tNumToDo  
+            if tCount = 0 then
+               put fromTheme("variable_row", "header") after tResult
+            end if
+            put pAObjects[i] into tA
+            
+            -- and add/overwrite any values specified
+            repeat for each key K in pDetail["overwrite"]
+               put pDetail["overwrite"][K] into tA[K]
+            end repeat
+            
+            put fromTheme("variable_item", "header") after tResult
+            put fillTemplate(tA, tTemplate) &CR after tResult	
+            put fromTheme("variable_item", "footer") after tResult
+            
+            add 1 to tCount
+            if tCount = tNPerRow then
+               put fromTheme("variable_row", "footer") after tResult
+               put 0 into tCount
+            end if
+         end repeat
+         if tCount <> 0 then
+            put fromTheme("variable_row", "footer") after tResult
+         end if
+         				
+         put fromTheme("variable_section", "footer") after tResult
+         break
+         
+      case "list"
+         repeat with i = 1 to tNumToDo  
+            put pAObjects[i] into tA
+            
+            -- and add/overwrite any values specified
+            repeat for each key K in pDetail["overwrite"]
+               put pDetail["overwrite"][K] into tA[K]
+            end repeat
+            
+            put fillTemplate(tA, tTemplate) &CR after tResult	
+         end repeat
+         break
+         
+      case "accordion"
+         local tItemTemplate
+         put fromTheme("accordion", "header") after tResult
+         -- put lcmsGetView("accordion_item_header") into tItemTemplate 
+         repeat with i = 1 to tNumToDo  
+            put pAObjects[i] into tA
+            
+            -- and add/overwrite any values specified
+            repeat for each key K in pDetail["overwrite"]
+               put pDetail["overwrite"][K] into tA[K]
+            end repeat
+            
+            put putWithDefault(tA[pDetail["titlefield"]], tA["title"]) into gData["accordion"]["item_header"]
+            put i into gData["accordion"]["item_count"]
+            
+            put fromTheme("accordion_item", "header") after tResult
+            put fillTemplate(tA, tTemplate) &CR after tResult	
+            put fromTheme("accordion_item", "footer") after tResult
+            
+         end repeat
+         				
+         put fromTheme("accordion", "footer") after tResult
+         break
+         
+   end switch
+   
+   put CR after tResult
+   return tResult
+   
+end outMultipleObjects
+
+-- -------------------- MENUS ------------
+-- menu structure is a set of lines
+--  each top level  one has   page_name  [Visible label]
+-- each sub menu starts with a minus char, i.e.   - page_name [Visible label]
+--  visible label is optional
+--
+-- page_name MUST be a single word - i.e. no spaces
+--
+command getMenus
+   local tFolder, tt, tName, tMenu, tType, tPage, tLabel
+   
+   put URL ("file:user/menus.txt") into tt
+   
+   if tt is not empty then   
+      put empty into tName
+      set the itemDel to "-"
+      repeat for each line L in tt
+         put trim(L) into L
+         switch word 1 of L
+            case empty
+               break
+            case "menu"
+               if tName is not empty then  -- save the previous menu content
+                  put tMenu into gData["menu"][tName]
+                  put empty into tName
+                  put empty into tMenu             
+               end if
+               put word 2 of L into tName
+               put empty into tMenu
+               break
+            case "end"
+               put tMenu into gData["menu"][tName]
+               put empty into tName
+               put empty into tMenu
+               break
+            default
+               -- now we have an actual entry
+               if char 1 of word 1 of L = "-" then
+                  if tType = "top" then -- previous was a top-level, so this is start of a new sub-menu
+                     replace "top" with "dropdown" in line -1 of tMenu
+                  end if
+                  put "sub"  into tType
+                  put char 2 to -1 of word 1 of L into tPage
+                  put word 2 to -1 of L into tLabel
+               else
+                  put "top" into tType
+                  put word 1 of L into tPage
+                  put word 2 to -1 of L into tLabel
+               end if
+               put tType & COMMA & tPage & COMMA & tLabel  & CR after tMenu
+         end switch
+      end repeat
+      
+      if tMenu is not empty then
+         put tMenu into gData["menu"][tName]
+      end if
+   else
+      -- no menu definition file  (so no lables !!)
+      --    so all files go into navbar
+      --    and all top-level files go into footer
+      set the defaultFolder to "user/pages"
+      put files() into tt
+      filter tt with "*.txt"
+      set the itemDel to "-"
+      replace ".txt" with empty in tt
+      sort lines of tt numeric by item 1 of each
+      
+      put empty into gData["Menu"]["navbar"]
+      put empty into gData["Menu"]["footer"]
+      repeat for each line L in tt
+         if item 1 of L is a number then
+            if item 1 of L mod 1 = 0 then
+               put "top" into tTYpe
+            else
+               if tType = "top" then -- previous was a top so really a start of a dropdown
+                  replace "top" with "dropdown" in line -1 of gData["Menu"]["navbar"]
+               end if
+               put "sub" into tType
+            end if
+            put tType & COMMA & item 2 to -1 of L & CR after gData["Menu"]["navbar"]
+            if tType = "top" then 
+               put tType & COMMA & item -1 of L & CR after gData["Menu"]["footer"]
+            end if
+         end if
+      end repeat
+   end if
+end getMenus
+
+
+function putMenu pWhich
+  local tResult, tMenu, TMP, ITM
+   
+  put empty into tResult
+
+  switch pWhich
+    case "navbar"  
+      put gData["menu"]["navbar"] into tMenu
+    
+      -- do the navbar overall header
+      put fromTheme("navbar", "header") after tResult
+      
+      put empty into TMP
+
+      local tType, tLastType, tPrevLine
+      put empty into tPrevLine
+      
+      repeat for each line L in tMenu
+        put trim(item 1 of L) into tType
+        switch tType
+          case "top"
+          case "dropdown"
+            if tLastType = "sub" then
+              -- we have just finished a sub-menu
+              put fromTheme("navbar_dropdown", "footer") after tResult
+            end if
+            put tType into tLastType
+            put trim(item 2 of L) into ITM
+            put ITM into gData["ITMUrl"]
+            put putWithDefault(trim(item 3 of L), ITM) into gData["ITM"]
+            if tType = "top" then
+              if ITM <> gData["activePage"] then
+                put fromTheme("navbar_normal", "header") after tResult
+              else
+                put fromTheme("navbar_active", "header") after tResult
+              end if
+            else
+              put fromTheme("navbar_dropdown", "header") after tResult
+              put fromTheme("navbar_sub", "header") after tResult
+            end if
+            break
+            
+          case "sub"
+            put trim(item 2 of L) into ITM
+            put ITM into gData["ITMUrl"]
+            put putWithDefault(trim(item 3 of L), ITM) into gData["ITM"]
+            put fromTheme("navbar_sub", "header") after tResult
+            break
+        end switch
+        put tType into tLastType
+      end repeat
+      put fromTheme("navbar", "footer") after tResult
+      break
+
+    case "footer"  
+      put gData["menu"]["footer"] into tMenu
+      put empty into TMP
+      repeat for each line L in tMenu
+        put trim(item 2 of L) into gData["ITMUrl"]
+        put putWithDefault(trim(item 3 of L), trim(item 2 of L)) into gData["ITM"]
+        put fromTheme("footer_menu", "header") after tResult
+      end repeat
+      break
+  end switch
+
+  return tResult
+end putMenu
+
+
+-- internal functions
+
+private function splitEntries pText
+   local tAR
+  set the itemDel to ","
+  repeat for each item II in pText
+    put word 2 to -1 of II into tAR[word 1 of II]
+  end repeat
+  return tAR
+end splitEntries
+
+private function stripCR pp
+   --  put "'#id_" & pp & "'" into tt
+   --  pl tt
+   local tt
+   put pp into tt
+   replace numtochar(10) with empty in tt
+   --  repeat with i = 1 to the number of chars in tt
+   --    pl i && chartonum(char i of tt) && char i of tt & "::"
+   --  end repeat
+   return tt
+end stripCR
+
+
+--  function showdetails pp
+--    pl "pp=::" & pp & "::"
+--    repeat for each char c in pp
+--      pl chartonum(c) && c
+--    end repeat
+--    return "asdf"
+--  end showdetails
+

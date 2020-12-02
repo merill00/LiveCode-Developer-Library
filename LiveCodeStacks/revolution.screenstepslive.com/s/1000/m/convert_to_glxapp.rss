@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>GLX Application Framework &gt; Converting An Existing Application To Use The Framework : Recent Lessons</title>
+    <description>Recently created lessons from GLX Application Framework : Converting An Existing Application To Use The Framework</description>
+    <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp</link>
+    <item>
+      <title>Cleanup</title>
+      <description>&lt;p&gt;That about does it for the conversion. The &lt;strong&gt;Article Maestro&lt;/strong&gt; application is now running on top of the GLX Application Framework and can take advantage of all the features the framework provides. There is just a little cleanup to perform before we are done.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:52:56 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6962-cleanup</link>
+    </item>
+    <item>
+      <title>Rework Stack (or Card) Script Using Framework Messages</title>
+      <description>&lt;p&gt;Now I'm going to rework some of your existing application handlers (preOpenStack and resizeStack) to take advantage of framework messages.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:52:43 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6961-rework-stack-or-card-script-using-framework-messages</link>
+    </item>
+    <item>
+      <title>Tell Framework to Manage Application Window</title>
+      <description>&lt;p&gt;Now that I have a working application let's look at how to tell the framework to manage the Article Maestro window. The framework will send special messages and manage the size and position of the window across sessions.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:52:16 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6960-tell-framework-to-manage-application-window</link>
+    </item>
+    <item>
+      <title>Build Standalones</title>
+      <description>&lt;p&gt;Now that I have finished configuring the &lt;strong&gt;glxappLauncher&lt;/strong&gt; stack I can build a standalone executable with it.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:51:56 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6959-build-standalones</link>
+    </item>
+    <item>
+      <title>Configure Standalone Settings</title>
+      <description>&lt;p&gt;Now that I have finished basic configuration I am going to build standalone executables. The standalone executables will enable me to test the standalone versions of the application while working on it in the IDE.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:51:38 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6958-configure-standalone-settings</link>
+    </item>
+    <item>
+      <title>Tell Framework About New Application Stack</title>
+      <description>&lt;p&gt;While I've added the &lt;strong&gt;Article Maestro.rev&lt;/strong&gt; stack file to the components folder, the framework still needs to know that the &lt;strong&gt;Article Maestro&lt;/strong&gt; stack file is part of the application.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:51:11 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6957-tell-framework-about-new-application-stack</link>
+    </item>
+    <item>
+      <title>Begin Integrating Existing Stack</title>
+      <description>&lt;p&gt;Now that I have created a new application it is time to integrate the existing &lt;strong&gt;Article Maestro.rev&lt;/strong&gt; stack file into it.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:50:52 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6956-begin-integrating-existing-stack</link>
+    </item>
+    <item>
+      <title>Configure Application Settings</title>
+      <description>&lt;p&gt;Now it is time to configure the application settings in the &lt;strong&gt;General&lt;/strong&gt; tab of the plugin.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:50:22 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6955-configure-application-settings</link>
+    </item>
+    <item>
+      <title>Creating A New GLX Framework Application</title>
+      <description>&lt;p&gt;To begin I will create a new application using the framework IDE plugin.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:50:06 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6954-creating-a-new-glx-framework-application</link>
+    </item>
+    <item>
+      <title>Introduction</title>
+      <description>&lt;p&gt;This manual will show how an existing Revolution application can be converted to use the GLX Application Framework. The application I will be converting is Article Maestro by &lt;a href="http://www.maplecommerce.com/"&gt;MapleCommerce&lt;/a&gt;.&lt;/p&gt;</description>
+      <pubDate>Thu, 08 Sep 2016 09:49:35 -0500</pubDate>
+      <link>https://revolution.screenstepslive.com/s/1000/m/convert_to_glxapp/l/6953-introduction</link>
+    </item>
+  </channel>
+</rss>

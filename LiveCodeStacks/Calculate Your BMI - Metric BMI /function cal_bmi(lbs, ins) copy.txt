@@ -1,0 +1,233 @@
+
+
+<script language="Javascript" type="text/javascript">
+<!--
+function cal_bmi(kg, htc){
+
+
+   m = htc/100;
+   h2 = m * m;
+
+   bmi = kg/h2;
+
+
+   f_bmi = Math.floor(bmi);
+
+   diff  = bmi - f_bmi;
+   diff = diff * 10;
+
+   diff = Math.round(diff);
+   if (diff == 10){
+      // Need to bump up the whole thing instead
+      f_bmi += 1;
+      diff = 0;
+   }
+   bmi = f_bmi + "." + diff;
+
+   return bmi;
+}
+function compute(){
+   var f = self.document.forms[0];
+
+   // Set up variables for calculation
+   w = f.kg.value;
+//   i = parseInt(f.htc.value);
+   i = f.htc.value;
+
+   // Do validation checking to ensure existence of values
+
+   if (!chkw(i)){
+     alert("Please enter a number for your height.");
+     f.htc.focus();
+     return;
+   }
+   if (!chkw(w)){
+     alert("Please enter a number for your weight.");
+     f.kg.focus();
+     return;
+   }
+
+   f.bmi.value = cal_bmi(w, i);
+   f.bmi.focus();
+}
+function chkw(w){
+  // if (isNaN(parseInt(w))){
+   if (isNaN(w)){
+	  return false;
+   } else if (w < 0){
+  return false;
+  }
+  else{
+  return true;
+  }
+}
+// -->
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+===========================================================================
+
+
+<script language="Javascript" type="text/javascript">
+
+<!--
+
+function cal_bmi(lbs, ins)
+
+{
+
+h2 = ins * ins;
+
+bmi = lbs/h2 * 703
+
+f_bmi = Math.floor(bmi);
+
+diff = bmi - f_bmi;
+
+diff = diff * 10;
+
+diff = Math.round(diff);
+
+
+
+if (diff == 10) // Need to bump up the whole thing instead
+
+{
+
+f_bmi += 1;
+
+diff = 0;
+
+}
+
+bmi = f_bmi + "." + diff;
+
+return bmi;
+
+}
+
+function compute(){
+
+var f = self.document.forms[0];
+
+
+
+w = f.wt.value;
+
+v = f.htf.value;
+
+u = f.hti.value;
+
+
+
+// Format values for the BMI calculation
+
+
+
+if (!chkw(u))
+
+{
+
+var ii = 0;
+
+f.hti.value = 0;
+
+} else
+
+{
+
+var it = f.hti.value*1;
+
+var ii = parseInt(it);
+
+}
+
+
+
+var fi = parseInt(f.htf.value * 12);
+
+var i = parseInt(f.htf.value * 12) + f.hti.value*1.0; // var i = fi + ii; aeisenberg@air.org: now the height in inches is correctly summed
+
+
+
+// Do validation of remaining fields to check for existence of values
+
+
+
+if (!chkw(v))
+
+{
+
+alert("Please enter a number for your height.");
+
+f.htf.focus();
+
+return;
+
+}
+
+if (!chkw(w))
+
+{
+
+alert("Please enter a number for your weight.");
+
+f.wt.focus();
+
+return;
+
+}
+
+
+
+// Perform the calculation
+
+
+
+f.bmi.value = cal_bmi(w, i);
+
+f.bmi.focus();
+
+}
+
+
+
+function chkw(w){
+
+if (isNaN(parseInt(w))){
+
+return false;
+
+} else if (w < 0){
+
+return false;
+
+}
+
+else{
+
+return true;
+
+}
+
+}
+
+// -->
+
+</script>

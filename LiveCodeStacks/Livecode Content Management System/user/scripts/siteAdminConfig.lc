@@ -1,0 +1,18 @@
+script "Site Admin Config"
+
+global gAdminConfig
+global gData, gTheme
+
+
+command siteAdminConfig
+
+  -- config settings for photo uploads / resizing
+  put "4000, 3000, false" into gAdminConfig["photo sizes"]["large"]
+  put "1600,  1200, false" into gAdminConfig["photo sizes"]["medium"]
+  put " 400,  300, false" into gAdminConfig["photo sizes"]["small"]
+  put "  80,   60, false" into gAdminConfig["photo sizes"]["thumb"]
+  
+  put "media/photos" into gAdminConfig["imageBase"] 
+  put TRUE into gAdminConfig["UseSubFolders"] 
+  
+end siteAdminConfig 

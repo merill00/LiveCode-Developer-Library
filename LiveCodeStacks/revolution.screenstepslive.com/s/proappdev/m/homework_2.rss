@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Professional Application Development With Revolution (now LiveCode) &gt; Homework: Session II : Recent Lessons</title>
+    <description>Recently created lessons from Professional Application Development With Revolution (now LiveCode) : Homework: Session II</description>
+    <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2</link>
+    <item>
+      <title>Format General UI Controls For Platform</title>
+      <description>&lt;p&gt;I created this To-Do application on a Mac. That means that if I set the text size or style of any controls that the current font was saved with the control. In this case Lucida Grande. The stack won't look very nice on Windows so we are going to look at an easy way to format controls to use the right font on each platform.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:24:55 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2/l/6682-format-general-ui-controls-for-platform</link>
+    </item>
+    <item>
+      <title>Broadcast Preference Change</title>
+      <description>&lt;p&gt;The To-Do application has two places in the UI that can change the value of the &lt;strong&gt;hide completed items&lt;/strong&gt; preference. The first is the checkbox in the UI. The second is the Edit menu item. Let's look at a simple example that shows how Broadcasting can be used to keep the UI in sync when the preference value is changed by calling glxapp_setPref.&lt;/p&gt;
+
+
+&lt;p&gt;The framework uses the included Broadcasting API in order to send messages when preference values are changed. We will talk more about Broadcasting in Session III.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:24:40 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2/l/6681-broadcast-preference-change</link>
+    </item>
+    <item>
+      <title>Make State of "Hide Complete Items" Checkbox a Preference</title>
+      <description>&lt;p&gt;Now we are going to add a preference to the application.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:24:06 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2/l/6680-make-state-of-hide-complete-items-checkbox-a-preference</link>
+    </item>
+    <item>
+      <title>Test Loading of Libraries</title>
+      <description>&lt;p&gt;Now that you have configured the application to load the new libraries.rev stack file at launch you can open the application in the IDE again to test.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:23:39 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2/l/6679-test-loading-of-libraries</link>
+    </item>
+    <item>
+      <title>Add libControlFormatter.rev</title>
+      <description>&lt;p&gt;Now that you have a location to store libraries you are going to add a new library to the libraries stack.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:23:26 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2/l/6678-add-libcontrolformatter-rev</link>
+    </item>
+    <item>
+      <title>Create libraries.rev Stack File</title>
+      <description>&lt;p&gt;Now you will create a libraries.rev stack file. This stack file is a good place to store libraries that your application uses. The libraries can be substacks of the libraries.rev mainstack.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:22:38 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2/l/6677-create-libraries-rev-stack-file</link>
+    </item>
+    <item>
+      <title>Open To-Do Application</title>
+      <description>&lt;p&gt;Your homework for this session involves adding some features to an existing application. The application is a variant of the SQL Yoga To-Do application.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:22:10 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_2/l/6676-open-to-do-application</link>
+    </item>
+  </channel>
+</rss>

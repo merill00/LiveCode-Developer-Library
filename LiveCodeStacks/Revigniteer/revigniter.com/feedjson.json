@@ -1,0 +1,127 @@
+{
+  "version": "https://jsonfeed.org/version/1",
+  "title": "revIgniter JSON Feed",
+  "home_page_url": "https://revigniter.com",
+  "feed_url": "https://revigniter.com/feedjson",
+  "description": "Announcements regarding revIgniter",
+  "user_comment": "This feed allows you to read the posts from this site in any feed reader that supports the JSON Feed format. To add this feed to your reader, add the following URL to your reader: https://revigniter.com/feedjson",
+  "icon": "https://revigniter.com/assets/modules/feedjson/img/feedIcon.png",
+  "favicon": "https://revigniter.com/assets/modules/feedjson/img/feedFavicon.png",
+  "author": {
+    "name": "Ralf Bitter"
+  },
+  "items": [
+    {
+"id": "https://revigniter.com/news/newsarticle/revIgniter_v2.1.6_Released",
+"url": "https://revigniter.com/news/newsarticle/revIgniter_v2.1.6_Released",
+"title": "revIgniter v2.1.6 Released",
+"content_html": "<p>revIgniter v2.1.6 has been released. Controllers can now be run via the command-line interface. To get more informations please read the <a href=\"https://revigniter.com/userGuide/changelog.html\">Change Log</a> of the User Guide.</p><p>If you are running revIgniter please see the <a href=\"https://revigniter.com/userGuide/installation/upgrading.html\">Update Instructions</a>.</p>",
+"summary": "revIgniter v2.1.6 has been released. Controllers can now be run via the command-line interface. To get more informations please read the Change Log of the User Guide.",
+"date_published": "2020-03-11T19:42:28-04:00",
+"author": {
+"name": "Ralf Bitter"
+}
+},
+{
+"id": "https://revigniter.com/news/newsarticle/revIgniter_v2.1.5_Released",
+"url": "https://revigniter.com/news/newsarticle/revIgniter_v2.1.5_Released",
+"title": "revIgniter v2.1.5 Released",
+"content_html": "<p>revIgniter v2.1.5 has been released. This release adds CSP (Content Security Policy) support to AJAX pagination, to the Galleria helper and to the Asset helper. Finally bidding farewell to Google by replacing the Google search bar with a privacy-friendly search bar in the User Guide. To get more informations please read the <a href=\"https://revigniter.com/userGuide/changelog.html\">Change Log</a> of the User Guide.</p><p>If you are running revIgniter please see the <a href=\"https://revigniter.com/userGuide/installation/upgrading.html\">Update Instructions</a>.</p>",
+"summary": "revIgniter v2.1.5 has been released. This release adds CSP (Content Security Policy) support to AJAX pagination, to the Galleria helper and to the Asset helper.",
+"date_published": "2020-01-18T17:57:00-05:00",
+"author": {
+"name": "Ralf Bitter"
+}
+},
+{
+"id": "https://revigniter.com/news/newsarticle/revIgniter_v2.1.4_Released",
+"url": "https://revigniter.com/news/newsarticle/revIgniter_v2.1.4_Released",
+"title": "revIgniter v2.1.4 Released",
+"content_html": "<p>revIgniter v2.1.4 has been released. This maintenance release implements the
+\"SameSite\" cookie attribute. To get more informations please read the <a href=\"https://revigniter.com/userGuide/changelog.html\">Change Log</a> of the User Guide.</p><p>If you are running revIgniter please see the <a href=\"https://revigniter.com/userGuide/installation/upgrading.html\">Update Instructions</a>.</p>",
+"summary": "revIgniter v2.1.4 has been released. This maintenance release implements the
+\"SameSite\" cookie attribute.",
+"date_published": "2019-10-21T19:03:19-04:00",
+"author": {
+"name": "Ralf Bitter"
+}
+},
+{
+"id": "https://revigniter.com/news/newsarticle/TM_bundles_v2.4.0_Released",
+"url": "https://revigniter.com/news/newsarticle/TM_bundles_v2.4.0_Released",
+"title": "TM bundles v2.4.0 Released",
+"content_html": "<p>This release adds dark themes \"revIgniterDark\" and \"LiveCodeDark\". Please read README.md included in the bundle.</p>",
+"summary": "This release adds dark themes \"revIgniterDark\" and \"LiveCodeDark\". Please read README.md included in the bundle.",
+"date_published": "2019-09-25T17:31:00-04:00",
+"author": {
+"name": "Ralf Bitter"
+}
+},
+{
+"id": "https://revigniter.com/news/newsarticle/revIgniter_v2.1.3_Released",
+"url": "https://revigniter.com/news/newsarticle/revIgniter_v2.1.3_Released",
+"title": "revIgniter v2.1.3 Released",
+"content_html": "<p>revIgniter v2.1.3 has been released. This release fixes a bug in the authentication library which prevented the registration of new users. To get more informations please read the <a href=\"https://revigniter.com/userGuide/changelog.html\">Change Log</a> of the User Guide.</p><p>If you are running revIgniter please see the <a href=\"https://revigniter.com/userGuide/installation/upgrading.html\">Update Instructions</a>.</p>",
+"summary": "revIgniter v2.1.3 has been released. This release fixes a bug in the authentication library which prevented the registration of new users.",
+"date_published": "2019-09-23T13:24:00-04:00",
+"author": {
+"name": "Ralf Bitter"
+}
+},
+{
+"id": "https://revigniter.com/news/newsarticle/revIgniter_v2.1.2_Released",
+"url": "https://revigniter.com/news/newsarticle/revIgniter_v2.1.2_Released",
+"title": "revIgniter v2.1.2 Released",
+"content_html": "<p>revIgniter v2.1.2 has been released. This housekeeping release includes some minor changes e.g. database inserts and updates no longer set table fields to empty if the corresponding array element passed to the active record library is empty. Naming restrictions for custom libraries and stacks are widely reduced. To get more informations please read the <a href=\"https://revigniter.com/userGuide/changelog.html\">Change Log</a> of the User Guide.</p><p>If you are running revIgniter please see the <a href=\"https://revigniter.com/userGuide/installation/upgrading.html\">Update Instructions</a>.</p>",
+"summary": "revIgniter v2.1.2 has been released. This housekeeping release includes some minor changes e.g. database inserts and updates no longer set table fields to empty if the corresponding array element passed to the active record library is empty.",
+"date_published": "2019-09-12T19:58:46-04:00",
+"author": {
+"name": "Ralf Bitter"
+}
+},
+{
+"id": "https://revigniter.com/news/newsarticle/revIgniter_v2.1.1_Released",
+"url": "https://revigniter.com/news/newsarticle/revIgniter_v2.1.1_Released",
+"title": "revIgniter v2.1.1 Released",
+"content_html": "<p>revIgniter v2.1.1 has been released. This maintenance release includes an extra variant to retrieve URI strings. This may serve those who develop web apps using XAMPP. Furthermore it fixes an issue related to OTP. To get more informations please read the <a href=\"https://revigniter.com/userGuide/changelog.html\">Change Log</a> of the User Guide.</p><p>If you are running revIgniter please see the <a href=\"https://revigniter.com/userGuide/installation/upgrading.html\">Update Instructions</a>.</p>",
+"summary": "revIgniter v2.1.1 has been released. This maintenance release includes an extra variant to retrieve URI strings.",
+"date_published": "2019-08-28T19:12:00-04:00",
+"author": {
+"name": "Ralf Bitter"
+}
+},
+{
+"id": "https://revigniter.com/news/newsarticle/TM_bundles_v2.3.0_Released",
+"url": "https://revigniter.com/news/newsarticle/TM_bundles_v2.3.0_Released",
+"title": "TM bundles v2.3.0 Released",
+"content_html": "<p>This release adds tab triggers for the new handlers related to two-factor authentication. Please read README.md included in the bundle.</p>",
+"summary": "This release adds tab triggers for the new handlers related to two-factor authentication. Please read README.",
+"date_published": "2019-07-01T17:51:00-04:00",
+"author": {
+"name": "Ralf Bitter"
+}
+},
+{
+"id": "https://revigniter.com/news/newsarticle/revIgniter_v2.1.0_Released",
+"url": "https://revigniter.com/news/newsarticle/revIgniter_v2.1.0_Released",
+"title": "revIgniter v2.1.0 Released",
+"content_html": "<p>revIgniter v2.1.0 has been released. This release adds two-factor authentication and a one-time password (OTP) helper conforming to RFC6238. Furthermore there are tweaks and fixes. To get more informations please read the <a href=\"https://revigniter.com/userGuide/changelog.html\">Change Log</a> of the User Guide.</p><p>If you are running revIgniter please see the <a href=\"https://revigniter.com/userGuide/installation/upgrading.html\">Update Instructions</a>.</p>",
+"summary": "revIgniter v2.1.0 has been released. This release adds two-factor authentication and a one-time password (OTP) helper conforming to RFC6238.",
+"date_published": "2019-06-28T19:09:00-04:00",
+"author": {
+"name": "Ralf Bitter"
+}
+},
+{
+"id": "https://revigniter.com/news/newsarticle/revIgniter_v2.0.5_Released",
+"url": "https://revigniter.com/news/newsarticle/revIgniter_v2.0.5_Released",
+"title": "revIgniter v2.0.5 Released",
+"content_html": "<p>revIgniter v2.0.5 has been released. This release improves the Config library and fixes an issue with sub libraries. To get more informations please read the <a href=\"https://revigniter.com/userGuide/changelog.html\">Change Log</a> of the User Guide.</p><p>If you are running revIgniter please see the <a href=\"https://revigniter.com/userGuide/installation/upgrading.html\">Update Instructions</a>.</p>",
+"summary": "revIgniter v2.0.5 has been released. This release improves the Config library and fixes an issue with sub libraries.",
+"date_published": "2019-05-07T16:21:00-04:00",
+"author": {
+"name": "Ralf Bitter"
+}
+}
+  ]
+}

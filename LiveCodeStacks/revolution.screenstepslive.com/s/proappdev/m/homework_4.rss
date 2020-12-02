@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Professional Application Development With Revolution (now LiveCode) &gt; Homework: Session IV : Recent Lessons</title>
+    <description>Recently created lessons from Professional Application Development With Revolution (now LiveCode) : Homework: Session IV</description>
+    <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4</link>
+    <item>
+      <title>Update FileStorm Project</title>
+      <description>&lt;p&gt;The FileStorm project uses an alias to the /Applications folder on your development computer. This alias adds an alias to the folder on the DMG file that is created so that the user can drag your application into the Applications directory really easily.&lt;/p&gt;
+
+
+&lt;p&gt;This lesson will show you how to create the alias and update the project to point to the alias.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:28:18 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4/l/6749-update-filestorm-project</link>
+    </item>
+    <item>
+      <title>Compiling Windows Installer</title>
+      <description>&lt;p&gt;Let's look at how you compile the Windows installer using INNO Setup. You must have INNO Setup installed on Windows for this to work.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:28:00 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4/l/6715-compiling-windows-installer</link>
+    </item>
+    <item>
+      <title>Building Installers With the Application Packager</title>
+      <description>&lt;p&gt;The Application Packager is what you use to package up your application in order to create an installer or provide an update. &lt;/p&gt;
+
+
+&lt;p&gt;In order to get around some limitations in regards to manipulating scripts that is present in a Revolution standalone application you need to open the Application Packager in the Revolution IDE. I usually keep multiple copies of the same version of Revolution around and just open the Application Packager stack in a separately running instance of the IDE.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:27:50 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4/l/6714-building-installers-with-the-application-packager</link>
+    </item>
+    <item>
+      <title>Configure Global Build Profile Settings</title>
+      <description>&lt;p&gt;We are just about ready to open the Application Packager. We just need to configure some settings that will affect building installers and update packages.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:27:25 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4/l/6713-configure-global-build-profile-settings</link>
+    </item>
+    <item>
+      <title>Add Read Me And Database As A Standalone Resource</title>
+      <description>&lt;p&gt;Before using the Application Packager we are going to add two more files to the application. The &lt;strong&gt;Standalone Resources&lt;/strong&gt; tab allows you to add files that will be included with the distribution for each platform.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:27:03 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4/l/6712-add-read-me-and-database-as-a-standalone-resource</link>
+    </item>
+    <item>
+      <title>Prepare FTP Server</title>
+      <description></description>
+      <pubDate>Fri, 02 Sep 2016 11:26:40 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4/l/6711-prepare-ftp-server</link>
+    </item>
+    <item>
+      <title>Download Installer Programs</title>
+      <description>&lt;p&gt;In order to automate the creation of installers as much as possible you need the write software for creating installers. You want an installer program that creates installers based on text files or that can be automated through the use of a command line tool or AppleScript.&lt;/p&gt;
+
+
+&lt;p&gt;Here are suggestions for programs that I use on Windows and OS X. Download and install these programs if you would like to test building installers.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:26:38 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_4/l/6710-download-installer-programs</link>
+    </item>
+  </channel>
+</rss>

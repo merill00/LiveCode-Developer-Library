@@ -1,0 +1,219 @@
+/*************************************************************************************
+*      This program provides a simple template one can quickly and easily update to generate a 
+* simple program for displaying and navigating whatever text based information they need to provide
+* for their users to navigate and acquire whatever relevant data is available.
+**************************************************************************************/
+
+
+/*
+--Global variables start with a lower case g
+--Messages start with a lower case m (exception for official messages)
+--Functions start with a lowercase f
+*/
+
+
+global gCFileArray /*numeric value array to control file location for reading*/
+global gCFileArrayLimit /*Indicator of the final item in the array at any given moment*/
+global gCFilePath /*the intermediate data from the top file to the file to be querried
+*                               Excludes the extension to enable use for any included files for the page*/
+global gCFileData /*This contains whatever data was read in for the current page of information*/
+global gTItems /*This is used to determine how many hyperlinks to include*/
+global gCurrentTeir /*Mechanism for controling screen data while stepping through it*/
+global gFileIndicator /*This is used to simplify corrections for different operating system file delimiters*/
+
+--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+/*************************************************************************************
+*   preOpenStack 
+*            Initializes the program by launching the necessary 
+*            messages to initialize the program.
+**************************************************************************************/
+on preOpenStack
+   put "/" into gFileIndicator /* put "/" if the program is running on a mac, use "\" instead for windows*/
+   set the visible of image "ClickMe" to true
+   set the visible of field "StartUp" to true
+   put ((gFileIndicator) & "KPoeP3" & (gFileIndicator) & "Greetings.txt") into toRead
+   open file specialFolderPath("Desktop") &  (toRead) for read
+   read from file specialFolderPath("Desktop") &  (toRead) until EOF
+   put it into field "StartUp" 
+   close file specialFolderPath("Desktop") &  (toRead)
+   set the visible of field "Header" to false
+   set the visible of field "Links" to false
+   set the visible of field "Details" to false
+   set the visible of field "Description" to false
+   set the visible of image "Image" to false
+   set the visible of button "To Top" to false
+   set the visible of button "Back One" to false
+end preOpenStack
+
+
+/*************************************************************************************
+*  mClearFields
+*        This message enables clearing the fields without unintentionally 
+*         reseting the program to the top.
+***************************************************************************************/
+on mClearFields
+   put 0 into gTItems
+   put "" into field "Description"
+   put "" into field "Links"
+   put "" into field "Details"
+   set the filename of image "Image" to ""
+   play stop
+end mClearFields
+
+
+/*************************************************************************************
+*   mClearData
+*            This message restores the starting values to enable
+*            easy return to the initial program conditions without
+*            requiring the program to be restarted.
+**************************************************************************************/
+on mClearData
+   put 1 into gCurrentTeir
+   put 1 into gCFileArrayLimit
+   put 0 into item 1 of gCFileArray
+   put "" into gCFilePath   
+end mClearData
+
+
+
+/*************************************************************************************  
+*  mUpdateFileArray
+*             This message controls the navigation of the data.
+*             When called it first checks where it is being asked to 
+*             go. It then makes adjustments accordingly
+*             It can be called by button "To Top", button "Back One",
+*             or by clicking one of the hyperlinks in the Link menu
+*             If currently on the top of the navigation heap the two 
+*             buttons are hidden to avoid confusion.
+***************************************************************************************/
+
+on mUpdateFileArray stepWhere
+   lock screen
+   if stepWhere is "Up" then
+      subtract 1 from gCurrentTeir
+      put "" into item gCFileArrayLimit of gCFileArray
+      subtract 1 from gCFileArrayLimit
+      if gCurrentTeir < 1 then
+         mUpdateFileArray("Top")
+      end if
+   else if stepWhere is "Top"  then
+      if gCFileArrayLimit >1 then
+         repeat with x = 1 to (gCFileArrayLimit)
+            put "" into item x of gCFileArray
+         end repeat
+      end if
+      mClearData
+   else
+      add 1 to gCurrentTeir
+      add 1 to gCFileArrayLimit
+      put stepWhere into item gCFileArrayLimit of gCFileArray
+   end if
+   if gCurrentTeir = 1 then
+      set the visible of button "To Top" to false
+      set the visible of button "Back One" to false
+   else
+      set the visible of button "To Top" to true
+      set the visible of button "Back One" to true
+   end if
+   mPrepareFilePath
+   unlock screen
+end mUpdateFileArray
+
+
+/*************************************************************************************  
+*  mPrepareFilePath
+*             This message prepares the path to be called by the
+*             mLoadFile function.
+***************************************************************************************/
+on mPrepareFilePath
+   put "" into gCFilePath
+   repeat with x = 1 to (gCFileArrayLimit)
+      if (item x of gCFileArray is a number) then
+         put (gCFilePath &  (gFileIndicator) & (item x of gCFileArray)) into gCFilePath
+      end if
+   end repeat
+   mLoadFile
+   mLoadScreen
+end mPrepareFilePath
+
+
+/*************************************************************************************  
+*  mLoadFile
+*             This message loads the file with the information to 
+*             be displayed to the user.
+***************************************************************************************/
+on mLoadFile 
+   put ((gFileIndicator) & "KpoeP3" & gCFilePath & ".txt") into ToRead
+   open file specialFolderPath ("Desktop") & (ToRead) for read
+   read from file specialFolderPath ("Desktop") & (ToRead) until EOF
+   put it into gCFileData
+   close file specialFolderPath ("Desktop") & (ToRead)
+end mLoadFile
+
+
+/*************************************************************************************  
+*  mLoadScreen
+*             This message sorts the data to present on the screen.
+***************************************************************************************/
+on mLoadScreen
+   mClearFields
+   set the itemDelimiter to "*"
+   put item 1 of gCFileData into gtItems
+   put item 2 of gCFileData into field "Header"
+   put item 3 of gCFileData into field "Description"  
+   if gtItems > 0 then
+      repeat with x = 4 to (gtItems + 3)
+         put (x - 3) into lineNum
+         put (item x of gCFileData) into line lineNum of field "Links"
+         set the textStyle of line lineNum of field "Links" to link
+         set the linkText of line lineNum of field "Links" to lineNum
+      end repeat
+   end if
+   put (gTItems + 4) into beyondLinks
+   put item beyondLinks of gCFileData into field "Details"
+   put item (beyondLinks + 1)  of gCFileData into numLoadThings
+   if numLoadThings > 0 then
+      put (beyondLinks + 2) into t
+         put item t of gCFileData into loadThing
+         if loadThing is ".jpg" or loadThing is ".png" then
+            put ("." & gCFilePath & loadThing) into loadFile
+            set the filename of image "Image" to (LoadFile)
+            set the visible of image "Image" to true
+         end if 
+   end if
+   checkOverflow
+end mLoadScreen
+
+on checkOverflow
+   if the formattedHeight of field "Details" > the height of field "Details" then
+      set the vScrollBar of field "Details" to true
+   else
+      set the vScrollBar of field "Details" to false
+   end if
+   if the formattedHeight of field "Description" > the height of field "Description" then
+      set the vScrollBar of field "Description" to true
+   else
+      set the vScrollBar of field "Description" to false
+   end if
+   if the formattedHeight of field "Links" > the height of field "Links" then
+      set the vScrollBar of field "Links" to true
+   else
+      set the vScrollBar of field "Links" to false
+   end if
+   
+end checkOverflow
+/*************************************************************************************  
+*  linkClicked
+*             This message detects which item was clicked 
+*             in the links menu and sends the appropriate 
+*             information to mUpdateFileArray to load the 
+*             file for the data the user is looking for.
+***************************************************************************************/
+on linkClicked myLink
+   repeat with x = 1 to gTItems
+   if myLink = x then
+      mUpdateFileArray(myLink)
+   end if
+   end repeat
+end linkClicked

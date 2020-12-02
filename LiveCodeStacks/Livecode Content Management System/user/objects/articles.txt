@@ -1,0 +1,11 @@
+Summary: Category,Headline
+Headline,Input,120
+Author,Input,80
+DatePublished,Input,20
+DateExpires,Input,20
+DateEmbargo,Input,20
+Summary,Input,100
+Content,Area,100,20
+Image,Input,64
+Category,Input,20
+Tags,Input,20

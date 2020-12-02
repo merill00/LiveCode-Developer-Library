@@ -1,0 +1,18 @@
+on mouseUp
+   set the text of field "My Field" to "Hello"
+   answer "Hello"
+end mouseUp
+
+
+on mouseUp set the text of field "My Field" to |"Hello"| answer |"Hello"| end mouseUp
+
+
+on mouseUp 
+   set the text of field MyField to "Hello" answer "Hello" end mouseUp
+
+
+ "script": "on mouseUp \r\n set the text of field MyField to \"Hello\" answer \"Hello\" \r\n end mouseUp "
+
+
+
+

@@ -1,0 +1,1703 @@
+/*
+Copyright (C) 2015-2016 LiveCode Ltd.
+
+This file is part of LiveCode.
+
+LiveCode is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License v3 as published by the Free
+Software Foundation.
+
+LiveCode is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+for more details.
+
+You should have received a copy of the GNU General Public License
+along with LiveCode.  If not see <http://www.gnu.org/licenses/>.  */
+
+/**
+This widget is a button bar.
+
+Contributed by .com Solutions Inc.
+www.FmProMigrator.com
+
+Name: buttonClicked
+Type: message
+Syntax: on buttonClicked nameOfButtonClicked
+Summary: Sent when a button is clicked
+
+Example:
+on buttonClicked pButtonName
+   -- branch based upon name of clicked button
+   switch pButtonName
+      case "first"
+         break
+      case "previous"
+         break
+      case "next"
+         break
+      case "last"
+         break
+      default
+         -- do nothing if empty
+   end switch
+end buttonClicked
+
+Description:
+Handle the <buttonClicked> message in the widget's object script to respond to
+a button click made by the user.
+
+*/
+
+-- declaring extension as widget, followed by identifier
+widget com.fmpromigrator.widget.buttonbar
+
+-- dependancy declarations
+use com.livecode.canvas
+use com.livecode.widget
+use com.livecode.engine
+use com.livecode.library.iconSVG
+use com.livecode.library.widgetutils
+--
+
+-- adding metadata to ensure the extension displays correctly in livecode
+metadata author is "David Simpson"
+metadata version is "0.9.7"
+metadata title is "Button Bar"
+metadata preferredSize is "320,49"
+metadata svgicon is "M15.608,6.262h-2.338v0.935h2.338c0.516,0,0.934,0.418,0.934,0.935v8.879c0,0.517-0.418,0.935-0.934,0.935H4.392c-0.516,0-0.935-0.418-0.935-0.935V8.131c0-0.516,0.419-0.935,0.935-0.935h2.336V6.262H4.392c-1.032,0-1.869,0.837-1.869,1.869v8.879c0,1.031,0.837,1.869,1.869,1.869h11.216c1.031,0,1.869-0.838,1.869-1.869V8.131C17.478,7.099,16.64,6.262,15.608,6.262z M9.513,11.973c0.017,0.082,0.047,0.162,0.109,0.226c0.104,0.106,0.243,0.143,0.378,0.126c0.135,0.017,0.274-0.02,0.377-0.126c0.064-0.065,0.097-0.147,0.115-0.231l1.708-1.751c0.178-0.183,0.178-0.479,0-0.662c-0.178-0.182-0.467-0.182-0.645,0l-1.101,1.129V1.588c0-0.258-0.204-0.467-0.456-0.467c-0.252,0-0.456,0.209-0.456,0.467v9.094L8.443,9.553c-0.178-0.182-0.467-0.182-0.645,0c-0.178,0.184-0.178,0.479,0,0.662L9.513,11.973z"
+
+--
+
+/**
+Syntax: set the itemArray of <widget> to <pButtonArray>
+Syntax: get the itemArray of <widget>
+
+Summary:  The <itemArray> is all the collective data of the icons and labels of the buttonbar
+
+Parameters:
+pButtonArray(array): An array containing all the buttonbar data:
+
+Description:
+The <itemArray> is a numerically keyed array, each element of which contains
+an array describing the label and icons of the navigation item at that index.
+
+The structure of the <itemArray> is:
+
+```
+{ key (integer): The index of the navigation item
+	value (array): The array containing the data for the item at this index
+	{ key : "label"
+		value (string): The label of this item
+		key : "name"
+		value (string): The name of this item
+		key : "icon_name"
+		value (string) : The name of the icon to display when the item is not highlighted
+		key : "hilited_icon_name"
+		value (string) : The name of the icon to display when the item is highlighted
+	}
+}
+```
+
+Any individual keys ("label", "icon_name", "hilited_icon_name") missing when
+setting the <itemArray> will be added, and set to their defaults - "circle" for
+the icons, and "New Item" for the label.
+
+**Note:** Setting the <ButtonArrayData> to a non-numerically keyed array will cause an
+error to be thrown
+*/
+property itemArray get getButtonData set setButtonData
+metadata itemArray.editor is "com.livecode.pi.navbar"
+metadata itemArray.label is "Button data"
+
+/**
+Syntax: set the itemNames of <widget> to <pNames>
+Syntax: get the itemNames of <widget>
+Summary: The names of the button items
+
+Parameters:
+pNames(string): A comma delimited list of the button item names.
+
+Description:
+The names of the button items of the widget.
+
+Adding an item to the <itemNames> of the buttonbar causes a new button item to
+be created with the default icon and label. Removing an item from the
+<itemNames> causes the corresponding item to be removed from the button
+items.
+*/
+property itemNames		get getButtonNames			set setButtonNames
+metadata itemNames.editor is "com.livecode.pi.editorList"
+metadata itemNames.subeditor is "com.livecode.pi.string"
+metadata itemNames.delimiter is ","
+metadata itemNames.label is "Button names"
+
+/**
+Syntax: set the itemIcons of <widget> to <pIcons>
+Syntax: get the itemIcons of <widget>
+Summary: The icons for the button items when not highlighted
+
+Parameters:
+pIcons(string): A comma delimited list of icon names.
+
+Description:
+The icons of the button items of the widget.  Adding an item to the
+<itemIcons> causes a new button item to be created with the default label
+and name.
+
+Each icon name must be one of the predefined graphics provided by the "IconSVG"
+library.  You can get a list of available predefined path names by running
+`put iconNames()` in the Message Box.
+
+**Note:** Removing an item from the <itemIcons> does not cause the
+corresponding item to be removed from the button items, but merely resets
+it to the default icon.
+
+*/
+property itemIcons		get getButtonIcons			set setButtonIcons
+metadata itemIcons.user_visible is "false"
+
+/**
+Syntax: set the hilitedItemIcons of <widget> to <pIcons>
+Syntax: get the hilitedItemIcons of <widget>
+Summary: The icons for the navigation items when pressed (hilited)
+
+Parameters:
+pIcons(string): A comma delimited list icon names.
+
+Description:
+The icons for the button items of the widget to be shown when the buttons are
+in the pressed state.  Adding an item to the <hilitedItemIcons> causes a new button
+item to be created with the default label and name.
+
+The name of an icon must be one of the names returned by the iconNames() function of the com.livecode.library.iconSVG library.
+
+Each icon name must be one of the predefined graphics provided by the "IconSVG"
+library.  You can get a list of available predefined path names by running
+`put iconNames()` in the Message Box.
+
+**Note:** Removing an item from the <hilitedItemIcons> does not cause the
+corresponding item to be removed from the button items, but merely resets
+it to the default icon.
+
+References: itemIcons (property)
+*/
+property hilitedItemIcons		get getButtonSelectedIcons			set setButtonSelectedIcons
+metadata hilitedItemIcons.user_visible is "false"
+
+/**
+Syntax: set the itemLabels of <widget> to <pLabels>
+Syntax: get the itemLabels of <widget>
+Summary: The labels displayed for the navigation items
+
+Parameters:
+pLabels(string): A comma delimited list of labels.
+
+Description:
+The display labels for button items of the widget. Adding an item to the
+<itemLabels> causes a new button item to be created with the default icon
+and name.
+
+**Note:** Removing an item from the <itemLabels> does not cause the
+corresponding item to be removed from the button items, but merely resets
+it to the default label.
+*/
+property itemLabels		get getButtonLabels		set setButtonLabels
+metadata itemLabels.user_visible is "false"
+
+/**
+Syntax: set the itemStyle of <widget> to <pItemStyle>
+Syntax: get the itemStyle of <widget>
+
+Summary: The display style of the widget
+
+Parameters:
+pItemStyle(enum): The display style
+-"icons": display icons only
+-"text": display names only
+-"both": display icons and names
+
+Description:
+Use the <itemStyle> property to control which elements of the button items are displayed.
+*/
+property itemStyle	get mItemStyle	set setItemStyle
+metadata itemStyle.editor is "com.livecode.pi.enum"
+metadata itemStyle.options is "icons,text,both"
+metadata itemStyle.default is "both"
+metadata itemStyle.label is "Display style"
+
+/**
+Syntax: set the hiliteColor of <widget> to <pColor>
+Syntax: get the hiliteColor of <widget>
+
+Summary: Controls the color of buttonbar icons and text when pressed.
+
+Description:
+Use the <hiliteColor> property to control the color used to draw icons and text
+of the currently-pressed buttonbar item.
+*/
+metadata hiliteColor.editor is "com.livecode.pi.color"
+metadata hiliteColor.label is "Clicked item color"
+metadata hiliteColor.section is "Colors"
+metadata hiliteColor.default is "10,95,244"
+
+/**
+Name: foreColor
+
+Syntax: set the foreColor of <widget> to <pColor>
+Syntax: get the foreColor of <widget>
+
+Summary: Controls the color of buttonbar icons and text when not selected.
+
+Description:
+Use the <foreColor> property to control the color used to draw icons and text
+of the buttonbar items that are not selected.
+*/
+metadata foregroundColor.editor is "com.livecode.pi.color"
+metadata foregroundColor.label is "Item color"
+metadata foregroundColor.section is "Colors"
+metadata foregroundColor.default is "128,128,128"
+
+/**
+Name: backColor
+
+Syntax: set the backColor of <widget> to <pColor>
+Syntax: get the backColor of <widget>
+
+Summary: Controls the background color of the buttonbar.
+
+Description:
+Use the <backColor> property to control the way the background of the buttonbar
+is painted.
+*/
+metadata backgroundColor.editor is "com.livecode.pi.color"
+metadata backgroundColor.label is "Background color"
+metadata backgroundColor.section is "Colors"
+metadata backgroundColor.default is "244,244,244"
+
+/**
+Syntax: set the borderColor of <widget> to <pColor>
+Syntax: get the borderColor of <widget>
+
+Summary: Controls the border color of the buttonbar.
+
+Description:
+Use the <borderColor> property to control the color used to draw the top border
+of the buttonbar.
+*/
+metadata borderColor.editor is "com.livecode.pi.color"
+metadata borderColor.label is "Border color"
+metadata borderColor.section is "Colors"
+metadata borderColor.default is "166,166,166"
+
+/**
+Syntax: set the editMode of <widget> to (true | false)
+Syntax: get the editMode of <widget>
+
+Summary: Whether the widget is in edit mode or not
+
+Description:
+This is currently an experimental feature of the navigation bar, and allows the icons to
+be changed by clicking on the outlined regions, and new items to be added with the add button.
+*/
+property editMode get mEditMode set setEditMode
+metadata editMode.user_visible is "false"
+
+/**
+Syntax: get the desiredHeight of <widget>
+
+Summary: The height that the widget ought to be displayed at
+
+Example:
+create widget as "com.fmpromigrator.widget.buttonbar"
+set the height of it to the desiredHeight of it
+
+Description:
+Returns the height that the widget ought to be displayed at
+*/
+property desiredHeight	get getDesiredHeight
+metadata desiredHeight.user_visible is "false"
+
+/**
+Syntax: set the <showBorder> of <widget> to {true | false}
+Syntax: get the <showBorder> of <widget>
+
+Summary: Whether the dividing line at the top of the buttonbar is drawn or not
+
+Description:
+Use the <showBorder> property to determine whether the dividing line at the top
+of the buttonbar is drawn or not.
+*/
+property showBorder get mShowDivide set setShowDivide
+metadata showBorder.default is "true"
+metadata showBorder.label is "Show border"
+
+/**
+Syntax: set the <opaque> of <widget> to {true | false}
+Syntax: get the <opaque> of <widget>
+
+Summary: Whether the background of the buttonbar is opaque
+
+Description:
+If the <opaque> property is `false`, the background of the buttonbar will be
+transparent.
+*/
+property "opaque" get mShowBackground set setShowBackground
+metadata opaque.default is "true"
+metadata opaque.label is "Opaque background"
+
+metadata textSize.default is "10"
+
+-- private instance variables
+private variable mButtonData as List
+
+private variable mSelectedItem as Integer
+private variable mItemStyle as String
+
+private variable mButtonItemCount as Integer
+private variable mBoxWidth as Real
+
+private variable mWidth as Real
+private variable mHeight as Real
+
+private variable mRecalculate as Boolean
+
+private variable mEditMode as Boolean
+private variable mAddIcon as Path
+private variable mDeleteIcon as Path
+private variable mReorderIcon as Path
+
+private variable mDragData as optional Array
+
+private variable mHiliteColor as Color
+
+private variable mShowDivide as Boolean
+private variable mShowBackground as Boolean
+
+private variable mActionPaths as Array
+
+--
+
+constant kIconPaddingRatio is 0.1225
+constant kLabelPaddingRatio is 0.09 -- orig = 0.06 - changed to 0.09 to reduce truncation of label text descenders
+constant kLabelHeightRatio is 0.165
+
+constant kEditModePaddingUnit is 10
+constant kEditModeLineHeight is 50
+
+constant kIconOnlyPaddingRatio is 0.2
+
+constant kDefaultButtonName is "new item"
+constant kDefaultButtonLabel is "New Item"
+constant kDefaultButtonIconName is "circle"
+
+public handler OnSave(out rProperties as Array)
+	-- save widget properties when saving stack
+	put the empty array into rProperties
+
+	put getButtonData() into rProperties["items"]
+	put mItemStyle into rProperties["itemStyle"]
+	put mShowDivide into rProperties["showBorder"]
+	put mShowBackground into rProperties["opaque"]
+end handler
+
+public handler OnLoad(in pProperties as Array)
+	-- load previously saved widget properties opening stack
+	setButtonData(pProperties["items"])
+	setItemStyle(pProperties["itemStyle"])
+
+	if "showBorder" is among the keys of pProperties then
+		put pProperties["showBorder"] into mShowDivide
+	else
+		put true into mShowDivide
+	end if
+
+	if "opaque" is among the keys of pProperties then
+		put pProperties["opaque"] into mShowBackground
+	else
+		put true into mShowBackground
+	end if
+end handler
+
+public handler OnCreate() returns nothing
+	-- creating the default list of button items when creating a new instance of the widget
+
+	variable tButtonItems as List
+	put the empty list into tButtonItems
+
+	variable tArray as Array
+	put the empty array into tArray
+
+	put "html5" into tArray["name"]
+	put "HTML5" into tArray["label"]
+	put "html5" into tArray["icon_name"]
+	put "" into tArray["hilited_icon_name"]
+	put "" into tArray["icon"]
+	put "" into tArray["hilited_icon"]
+	push tArray onto tButtonItems
+
+	put "laptop" into tArray["name"]
+	put "Laptop" into tArray["label"]
+	put "laptop" into tArray["icon_name"]
+	put "" into tArray["hilited_icon_name"]
+	put "" into tArray["icon"]
+	put "" into tArray["hilited_icon"]
+	push tArray onto tButtonItems
+
+	put "picture" into tArray["name"]
+	put "Picture" into tArray["label"]
+	put "picture" into tArray["icon_name"]
+	put "" into tArray["hilited_icon_name"]
+	put "" into tArray["icon"]
+	put "" into tArray["hilited_icon"]
+	push tArray onto tButtonItems
+
+	put "search" into tArray["name"]
+	put "Search" into tArray["label"]
+	put "search" into tArray["icon_name"]
+	put "" into tArray["hilited_icon_name"]
+	put "" into tArray["icon"]
+	put "" into tArray["hilited_icon"]
+	push tArray onto tButtonItems
+	put the number of elements in tButtonItems into mButtonItemCount
+
+	put tButtonItems into mButtonData
+
+	put 0 into mSelectedItem -- none of the icons are selected by default
+	put nothing into mDragData
+	put "both" into mItemStyle
+
+	put 0 into mBoxWidth
+
+	initialiseEditData()
+
+	put true into mRecalculate
+	put false into mEditMode
+
+	put path iconSVGPathFromName("plus") into mAddIcon
+	put path iconSVGPathFromName("minus sign") into mDeleteIcon
+	put path iconSVGPathFromName("reorder") into mReorderIcon
+
+	put color [10, 95/255,244/255] into mHiliteColor
+
+	put true into mShowDivide
+	put true into mShowBackground
+
+	put the empty array into mActionPaths
+end handler
+
+public handler OnPaint() returns nothing
+
+	if mRecalculate then
+		updateParameters()
+	end if
+
+	if not mEditMode then
+		drawButtonBar()
+	else
+		drawButtonBarEditMode()
+	end if
+end handler
+
+----------------------------------------------------------------
+-- Drawing in normal mode
+----------------------------------------------------------------
+
+private handler drawButtonBar() returns nothing
+	-- draw the entire button bar and background - top level handler
+	-- background
+	if mShowBackground then
+		set the paint of this canvas to my background paint
+		fill getPath("background") on this canvas
+	end if
+
+	if mButtonItemCount is not 0 then
+		drawButtonBarContent()
+	end if
+
+	-- Draw the top line
+	if mShowDivide then
+		set the paint of this canvas to my border paint
+		set the stroke width of this canvas to 0
+		stroke getPath("line") on this canvas
+	end if
+end handler
+
+private handler drawButtonBarContent() returns nothing
+	-- draw the contents of the button bar (icons, text)
+	variable tX as Integer
+	repeat with tX from 1 up to mButtonItemCount
+		-- Draw the text labels under the icons of the button bar
+		if mItemStyle is in ["text","both"] then
+			drawLabel(mButtonData[tX]["label"], mButtonData[tX]["label_rect"], tX is mSelectedItem)
+		end if
+
+		if mItemStyle is in ["icons","both"] then
+			-- Draw the icons
+			if tX is mSelectedItem then
+				drawIcon(mButtonData[tX]["hilited_icon_path"], true)
+			else
+				drawIcon(mButtonData[tX]["icon_path"], false)
+			end if
+
+		end if
+	end repeat
+end handler
+
+----------------------------------------------------------------
+-- Drawing in edit mode
+----------------------------------------------------------------
+
+private handler drawButtonBarEditMode() returns nothing
+	// Make sure the subsequent drawing operations are opaque
+	set the opacity of this canvas to 1
+	// background
+	set the paint of this canvas to getPaint("background","editmode-fill")
+	fill getPath("bounding box") on this canvas
+
+	set the paint of this canvas to getPaint("background","editmode-stroke")
+	set the stroke width of this canvas to 0
+	stroke getPath("bounding box") on this canvas
+
+	if mButtonItemCount is 0 then
+		set the paint of this canvas to getPaint("add", "fill")
+		fill mActionPaths["add_icon_path"] on this canvas
+	else
+		drawEditModeContent()
+	end if
+end handler
+
+private handler drawEditModeContent() returns nothing
+	variable tX as Integer
+	repeat with tX from 1 up to mButtonItemCount
+			-- Draw the text of the nav bar
+			drawEditModeLabel(mButtonData[tX]["label"], mButtonData[tX]["label_rect"])
+			-- Draw the icon
+			drawIcon(mButtonData[tX]["icon_path"], false)
+			-- Draw the selectedIcon
+			drawIcon(mButtonData[tX]["hilited_icon_path"], true)
+			-- Draw the 'add item' item
+			drawActionItems(tX)
+			-- Draw the rects round the editable elements
+			--drawEditableRects(this canvas)
+			-- Draw the line between items
+			drawEditModeDivide(tX)
+	end repeat
+
+	if mDragData is not nothing then
+		drawDragData()
+	end if
+end handler
+
+private handler drawDragData()
+	if mDragData is nothing then
+		return
+	end if
+
+	variable tTargetPath as Path
+	if "target" is among the keys of mDragData then
+		if mDragData["target"] is 0 then
+			put line path from point [0, mDragData["target"] * kEditModeLineHeight + 2] to point [mWidth, mDragData["target"] * kEditModeLineHeight + 2] into tTargetPath
+		else if mDragData["target"] is mButtonItemCount then
+			put line path from point [0, mDragData["target"] * kEditModeLineHeight - 2] to point [mWidth, mDragData["target"] * kEditModeLineHeight - 2] into tTargetPath
+		else
+			put line path from point [0, mDragData["target"] * kEditModeLineHeight] to point [mWidth, mDragData["target"] * kEditModeLineHeight] into tTargetPath
+		end if
+
+		set the paint of this canvas to getPaint("text", "selected-fill")
+		set the stroke width of this canvas to 3
+		stroke tTargetPath on this canvas
+	end if
+
+	if "rect" is among the keys of mDragData then
+		set the opacity of this canvas to 0.4
+		set the paint of this canvas to getPaint("background","drag-fill")
+		fill rectangle path of mDragData["rect"] on this canvas
+		-- Draw the text of the nav bar
+		drawEditModeLabel(mDragData["label"], mDragData["label_rect"])
+		-- Draw the icon
+		drawIcon(mDragData["icon_path"], false)
+		-- Draw the selectedIcon
+		drawIcon(mDragData["hilited_icon_path"], true)
+	end if
+end handler
+
+private handler drawEditModeDivide(in pNumber as Number) returns nothing
+	if pNumber is mButtonItemCount then
+		return
+	end if
+	variable tPath as Path
+	put line path from point [1, kEditModeLineHeight * pNumber] to point [mWidth - 1, kEditModeLineHeight * pNumber + 1] into tPath
+	set the paint of this canvas to my border paint
+	set the stroke width of this canvas to 0
+	stroke tPath on this canvas
+end handler
+
+private handler drawIcon(in pIconPath as Path, in pSelected as Boolean)
+	if pSelected then
+		set the paint of this canvas to my highlight paint
+	else
+		set the paint of this canvas to my foreground paint
+	end if
+
+	fill pIconPath on this canvas
+end handler
+
+private handler drawLabel(in pLabel as String, in pRect as Rectangle, in pSelected as Boolean)
+	if pSelected then
+		set the paint of this canvas to my highlight paint
+	else
+		set the paint of this canvas to my foreground paint
+	end if
+
+	set the font of this canvas to getFont("label")
+	fill text pLabel at center of pRect on this canvas
+end handler
+
+private handler drawEditModeLabel(in pLabel as String, in pRect as Rectangle)
+	set the paint of this canvas to getPaint("text","editmode-fill")
+	set the font of this canvas to getFont("editmode-label")
+	fill text pLabel at left of pRect on this canvas
+end handler
+
+constant kStandardActions is ["add","delete","reorder"]
+private handler drawActionItems(in pRow as Integer)
+	drawActionItemsList(kStandardActions, pRow)
+end handler
+
+private handler drawActionItemsList(in pActions as List, in pRow as Integer)
+	variable tIconPath as Path
+	variable tElement as String
+	repeat for each element tElement in pActions
+		-- Draw the item
+		set the paint of this canvas to getPaint(tElement, "fill")
+		put mButtonData[pRow][tElement & "_icon_path"] into tIconPath
+		fill tIconPath on this canvas
+	end repeat
+end handler
+
+public handler OnMouseUp() returns nothing
+	-- unhighlight icon, post button name message only if it was the same button clicked
+	variable tClickPos as Point
+	variable tButtonName as String
+	variable tClickedButtonNumber as Integer
+	put the click position into tClickPos
+	if mEditMode then
+		-- Dismiss the transient fields when the widget is clicked
+		post "dismissTransient"
+		widgetClicked(tClickPos, true)
+	else
+		put the current click position into tClickPos
+		put locToButtonItem(tClickPos) into tClickedButtonNumber
+		put mButtonData[mSelectedItem]["name"] into tButtonName
+		-- DEBUG - Start
+		variable tClickedButtonNumberString as String
+		variable mSelectedItemString as String
+		format tClickedButtonNumber as string into tClickedButtonNumberString
+		format mSelectedItem as string into mSelectedItemString
+		--log mSelectedItemString & tClickedButtonNumberString
+		-- If LCB provided the mouseUp click position, then checking for tSelected <> mSelectedItem would tell if the user moved away from the original button.
+		-- DEBUG - End
+		if tClickedButtonNumber = mSelectedItem then
+			-- only recognize the button click if the same button receives the mouseUp and the mouseDown
+			post "buttonClicked" with [tButtonName]
+		end if
+		put 0 into mSelectedItem -- un-highlight the clicked button
+		redraw all
+	end if
+end handler
+
+public handler OnMouseStillDown() returns nothing
+	-- DEAD CODE - CURRENTLY UNUSED
+	-- check for whether user moved away from icon, 
+	-- unhighlight if this occurs to allow user to cancel the button press
+	log "Within Button"
+	-- http://quality.livecode.com/show_bug.cgi?id=15952
+	-- OnMouseStillDown - is not supported by LCB
+end handler
+
+public handler OnMouseDown() returns nothing
+	variable tClickPos as Point
+	put the click position into tClickPos
+	if mEditMode then
+		widgetClicked(tClickPos, false)
+	else
+		variable tSelected as Number
+		put locToButtonItem(tClickPos) into tSelected
+
+		if tSelected > 0 then
+			put tSelected into mSelectedItem
+			redraw all
+
+			variable tItemLabel as String
+			put mButtonData[mSelectedItem]["label"] into tItemLabel
+			post "hiliteChanged"
+		end if
+	end if
+end handler
+
+public handler OnMouseMove() returns nothing
+	-- figure out row of buttons during Drag & Drop
+	if mDragData is not nothing then
+		calculateDragRow(the y of the mouse position)
+		redraw all
+		return
+	end if
+
+	if mEditMode then
+		updateEditModeTooltip(the mouse position)
+		return
+	end if
+end handler
+
+private handler updateParameters()
+	initialiseEditData()
+
+	// update variables
+	put my width into mWidth
+	put my height into mHeight
+	put the number of elements in mButtonData into mButtonItemCount
+
+	if mButtonItemCount is 0 then
+		put mWidth into mBoxWidth
+	else
+		put mWidth / mButtonItemCount into mBoxWidth
+	end if
+
+	if mEditMode then
+		if mButtonItemCount is 0 then
+			calculateAddItemRect()
+		else
+			calculateEditModeIconRects()
+		end if
+	else if mButtonItemCount is not 0 then
+		calculateIconRects()
+	end if
+	put false into mRecalculate
+end handler
+
+private handler updateEditModeTooltip(in pPosition as Point) returns nothing
+    variable tElement as Array
+	repeat for each element tElement in mEditData
+		if pPosition is within tElement["rect"] then
+			if "tooltip" is among the keys of tElement then
+				set property "tooltip" of my script object to tElement["tooltip"]
+				return
+			end if
+		end if
+	end repeat
+
+	set property "tooltip" of my script object to ""
+end handler
+
+private handler calculateEditModeIconRects() returns nothing
+	// calculate the drawing rects
+	variable tX as Integer
+	variable tIconPath as Path
+	variable tIconRect as Rectangle
+	variable tLineHeight as Real
+	put kEditModeLineHeight into tLineHeight
+
+	repeat with tX from 1 up to mButtonItemCount
+		variable tLabelLeft as Real
+		variable tLabelRight as Real
+
+		variable tLineTop as Real
+		variable tLineBottom as Real
+		put (tX - 1) * tLineHeight into tLineTop
+		put tX * tLineHeight into tLineBottom
+
+		-- One 1/2 line height icon + 2 lots of padding gives width of data to left of label
+		put 2 * kEditModePaddingUnit + tLineHeight / 4 into tLabelLeft
+		-- Two 1/4 line height icons + two line height icons + 4 lots of padding gives width of data to right of label
+		put mWidth - (4 * kEditModePaddingUnit + 5 * tLineHeight / 2) into tLabelRight
+
+		put rectangle [tLabelLeft, tLineTop + kEditModePaddingUnit, tLabelRight, tLineBottom - kEditModePaddingUnit] into mButtonData[tX]["label_rect"]
+		-- Allow label to be edited inline
+		setEditableTextRect("label", tX, mButtonData[tX]["label_rect"], "Label")
+
+		if mButtonData[tX]["icon_name"] is not empty then
+			put iconSVGPathFromName(mButtonData[tX]["icon_name"]) into mButtonData[tX]["icon"]
+		end if
+		put path mButtonData[tX]["icon"] into tIconPath
+
+		variable tLeft as Real
+		put tLabelRight + kEditModePaddingUnit into tLeft
+
+		put rectangle [tLeft + kEditModePaddingUnit, tLineTop + kEditModePaddingUnit, tLeft + tLineHeight - kEditModePaddingUnit, tLineBottom - kEditModePaddingUnit] into tIconRect
+		constrainPathToRect(tIconRect, tIconPath)
+		put tIconPath into mButtonData[tX]["icon_path"]
+		put tIconRect into mButtonData[tX]["icon_rect"]
+
+		if mButtonData[tX]["hilited_icon_name"] is not empty then
+			put iconSVGPathFromName(mButtonData[tX]["hilited_icon_name"]) into mButtonData[tX]["hilited_icon"]
+		end if
+
+		if mButtonData[tX]["hilited_icon"] is not "" then
+			put path mButtonData[tX]["hilited_icon"] into tIconPath
+		end if
+
+		add tLineHeight to tLeft
+		put rectangle [tLeft + kEditModePaddingUnit, tLineTop + kEditModePaddingUnit, tLeft + tLineHeight - kEditModePaddingUnit, tLineBottom - kEditModePaddingUnit] into tIconRect
+		constrainPathToRect(tIconRect, tIconPath)
+		put tIconPath into mButtonData[tX]["hilited_icon_path"]
+		put tIconRect into mButtonData[tX]["hilited_icon_rect"]
+
+		setEditableRect("icon", tX, mButtonData[tX]["icon_rect"], \
+				"Icon", "com.livecode.widget.iconPicker", iconSelected)
+		setEditableRect("selectedIcon", tX, mButtonData[tX]["hilited_icon_rect"], \
+				"Highlighted Icon", "com.livecode.widget.iconPicker", iconSelected)
+
+		calculateEditModeActionPathsForRow(tX)
+	end repeat
+end handler
+
+private handler calculateAddItemRect()
+	calculateEditModeActionIconPaths(["add"])
+	setActionRect("add_icon", 1, \
+			the bounding box of mActionPaths["add_icon_path"], "Add Item", \
+			addItem, true)
+end handler
+
+private handler calculateEditModeActionPathsForRow(in pRow as Integer)
+	calculateEditModeActionIconPaths(kStandardActions)
+
+	variable tIconPath as Path
+	put mActionPaths["add_icon_path"] into tIconPath
+	translate tIconPath by [0, (pRow - 1) * kEditModeLineHeight]
+	put tIconPath into mButtonData[pRow]["add_icon_path"]
+	setActionRect("add_icon", pRow, the bounding box of tIconPath, \
+			"Add Item", addItem, true)
+
+	put mActionPaths["delete_icon_path"] into tIconPath
+	translate tIconPath by [0, (pRow - 1) * kEditModeLineHeight]
+	put tIconPath into mButtonData[pRow]["delete_icon_path"]
+	setActionRect("delete_icon", pRow, the bounding box of tIconPath, \
+			"Delete Item", deleteItem, true)
+
+	put mActionPaths["reorder_icon_path"] into tIconPath
+	translate tIconPath by [0, (pRow - 1) * kEditModeLineHeight]
+	put tIconPath into mButtonData[pRow]["reorder_icon_path"]
+	setActionRect("reorder_icon", pRow, the bounding box of tIconPath, \
+			"Reposition Item", reorderItem, false)
+
+end handler
+
+private handler calculateEditModeActionIconPaths(in pActions as List)
+	-- calculate postions of the add, delete, reorder icons when widget is displayed within property inspector
+	variable tIconPath as Path
+	variable tIconRect as Rectangle
+
+	variable tActionFraction as Real
+	put 1/4 into tActionFraction
+
+	variable tLeft as Real
+	variable tTop as Real
+	variable tRight as Real
+	variable tBottom as Real
+	put my width - 2 * (kEditModeLineHeight * tActionFraction + kEditModePaddingUnit) into tLeft
+	put kEditModeLineHeight * (1 - tActionFraction) / 2 into tTop
+	put tLeft + kEditModeLineHeight * tActionFraction into tRight
+	put kEditModeLineHeight - kEditModeLineHeight * (1 - tActionFraction) / 2 into tBottom
+
+	if "add" is in pActions then
+		put rectangle [tLeft, tTop, tRight, tBottom] into tIconRect
+		put mAddIcon into tIconPath
+		constrainPathToRect(tIconRect, tIconPath)
+		put tIconPath into mActionPaths["add_icon_path"]
+	end if
+
+	if "reorder" is in pActions then
+		add kEditModeLineHeight * tActionFraction + kEditModePaddingUnit to tLeft
+		put tLeft + kEditModeLineHeight * tActionFraction into tRight
+		put rectangle [tLeft, tTop, tRight, tBottom] into tIconRect
+		put mReorderIcon into tIconPath
+		constrainPathToRect(tIconRect, tIconPath)
+		put tIconPath into mActionPaths["reorder_icon_path"]
+	end if
+
+	if "delete" is in pActions then
+		put rectangle [kEditModePaddingUnit, tTop, kEditModePaddingUnit + kEditModeLineHeight * tActionFraction, tBottom] into tIconRect
+		put mDeleteIcon into tIconPath
+		constrainPathToRect(tIconRect, tIconPath)
+		put tIconPath into mActionPaths["delete_icon_path"]
+	end if
+end handler
+
+private handler calculateDragRow(in pY as Real) returns nothing
+	variable tLineHeight as Real
+	put kEditModeLineHeight into tLineHeight
+
+	-- calculate the drag destination
+	put the floor of ((pY + tLineHeight / 2) / tLineHeight) into mDragData["target"]
+
+	variable tLabelLeft as Real
+	variable tLabelRight as Real
+
+	variable tLineTop as Real
+	variable tLineBottom as Real
+	put pY - mDragData["offset"] into tLineTop
+	put tLineTop + tLineHeight  into tLineBottom
+
+	-- calculate the drawing rects
+	put rectangle [0, tLineTop, mWidth, tLineBottom] into mDragData["rect"]
+
+	-- One 1/2 line height icon + 2 lots of padding gives width of data to left of label
+	put 2 * kEditModePaddingUnit + tLineHeight / 4 into tLabelLeft
+	-- Two 1/4 line height icons + two line height icons + 4 lots of padding gives width of data to right of label
+	put mWidth - (4 * kEditModePaddingUnit + 5 * tLineHeight / 2) into tLabelRight
+
+	put rectangle [tLabelLeft, tLineTop + kEditModePaddingUnit, tLabelRight, tLineBottom - kEditModePaddingUnit] into mDragData["label_rect"]
+
+	variable tIconPath as Path
+	variable tIconRect as Rectangle
+	put path mButtonData[mDragData["item"]]["icon"] into tIconPath
+
+		variable tLeft as Real
+		put tLabelRight + kEditModePaddingUnit into tLeft
+
+		put rectangle [tLeft + kEditModePaddingUnit, tLineTop + kEditModePaddingUnit, tLeft + tLineHeight - kEditModePaddingUnit, tLineBottom - kEditModePaddingUnit] into tIconRect
+		constrainPathToRect(tIconRect, tIconPath)
+		put tIconPath into mDragData["icon_path"]
+
+		if mButtonData[mDragData["item"]]["hilited_icon"] is not "" then
+			put path mButtonData[mDragData["item"]]["icon"] into tIconPath
+		end if
+
+		add tLineHeight to tLeft
+		put rectangle [tLeft + kEditModePaddingUnit, tLineTop + kEditModePaddingUnit, tLeft + tLineHeight - kEditModePaddingUnit, tLineBottom - kEditModePaddingUnit] into tIconRect
+		constrainPathToRect(tIconRect, tIconPath)
+		put tIconPath into mDragData["hilited_icon_path"]
+end handler
+
+private handler calculateIconRects() returns nothing
+	variable tNumItems as Number
+	variable tIdx as Number
+	variable tXOffset as Number
+	variable tYOffset as Number
+	variable tIconName as String
+	variable tIconPadding as Number
+	variable tIconRectInfo as List
+	variable tLabelRectInfo as List
+	variable tIconRect as Rectangle
+	variable tLabelRect as Rectangle
+	variable tIconType as String
+	variable tIconPath as Path
+
+	put the number of elements in mButtonData into tNumItems
+
+	repeat with tIdx from 1 up to tNumItems
+
+		-- Compute vertical centreline for text and icon
+		put mBoxWidth * (tIdx - 0.5) into tXOffset
+
+		-- Compute label rect
+		if mItemStyle is "text" then
+			-- Each label's effective rect is the whole of the item's box
+			put [tXOffset - mBoxWidth / 2, 0, \
+					tXOffset + mBoxWidth / 2, my height] into tLabelRectInfo
+
+		else
+			-- Each label is located below the corresponding icon
+			put [tXOffset - mBoxWidth / 2, \
+					my height * (1 - kLabelPaddingRatio - kLabelHeightRatio), \
+					tXOffset + mBoxWidth / 2, \
+					my height * (1 - kLabelPaddingRatio)] into tLabelRectInfo
+		end if
+
+		put rectangle tLabelRectInfo into tLabelRect
+		put tLabelRect into mButtonData[tIdx]["label_rect"]
+
+		if mItemStyle is "text" then
+			-- Don't need to process icons
+			next repeat
+		end if
+
+		-- Compute icon rect
+
+		if mItemStyle is "icons" then
+			-- Position icons along horizontal centreline
+			put my height * kIconOnlyPaddingRatio into tIconPadding
+			put [tXOffset - (mBoxWidth/2), \
+					tIconPadding, \
+					tXOffset + (mBoxWidth/2), \
+					my height - tIconPadding] into tIconRectInfo
+		else
+			-- Position icons above text
+			put my height * kIconPaddingRatio into tIconPadding
+			put [tXOffset - (mBoxWidth/2), \
+					tIconPadding, \
+					tXOffset + (mBoxWidth/2), \
+					the top of tLabelRect - tIconPadding] into tIconRectInfo
+		end if
+
+		put rectangle tIconRectInfo into tIconRect
+
+		-- Fit icons into the icon rect.  Repeat twice, once for the "normal"
+		-- icon and once for the "hilited" icon.  Note that we carry the "normal"
+		-- path round to become the "hilited" icon if there's no "hilited" icon
+		-- specified.
+		put the empty path into tIconPath
+		repeat for each element tIconType in ["icon","hilited_icon"]
+			-- Update icon path
+			if mButtonData[tIdx][tIconType & "_name"] is not empty then
+				put iconSVGPathFromName(mButtonData[tIdx][tIconType & "_name"]) \
+					into mButtonData[tIdx][tIconType]
+			else
+				put "" into mButtonData[tIdx][tIconType]
+			end if
+
+			-- Fit the icon path to the icon rect
+			if mButtonData[tIdx][tIconType] is not empty then
+				-- Fit icon path to Rectangle
+				put path mButtonData[tIdx][tIconType] into tIconPath
+				constrainPathToRect(tIconRect, tIconPath)
+			end if
+
+			put tIconPath into mButtonData[tIdx][tIconType & "_path"]
+			put tIconRect into mButtonData[tIdx][tIconType & "_rect"]
+		end repeat
+	end repeat
+end handler
+
+public handler OnGeometryChanged()
+	put true into mRecalculate
+end handler
+
+--Callback when an icon is selected from the icon picker widget
+public handler iconSelected(in pSelectedIcon as optional any, in pType as String, in pNumber as Number)
+	if pSelectedIcon is not nothing then
+		if pType is "selectedIcon" then
+			put pSelectedIcon into mButtonData[pNumber]["hilited_icon_name"]
+			put "" into mButtonData[pNumber]["hilited_icon"]
+		else
+			put pSelectedIcon into mButtonData[pNumber]["icon_name"]
+			put "" into mButtonData[pNumber]["icon"]
+		end if
+
+		-- If the selected icon is the same as the icon, just put empty into the selected icon name
+		-- that way, when the icon is changed, the selected icon will change too.
+		if mButtonData[pNumber]["hilited_icon_name"] is mButtonData[pNumber]["icon_name"] then
+			put "" into mButtonData[pNumber]["hilited_icon_name"]
+			put "" into mButtonData[pNumber]["hilited_icon"]
+		end if
+		post "dataChanged"
+		put true into mRecalculate
+		redraw all
+	end if
+end handler
+
+private handler locToButtonItem(in pLoc as Point) returns Integer
+	-- figure out which icon was clicked based upon which icon rect was clicked in normal mode
+	return the floor of (the x of pLoc / mBoxWidth) + 1
+end handler
+
+private handler yPosToLine(in pY as Number) returns Integer
+	-- figure out which icon row was clicked in edit mode within property inspector
+	variable tLineHeight as Real
+	put mHeight / mButtonItemCount into tLineHeight
+	return the floor of (pY / tLineHeight) + 1
+end handler
+
+public handler setHiliteColor(in pColor as String) returns nothing
+	-- convert string of color values into LCB color values for hilite color
+	put stringToColor(pColor) into mHiliteColor
+	redraw all
+end handler
+
+public handler getHiliteColor() returns String
+	-- convert LCB color values into LCS string of color values
+	return colorToString(mHiliteColor, false)
+end handler
+
+public handler getPath(in pObject as String) returns Path
+	-- returns rect or line path based upon object type for drawing purposes
+	variable tRect
+	put my bounds into tRect
+	if pObject is "bounding box" then
+		return rectangle path of rectangle [the left of tRect + 0.5, the top of tRect + 0.5, the right of tRect - 0.5, the bottom of tRect - 0.5]
+	else if pObject is "line" then
+		return line path from point [0, 0.5] to point [my width, 0.5]
+		-- Offset background by 1 from the top so that line is allowed to be transparent
+	else if pObject is "background" then
+		return rectangle path of rectangle [the left of tRect + 0.5, the top of tRect + 1, the right of tRect - 0.5, the bottom of tRect - 0.5]
+	end if
+end handler
+
+public handler getPaint(pLocation, pType) returns Paint
+	-- get default paint fill color based upon object location and fill type in Edit mode
+	if pLocation is "background" then
+		if pType is "drag-fill" then
+			return solid paint with color [200/255, 200/255, 200/255]
+		else if pType is "stroke" then
+			return solid paint with color [0, 0, 0, 0.2]
+		else if pType is "editmode-stroke" then
+			return solid paint with color [193/255, 193/255, 193/255]
+		else if pType is "editmode-fill" then
+			return solid paint with color [1, 1, 1]
+		end if
+	else if pLocation is "text" then
+		if pType is "fill" then
+			return solid paint with color [146/255, 146/255, 146/255]
+		else if pType is "selected-fill" then
+			return solid paint with mHiliteColor
+		else if pType is "additem" or pType is "deleteitem" then
+			return solid paint with color [1, 1, 1]
+		else if pType is "editmode-fill" then
+			return solid paint with color [0, 0, 0]
+		end if
+	end if
+
+	if pLocation is "add" then
+		return solid paint with color [146/255, 146/255, 146/255]
+	else if pLocation is "reorder" then
+		return solid paint with color [146/255, 146/255, 146/255]
+	else if pLocation is "delete" then
+		return solid paint with color [240/255, 0, 0]
+	end if
+
+	return solid paint with color [1, 100/255, 200/255]
+end handler
+
+private handler getFont(in pType as String) returns Font
+	-- returns the font assigned to this widget within the property inspector
+	return my font
+end handler
+
+public handler setButtonSelectedItem(in pSelectedItem as Integer) returns nothing
+	-- set the selected item if it has changed
+	if pSelectedItem is not mSelectedItem and \
+			pSelectedItem > 0 and \
+			pSelectedItem <= the number of elements in mButtonData then
+		put pSelectedItem into mSelectedItem
+		post "hiliteChanged"
+		redraw all
+	end if
+end handler
+
+public handler setButtonSelectedItemName(in pName as String) returns nothing
+	-- set the name of the selected item
+	variable tCount as Number
+	variable tItem as Array
+
+	-- Find the item index corresponding to pName and set it as the
+	-- currently-highlighted item.
+	put 0 into tCount
+	repeat for each element tItem in mButtonData
+		add 1 to tCount
+		if mButtonData["name"] is pName then
+			setButtonSelectedItem(tCount)
+			exit repeat
+		end if
+	end repeat
+end handler
+
+public handler setItemStyle(in pItemStyle as String) returns nothing
+	-- Cope with old-style item style property values
+	if pItemStyle is "icons and names" then
+		put "both" into pItemStyle
+	end if
+	if pItemStyle is "names" then
+		put "text" into pItemStyle
+	end if
+
+	put pItemStyle into mItemStyle
+	put true into mRecalculate
+	redraw all
+end handler
+
+public handler setEditMode(in pEditMode as Boolean) returns nothing
+	-- set edit mode variables, redraw widget
+	put pEditMode into mEditMode
+	put true into mRecalculate
+	redraw all
+end handler
+
+--------------------------------------------------------------------------------
+--
+--		Data utilities
+--
+--------------------------------------------------------------------------------
+
+private handler listToArray(in pList as List) returns Array
+	-- convert an LCB list to an LCS array
+	variable tCount
+	variable tArray
+	put the empty array into tArray
+
+	variable tKey as String
+	repeat with tCount from 1 up to the number of elements in pList
+		put tCount formatted as string into tKey
+		put defaultButtonArray() into tArray[tKey]
+
+		variable tAttribute as String
+		repeat for each key tAttribute in tArray[tKey]
+			put pList[tCount][tAttribute] into tArray[tKey][tAttribute]
+		end repeat
+	end repeat
+	return tArray
+end handler
+
+private handler setData(in pArray as Array, in pKeys as List, out rList as List)
+	-- Excessive hoop-jumping to work around the fact that keys of numerically keyed LCS array
+	-- comes into LCB as strings, and therefore must be parsed as number to sort, then formatted back
+	-- to be used as keys again. Because parse/format of integer doesn't currently roundtrip, we need to
+	-- create a lookup from the original strings.
+	variable tKey
+	variable tOrder as List
+	put the empty list into tOrder
+	variable tLookup as Array
+	put the empty array into tLookup
+	variable tNumericKey as Number
+	repeat for each key tKey in pArray
+		put tKey parsed as number into tNumericKey
+		push tNumericKey onto tOrder
+		put tKey into tLookup[tNumericKey formatted as string]
+	end repeat
+	sort tOrder in ascending numeric order
+
+	variable tOrderKey
+	variable tElement as Array
+	variable tList as List
+	put the empty list into tList
+
+	variable tOriginalKey as String
+	repeat for each element tOrderKey in tOrder
+		put the empty array into tElement
+		repeat for each element tKey in pKeys
+			put tLookup[tOrderKey formatted as string] into tOriginalKey
+			-- Use default item if key is not present
+			if tKey is among the keys of pArray[tOriginalKey] then
+				put pArray[tOriginalKey][tKey] into tElement[tKey]
+			else
+				put defaultButtonElement(tKey) into tElement[tKey]
+			end if
+		end repeat
+		if tElement["label"] is "" then
+			put "New Item" into tElement["label"]
+		end if
+		-- If the selected icon is the same as the icon, just put empty into the selected icon name
+		-- that way, when the icon is changed, the selected icon will change too.
+		if tElement["hilited_icon_name"] is tElement["icon_name"] then
+			put "" into tElement["hilited_icon_name"]
+		end if
+		push tElement onto tList
+	end repeat
+
+	put tList into rList
+end handler
+
+private handler getDataElement(in pElementName as String, in pList as List) returns String
+	-- return CSV string of values matched within the input List based upon passed in pElementName 
+	variable tList
+	put the empty list into tList
+
+	variable tElement
+	repeat for each element tElement in pList
+		push tElement[pElementName] onto tList
+	end repeat
+
+	variable tElements
+	combine tList with "," into tElements
+	return tElements
+end handler
+
+private handler setDataElement(in pElementName as String, in pElements as String, in pDefaultArray as Array, inout xList as List)
+	-- add to an existing List based upon string value and array passed in
+	variable tElements
+	split pElements by "," into tElements
+
+	variable tCount
+	put 0 into tCount
+
+	variable tElement
+	repeat for each element tElement in xList
+		add 1 to tCount
+		if tCount > the number of elements in tElements then
+			put pDefaultArray[pElementName] into xList[tCount][pElementName]
+		else
+			put tElements[tCount] into xList[tCount][pElementName]
+		end if
+	end repeat
+
+	// If we there are more of the given element than there are items, generate more
+	add 1 to tCount
+	repeat with tCount from tCount up to the number of elements in tElements
+		push pDefaultArray onto xList
+		put tElements[tCount] into xList[tCount][pElementName]
+	end repeat
+
+	put true into mRecalculate
+    post "navDataChanged"
+	redraw all
+end handler
+
+-- Only the primary data element ("name" for both actions and buttons) can *reduce*
+-- the number of elements in the data list.
+private handler setPrimaryDataElement(in pElementName as String, \
+		in pElements as String, in pUnique as Boolean, \
+		in pDefaultArray as Array, inout xList as List)
+	variable tElements as List
+	variable tElement as String
+	variable tCount as Number
+
+	split pElements by "," into tElements
+
+	-- Enforce uniqueness, if requested
+	if pUnique then
+		put 0 into tCount
+		repeat with tCount from 1 up to the number of elements in tElements
+			if the index of tElements[tCount] after tCount in tElements is not 0 then
+				throw "duplicate" && pElementName && tElements[tCount]
+				return
+			end if
+		end repeat
+	end if
+
+	put 0 into tCount
+	repeat for each element tElement in tElements
+		add 1 to tCount
+		if tCount > the number of elements in xList then
+			push pDefaultArray onto xList
+		end if
+
+		put tElement into xList[tCount][pElementName]
+	end repeat
+
+	// If we there are more items than there are primary elements, pop them off.
+	add 1 to tCount
+	repeat with tCount from tCount up to the number of elements in xList
+		pop xList
+	end repeat
+
+	put true into mRecalculate
+    post "dataChanged"
+	redraw all
+end handler
+
+--------------------------------------------------------------------------------
+--
+--		Button data handling
+--
+--------------------------------------------------------------------------------
+
+private handler defaultButtonElement(in pKey as String) returns String
+	if pKey is "name" then
+		return kDefaultButtonName
+	else if pKey is "label" then
+		return kDefaultButtonLabel
+	else if pKey is "icon_name" then
+		return kDefaultButtonIconName
+	else if pKey is "hilited_icon_name" then
+		return ""
+	else if pKey is "icon" then
+		return ""
+	else if pKey is "hilited_icon" then
+		return ""
+	end if
+	return ""
+end handler
+
+private handler defaultButtonArray() returns Array
+	-- create a new array of default values based upon the kDefault values defined in the widget
+	variable tArray as Array
+	put the empty array into tArray
+	put kDefaultButtonName into tArray["name"]
+	put kDefaultButtonLabel into tArray["label"]
+	put kDefaultButtonIconName into tArray["icon_name"]
+	put "" into tArray["hilited_icon_name"]
+	put "" into tArray["icon"]
+	put "" into tArray["hilited_icon"]
+	return tArray
+end handler
+
+private handler buttonDataDifferent(in pLeft as List, in pRight as List) returns Boolean
+    if the number of elements in pLeft is not the number of elements in pRight then
+        return true
+    end if
+
+	variable tIndex as Number
+	repeat with tIndex from 1 up to the number of elements in pLeft
+        if pLeft[tIndex]["label"] is not pRight[tIndex]["label"] then
+            return true
+        end if
+
+        if pLeft[tIndex]["icon_name"] is not pRIght[tIndex]["icon_name"] then
+            return true
+        end if
+
+        if pLeft[tIndex]["hilited_icon_name"] is not pRight[tIndex]["hilited_icon_name"] then
+            if not (pLeft[tIndex]["hilited_icon_name"] is "" and pRight[tIndex]["hilited_icon_name"] is pRight[tIndex]["icon_name"]) and not (pLeft[tIndex]["hilited_icon_name"] is pLeft[tIndex]["icon_name"] and pRight[tIndex]["hilited_icon_name"] is "") then
+                return true
+            end if
+        end if
+	end repeat
+	return false
+end handler
+
+private handler getButtonData() returns Array
+	return listToArray(mButtonData)
+end handler
+
+private handler setButtonData(in pButtonData as Array)
+	variable tButtonData as List
+	setData(pButtonData, the keys of defaultButtonArray(), tButtonData)
+	if buttonDataDifferent(tButtonData, mButtonData) then
+		put tButtonData into mButtonData
+		put true into mRecalculate
+		post "dataChanged"
+		redraw all
+	end if
+end handler
+
+private handler getButtonNames() returns String
+	return getDataElement("name", mButtonData)
+end handler
+
+private handler setButtonNames(in pNames as String)
+	setPrimaryDataElement("name", pNames, true, defaultButtonArray(), mButtonData)
+end handler
+
+private handler getButtonIcons() returns String
+	return getDataElement("icon_name", mButtonData)
+end handler
+
+private handler setButtonIcons(in pIcons as String)
+	setDataElement("icon_name", pIcons, defaultButtonArray(), mButtonData)
+end handler
+
+private handler getButtonSelectedIcons() returns String
+	return getDataElement("hilited_icon_name", mButtonData)
+end handler
+
+private handler setButtonSelectedIcons(in pIcons as String)
+	setDataElement("hilited_icon_name", pIcons, defaultButtonArray(), mButtonData)
+end handler
+
+private handler getButtonLabels() returns String
+	return getDataElement("label", mButtonData)
+end handler
+
+private handler setButtonLabels(in pLabels as String)
+	setDataElement("label", pLabels, defaultButtonArray(), mButtonData)
+end handler
+
+private handler addItem(in pItem as Number)
+	if mButtonData is [] then
+		push defaultButtonArray() onto mButtonData
+	else
+		splice [defaultButtonArray()] after element pItem of mButtonData
+	end if
+	put true into mRecalculate
+	post "dataChanged"
+	redraw all
+end handler
+
+private handler deleteItem(in pItem as Number)
+	delete element pItem of mButtonData
+	put true into mRecalculate
+	post "dataChanged"
+	redraw all
+end handler
+
+private handler moveItem(in pFrom as Number, in pTo as Number) returns nothing
+	-- Do nothing if this isn't really a move.
+	if pFrom is pTo then
+		return
+	end if
+
+	variable tItem as Array
+	put mButtonData[pFrom] into tItem
+	delete element pFrom of mButtonData
+	if pTo is 1 then
+		splice [tItem] before element 1 of mButtonData
+	else
+		splice [tItem] after element (pTo - 1) of mButtonData
+	end if
+	post "dataChanged"
+	put true into mRecalculate
+end handler
+
+private handler reorderItem(in pItem as Number)
+	put {} into mDragData
+	put the y of the mouse position - ((pItem - 1) * kEditModeLineHeight) into mDragData["offset"]
+	put pItem into mDragData["item"]
+	put mButtonData[pItem]["label"] into mDragData["label"]
+	redraw all
+end handler
+
+private handler dragDrop() returns nothing
+	if mDragData is nothing then
+		return
+	end if
+
+	if "target" is among the keys of mDragData then
+		if mDragData["item"] > mDragData["target"] then
+			moveItem(mDragData["item"], mDragData["target"] + 1)
+		else if mDragData["target"] > mDragData["item"] then
+			moveItem(mDragData["item"], mDragData["target"])
+		end if
+		put nothing into mDragData
+		redraw all
+	end if
+end handler
+
+private handler getDesiredHeight() returns Number
+	if mEditMode and mButtonItemCount is not 0 then
+		return kEditModeLineHeight * mButtonItemCount
+	end if
+
+    return kEditModeLineHeight
+end handler
+
+private handler setShowDivide(in pShowDivide as Boolean) returns nothing
+	if pShowDivide is mShowDivide then
+		return
+	end if
+
+	put pShowDivide into mShowDivide
+	redraw all
+end handler
+
+private handler setShowBackground(in pShowBackground as Boolean) returns nothing
+	if pShowBackground is mShowBackground then
+		return
+	end if
+
+	put pShowBackground into mShowBackground
+	redraw all
+end handler
+
+--------------------------------------------------------------------------------
+--
+--		Editable rect things
+--
+--------------------------------------------------------------------------------
+
+handler type PopupCallback(in pPopupResult as optional any, in pType as String, in pNumber as Number)
+handler type ActionCallback(in pNumber as Number)
+
+private variable mEditData as Array
+
+public handler initialiseEditData()
+	put the empty array into mEditData
+end handler
+
+public handler setEditableRect(in pComponent as String, in pNumber as Number, \
+		in pRect as Rectangle, in pTooltip as String, in pPopup as String, \
+		in pCallback as PopupCallback)
+	variable tComponentID as String
+	put pComponent && pNumber formatted as string into tComponentID
+
+	put the empty array into mEditData[tComponentID]
+
+	put pRect into mEditData[tComponentID]["rect"]
+	put pTooltip into mEditData[tComponentID]["tooltip"]
+	put pPopup into mEditData[tComponentID]["popup"]
+	put pCallback into mEditData[tComponentID]["callback"]
+	put pComponent into mEditData[tComponentID]["type"]
+	put pNumber into mEditData[tComponentID]["number"]
+	put true into mEditData[tComponentID]["mouseup"]
+end handler
+
+public handler setEditableTextRect(in pComponent as String, \
+		in pNumber as Number, in pRect as Rectangle, in pTooltip as String)
+	variable tComponentID as String
+	put pComponent && pNumber formatted as string into tComponentID
+
+	put the empty array into mEditData[tComponentID]
+
+	put pRect into mEditData[tComponentID]["rect"]
+	put pTooltip into mEditData[tComponentID]["tooltip"]
+	put pComponent into mEditData[tComponentID]["type"]
+	put pNumber into mEditData[tComponentID]["number"]
+	put true into mEditData[tComponentID]["mouseup"]
+end handler
+
+public handler setActionRect(in pComponent as String, in pNumber as Number, \
+		in pRect as Rectangle, in pTooltip as String, \
+		in pAction as ActionCallback, in pMouseUp as Boolean)
+	variable tComponentID as String
+	put pComponent && pNumber formatted as string into tComponentID
+
+	put the empty array into mEditData[tComponentID]
+
+	put pRect into mEditData[tComponentID]["rect"]
+	put pTooltip into mEditData[tComponentID]["tooltip"]
+	put pComponent into mEditData[tComponentID]["type"]
+	put pNumber into mEditData[tComponentID]["number"]
+	put pAction into mEditData[tComponentID]["action"]
+	put pMouseUp into mEditData[tComponentID]["mouseup"]
+end handler
+
+public handler drawEditableRects(in pCanvas as Canvas)
+	-- loop thru buttons, draw the vertical list of icons and text labels for editing purposes
+	variable tElement as Array
+	repeat for each element tElement in mEditData
+		set the paint of pCanvas to solid paint with color [0,0,0]
+		stroke rectangle path of tElement["rect"] on pCanvas
+	end repeat
+end handler
+
+private handler widgetClicked(in pClickPosition as Point, in pMouseUp as Boolean)
+	-- check if mouseUp within button within property inspector
+	if pMouseUp then
+		dragDrop()
+	end if
+
+	variable tElement as Array
+	repeat for each element tElement in mEditData
+		if tElement["mouseup"] is pMouseUp and pClickPosition is within tElement["rect"] then
+			if "popup" is among the keys of tElement then
+				doPopup(pClickPosition, tElement) -- popup icon picker
+			else if "action" is among the keys of tElement then
+				doAction(tElement)
+			else
+				addEditableField(tElement)
+			end if
+		end if
+	end repeat
+end handler
+
+private handler doPopup(in pClickPos as Point, in pArray as Array)
+	variable tResult
+
+	-- Popup the icon picker with the currently selected icon as the initial selection
+	variable tProperties as Array
+	put the empty array into tProperties
+	if pArray["type"] is "selectedIcon" and mButtonData[pArray["number"]]["hilited_icon_name"] is not "" then
+		put mButtonData[pArray["number"]]["hilited_icon_name"] into tProperties["selectedIcon"]
+	else
+		put mButtonData[pArray["number"]]["icon_name"] into tProperties["selectedIcon"]
+	end if
+
+	popup widget pArray["popup"] at pClickPos with properties tProperties
+	put the result into tResult
+
+	variable tCallback as PopupCallback
+	put pArray["callback"] into tCallback
+	tCallback(tResult, pArray["type"], pArray["number"])
+end handler
+
+private handler doAction(in pArray as Array)
+	variable tCallback as ActionCallback
+	put pArray["action"] into tCallback
+	tCallback(pArray["number"])
+end handler
+
+private handler formatRectAsString(in pRect as Rectangle)
+	-- convert rectangle data type into CSV string in L,T,R,B format
+	variable tResult as String
+	put (the left of pRect) formatted as string into tResult
+	put "," & (the top of pRect) formatted as string after tResult
+	put "," & (the right of pRect) formatted as string after tResult
+	put "," & (the bottom of pRect) formatted as string after tResult
+	return tResult
+end handler
+
+private handler addEditableField(in pElement as Array)
+	-- Work around the fact that LCB currently doesn't have editable text fields
+	post "editField" with [formatRectAsString(pElement["rect"]), pElement["number"]]
+end handler
+
+end widget

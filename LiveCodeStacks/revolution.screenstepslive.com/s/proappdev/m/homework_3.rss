@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Professional Application Development With Revolution (now LiveCode) &gt; Homework: Session III : Recent Lessons</title>
+    <description>Recently created lessons from Professional Application Development With Revolution (now LiveCode) : Homework: Session III</description>
+    <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3</link>
+    <item>
+      <title>Filtering Files Using 'answer file with type'</title>
+      <description>&lt;p&gt;Now we will use the file extension we just created to create a Filter for 'answer file with type'.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:26:37 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3/l/6705-filtering-files-using-answer-file-with-type</link>
+    </item>
+    <item>
+      <title>Defining Supported File Types</title>
+      <description>&lt;p&gt;This chapter will show you how the GLX Application Framework helps you work with supported file extensions.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:26:28 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3/l/6704-defining-supported-file-types</link>
+    </item>
+    <item>
+      <title>Slider &amp; Field Example</title>
+      <description>&lt;p&gt;Now we will look at a simple broadcasting example. Broadcasting is a way for controls to &amp;quot;sign-up&amp;quot; to receive messages when certain events occurs. In this example we will notify a field that the slider position of a scrollbar has changed.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:26:15 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3/l/6703-slider-field-example</link>
+    </item>
+    <item>
+      <title>Scrollbar Example</title>
+      <description>&lt;p&gt;Now we will look at a similar undo example using a Scrollbar.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:25:53 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3/l/6702-scrollbar-example</link>
+    </item>
+    <item>
+      <title>Text Field Example</title>
+      <description>&lt;p&gt;Now let's look at how to undo changes to a field.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:25:37 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3/l/6701-text-field-example</link>
+    </item>
+    <item>
+      <title>Creating Undo/Redo Buttons</title>
+      <description>&lt;p&gt;Let's look at how to work with Undo.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Sep 2016 11:25:21 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3/l/6700-creating-undo-redo-buttons</link>
+    </item>
+    <item>
+      <title>Download cacert.pem File</title>
+      <description>&lt;p&gt;When working with SSL you need to provide Revolution with a certificate file so it can verify that the host is who it says it is. You can download a cert file here:&lt;/p&gt;
+
+
+&lt;p&gt;&lt;a href="http://curl.haxx.se/docs/caextract.html"&gt;http://curl.haxx.se/docs/caextract.html&lt;/a&gt;&lt;/p&gt;
+
+
+&lt;p&gt;You include this file in your application files and set the &lt;strong&gt;sslcertificates&lt;/strong&gt; property to the path to the file.&lt;/p&gt;</description>
+      <pubDate>Fri, 02 Oct 2009 13:18:24 -0400</pubDate>
+      <link>https://revolution.screenstepslive.com/s/proappdev/m/homework_3/l/6750-download-cacert-pem-file</link>
+    </item>
+  </channel>
+</rss>

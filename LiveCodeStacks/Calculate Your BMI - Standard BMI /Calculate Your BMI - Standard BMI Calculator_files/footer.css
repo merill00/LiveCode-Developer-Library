@@ -1,0 +1,210 @@
+footer{
+    color: #FFFFFF;
+    background-color: #4A4A4A;
+    font-size: 12px;
+    line-height: 20px;
+    font-family: Lato, Verdana, Arial, sans-serif;
+    text-align: left;
+    font-style: normal;
+}
+
+
+#footer-bottom #desktop-3-col {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    -o-justify-content: center;
+    justify-content: center;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+}
+#footer-bottom #desktop-3-col{
+    padding: 40px 0 20px 0;
+}
+#footer-bottom #desktop-3-col > div {
+    width: 30%;
+    padding-left: 40px;
+
+}
+
+
+#footer-bottom #footer-wrapper-top {
+    background-color: #575B5E;
+}
+
+#footer-bottom ul#footer-social {
+    padding-left: 0px;
+}
+#footer-bottom ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-left: 0px;
+}
+#footer-bottom ul#footer-social > li:first-child {
+    padding-left: 0px;
+}
+#footer-bottom #footer-social li, #footer-bottom #footer-block-5 li {
+    display: inline;
+    padding: 0 10px;
+}
+
+#footer-bottom #footer-wrapper-bottom ul {
+    text-align: center;
+}
+#footer-bottom ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#footer-bottom ul li{
+    list-style-type: none !important;
+
+}
+
+
+
+#footer-bottom a, #footer-bottom a:link, #footer-bottom h3 {
+    color: #FFFFFF;
+}
+
+
+#footer-bottom #nhlbi_address {
+    background-image: url("/web_resources/images/ico-map_pin-white.png");
+    background-size: 15px 20px;
+    background-repeat: no-repeat;
+    background-position: initial;
+    display: inline-block;
+    content: " ";
+    padding-left: 30px;
+}
+
+
+#footer-bottom #footer-block-logo .link-title {
+    padding: 0 0 0 30px;
+}
+
+
+#footer-bottom .link-title {
+    padding: 0 0 0 20px;
+    margin: 10px 0;
+    background-image: url("/web_resources/images/viewmorewhite.png");
+    background-size: 12px 12px;
+    background-repeat: no-repeat;
+    background-position: left center;
+    display: block;
+    content: " ";
+    height: inherit;
+    font-size: 12px;
+}
+
+
+#footer-bottom p {
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+
+#footer-bottom .footer__logo-image {
+    width: 240px;
+    display: block;
+    padding-bottom: 20px;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {  
+#footer-bottom .footer__logo-image {
+    width: 80%;
+
+}
+
+
+
+}
+
+
+#footer-bottom a {
+    text-decoration: none;
+     font-family: Lato, Verdana, Arial, sans-serif;
+}
+
+#footer-bottom a:hover {
+background-color: transparent;
+text-decoration: underline;
+}
+
+
+
+#footer-bottom #footer-block-5 > div:first-child {
+    padding-top: 20px;
+}
+#footer-bottom #footer-block-5 > div:last-child {
+    padding: 10px 0 20px 0;
+}
+
+
+
+
+#footer-bottom #footer-block-alerts form {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    -o-justify-content: center;
+    justify-content: center;
+    -webkit-flex-direction: row;
+    -moz-flex-direction: row;
+    -ms-flex-direction: row;
+    -o-flex-direction: row;
+    flex-direction: row;
+}
+
+#footer-bottom #footer-block-alerts form #emailAddress {
+    width: 100%;
+}
+#footer-bottom #footer-block-alerts #emailAddress {
+    color: black;
+}
+#footer-bottom #footer-block-alerts #emailAddress {
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    padding: 0 0 0 10px;
+    border-style: none;
+}
+
+#footer-bottom #footer-block-alerts form > input {
+    height: 30px;
+    color: black;
+}
+
+#footer-bottom #footer-block-alerts .sign-up {
+    background-color: #1a568c;
+    border: medium none;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    outline: medium none;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0 15px;
+    color: white;
+    width:100px;
+}
+
+#footer-bottom h3 {
+    font-weight: bold;
+    font-family: Lato, Verdana, Arial, sans-serif;
+    font-style: normal;
+}

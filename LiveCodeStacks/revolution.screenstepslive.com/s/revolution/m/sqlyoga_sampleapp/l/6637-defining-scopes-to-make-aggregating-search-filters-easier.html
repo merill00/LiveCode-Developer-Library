@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content='text/html;charset=UTF-8' http-equiv='Content-Type'>
+<meta content='IE=edge' http-equiv='X-UA-Compatible'>
+<meta content='width=device-width, initial-scale=1' name='viewport'>
+<title>Defining Scopes To Make Aggregating Search Filters Easier | SQL Yoga To-Do Application | Tutorials &amp; Manuals</title>
+<meta content='To finish up this tutorial we are going to take a look at how SQL Yoga makes managing search filters really easy.' name='description'>
+
+<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="n0GIZXu8z8LQdh0YLTlvJcEg9VP4zS3kXjdgkg74L1NOHn+1UwYHqI9xHb1/5T+pd3OaSd57+gk3eXTt/SD6nw==" />
+<link rel="stylesheet" media="screen" href="https://assets.screensteps.com/assets/themes/fonts/helvetica-e03d9e53b962f0a4e2fed42a4a318c29cf029d37f80397baaf14722853359e6a.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link rel="stylesheet" href="https://assets.screensteps.com/assets/themes/alpha-027b2e60ae75b9d8e6d6bcb32d3e6730dc3f6fe41be8479ef83e02168774766b.css" />
+<style type="text/css" media="all">/* headings */
+  h1,
+  h1.toc-heading,
+  h2.toc-heading {
+    color: #;
+  }
+
+  h2.toc-subheading,
+  h3.toc-subheading,
+  h4.toc-subheading,
+  h5.toc-subheading,
+  h6.toc-subheading {
+    color: #;
+  }
+
+  .screensteps-training-site [data-count-bubble]::after {
+    background-color: #;
+  }
+
+  .screensteps-article-content h2 {
+    color: #;
+  }
+
+  .screensteps-article-content h3,
+  .screensteps-article-content h4,
+  .screensteps-article-content h5,
+  .screensteps-article-content h6 {
+    color: #;
+  }
+
+  .screensteps-sidebar h3 {
+    color: #;
+  }
+
+  .sidebar-subheading {
+    color: #;
+  }
+
+  .comments-heading {
+    color: #;
+  }
+
+  /* base/_buttons */
+  input[type="button"],
+  input[type="reset"],
+  input[type="submit"],
+  button,
+  .screensteps-bg-action-color,
+  .screensteps-courses .screensteps-progress-bar::before,
+  .screensteps-courses .screensteps-courses-menu a:hover,
+  .screensteps-courses .screensteps-courses-menu .step-active a::before,
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #216bb5;
+  }
+
+  input[type="button"]:hover,
+  input[type="reset"]:hover,
+  input[type="submit"]:hover,
+  button:hover,
+  button.screensteps-bg-action-color:hover,
+  a.screensteps-bg-action-color:hover {
+    background-color: #155596;
+  }
+
+  /* base/_forms */
+  input[type="email"]:focus,
+  input[type="number"]:focus,
+  input[type="password"]:focus,
+  input[type="search"]:focus,
+  input[type="tel"]:focus,
+  input[type="text"]:focus,
+  input[type="url"]:focus,
+  input[type="color"]:focus,
+  input[type="date"]:focus,
+  input[type="datetime"]:focus,
+  input[type="datetime-local"]:focus,
+  input[type="month"]:focus,
+  input[type="time"]:focus,
+  input[type="week"]:focus,
+  select[multiple=multiple]:focus,
+  textarea:focus {
+    border-color: #216bb5;
+  }
+
+
+  .screensteps-training-site .screensteps-main-search .search-field:not(:placeholder-shown) {
+    box-shadow: 0 0 0 2px #3793C8;
+  }
+
+  /* base/_typography */
+  body {
+    background-color: #3793C8;
+    color: #;
+  }
+
+  a {
+    color: #216bb5;
+  }
+
+
+
+  /* _screensteps-container */
+  .screensteps-container a:visited {
+    color: #155596;
+  }
+ .screensteps-container a:active,
+ .screensteps-container a:focus,
+ .screensteps-container a:hover {
+    color: #155596;
+  }
+
+  /* _screensteps-manual-contents */
+  .screensteps-manual-contents h2 a {
+    color: #216bb5;
+  }
+  /* _screensteps-foldable-sections */
+  .screensteps-main-content .embedded-chapter-article > * {
+    color: #216bb5;
+  }
+
+  /* screensteps-header */
+  .screensteps-branding h1,
+  .screensteps-header .screensteps-branding a,
+  .screensteps-training-site .screensteps-profile-subnav-toggle {
+    color: #ffffff;
+  }
+
+  .screensteps-header .screensteps-branding a:hover {
+    color: #2C7CAA;
+  }
+
+  /* meta data text */
+  .chapter-count,
+  .screensteps-comment-count,
+  .screensteps-lesson-details,
+  .nested-chapter-lessons .here a:after,
+  .screensteps-single-comment time {
+    color: #;
+  }
+
+  /* course tiles */
+  .screensteps-training-site .screensteps-group .asset-list--course a {
+    background-color: #;
+    color: #;
+  }
+
+  .screensteps-training-site .asset-item__progress-bar {
+    background-color: #;
+  }
+
+  .screensteps-training-site .screensteps-group .asset-list--course a:hover {
+    background-color: #;
+  }
+</style>
+
+<link rel='icon'>
+<script src="https://assets.screensteps.com/assets/application-fe7915887e0874f95ef87940f513c239a27a71cc345a491bff7c3f92416a8111.js"></script>
+<script src="https://assets.screensteps.com/assets/vendor/jquery.fitvids-3e4679bfa1c083cec0d56c1f636f2038bf770ed13929e17d22bd1f417d3c94f8.js"></script>
+<script src="https://assets.screensteps.com/assets/theme-a161d6812c4179b27f1d00b86bb981be26e0733ede796eda0978b6a514ff216a.js"></script>
+<!--[if lt IE 9]>
+<script src="//assets.screensteps.com/assets/vendor/html5shiv.min-a280ac74b433afc5b6516368f5a678ceba501e0fb8b7987adee3b4e673674310.js"></script>
+<![endif]-->
+
+<style media=''></style>
+<script></script>
+
+  <script type="text/javascript">
+    !function(name,path,ctx){
+      var latest,prev=name!=='Keen'&&window.Keen?window.Keen:false;ctx[name]=ctx[name]||{ready:function(fn){var h=document.getElementsByTagName('head')[0],s=document.createElement('script'),w=window,loaded;s.onload=s.onerror=s.onreadystatechange=function(){if((s.readyState&&!(/^c|loade/.test(s.readyState)))||loaded){return}s.onload=s.onreadystatechange=null;loaded=1;latest=w.Keen;if(prev){w.Keen=prev}else{try{delete w.Keen}catch(e){w.Keen=void 0}}ctx[name]=latest;ctx[name].ready(fn)};s.async=1;s.src=path;h.parentNode.insertBefore(s,h)}}
+    }('KeenAsync','https://d26b395fwzu5fz.cloudfront.net/keen-tracking-1.1.3.min.js',this);
+
+    KeenAsync.ready(function(){
+      // Configure a client instance
+      var client = new KeenAsync({
+        projectId: '591daac30935ce40a59fb7ab',
+        writeKey: 'C89A9A1A8DB4C585F119F8F81ABB9621940DBBADDA5C72C2B87B1BD3464890D23FD250B0FFA4A1056DCB210616545B7B6C9DDF2054167B5219A3DD81E8DF90A321BE0C1B35BA19F2E3E85730FB96C1F93F8C66D8CD449FE6EFE43D98453632D1'
+      });
+
+      // Record an event
+      client.recordEvent('pageviews', {
+        title: document.title,
+        ip_address: "${keen.ip}",
+        user_agent: "${keen.user_agent}",
+        user_id: null,
+        account_id: "2c1ab788fb",
+        site_id: 18,
+        manual_id: 764,
+        article_id: 6637,
+        article_type_id: 0,
+        course_id: null,
+        source_id: 1
+      });
+    });
+  </script>
+
+
+</head>
+<body class='helvetica-body helvetica-header site-article  no-focus-outline' data-base-path='/s/revolution/' data-content-template='2015' data-generating-pdf-text='Generating PDF...'>
+<div class='screensteps-admin-navigation'>
+<div data-logged-in-check-url='https://revolution.screenstepslive.com/s/18/user_nav' id='screensteps-admin-bar'>
+<ul>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/sites/18/manuals/764/chapters/2227/articles/6637">View in admin portal</a></li>
+<li><a target="_blank" href="https://revolution.screenstepslive.com/admin/v2/article-editor/6637">Edit content on web</a></li>
+<li><a href="screensteps://revolution.screenstepslive.com/open/s/18/m/764/a/6637?checkout=1">Edit in desktop</a></li>
+</ul>
+</div>
+
+</div>
+<header class='screensteps-header' role='banner'>
+<a class='skip-navigation--link' href='#screensteps-main-content' id='skip-navigation'>
+Skip to main content
+</a>
+
+<div class='screensteps-branding'>
+<div class='logo-wrapper'>
+<h1 class='company-name'>Cross-Platform Application Development with LiveCode</h1>
+</div>
+</div>
+</header>
+
+<div class='screensteps-container-wrapper'>
+<main class='screensteps-container'>
+<div class='screensteps-site-title-wrapper'>
+<h1 class='screensteps-site-title toc-heading'>Tutorials &amp; Manuals</h1>
+</div>
+<div class='screensteps-main-search' role='search'>
+<form id="screensteps-search-form" action="../../../searches.html" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+<div class='screensteps-search-form'>
+<label for="text">Search term</label>
+<input type="text" name="text" id="text" class="search-field" title="Enter a keyword or topic to search" />
+
+<input type="submit" name="commit" value="Search" class="search-submit" data-disable-with="Search" />
+</div>
+</form>
+
+
+</div>
+<div class='left-sidebar lesson manual-lesson screensteps-content-wrapper'>
+<div class='screensteps-main-content' role='main'>
+<header class='screensteps-title'>
+<div id="screensteps-breadcrumb" aria-label="breadcrumb" aria-level="3"><a href="../../../../revolution.html">Tutorials &amp; Manuals</a><span class='manual-group-breadcrumb'><a href="../../../../revolution.html#SQLYoga">SQL Yoga</a></span><a href="../../sqlyoga_sampleapp.html">SQL Yoga To-Do Application</a> <span class='chapter-breadcrumb'><a href="../c/2227.html">Adding Search Functionality</a></span>Defining Scopes To Make Aggregating Search Filters Easier</div>
+</header>
+<div id='screensteps-main-content'>
+<div class='screensteps-article'>
+<div class="screensteps-article-content " data-article-id="6637" data-workflow=false>
+    <h1 class="lesson">Defining Scopes To Make Aggregating Search Filters Easier</h1>
+    <div class="screensteps-steps" data-role="steps-container">
+          <div class="instructions screensteps-textblock screensteps-wrapper--introduction screensteps-wrapper">
+  <p>To finish up this tutorial we are going to take a look at how SQL Yoga makes managing search filters really easy.</p>
+</div>
+
+
+    <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/139/233/original/media_1253895043553.png 212w" data-src="https://media.screensteps.com/image_assets/assets/000/139/233/original/media_1253895043553.png" class="lazyload lazypreload" style="max-width:212px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/139/233/original/media_1253895043553.png" /><noscript><img alt="" width="212" src="https://media.screensteps.com/image_assets/assets/000/139/233/original/media_1253895043553.png" /></noscript>
+</div>
+
+
+      <div class="step step-depth-1" data-step-uuid="f87df20e-1777-4e64-b874-8a44ea3938ae" id="">
+      <h2 id="SearchFiltersToTakeIntoAccount">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Search Filters To Take Into Account" href="#SearchFiltersToTakeIntoAccount"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Search Filters To Take Into Account
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/139/226/original/media_1253824553669.png 649w" data-src="https://media.screensteps.com/image_assets/assets/000/139/226/original/media_1253824553669.png" class="lazyload lazypreload" style="max-width:649px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/139/226/original/media_1253824553669.png" /><noscript><img alt="" width="649" src="https://media.screensteps.com/image_assets/assets/000/139/226/original/media_1253824553669.png" /></noscript>
+</div>
+
+ 
+      <div class="instructions screensteps-textblock ">
+  <p>When displaying to-do items the application has to take three possible search filters into account.</p>
+<p>1) Are to-do items being filtered by project or person?</p>
+<p>2) Are there any search terms the user wants to filter the list by?</p>
+<p>3) Should all to-do items be shown or just those that aren't completed?</p>
+<p>The normal approach would be to have a number of conditional statements that built up a SQL WHERE clause. These tend to be hard to read and hard to debug as the number of search conditions grows. </p>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="ed185532-539b-4b43-8cb5-95c14b11dc65" id="">
+      <h2 id="ScopesToTheRescue">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Scopes to the Rescue" href="#ScopesToTheRescue"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Scopes to the Rescue
+      </h2>
+      <div class="instructions screensteps-textblock ">
+  <p>SQL Yoga provides a Scope object that makes working with search filters much simpler. </p>
+<p>A Scope object allows you to define a very narrow search condition that can be used with a SQL Query object. Scopes are useful when you have a number of search conditions that you want to dynamically apply to a search. You can easily add in the scopes you need to the SQL Query object based on user input and SQL Yoga will generate a complete search condition for you based on all added Scopes.</p>
+<p>Let's look at how to create Scope objects that will help us display to-do items based on the 3 criteria.</p>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="8714565a-2d59-4b34-a0c3-4862ff41f026" id="">
+      <h2 id="DefiningAScopeObject">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Defining A Scope Object" href="#DefiningAScopeObject"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Defining A Scope Object
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/139/231/original/media_1253825150845.png 533w" data-src="https://media.screensteps.com/image_assets/assets/000/139/231/original/media_1253825150845.png" class="lazyload lazypreload" style="max-width:533px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/139/231/original/media_1253825150845.png" /><noscript><img alt="" width="533" src="https://media.screensteps.com/image_assets/assets/000/139/231/original/media_1253825150845.png" /></noscript>
+</div>
+
+ 
+      <div class="instructions screensteps-textblock ">
+  <p>You define Scope objects in the <strong>table objects behavior </strong>script where you created Table and Relationship objects earlier. Edit the behavior script by viewing the card controls of the <strong>application </strong>stack (1) and editing the script of the <strong>SQL Yoga Table Objects Behavior </strong>button. </p>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="35ab0306-14d1-48ff-a9b1-3753a4027fd8" id="">
+      <h2 id="AddCreatescopesCall">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Add _CreateScopes Call" href="#AddCreatescopesCall"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Add _CreateScopes Call
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/139/224/original/media_1253826204287.png 392w" data-src="https://media.screensteps.com/image_assets/assets/000/139/224/original/media_1253826204287.png" class="lazyload lazypreload" style="max-width:392px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/139/224/original/media_1253826204287.png" /><noscript><img alt="" width="392" src="https://media.screensteps.com/image_assets/assets/000/139/224/original/media_1253826204287.png" /></noscript>
+</div>
+
+ 
+      <div class="instructions screensteps-textblock ">
+  <p>The first thing you need to do is add a call to <strong>_CreateScopes</strong> in the <strong>dbobject.createTables</strong> message. You can add it just after the _CreateRelationships call.</p>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="e1fad56b-f80c-4ae3-92b0-76c8eceb83ab" id="">
+      <h2 id="UpdateBehaviorScript">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Update Behavior Script" href="#UpdateBehaviorScript"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Update Behavior Script
+      </h2>
+      <div class="instructions screensteps-textblock ">
+  <p><span style="color: rgb(0,0,0);">Paste the following RevTalk code at the end of the behavior script.</span></p>
+<p><span style="color: rgb(0,0,0);"><strong>----------</strong></span></p>
+<p><span style="color: rgb(0,0,0);"><em><strong>Copy &amp; Paste The Following Code</strong></em></span></p>
+<p><span style="color: rgb(0,0,0);"><strong>----------</strong></span></p>
+<p><span style="color: rgb(0,0,0);"><strong>private</strong></span><span style="color: rgb(0,0,0);"> </span><span style="color: rgb(0,0,0);"><strong>command</strong></span><span style="color: rgb(0,0,0);"> _CreateScopes</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span><span style="color: rgb(0,127,0);"><strong>## Define scopes to help filter to-do results</strong></span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span><span style="color: rgb(0,127,0);"><strong>## to-dos linked to a project</strong></span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	tblscope_createObject </span><span style="color: rgb(0,0,127);">"todo_items"</span><span style="color: rgb(0,0,0);">, </span><span style="color: rgb(0,0,127);">"of project"</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span><span style="color: rgb(127,127,0);"><strong>put</strong></span><span style="color: rgb(0,0,0);"> it </span><span style="color: rgb(127,0,127);">into</span><span style="color: rgb(0,0,0);"> theScopeA</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	tblscope_set theScopeA, </span><span style="color: rgb(0,0,127);">"related table joins"</span><span style="color: rgb(0,0,0);">, </span><span style="color: rgb(0,0,127);">"LEFT OUTER JOIN people"</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	tblscope_set theScopeA, </span><span style="color: rgb(0,0,127);">"conditions"</span><span style="color: rgb(0,0,0);">, </span><span style="color: rgb(0,0,127);">"todo_items.project_id is :1"</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span><span style="color: rgb(0,127,0);"><strong>## to-dos linked to a person</strong></span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	tblscope_createObject </span><span style="color: rgb(0,0,127);">"todo_items"</span><span style="color: rgb(0,0,0);">, </span><span style="color: rgb(0,0,127);">"of person"</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span><span style="color: rgb(127,127,0);"><strong>put</strong></span><span style="color: rgb(0,0,0);"> it </span><span style="color: rgb(127,0,127);">into</span><span style="color: rgb(0,0,0);"> theScopeA</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	tblscope_set theScopeA, </span><span style="color: rgb(0,0,127);">"related table joins"</span><span style="color: rgb(0,0,0);">, </span><span style="color: rgb(0,0,127);">"people"</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	tblscope_set theScopeA, </span><span style="color: rgb(0,0,127);">"conditions"</span><span style="color: rgb(0,0,0);">, </span><span style="color: rgb(0,0,127);">"people.id is :1"</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span><span style="color: rgb(0,127,0);"><strong>## to-dos that are not completed</strong></span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	tblscope_createObject </span><span style="color: rgb(0,0,127);">"todo_items"</span><span style="color: rgb(0,0,0);">, </span><span style="color: rgb(0,0,127);">"not completed"</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span><span style="color: rgb(127,127,0);"><strong>put</strong></span><span style="color: rgb(0,0,0);"> it </span><span style="color: rgb(127,0,127);">into</span><span style="color: rgb(0,0,0);"> theScopeA</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	tblscope_set theScopeA, </span><span style="color: rgb(0,0,127);">"conditions"</span><span style="color: rgb(0,0,0);">, </span><span style="color: rgb(0,0,127);">"todo_items.completed is 0"</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span><span style="color: rgb(0,127,0);"><strong>## to-dos where to-do name contains user provided string</strong></span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	tblscope_createObject </span><span style="color: rgb(0,0,127);">"todo_items"</span><span style="color: rgb(0,0,0);">, </span><span style="color: rgb(0,0,127);">"name contains"</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	</span><span style="color: rgb(127,127,0);"><strong>put</strong></span><span style="color: rgb(0,0,0);"> it </span><span style="color: rgb(127,0,127);">into</span><span style="color: rgb(0,0,0);"> theScopeA</span></p>
+<p class="indent1"><span style="color: rgb(0,0,0);">	tblscope_set theScopeA, </span><span style="color: rgb(0,0,127);">"conditions"</span><span style="color: rgb(0,0,0);">, </span><span style="color: rgb(0,0,127);">"todo_items.name contains ':1'"</span></p>
+<p><span style="color: rgb(0,0,0);"><strong>end</strong></span><span style="color: rgb(0,0,0);"> _CreateScopes</span></p>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="9203a795-077f-4409-a7f3-0d34ef16ae91" id="">
+      <h2 id="DefiningScopeObjectsForATableObject">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Defining Scope Objects for a Table Object" href="#DefiningScopeObjectsForATableObject"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Defining Scope Objects for a Table Object
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/139/229/original/media_1253840939106.png 516w" data-src="https://media.screensteps.com/image_assets/assets/000/139/229/original/media_1253840939106.png" class="lazyload lazypreload" style="max-width:516px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/139/229/original/media_1253840939106.png" /><noscript><img alt="" width="516" src="https://media.screensteps.com/image_assets/assets/000/139/229/original/media_1253840939106.png" /></noscript>
+</div>
+
+ 
+      <div class="instructions screensteps-textblock ">
+  <p>A Scope object is attached to a Table object. You create a Scope object by calling <strong>tblscope_createObject</strong> and passing in the name of the table (1) and a unique name (unique for that particular table) for the scope (2).</p>
+<p>tblscope_createObject returns a reference to the Scope object that was created (3). You use this reference when calling tblscope_set.</p>
+<p>After creating the Scope object you define the conditions of the scope (4). Four Scopes have been created above and notice that each one has a very specific search condition. By combining various Scope objects the exact search the user has requested can be performed.</p>
+<p>Notice how most of the Scope object conditions using binding variables (the :1 in the conditions string) (5). The actual value that will be searched for is usually specified when the Scope is added to the SQL Query object.</p>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="c02fd0a6-8c4c-484a-9c7f-b4f5b27fc735" id="">
+      <h2 id="CallTableobjectsReload">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Call tableobjects_reload" href="#CallTableobjectsReload"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Call tableobjects_reload
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/139/228/original/media_1253891533192.png 401w" data-src="https://media.screensteps.com/image_assets/assets/000/139/228/original/media_1253891533192.png" class="lazyload lazypreload" style="max-width:401px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/139/228/original/media_1253891533192.png" /><noscript><img alt="" width="401" src="https://media.screensteps.com/image_assets/assets/000/139/228/original/media_1253891533192.png" /></noscript>
+</div>
+
+ 
+      <div class="instructions screensteps-textblock ">
+  <p>Since you are modifying the objects in the Database object you need to call <strong>tableobjects_reload</strong> so that the dbobject.createTables message is called.</p>
+<p>Make sure and call <strong>dbobject_save</strong> and then <strong>save the application stack</strong> to disk as well to make the changes permanent.</p>
+</div>
+
+ 
+  </div>
+
+
+      <div class="step step-depth-1" data-step-uuid="cbdb1617-d806-4c6f-bbca-8cbfe879fddc" id="">
+      <h2 id="ConfirmYourWork">
+      <a class="screensteps-anchor" tabindex="-1" aria-hidden="true" aria-label="Anchor for Confirm Your Work" href="#ConfirmYourWork"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 20 20" enable-background="new 0 0 20 20" role="img" aria-label="Heading anchor"><path d="M7.859 14.691l-.81.805c-.701.695-1.843.695-2.545 0-.336-.334-.521-.779-.521-1.252s.186-.916.521-1.252l2.98-2.955c.617-.613 1.779-1.515 2.626-.675.389.386 1.016.384 1.403-.005.385-.389.383-1.017-.006-1.402-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956c-.715.709-1.108 1.654-1.108 2.658 0 1.006.394 1.949 1.108 2.658.736.73 1.702 1.096 2.669 1.096.967 0 1.934-.365 2.669-1.096l.811-.805c.389-.385.391-1.012.005-1.4-.387-.388-1.014-.39-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002c-.389.386-.392 1.013-.006 1.401.386.389 1.013.391 1.402.005l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477-.389-.386-1.016-.383-1.401.005-.386.389-.384 1.017.005 1.401.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153c.712-.71 1.107-1.654 1.107-2.658 0-1.005-.395-1.949-1.109-2.659z"></path></svg>
+</a>
+      Confirm Your Work
+      </h2>
+      <div class="image clearfix">
+  <img alt="" data-srcset="https://media.screensteps.com/image_assets/assets/000/139/223/original/media_1255727183200.png 470w" data-src="https://media.screensteps.com/image_assets/assets/000/139/223/original/media_1255727183200.png" class="lazyload lazypreload" style="max-width:470px" data-sizes="auto" src="https://media.screensteps.com/image_assets/assets/000/139/223/original/media_1255727183200.png" /><noscript><img alt="" width="470" src="https://media.screensteps.com/image_assets/assets/000/139/223/original/media_1255727183200.png" /></noscript>
+</div>
+
+ 
+      <div class="instructions screensteps-textblock ">
+  <p>To confirm that you updated the behavior script correctly check the printout of the Database object array. You should see an entry for <strong>scopes</strong> under the todo_items table object.</p>
+</div>
+
+ 
+  </div>
+
+
+
+
+      
+    </div>
+</div>
+
+
+<div class='screensteps-next-prev-navigation' data-role='next-previous-nav'>
+<ul>
+<li class='previous'>
+<strong>Prev</strong>: <a href="6660-chapter-overview.html">Chapter Overview</a>
+</li>
+<li class='next'>
+<strong>Next</strong>: <a href="6638-search-for-to-dos-using-scopes.html">Search for To-Dos Using Scopes</a>
+</li>
+</ul>
+</div>
+
+<div class='no-comments screensteps-comments'>
+<h2 class='comments-heading'>
+<span class='screensteps-comment-count'>0</span>
+Comments
+</h2>
+
+<div class='screensteps-add-comment'>
+<h3 class='comment-heading'>Add your comment</h3>
+<script type="text/javascript" charset="utf-8">
+  ScreenStepsLiveSpamCheck = function() {
+      var key = document.getElementById('comment_spam_check_key').value;
+    var sig = '';
+    for (var x = 0; x< key.length; x++ ) {
+       sig += key.charCodeAt(x)+13;
+    }
+    document.getElementById('comment_spam_check_sig').value = sig; 
+    return true;
+  };
+</script>
+<div id='custom-comment-form-2015'></div>
+<form id="comment-form" class="comment-form" onclick="return ScreenStepsLiveSpamCheck();" action="../../../comments_lesson_id=6637-defining-scopes-to-make-aggregating-search-filters-easier.html" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><div class='field-row name'>
+<label class="required" for="comment-name">Name*</label>
+<input id="comment-name" type="text" name="comment[name]" />
+</div>
+<div class='field-row email'>
+<label class="required" for="comment-email">Email*</label>
+<input id="comment-email" type="text" name="comment[email]" />
+</div>
+<input value="764" type="hidden" name="comment[manual_id]" id="comment_manual_id" />
+<input value="18" type="hidden" name="comment[space_id]" id="comment_space_id" />
+<input value="ammiok8ckJh9" type="hidden" name="comment[spam_check_key]" id="comment_spam_check_key" />
+<input type="hidden" name="comment[spam_check_sig]" id="comment_spam_check_sig" />
+<div class='field-row'>
+<label class="required" for="comment-comment">Comment*</label>
+<textarea id="comment-comment" name="comment[comment]">
+</textarea>
+</div>
+<div class='field-row'>
+<label id="subscribe-label" for="comment_subscribe">Subscribe</label>
+<input name="comment[subscribe]" type="hidden" value="0" /><input type="checkbox" value="1" name="comment[subscribe]" id="comment_subscribe" />
+<span class='help'>E-Mail me when someone replies to this comment</span>
+</div>
+<div class='field-row'><label id="recaptcha-label" class="comment-label" for="recaptcha">Are you human?</label>
+<div id='recaptcha-wrapper'>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<div class="g-recaptcha" data-sitekey="6Le-4BAUAAAAAJnK4h5JcvgWReY9OxXoLjfqLP90"></div>
+          <noscript>
+            <div style="width: 302px; height: 352px;">
+              <div style="width: 302px; height: 352px; position: relative;">
+                <div style="width: 302px; height: 352px; position: absolute;">
+                  <iframe
+                    src="https://www.google.com/recaptcha/api/fallback?k=6Le-4BAUAAAAAJnK4h5JcvgWReY9OxXoLjfqLP90"
+                    frameborder="0" scrolling="no"
+                    style="width: 302px; height:352px; border-style: none;">
+                  </iframe>
+                </div>
+                <div style="width: 250px; height: 80px; position: absolute; border-style: none;
+                  bottom: 21px; left: 25px; margin: 0px; padding: 0px; right: 25px;">
+                  <textarea id="g-recaptcha-response" name="g-recaptcha-response"
+                    class="g-recaptcha-response"
+                    style="width: 250px; height: 80px; border: 1px solid #c1c1c1;
+                    margin: 0px; padding: 0px; resize: none;" value="">
+                  </textarea>
+                </div>
+              </div>
+            </div>
+          </noscript>
+
+</div>
+</div>
+<div class='field-row'><input type="submit" name="commit" value="Submit Comment" id="create-comment-button" data-disable-with="Submit Comment" /></div>
+</form>
+
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+<div aria-label='sidebar' class='screensteps-sidebar' role='complementary'>
+<div class='screensteps-sidebar-widget' id='sidebar-chapters'>
+<h3>Topics</h3>
+<ul id='sidebar-chapter-list'>
+<li class='chapter-list-item' data-section-id='2188'>
+<a class='toggle-lessons' href='../c/2188.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Introduction</span>
+<span class='chapter-count'>
+&nbsp;3
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6653'><a href="6653-introduction-what-we-are-going-to-create.html">Introduction: What We Are Going to Create</a></li>
+<li data-lesson-id='6566'><a href="6566-before-you-get-started.html">Before You Get Started</a></li>
+<li data-lesson-id='6624'><a href="6624-the-to-do-application-database-schema.html">The To-Do Application Database Schema</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2233'>
+<a class='toggle-lessons' href='../c/2233.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Getting Started</span>
+<span class='chapter-count'>
+&nbsp;5
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6654'><a href="6654-chapter-overview.html">Chapter Overview</a></li>
+<li data-lesson-id='6567'><a href="6567-open-blank-application-template.html">Open Blank Application Template</a></li>
+<li data-lesson-id='6437'><a href="6437-unlocking-the-sql-yoga-library.html">Unlocking the SQL Yoga Library</a></li>
+<li data-lesson-id='6434'><a href="6434-creating-a-sql-yoga-database-object.html">Creating A SQL Yoga Database Object</a></li>
+<li data-lesson-id='6568'><a href="6568-initializing-sql-yoga-at-launch.html">Initializing SQL Yoga At Launch</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2223'>
+<a class='toggle-lessons' href='../c/2223.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Creating Records In and Displaying Records From A Database</span>
+<span class='chapter-count'>
+&nbsp;6
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6656'><a href="6656-chapter-overview.html">Chapter Overview</a></li>
+<li data-lesson-id='6625'><a href="6625-creating-a-project.html">Creating a Project</a></li>
+<li data-lesson-id='6626'><a href="6626-display-projects-in-the-ui.html">Display Projects in the UI</a></li>
+<li data-lesson-id='6627'><a href="6627-creating-a-to-do-item.html">Creating a To-Do Item</a></li>
+<li data-lesson-id='6628'><a href="6628-display-to-do-items-in-the-ui.html">Display To-Do Items in the UI</a></li>
+<li data-lesson-id='6629'><a href="6629-creating-a-person-and-updating-left-column-display.html">Creating A Person And Updating Left Column Display</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2224'>
+<a class='toggle-lessons' href='../c/2224.html' role='button'>
+<span class='chapter-link sidebar-subheading'>More With Displaying Database Records</span>
+<span class='chapter-count'>
+&nbsp;3
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6657'><a href="6657-chapter-overview.html">Chapter Overview</a></li>
+<li data-lesson-id='6630'><a href="6630-tell-sql-yoga-about-table-relationships.html">Tell SQL Yoga About Table Relationships</a></li>
+<li data-lesson-id='6631'><a href="6631-update-the-ui-code-to-account-for-people.html">Update the UI Code to Account For People</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2225'>
+<a class='toggle-lessons' href='../c/2225.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Linking and Deleting Records</span>
+<span class='chapter-count'>
+&nbsp;4
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6658'><a href="6658-chapter-overview.html">Chapter Overview</a></li>
+<li data-lesson-id='6632'><a href="6632-associating-a-person-with-a-to-do-item.html">Associating a Person With a To-Do Item</a></li>
+<li data-lesson-id='6633'><a href="6633-removing-a-person-associated-with-a-to-do-item.html">Removing a Person Associated With a To-Do Item</a></li>
+<li data-lesson-id='6634'><a href="6634-deleting-projects-people-and-to-do-items.html">Deleting Projects, People and To-Do Items</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2226'>
+<a class='toggle-lessons' href='../c/2226.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Updating Database Records</span>
+<span class='chapter-count'>
+&nbsp;3
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6659'><a href="6659-chapter-overview.html">Chapter Overview</a></li>
+<li data-lesson-id='6635'><a href="6635-editing-a-project-person-or-to-do-name.html">Editing a Project, Person or To-Do Name</a></li>
+<li data-lesson-id='6636'><a href="6636-updating-a-to-do-items-completed-state.html">Updating a To-Do Items Completed State</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2227'>
+<a class='toggle-lessons' href='../c/2227.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Adding Search Functionality</span>
+<span class='chapter-count'>
+&nbsp;3
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6660'><a href="6660-chapter-overview.html">Chapter Overview</a></li>
+<li data-lesson-id='6637'><a href="6637-defining-scopes-to-make-aggregating-search-filters-easier.html">Defining Scopes To Make Aggregating Search Filters Easier</a></li>
+<li data-lesson-id='6638'><a href="6638-search-for-to-dos-using-scopes.html">Search for To-Dos Using Scopes</a></li>
+</ul>
+</li>
+<li class='chapter-list-item' data-section-id='2232'>
+<a class='toggle-lessons' href='../c/2232.html' role='button'>
+<span class='chapter-link sidebar-subheading'>Conclusion</span>
+<span class='chapter-count'>
+&nbsp;1
+</span>
+</a>
+<ul class='nested-chapter-lessons'>
+<li data-lesson-id='6651'><a href="6651-test-the-standalone-version.html">Test The Standalone Version</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='lesson-sidebar-info'>
+<h3>Last Updated</h3><p>Sep 02, 2016</p>
+
+<ul class='icon-links'>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='other-assets'>
+<h3>Other Resources</h3>
+<ul class='asset-list with-divider'>
+<li class='divider'><h4 class="sidebar-subheading">How-tos</h4></li>
+<li class='manual'><a href="../../how-to.html">Lessons</a></li>
+<li class='manual'><a href="../../10695.html">Signing Your Applications and Building Installers</a></li>
+<li class='divider'><h4 class="sidebar-subheading">GLX Application Framework</h4></li>
+<li class='manual'><a href="../../glxapp.html">GLX Application Framework 1.2</a></li>
+<li class='manual'><a href="../../convert_to_glxapp.html">Converting An Existing Application To Use The Framework</a></li>
+<li class='divider'><h4 class="sidebar-subheading">SQL Yoga</h4></li>
+<li class='manual'><a href="../../sqlyoga.html">SQL Yoga</a></li>
+<li class='manual'><a href="../../sqlyoga_examples.html">SQL Yoga Examples</a></li>
+<li class='manual'><a href="../../sqlyoga_sampleapp.html">SQL Yoga To-Do Application</a></li>
+<li class='manual'><a href="../../sqlyoga_plugin.html">SQL Yoga IDE Plugin</a></li>
+<li class='divider'><h4 class="sidebar-subheading">Plugins, Externals and Libraries</h4></li>
+<li class='manual'><a href="../../plugins.html">Plugins</a></li>
+</ul>
+</div>
+<div class='screensteps-sidebar-widget' id='screensteps-rss'>
+<p><a href="../../../../revolution.rss">Subscribe to our feed</a></p>
+</div>
+
+</div>
+
+</div>
+<script type="text/javascript">
+  jQuery(document).ready(function(jQuery) {
+    var lesson_id = 6637;
+    var current_article_sidebar_text = '(Current Article)';
+    var section_id = 2227;
+    var expansion = 'one';
+    switch(expansion) {
+      case 'none':
+        jQuery('ul.nested-chapter-lessons').hide();
+        break;
+      case 'all':
+        jQuery('ul.nested-chapter-lessons').show();
+        jQuery('li.chapter-list-item a.toggle-lessons').addClass('open');
+        break;
+      case 'one':
+        jQuery('ul.nested-chapter-lessons').hide();
+        jQuery('li.chapter-list-item[data-section-id="' + section_id + '"] ul.nested-chapter-lessons').show();
+        jQuery('li.chapter-list-item[data-section-id="' + section_id + '"] a.toggle-lessons').addClass('open');
+        break;
+    }
+    jQuery('li.chapter-list-item[data-section-id="' + section_id + '"]').addClass('here');
+    jQuery('li[data-lesson-id="' + lesson_id + '"]').addClass('here');
+    jQuery('li[data-lesson-id="' + lesson_id + '"] a').attr('data-current-article-text', current_article_sidebar_text);
+  });
+</script>
+<noscript>Enable javascript to expand/contract chapters</noscript>
+
+
+</main>
+</div>
+<div aria-labelledby='modal-label' class='screensteps-modal' id='screensteps-modal' role='dialog'>
+<span id='modal-label'>
+Inline referenced article
+</span>
+<div class='screensteps-modal__box'>
+<a class='screensteps-modal__close' href='#'>
+×
+</a>
+<span class='screensteps-loading-wrapper'>
+<span class='screensteps-loading'></span>
+</span>
+<div class='screensteps-modal__content screensteps-article-content'></div>
+</div>
+</div>
+</body>
+</html>

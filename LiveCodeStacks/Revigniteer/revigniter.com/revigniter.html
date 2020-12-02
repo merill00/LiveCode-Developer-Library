@@ -1,0 +1,764 @@
+<!Doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Web Application Framework - revIgniter</title>
+				
+				<meta http-equiv="Content-Security-Policy" content="script-src 'strict-dynamic' 'nonce-163c2d20f36f6926f3e2bfd169cb41ce3f3b1236c8e86294674d07982daf9e1f'; form-action 'self' https://www.paypal.com; object-src 'none'; base-uri 'self'; connect-src 'self'" />
+
+				
+        <meta name="description" content="revIgniter: a Web Application Framework for people who build web sites using LiveCode.">
+			 <meta name="copyright" content="copyright  2020 revIgniter.com Ralf Bitter">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+				<link  href="copyright/index.html" rel="copyright" />
+				<link  href="https://revigniter.com/assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+				<link  href="rssfeed.rss" rel="alternate" type="application/rss+xml" title="revIgniter RSS Feed" />
+				<link  href="feedjson.json" rel="alternate" type="application/json" title="revIgniter JSON Feed" />
+				
+
+        <link href="https://revigniter.com/assets/css/custom-bootstrap.min-cb1552660887.css" rel="stylesheet" type="text/css"  />
+
+							
+				<link href="https://revigniter.com/assets/css/animsition.min-cb1552660879.css" rel="stylesheet" type="text/css"  />
+				
+				<style type="text/css">.b { color: black; background-color: #FFFFFF; }
+.w { color: white; background-color: rgba(0,0,0,0); }
+</style>
+				
+				
+				<link rel="shortcut icon" href="https://revigniter.com/assets/img/favicon-cb1552660916.ico" />
+
+				<link rel="mask-icon" sizes="any" href="https://revigniter.com/assets/img/tabIcon.svg">
+
+			<script nonce='163c2d20f36f6926f3e2bfd169cb41ce3f3b1236c8e86294674d07982daf9e1f' src="https://revigniter.com/assets/js/modernizr-2.8.3-respond-1.4.2.min-cb1557431630.js"></script>
+			
+    </head>
+    <body>
+			<a class="sr-only sr-only-focusable" href="#topContainer">Skip to main content</a>
+			
+		<div style="animation-duration: 1.5s;" class="site-wrapper animsition" data-animsition-in="fade-in-down-lg" data-animsition-out="fade-out">
+		
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+			  <nav class="navbar navbar-inverse navbar-fixed-top" id="topNav">
+					<a class="navbar-brand toTop" href="#">revIgniter</a>
+			       <div class="container">
+							
+			         <div class="navbar-header">
+			           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			             <span class="sr-only">Toggle navigation</span>
+			             <span class="icon-bar"></span>
+			             <span class="icon-bar"></span>
+			             <span class="icon-bar"></span>
+			           </button>
+
+								 
+								<div id="logoNavbar"><a class="logoNavImg toTop" href="#"><img src="https://revigniter.com/assets/img/logoFill.svg" alt="revIgniter logo" /></a></div>
+								 
+			         </div>
+			         <div id="navbar" class="collapse navbar-collapse">
+			           <ul class="nav navbar-nav">
+			             <li><a href="#download">Download</a></li>
+			             <li><a href="#tmBundles">TM Bundles</a></li>
+									<li><a href="#news">News</a></li>
+			             <li><a href="#contact">Contact</a></li>
+			           </ul>
+			         </div><!--/.nav-collapse -->
+			       </div>
+			     </nav>
+					 
+					 
+					 
+
+					 <button type="button" class="hamburger is-closed cd-bouncy-nav-trigger">
+						 <span class="hamb-top"></span>
+						 <span class="hamb-middle"></span>
+						 <span class="hamb-bottom"></span>
+					 </button>
+					
+					
+
+
+    <!-- Main jumbotron -->
+    <div class="jumbotron">
+      <div class="container">
+        
+				
+			<div id="logoContainerHeader">
+						
+						<div id="logoType"><h1><span class="headerText">rev</span><span class="markerText">Igniter</span><span id="headerSub">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="headerText">FRAMEWORK</span></span></h1></div>
+						
+						<div id="logoPathContainerHeader">				
+				
+				
+						<svg role="img" id="logoPathHeader" xmlns="//www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMidYMin meet" viewBox="0 0 401.06 92.54"><defs id="defs3429"/><metadata id="metadata3432"/><g transform="translate(-188.01606,-466.21668)" id="layer1"><path d="m188.52 500.38c-0.69-23.49 48.38-20.64 81.22-14.41 16.1 3.05 64.94 18.79 97.01 31.23 47.09 18.27 82.1 24.35 112.94 21.48 70.66-6.59 108.93-72.21 108.93-72.21 0 0-35.28 68.57-107.36 75.82-47.18 4.75-90.92-10.41-119.86-21.35-33.83-12.79-62.35-19.5-88.89-23.14-21.78-2.99-45.94 0.7-46.77 11.7-0.84 11 13.58 12.46 25.93 10.9 11.19-1.41 34.77-12.7 66.13-8.71 27.93 3.55 52.71 32.33 52.71 32.33 0 0-25.01-12.06-47.87-12.78-24.29-0.77-45.35 26.79-80.48 27.02-16.33 0.1-32.63-16.66-36.53-30.99-4.35-15.99 2.47-34.77-17.12-26.89z" id="path4183-8-6-7-9-4" style="fill:none;stroke:#424C55;stroke-width:0.5"/></g></svg>
+				
+	
+			      </div>
+				
+				
+						<div id="logoFillContainerHeader">
+						<svg role="img" id="logoFillHeader" xmlns="//www.w3.org/2000/svg" xmlns:xlink="//www.w3.org/1999/xlink" viewBox="0 0 400.11 91.79" preserveAspectRatio="xMidYMin meet" version="1.1"><defs id="defs3436"><linearGradient gradientTransform="matrix(0.78283384,0,0,0.78283384,127.37542,-252.08797)" xlink:href="#linearGradient4294" id="linearGradient4216-3-5-6-6-3" x1="80.68" y1="877.86" x2="320" y2="880.27" gradientUnits="userSpaceOnUse"/><linearGradient id="linearGradient4294"><stop offset="0" id="stop4228" style="stop-color:#262b30;stop-opacity:1"/><stop offset="1" id="stop4230" style="stop-color:#9ba4ad;stop-opacity:1"/></linearGradient></defs><metadata id="metadata3439"/><g id="layer1a" transform="translate(-191.37306,-395.03997)"><path id="path4183-8-6-7-9-4a" d="m191.38 428.95c-0.69-23.49 48.38-20.64 81.22-14.41 16.1 3.05 64.94 18.79 97.01 31.23 47.09 18.27 82.1 24.35 112.94 21.48 70.66-6.59 108.93-72.21 108.93-72.21 0 0-35.28 68.57-107.36 75.82-47.18 4.75-90.92-10.41-119.86-21.35-33.83-12.79-62.35-19.5-88.89-23.14-21.78-2.99-45.94 0.7-46.77 11.7-0.84 11 13.58 12.46 25.93 10.9 11.19-1.41 34.77-12.7 66.13-8.71 27.93 3.55 52.71 32.33 52.71 32.33 0 0-25.01-12.06-47.87-12.78-24.29-0.77-45.35 26.79-80.48 27.02-16.33 0.1-32.63-16.66-36.53-30.99-4.35-15.99 2.47-34.77-17.12-26.89z" style="fill-rule:evenodd;fill:url(#linearGradient4216-3-5-6-6-3)"/></g></svg></div>
+				
+				
+				
+	    </div>
+				
+				
+      </div>
+    </div><!-- /jumbotron -->
+		
+		
+		<!-- bouncy -->
+		<div class="cd-bouncy-nav-modal">
+		<div role="navigation">
+		<ul class="cd-bouncy-nav">
+					<li><a href="#download">Download</a></li>
+					<li><a href="#tmBundles">TM Bundles</a></li>
+					<li><a href="#news">News</a></li>
+					<li><a href="#contact">Contact</a></li>
+				</ul>
+		</div>
+		</div><!-- /bouncy -->
+		
+		
+		
+		
+		<!-- welcome -->
+    <div class="container" id="topContainer" tabindex="-1" role="contentinfo">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="page-header">
+				<h2 class="text-center">Welcome to revIgniter</h2>
+				</div>
+				<p class="lead">revIgniter, a <strong>Web Application Development Framework</strong> primarily modeled on CodeIgniter, Ellislab, Inc., is a 
+				toolkit for people who develop web projects using <a href="https://livecode.com/" rel="noopener noreferrer" target="_blank">LiveCode</a>.</p>
+				<hr class="half-rule">
+				
+			</div>
+		</div>
+		</div><!-- /welcome -->
+		
+		
+		<!-- description -->
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-4">
+					<div class="lead-icon"><svg role="img" class="icon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#icon-stopwatch" class="leadIcon"></use></svg></div>
+					<p>revIgniter empowers you to develop web projects in a fraction of time compared to writing LiveCode code from scratch by providing a large 
+					number of code libraries addressing frequently needed tasks, as well as a straightforward interface and consequential pattern to 
+					access these libraries.</p>
+
+				</div>
+				
+				<div class="col-xs-12 col-sm-4">
+					<div class="lead-icon"><svg role="img" class="icon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#code" class="leadIcon"></use></svg></div>
+				<p>revIgniter lets you creatively concentrate on your project by lessen the quantity of code required for a 
+					given task.</p>
+				</div>
+				
+				<div class="col-xs-12 col-sm-4">
+					<div class="lead-icon"><svg role="img" class="icon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#circle-check" class="leadIcon"></use></svg></div>
+					<p>revIgniter is mature, it is thoroughly tested. Many websites have been successfully built with revIgniter including the presumably
+						largest <a href="https://www.himalayanacademy.com/" rel="noopener noreferrer" target="_blank">Hindu website</a> in existence.</p>
+
+				</div>
+			</div>
+			</div><!-- /description -->
+			
+			<hr>
+			
+			<!-- features -->
+			<div class="container" id="features">
+				<div class="row">
+					<div class="col-md-12">
+						<h2 class="text-center">What you get with revIgniter</h2>
+						<hr class="half-rule">
+					</div>
+				</div>
+						
+						
+
+<div class="row featureRow">
+<div class="col-xs-2 col-sm-1">
+<div id="featureIcon1"><svg role="img" class="icon featureIcon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#lc" class="feature-Icon"></use>
+</svg></div>
+</div>
+<div class="col-xs-10 col-sm-11"><span class="featureText"><span id="featureText1">First and foremost, a framework for your beloved coding language</span></span></div>
+</div>
+
+<div class="row featureRow">
+<div class="col-xs-2 col-sm-1">
+<div id="featureIcon2"><svg role="img" class="icon featureIcon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#mvc" class="feature-Icon"></use>
+</svg></div>
+</div>
+<div class="col-xs-10 col-sm-11"><span class="featureText"><span id="featureText2">A Model-View-Controller based framework</span></span></div>
+</div>
+
+<div class="row featureRow">
+<div class="col-xs-2 col-sm-1">
+<div id="featureIcon3"><svg role="img" class="icon featureIcon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#footprint" class="feature-Icon"></use>
+</svg></div>
+</div>
+<div class="col-xs-10 col-sm-11"><span class="featureText"><span id="featureText3">A framework with a small footprint</span></span></div>
+</div>
+
+<div class="row featureRow">
+<div class="col-xs-2 col-sm-1">
+<div id="featureIcon4"><svg role="img" class="icon featureIcon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#tachometer" class="feature-Icon"></use>
+</svg></div>
+</div>
+<div class="col-xs-10 col-sm-11"><span class="featureText"><span id="featureText4">Excellent performance</span></span></div>
+</div>
+
+<div class="row featureRow">
+<div class="col-xs-2 col-sm-1">
+<div id="featureIcon5"><svg role="img" class="icon featureIcon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#gear" class="feature-Icon"></use>
+</svg></div>
+</div>
+<div class="col-xs-10 col-sm-11"><span class="featureText"><span id="featureText5">A framework that requires virtually zero configuration</span></span></div>
+</div>
+
+<div class="row featureRow">
+<div class="col-xs-2 col-sm-1">
+<div id="featureIcon6"><svg role="img" class="icon featureIcon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#infinity" class="feature-Icon"></use>
+</svg></div>
+</div>
+<div class="col-xs-10 col-sm-11"><span class="featureText"><span id="featureText6">A framework that does not require you to stick to limiting coding rules (almost)</span></span></div>
+</div>
+
+<div class="row featureRow">
+<div class="col-xs-2 col-sm-1">
+<div id="featureIcon7"><svg role="img" class="icon featureIcon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#book" class="feature-Icon"></use>
+</svg></div>
+</div>
+<div class="col-xs-10 col-sm-11"><span class="featureText"><span id="featureText7">A clear, detailed documentation</span></span></div>
+</div>
+
+					
+				
+			</div><!-- /features -->
+			
+			<hr>
+			
+			
+			
+			
+			
+				<!-- carousel -->
+	<div class="container" id="testimonialsContainer">
+		<div class="row">
+			<div class="col-md-12">
+				<h2 class="text-center">What people are saying about revIgniter</h2>
+				<hr class="half-rule">
+				</div>
+			</div>
+		<div class="row">
+			<div class="col-md-12">
+			<div id="testimonialsCarousel" class="carousel slide">
+
+			  <!-- Indicators -->
+					<ol class="carousel-indicators">
+<li data-target="#testimonialsCarousel" data-slide-to="0" class="active"></li>
+<li data-target="#testimonialsCarousel" data-slide-to="1"></li>
+<li data-target="#testimonialsCarousel" data-slide-to="2"></li>
+<li data-target="#testimonialsCarousel" data-slide-to="3"></li>
+<li data-target="#testimonialsCarousel" data-slide-to="4"></li>
+<li data-target="#testimonialsCarousel" data-slide-to="5"></li>
+<li data-target="#testimonialsCarousel" data-slide-to="6"></li>
+<li data-target="#testimonialsCarousel" data-slide-to="7"></li>
+<li data-target="#testimonialsCarousel" data-slide-to="8"></li></ol>
+
+			  <!-- Wrapper for slides -->
+			  <div class="carousel-inner" role="listbox">
+						
+						
+<!-- slide 1 -->
+<div class="item active">
+<blockquote>
+<div class="carousel-caption"><svg role="img" class="icon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#doublequote" class="icon-doublequote"></use></svg>
+<h3 data-animation="animated slideDownBigIn">It's a complete toolbox of everything you'd find in the best CMSs in the world, except the documentation, code, and stability are better.</h3><h3 data-animation="animated slideUpBigIn"><small>Stephen Barncard</small></h3>
+</div>
+</blockquote>
+</div><!-- /.item -->
+
+<!-- slide 2 -->
+<div class="item">
+<blockquote>
+<div class="carousel-caption"><svg role="img" class="icon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#doublequote" class="icon-doublequote"></use></svg>
+<h3 data-animation="animated slideDownBigIn">Even with HTML5, you are going to need a web server and revIgniter is a real solution that will save you 4-6 months of programing.</h3><h3 data-animation="animated slideUpBigIn"><small>Todd Fabacher</small></h3>
+</div>
+</blockquote>
+</div><!-- /.item -->
+
+<!-- slide 3 -->
+<div class="item">
+<blockquote>
+<div class="carousel-caption"><svg role="img" class="icon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#doublequote" class="icon-doublequote"></use></svg>
+<h3 data-animation="animated slideDownBigIn">revIgniter is an excellent web framework well worth exploring.</h3><h3 data-animation="animated slideUpBigIn"><small>Richard Gaskin</small></h3>
+</div>
+</blockquote>
+</div><!-- /.item -->
+
+<!-- slide 4 -->
+<div class="item">
+<blockquote>
+<div class="carousel-caption"><svg role="img" class="icon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#doublequote" class="icon-doublequote"></use></svg>
+<h3 data-animation="animated slideDownBigIn">Anyone doing web with LiveCode and not using RevIgniter is doing it the hard way. RevIgniter is a field tested, proven, reliable framework that makes working with web a pleasure.</h3><h3 data-animation="animated slideUpBigIn"><small>Andre Garcia</small></h3>
+</div>
+</blockquote>
+</div><!-- /.item -->
+
+<!-- slide 5 -->
+<div class="item">
+<blockquote>
+<div class="carousel-caption"><svg role="img" class="icon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#doublequote" class="icon-doublequote"></use></svg>
+<h3 data-animation="animated slideDownBigIn">I'm a huge fan of the igniter framework and thus of revIgniter and Ralf's work.</h3><h3 data-animation="animated slideUpBigIn"><small>Dan Shafer</small></h3>
+</div>
+</blockquote>
+</div><!-- /.item -->
+
+<!-- slide 6 -->
+<div class="item">
+<blockquote>
+<div class="carousel-caption"><svg role="img" class="icon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#doublequote" class="icon-doublequote"></use></svg>
+<h3 data-animation="animated slideDownBigIn">It’s a very impressive piece of work.</h3><h3 data-animation="animated slideUpBigIn"><small>Monte Goulding</small></h3>
+</div>
+</blockquote>
+</div><!-- /.item -->
+
+<!-- slide 7 -->
+<div class="item">
+<blockquote>
+<div class="carousel-caption"><svg role="img" class="icon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#doublequote" class="icon-doublequote"></use></svg>
+<h3 data-animation="animated slideDownBigIn">Any server’s stack intended to serve web apps will never being best built than in using the fantastic Ralf Bitter's Revigniter port of the PHP’s CodeIgniter framework.</h3><h3 data-animation="animated slideUpBigIn"><small>Pierre Sahores</small></h3>
+</div>
+</blockquote>
+</div><!-- /.item -->
+
+<!-- slide 8 -->
+<div class="item">
+<blockquote>
+<div class="carousel-caption"><svg role="img" class="icon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#doublequote" class="icon-doublequote"></use></svg>
+<h3 data-animation="animated slideDownBigIn">RevIgniter enables us to use the joyful, efficient language of LiveCode to leverage the power of  CodeIgniter's MVC vision without the huge costs of PHP CMS development.</h3><h3 data-animation="animated slideUpBigIn"><small>Monks of <a href="https://himalayanacademy.com/" target="_blank" rel="noopener noreferrer">HimalayanAcademy.com</a></small></h3>
+</div>
+</blockquote>
+</div><!-- /.item -->
+
+<!-- slide 9 -->
+<div class="item">
+<blockquote>
+<div class="carousel-caption"><svg role="img" class="icon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#doublequote" class="icon-doublequote"></use></svg>
+<h3 data-animation="animated slideDownBigIn">It has a powerful set of capabilities that support a wide range of web development.</h3><h3 data-animation="animated slideUpBigIn"><small>Jacqueline Landman Gay</small></h3>
+</div>
+</blockquote>
+</div><!-- /.item -->
+
+
+			  </div><!-- /.carousel-inner -->
+
+			  <!-- Controls -->
+			  <a class="left carousel-control" href="#testimonialsCarousel"
+			     role="button" data-slide="prev">
+			    
+					<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+			    <span class="sr-only">Previous</span>
+			  </a>
+			  <a class="right carousel-control" href="#testimonialsCarousel"
+			     role="button" data-slide="next">
+			    
+					<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+			    <span class="sr-only">Next</span>
+			  </a>
+
+			</div>
+			</div>
+			</div>
+		</div><!-- /carousel -->
+			
+			
+			<hr id="testimonialDevider">
+			
+			
+			<!-- download -->
+			<div class="container" id="download">
+				<div class="row">
+					<div class="col-md-12">
+										<div id="dldBtn">
+														<p><a href="revIgniter.zip" class="btn btn-default btn-lg" role="button"><svg role="img" class="icon" id="icon-download"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#data-transfer-download" class="icon-download"></use></svg>Download</a></p>
+														<p class="version text-center">Version 2.1.6</p></div>
+										<div class="signature"><p class="version text-center"><a href="download/revIgniter.zip.sig">GPG Signature</a> (Ralf Bitter revigniter.com).</p></div>
+						</div>
+					</div>
+				</div><!-- /download -->
+				
+				<hr>
+				
+				
+				
+				
+							<!-- links -->
+								<div class="container">
+									<div class="row">
+										<div class="col-sm-4">
+											<h2 class="text-center">Getting started</h2>
+											<hr class="half-rule">
+													<div id="userGuideBtn">
+														<p><a href="userGuide/index.html" class="btn btn-default btn-lg" role="button"><svg role="img" class="icon" id="icon-book"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#book" class="icon-book"></use></svg>User Guide</a></p>
+											</div>
+											<p class="projectInfo" id="downloadAnchor">The first step is to install revIgniter, then read all the topics in the Introduction section of the user guide.
+
+				Next, read each of the General Topics pages in order. Each topic builds on the previous one, and includes code examples that you are encouraged to try.
+
+				Once you understand the basics you'll be ready to explore the Library Reference and Helper Reference pages to learn to utilize the native libraries and helper files.</p>
+										</div>
+										
+										
+										<div class="col-sm-4">
+											<h2 class="text-center">revIgniter email list</h2>
+											<hr class="half-rule">
+													<div id="mailListBtn">
+														<p><a href="http://lists.livecodejournal.com/listinfo.cgi/revigniter-livecodejournal.com" class="btn btn-default btn-lg" role="button"><svg role="img" class="icon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#mail" class="icon-mail"></use></svg>revIgniter email list</a></p>
+											</div>
+											<p class="projectInfo">To join the discussion relating to using revIgniter subscribe and review archives from the page connected to the button above.</p>
+										</div>
+										
+										
+										<div class="col-sm-4">
+											<h2 class="text-center">revIgniter project</h2>
+											<hr class="half-rule">
+													<div id="githubBtn">
+														<p><a href="https://github.com/revig/revigniter/" class="btn btn-default btn-lg" role="button"><svg role="img" class="icon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#github" class="icon-github"></use></svg>revIgniter on GitHub</a></p>
+											</div>
+											<p class="projectInfo">The revIgniter project can be found on GitHub.</p>
+										</div>
+										
+										
+									</div>
+								</div><!-- /links -->
+				
+								<hr>
+				
+				
+				
+
+				
+				<!-- TM bundles -->
+				<div class="container" id="tmBundles">
+					<div class="row">
+						<div class="col-md-12">
+							<h2 class="text-center"><svg role="img" class="icon accessoryIcon"><use xlink:href="https://revigniter.com/assets/img/iconSprite.svg#accessory" class="icon-accessory"></use></svg> Accessory</h2>
+							<hr class="half-rule">
+							<h3>TextMate Bundles</h3>
+						</div>
+					</div>
+					
+					<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-5">
+						<h4>Version 2.4.0</h4>
+						<p>These bundles will help reduce time spent in building revIgniter web sites considerably.  
+	Even if you don't use revIgniter and build your sites from scratch, the bundles  
+	serve you too.   
+	The revIgniter bundles are compatible with <a href="https://www.sublimetext.com/" rel="noopener noreferrer" target="_blank">Sublime Text</a> and <a href="https://atom.io/" rel="noopener noreferrer" target="_blank">Atom</a>, though the bundles' commands and  
+	file drop actions are not available.<br>There is an Atom package provided by Dr. Peter Brett, so there is no need to convert the bundles by yourself. 
+	You can even use the bundles on iOS in <a href="https://www.textasticapp.com/" rel="noopener noreferrer" target="_blank">Textastic</a> in case you like to code on an iPad. Of   
+	course, the specific commands and file drop actions don't work with Textastic either,   
+	furthermore there is no code completion in Textastic.</p>
+			
+						<p><strong>Note:</strong> This version works with <a href="https://macromates.com/" rel="noopener noreferrer" target="_blank">TextMate 2</a> and is not meant to be used with previous versions of TextMate.</p>
+					</div>
+					
+					<div class="col-xs-12 col-sm-6 col-md-6 col-md-offset-1" id="bundlesFeatures">
+						<h4>Features:</h4>
+					<ul>
+					<li><span class="bundlesFeatureText">Script Error Checking ("Linting")</span></li>
+					<li><span class="bundlesFeatureText">Collapsing Text Blocks (Foldings)</span></li>
+					<li><span class="bundlesFeatureText">Handler Pop-up</span></li>
+					<li><span class="bundlesFeatureText">Code Completion</span></li>
+					<li><span class="bundlesFeatureText">Snippets with Tab Stops and Placeholders (revIgniter and iRev)</span></li>
+					<li><span class="bundlesFeatureText">Drop Actions for Images, CSS Files, JS Files, Stacks, LC Files</span></li>
+					<li><span class="bundlesFeatureText">Indentation</span></li>
+					<li><span class="bundlesFeatureText">Paired Characters</span></li>
+					<li><span class="bundlesFeatureText">Templates (for controllers, models, functions, commands, views)</span></li>
+					</ul>
+					</div>
+					
+					</div>
+					
+					
+				</div>
+				
+				
+				
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+											<div id="bundlesDldBtn">
+															<p><a href="revIgniterTMbundles.zip" class="btn btn-default btn-lg" role="button">Download TextMate Bundles</a></p>
+												</div>
+							</div>
+						</div>
+					</div><!-- /TM bundles -->
+				
+				
+				
+				<hr>
+			
+				
+			
+				<!-- donation -->
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+							<h2 class="text-center">Donation</h2>
+							<hr class="half-rule">
+							<p>revIgniter is a free and open source software. If revIgniter saved you some time or helped you to create something awesome, you can express your satisfaction through making a friendly donation via PayPal using the donate button below.</p>
+										<div id="donationBtn">
+												
+												<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+												<input type="hidden" name="cmd" value="_s-xclick">
+												<input type="hidden" name="hosted_button_id" value="NS52G9H5AZ94A">
+												<input type="image" src="https://revigniter.com/assets/img/donateBtn.png" width="132" height="46" name="submit" alt="PayPal - The safer, easier way to pay online!">
+												<img alt="" src="../www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+												</form>
+
+														
+												
+														
+								</div>
+						</div>
+					</div>
+				</div><!-- /donation -->
+				
+				
+				
+				
+				<hr>
+				
+				
+				<!-- news -->
+				<!-- news -->
+<div class="container" id="news">
+					
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+      <h2 class="text-center"><svg role="img" class="icon newsIcon"><use xlink:href="https://revigniter.com/assets/modules/rss/img/iconSprite.svg#news" class="icon-news"></use></svg> News</h2>
+      <hr class="half-rule">
+    </div>
+  </div>
+
+
+	<div class="row">
+		<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+			<div id="paginationWrapper">
+			<nav id="newsPagination">
+					
+					<ul class="pagination" id="newsPaginationList"><li class="active"><span class="disabled">1</span></li><li><a href='news/3.html'>2</a></li><li><a href='news/3.html' aria-label='Next'><span aria-hidden="true">&gt;</span></a></li><li><a href='news/147.html' aria-label='Last'><span aria-hidden="true">&raquo;</span></a></li></ul>
+					
+			</nav>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="newsItems">
+		
+	
+
+<div class="row">
+<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+<div class="newsitem">
+<h3>revIgniter v2.1.6 Released</h3>
+<p>revIgniter v2.1.6 has been released. Controllers can now be run via the command-line interface. To get more informations please read the <a href="userGuide/changelog.html">Change Log</a> of the User Guide.</p><p>If you are running revIgniter please see the <a href="userGuide/installation/upgrading.html">Update Instructions</a>.</p>
+<p><span class="postdate">Posted on Wednesday, March 11, 2020</span></p>
+<hr class="half-rule">
+</div>
+</div>
+</div>
+
+<div class="row" id="newsAnchor">
+<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+<div class="newsitem">
+<h3>revIgniter v2.1.5 Released</h3>
+<p>revIgniter v2.1.5 has been released. This release adds CSP (Content Security Policy) support to AJAX pagination, to the Galleria helper and to the Asset helper. Finally bidding farewell to Google by replacing the Google search bar with a privacy-friendly search bar in the User Guide. To get more informations please read the <a href="userGuide/changelog.html">Change Log</a> of the User Guide.</p><p>If you are running revIgniter please see the <a href="userGuide/installation/upgrading.html">Update Instructions</a>.</p>
+<p><span class="postdate">Posted on Saturday, January 18, 2020</span></p>
+<hr class="half-rule">
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+<div class="newsitem">
+<h3>revIgniter v2.1.4 Released</h3>
+<p>revIgniter v2.1.4 has been released. This maintenance release implements the
+"SameSite" cookie attribute. To get more informations please read the <a href="userGuide/changelog.html">Change Log</a> of the User Guide.</p><p>If you are running revIgniter please see the <a href="userGuide/installation/upgrading.html">Update Instructions</a>.</p>
+<p><span class="postdate">Posted on Monday, October 21, 2019</span></p>
+<hr class="half-rule">
+</div>
+</div>
+</div>
+
+	
+	</div>
+
+
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+      <div id="rssLink">
+	      <a href="rssfeed.rss"><svg role="img" class="icon rssFeedIcon"><use xlink:href="https://revigniter.com/assets/modules/rss/img/iconSprite.svg#rssFeed" class="icon-rssFeed"></use></svg> RSS feed</a><!-- /test -->
+				 <a href="feedjson.json"><svg role="img" class="icon feedjsonIcon"><use xlink:href="https://revigniter.com/assets/modules/feedjson/img/iconSprite.svg#feedJSON" class="icon-feedjson"></use></svg> JSON feed</a><!-- /test -->
+      </div>
+    </div>
+  </div>
+
+</div><!-- /news -->
+				<!-- /news -->
+				
+	 
+
+	 
+	 <!-- contact form -->
+		 <div id="contact">
+	 		<div class="container revIgniterForm">
+	     	<h2 class="text-center">Contact</h2>
+	     	<div id="big-form" class="well form-box">
+			 
+
+  			<form action="#capt" accept-charset="utf-8" method="post" id="msg">
+  				<fieldset>
+<legend>Please provide your name, email address and a comment</legend>
+
+  				<input type="hidden" id="key" name="key" value="0c4ab43d7c2bfdeff3136b3dc4a7c34fd3d04890b9135d5ff3a6b3ae7125e8e9" />
+  				<input type="hidden" id="repopulateFld" name="repopulateFld" value="" />
+
+  				<div class="form-group">
+ 						<label for="firstname" class="control-label">First name (optional)</label>
+ 						<input name="first" class="validate-alphadash-accent form-control input-md" value="" placeholder="First" id="firstname" maxlength="32" type="text"  />
+ 					</div>
+
+  				<div class="form-group">
+ 						<label for="lastname" class="control-label">Last name (optional)</label>
+ 						<input name="last" class="validate-alphadash-accent form-control input-md" value="" placeholder="Last" id="lastname" maxlength="64" type="text"  />
+ 					</div>
+
+  				<div class="form-group" id="contactAnchor">
+ 						<label for="company">Company (optional)</label>
+ 						<input name="comp" class="form-control input-md" value="" placeholder="Company" id="company" maxlength="64" type="text"  />
+ 					</div>
+
+  				<div class="form-group">
+ 						<label for="email">Email</label>
+ 						<input type="text" id="email" placeholder="Email" value="" name="email" class="required validate-email form-control input-md"  />
+ 					</div>
+
+  				<div class="form-group">
+ 						<label for="subject">Subject</label>
+ 						<input name="subject" class="required form-control input-md" value="" placeholder="Subject" id="subject" maxlength="64" type="text"  />
+ 					</div>
+
+  				<div class="form-group">
+ 						<label for="message">Message</label>
+ 						<textarea rows="6" cols="70" class="required form-control" name="body" id="message" ></textarea>
+ 					</div>
+
+  				<div class="form-group">
+ 						<label for="privacypolicy">Informed Consent</label>
+						<label class="cb">
+						<input type="checkbox" name="privacypolicy" class="required" value="accept"  />
+						<span class="checkmark"></span>
+						<span class="help-block">Yes, I have read the <a href="privacy.html">Privacy Notice</a> and agree that my data will be used to process my request.</span>
+						</label>
+ 					</div>
+
+  				<div class="form-group">
+ 						<label for="capt">Captcha</label>
+ 						<input name="captcha" class="required validate-integer form-control input-md" value="" placeholder="Number verification" id="capt" maxlength="6" type="text"  />
+						<span class="help-block">Type the number shown below</span>
+ 					</div>
+
+  				<div><input type="submit" id="submitBtn" value="Submit" name="submitBtn" class="btn btn-default"  /></div>
+
+  				</fieldset>
+  			</form>
+
+						
+						<div id="formErrors">
+					      
+						</div>
+
+				 <div id="captcha">
+				 	<span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><br /><span class="w">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><br /><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><br /><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><br /><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="w">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><span class="b">&nbsp;&nbsp;</span><br />
+				 </div>
+				 
+				 
+	     </div>
+	     <div class="clearfix"></div>
+	   </div>
+	 
+	 </div><!-- /contact form -->
+
+
+
+
+		
+	  <footer class="footer">
+	       <div class="container">
+
+	 				<div class="row">
+	 						<div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+	 							<div id="riFooter">
+<p class="text-center riFooter">
+<a href="copyright.html">copyright &#169;  2020 revIgniter.com</a><span class="separator"> :: </span>
+<span class="currentpage">Home</span><span class="separator"> :: </span>
+<a href="imprint.html">Imprint</a><span class="separator"> :: </span>
+<a href="privacy.html">Privacy Notice</a>
+</p>
+</div>
+	 						</div>
+	 				</div>
+					 
+					 
+					 
+	       </div>
+	     </footer>
+			 
+			 
+</div>  <!-- /animsition -->
+
+		
+			<script nonce='163c2d20f36f6926f3e2bfd169cb41ce3f3b1236c8e86294674d07982daf9e1f' src="https://revigniter.com/assets/js/jq_bst_vel_velui-cb1557431686.js"></script>
+			 
+			 <script defer nonce='163c2d20f36f6926f3e2bfd169cb41ce3f3b1236c8e86294674d07982daf9e1f' src="https://revigniter.com/assets/js/jquery.blast.min-cb1557431826.js"></script>
+			 
+			 
+			 <!-- <script src="//cdn.jsdelivr.net/vivus/0.2.0/vivus.min.js"></script> -->
+			 <script nonce='163c2d20f36f6926f3e2bfd169cb41ce3f3b1236c8e86294674d07982daf9e1f' src="https://revigniter.com/assets/js/vivus.min-cb1557431784.js"></script>
+			 
+			 <script defer nonce='163c2d20f36f6926f3e2bfd169cb41ce3f3b1236c8e86294674d07982daf9e1f' src="https://revigniter.com/assets/js/bouncy.min-cb1557431925.js"></script>
+			 
+			 <script nonce='163c2d20f36f6926f3e2bfd169cb41ce3f3b1236c8e86294674d07982daf9e1f' src="https://revigniter.com/assets/js/jqanim_scrma-cb1557431961.js"></script>
+				
+				<script defer nonce='163c2d20f36f6926f3e2bfd169cb41ce3f3b1236c8e86294674d07982daf9e1f' src="https://revigniter.com/assets/js/animation.velocity.min-cb1557431732.js"></script>
+				
+				
+				
+				<script defer nonce='163c2d20f36f6926f3e2bfd169cb41ce3f3b1236c8e86294674d07982daf9e1f' src="https://revigniter.com/assets/js/sweet-alert.min-cb1557431875.js"></script>
+							
+				<script nonce='163c2d20f36f6926f3e2bfd169cb41ce3f3b1236c8e86294674d07982daf9e1f' src="https://revigniter.com/assets/js/jqform_form_jqval_svg4-cb1557432033.js"></script>
+
+				<script nonce='163c2d20f36f6926f3e2bfd169cb41ce3f3b1236c8e86294674d07982daf9e1f'>svg4everybody();</script>
+				
+				<script nonce='163c2d20f36f6926f3e2bfd169cb41ce3f3b1236c8e86294674d07982daf9e1f'>var rigBaseURL = 'https://revigniter.com/';</script>
+				
+				<script nonce='163c2d20f36f6926f3e2bfd169cb41ce3f3b1236c8e86294674d07982daf9e1f' src="https://revigniter.com/assets/js/script-min-Notification-cb1579023498.js"></script>
+
+
+		<script nonce='163c2d20f36f6926f3e2bfd169cb41ce3f3b1236c8e86294674d07982daf9e1f'>/* @license magnet:?xt=urn:btih:8e4f440f4c65981c5bf93c76d35135ba5064d8b7&dn=apache-2.0.txt */function switchPage(t){"use strict";"A"!==(t=t||window.event).target.nodeName&&"A"!==t.target.parentNode.nodeName||PaginationWidget.clickListener(t,"newsPagination","newsItems")}document.addEventListener("DOMContentLoaded",(function(){"use strict";var t=document.getElementById("newsPagination");t.addEventListener?t.addEventListener("click",switchPage,!1):t.attachEvent&&t.attachEvent("onclick",switchPage)}));var PaginationWidget={paginationWidget:null,paginationData:null,preventDefault:function(e){"use strict";e=e||window.event;document.addEventListener?e.preventDefault():document.attachEvent&&(e.returnValue=!1)},clickListener:function(e,t,n){"use strict";e=e||window.event;this.paginationWidget=document.getElementById(t);this.paginationData=document.getElementById(n);if(this.paginationWidget!==null&&this.paginationData!==null){this.preventDefault(e);try{var r=new XMLHttpRequest}catch(i){try{var r=new ActiveXObject("Microsoft.XMLHTTP")}catch(s){var r=null} } if(r!==null){var o=e.target?e.target:e.srcElement;if(o.nodeName!=="A"){o=o.parentNode;}o.requestTimer=setTimeout(function(){r.abort();PaginationWidget.writeError("The server timed out while making your request.")},10000);var u=o.href[o.href.length-1]==="/"?"ajaxrequest/":"/ajaxrequest/";r.open("POST",o.href+u,!0);r.onreadystatechange=function(){if(r.readyState===4){clearTimeout(o.requestTimer);r.status===200||r.status===304?PaginationWidget.writeData(r.responseText):PaginationWidget.writeError("The server was unable to be contacted.")} }; r.send(null)} } }, writeData:function(e){"use strict";var t=JSON.parse(e);PaginationWidget.paginationData.innerHTML=t.paginationData;PaginationWidget.paginationWidget.innerHTML=t.paginationLinks}, writeError:function(e){"use strict";alert(e)} };/* @license-end */</script>
+		
+
+    </body>
+</html>

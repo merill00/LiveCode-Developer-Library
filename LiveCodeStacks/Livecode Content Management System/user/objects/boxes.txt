@@ -1,0 +1,8 @@
+Summary: Category,Title
+Title,Input,120
+Category,Input,20
+Tags,Input,40
+Description,Area,100,10
+button_title,Input,32
+mainpage,Input,32
+detail,Input,32
