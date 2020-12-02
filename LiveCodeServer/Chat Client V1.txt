@@ -1,0 +1,107 @@
+REVO5500 Chat Client V1 @ W ‡ ^ Chat Client V1 ÿÿÿÿ cRevStandaloneSettings) scriptLibraries Internet
+Geometry
+Printing MacOSX true OSX, name UNIX Client Chat, fileSelector true Windows true Windows, LegalCopyright # 2013 All rights reserved worldwide UNIX, pageSetup true OSX, documentType Linux true Windows, documenticonFile Ž / Users / eric_coquard / Applications / LiveCode Community 6.1.1 (rc 1) .app / Contents / Tools / Runtime / Windows / x86-32 / Support / Sample Icons / genericdoc.ico search inclusionsanswerDialog true OSX, Windows documentExtension, FileDescription Chat Client 1.0.0.0 for Windows OSX, longVersion Chat Client 1.0.0.0 OSX, copyright # 2013 All rights reserved worldwide UNIX, printerChooser true name OSX Client Chat, identify com..chatclient OSX, shortVersion 1.0 .0.0 Windows, fileversion1 1 Windows, productversion1 1 Windows, fileversion2 0 Windows, productversion2 0 Windows, fileversion3 0 cursors false Windows, productversion3 0 Windows, fileversion4 0 OSX, info Chat Client Version 1.0.0.0 Windows, productversion4 0 MacOSX PowerPC-32 false android, minimum version 8
+askDialog true OSX, signature ???? Windows, iconFile Ž / Users / eric_coquard / Applications / LiveCode Community 6.1.1 (rc 1) .app / Contents / Tools / Runtime / Windows / x86-32 / Support / Sample Icons / genericapp.ico defaultBuildFolder ./Users/eric_coquard/ Documents / Livecode / sockets Windows, ProductName UNIX Client Chat, colorChooser true MacOSX x86-32 false ios, ipad intial orientations Windows portrait, companyname cREVGeneral breakpointconditions breakpoints breakpointstates stackfileversion 5.5 ê Pocal Client sIpServer, sSocket
+constant kPort = 8020
+
+Command ConnectServer
+   put field "TxtIpServer" into sIpServer
+   put empty into field "LstMessages"
+   put empty into field "LstLog"
+   open socket to sIpServer & ":" & kPort with message "ClientConnect"
+end ConnectServer
+
+Command Disconnect
+   local tUser, tlengthUser
+   put field "TxtUser" into tUser
+   put the length of tUser into tlengthUser
+   write "STOP," & tlengthUser & return & tuser & return to socket sIpServer & ":" & kPort
+   put "Disconnect host" & return before field "LstMessages"
+   close sSocket socket
+end Disconnect
+
+Command Authentication
+   local tUser, tlengthUser
+   put field "TxtUser" into tUser
+   put the length of tUser into tlengthUser
+   if tlengthUser> 0 then
+      write "AUTH," & tlengthUser & return & tuser & return to socket sIpServer & ":" & kPort
+   else
+      put "Error authentication" & return before field "LstMessages"
+   end if
+end Authentication
+
+Command StopConnect
+   local tUser, tlengthUser
+   put field "TxtUser" into tUser
+   put the length of tUser into tlengthUser
+   write "DCNX," & tlengthUser & return & tuser & return to socket sIpServer & ":" & kPort
+end StopConnect
+
+Command SendMessage
+   local tMessage, tlenghtMessage
+   put field "TxtMessage" into tMessage
+   put the length of tMessage into tlengthMessage
+   write "MESG," & tlengthMessage & return & tMessage & return to socket sIpServer & ":" & kPort
+SendMessage end
+
+Command ClientConnect pSocket
+   put pSocket into sSocket
+   read from socket sSocket until return with message "ClientConnectReceveid"
+
+end ClientConnect
+
+Command ClientConnectReceveid pSocket, pMesg
+   local tCommand, tLength
+   put item 1 of pMesg into tCommand
+   put item 2 of pMesg into tLength
+   if tLength is an integer then
+      put pMesg & return before field "LstLog"
+      
+   else
+      put pMesg & return before field "LstMessages"
+   end if
+   eee
+   read from socket sSocket until return with message "ClientConnectReceveid"
+end ClientConnectReceveid
+     €: cREVGeneral scripteditorvscroll 0 scripteditorselection 605 ì ð ð ð ÷ ø ø ü ü ü ü ü
+   ì TxtIpServer) `€ h dCREVGeneral revUniqueID1374572077291 ê
+127.0.0.1
+   î Label Field     € l x
+cREVTable currentview IP server: cREVGeneral revUniqueID1374572081310 IP server: ð Connect toE <p) on mouseUp
+   ConnectServer
+end mouseUp
+     € to R œ cREVGeneral revUniqueID1374572415134 scripteditorvscroll 0 scripteditorselection 39
+   ò txtUser) `€ h 1 d
+cREVTable currentview cREVGeneral revUniqueID1374573241732 ê
+   ó Label Field     € 0 d |
+cREVTable currentview User: cREVGeneral revUniqueID1374573252461 User: õ AUTH toE <p * on mouseUp
+   Authentication
+end mouseUp
+     € to 0 ReCREVGeneral revUniqueID1374573298533 scripteditorvscroll 0 scripteditorselection 28
+   ÷ TxtMessage) `€, q ¢ /
+cREVTable currentview cREVGeneral revUniqueID1374575569448 ê
+   ø Label Field     € j Z d ~
+cREVTable currentview Message: cREVGeneral revUniqueID1374575578571
+Message: ú MESG to E <p 'on mouseUp
+   SendMessage
+end mouseUp
+     € R ž cREVGeneral revUniqueID1374576448371 scripteditorvscroll 0 scripteditorselection 37
+   ü LstMessages,) `€ * (J
+cREVTable currentview cREVGeneral revUniqueID1374589402945 ê ý `/) H
+   þ Label Field     € j Z dx
+cREVTable currentview Message: cREVGeneral revUniqueID1374589417641
+Message:
+   ÿ Field Label €, ¤ d x
+cREVTable currentview Logs: cREVGeneral revUniqueID1374589425465 Logs: DCNX to E <p 'on mouseUp
+   StopConnect
+end mouseUp
+     € 8 0 R ý cREVGeneral scripteditorvscroll 0 revUniqueID1374697634269 scripteditorselection 25
+      LstLog,) `€ * ¼ J y
+cREVTable currentview cREVGeneral revUniqueID1374784112852 ê `/ ½ H {
+     Label Field € (d
+cREVTable currentview
+Messages: cREVGeneral revUniqueID1374784126502 Posts: Disconnect to E <p & on mouseUp
+   Disconnect
+end mouseUp
+     €: R ûcREVGeneral revUniqueID1374913165220 scripteditorvscroll 0 scripteditorselection 24

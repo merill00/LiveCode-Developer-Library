@@ -1,0 +1,185 @@
+REVO5500 Chat Server V1 @ ‡ 'i ^ Chat Server V1 ÿÿÿÿ cREVGeneral breakpointconditions breakpoints breakpointstates stackfileversion 5.5 ê Server P Šlocal sConnectedClients ÊÊÊ-- List of Authorized Users [user] => [name]
+local sPendingClientsÊÊÊÊÊÊÊÊ--- list of hosts waiting
+local sClientNamesÊÊÊÊÊÊÊÊÊÊÊÊ-- Name of the current user
+local sRunningÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊ-- server en cours
+constant kPort = 8020
+
+- Start the server
+command chatServerStart
+   if not sRunning then
+      put true into sRunning
+      put empty into field "LstMessages"
+      put empty into field "LstPending"
+      put empty into field "LstConnect"
+      put "start server" & return before field "LstMessages"
+      accept connections on port kPort with message "chatServerClientConnected"
+   end ifÊÊÊÊ
+end chatServerStart
+
+- Stop the server
+command chatServerStop
+   if sRunning then
+      put false into sRunning
+      put empty into sConnectedClients
+      put empty into sPendingClients
+      put empty into sClientNames
+      put empty into field "LstPending"
+      put empty into field "LstConnect"
+      repeat for each line tSocket in the opensockets
+         close socket tSocket
+         put "socket deconnect:" & tSocket & return before field "LstMessages"
+      end repeat
+      put "stop server" & return before field "LstMessages"
+   end if
+end chatServerStop
+
+on chatServerClientConnected pSocket
+   put pSocket & return after sPendingClients
+   put sPendingClients into field "LstPending"
+   put "connect client:" & pSocket & return before field "LstMessages"
+   read from socket pSocket until return with message "chatServerMessageReceived"
+end chatServerClientConnected
+
+on chatServerMessageReceived pSocket, pMsg
+   if length (pMsg)> 1 then
+      put char 1 to -2 of pMsg into pMsg
+      local tAuth, tCommand, tLength, tMsg
+      put pSocket is among the keys of sConnectedClients into tAuth
+      put item 1 of pMsg into tCommand
+      put item 2 of pMsg into tLength
+      if tLength is not an integer then
+         put "Invalid message length" & return into tMsg
+         write "WARN," & the number of chars in tMsg & return & tMsg & return to socket pSocket
+      Êelse
+         switch tCommand
+            box "DCNX"
+               - User disconnection
+               if tAuth then
+                  read from socket pSocket for tLength floats
+                  if it is among the lines of sClientNames then
+                     put "client disconnect:" & it & return before field "LstMessages"
+                     write "DCNX, 0" & return to socket pSocket
+                     chatServerBroadcast it && "disconnected"
+                     
+                     delete line lineoffset (it, sClientNames) of sClientNames
+                     put pSocket & return after sPendingClients
+                     put sPendingClients into field "LstPending"
+                     put empty into sConnectedClients [pSocket]
+                     delete line lineoffset (pSocket, sConnectedClients) of sConnectedClients
+                     put empty into field "LstConnect"
+                     repeat for each line tSocket in the keys of sConnectedClients
+                        put tSocket & "," & sConnectedClients [tSocket] into field "LstConnect"
+                     end repeat
+                  end if
+               else
+                  put "Client not verified" & return into tMsg
+                  write "ERRO," & the number of chars in tMsg & return & tMsg to socket pSocket
+               end if
+               break
+            case "STOP"
+               - Disconnecting the host
+               if tAuth then
+                  - the user is connected, automatic logout
+                  read from socket pSocket for tLength floats
+                  if it is among the lines of sClientNames then
+                     put "client disconnect:" & it & return before field "LstMessages"
+                     delete line lineoffset (pSocket, sConnectedClients) of sConnectedClients
+                     write "DCNX, 0" & return to socket pSocket
+                     chatServerBroadcast it && "disconnected"
+                     delete line lineoffset (it, sClientNames) of sClientNames
+                  end if
+                  put empty into field "LstConnect"
+                  repeat for each line tSocket in the keys of sConnectedClients
+                     put tSocket & "," & sConnectedClients [tSocket] into field "LstConnect"
+                  end repeat
+                  
+               end if
+               if pSocket is among the lines of sPendingClients then
+                  delete line lineoffset (pSocket, sPendingClients) of sPendingClients
+               end if
+               put "disconnect host:" & pSocket & return before field "LstMessages"
+               put sPendingClients into field "LstPending"
+               
+               break
+            case "MESG"
+               - message management
+               if tAuth then
+                  read from socket pSocket for tLength floats
+                  put "message send:" & sConnectedClients [pSocket] & return before field "LstMessages"
+                  chatServerBroadcast sConnectedClients [pSocket] & ":" && it
+               else
+                  put "Client not verified" & return into tMsg
+                  write "ERRO," & the number of chars in tMsg & return & tMsg to socket pSocket
+               end if
+               break
+            case "AUTH"
+               - user authentication
+               if tAuth then
+                  put "Customer already verified" & return into tMsg
+                  write "WARN," & the number of chars in tMsg & return & tMsg to socket pSocketÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊÊ
+               else
+                  read from socket pSocket for tLength floats
+                  if it is not among the lines of sClientNames then
+                     put it into sConnectedClients [pSocket]
+                     put "accept customer:" & it & return before field "LstMessages"
+                     put it & return after sClientNames
+                     write "VERI, 0" & return to socket pSocket
+                     delete line lineoffset (pSocket, sPendingClients) of sPendingClients
+                     put sPendingClients into field "LstPending"
+                     repeat for each line tSocket in the keys of sConnectedClients
+                        put tSocket & "," & sConnectedClients [tSocket] into field "LstConnect"
+                     end repeat
+                     chatServerBroadcast it && "connected"
+                  else
+                     put "Username already taken" & return into tMsg
+                     write "ERRO," & the number of chars in tMsg & return & tMsg to socket pSocket
+                  end if
+               end if
+               break
+            default
+               put "Unknown command" & return into tMsg
+               write "ERRO," & the number of chars in tMsg & return & tMsg to socket pSocket
+               break
+         end switch
+      end if
+   end if
+   read from socket pSocket until return with message "chatServerMessageReceived"
+end chatServerMessageReceived
+
+command chatServerBroadcast pMsg
+ÊÊÊlocal tMsg
+"MESG," & the number of tanks in pMsg & return & pMsg & return into tMsg
+•••••••••••••••••••••••••••••••••••••••••••••
+Ê Ê Ê Ê w w w w w w w w w
+ÊÊÊend repeat
+end chatServerBroadcast
+
+on socketClosed pSocket
+Ê Ê if if if if if pSocket is among the lines of sPendingClients
+ÊÊÊÊÊÊÊÊelelelel line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line line
+ÊÊÊelse if sConnectedClients [pSocket] is not empty then
+ÊÊÊÊÊÊÊÊlocal tName
+Ê Ê Ê put s sConnectedClients [pSocket] into tName
+Ê Ê Ê Ê d el s s s sConnectedClients [pSocket]
+ÊÊÊÊÊÊÊÊdelete line lineoffset (tName, sClientNames) of sClientNames
+ÊÊÊÊÊÊÊÊchatServerBroadcast tName && "disconnected"
+ÊÊÊend if
+end socketClosed
+     € 'i: cREVGeneral scripteditorvscroll 0 scripteditorselection 5410 debugParameters pSocket, debugEntryHandler M, socketClosed ð ò ô ð Start atE <p + on mouseUp
+   chatServerStart
+end mouseUp
+     € R œ cREVGeneral scripteditorvscroll 0 revUniqueID1374568059937 scripteditorselection 29 ò Stop at E <p * on mouseUp
+   chatServerStop
+end mouseUp
+     € t R ž cREVGeneral scripteditorvscroll 0 revUniqueID1374568097400 scripteditorselection 10
+   o LstMessages,) `€ @ d z
+cREVTable currentview cREVGeneral revUniqueID1374568994613 ê õ `i A x
+   ÿ LstPending,) `€ Ð d 8 cREVGeneral revUniqueID1374763312834 ê `i Ñ 6y
+      LstConnect,) `€ f 8 y cREVGeneral revUniqueID1374763795077 ê `k 6 {
+     Field Label €, d
+cREVTable currentview Logs: cREVGeneral revUniqueID1374766258754 Logs:
+     Label Field € ¼ d
+cREVTable currentviewHost connect: cREVGeneral revUniqueID1374766302496 Host connect:
+     Field Label €
+ d
+cREVTable currentviewUser connect: cREVGeneral revUniqueID1374766331026 User connect:
