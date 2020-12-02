@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigEnableProfiler ${1:bool}${0}</string>
+	<key>name</key>
+	<string>Enable Profiler</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>output</string>
+	<key>uuid</key>
+	<string>9A6E3DF8-5737-4B82-9480-DA325C5D8A40</string>
+</dict>
+</plist>

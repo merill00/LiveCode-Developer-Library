@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigFetchModuleSegment(${1:number}${2:, "${3:noResultValue}"})${0}</string>
+	<key>name</key>
+	<string>Modules Segment</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>module</string>
+	<key>uuid</key>
+	<string>BF7A9C7C-7ECE-4F39-AECE-F829F7DFF2B2</string>
+</dict>
+</plist>

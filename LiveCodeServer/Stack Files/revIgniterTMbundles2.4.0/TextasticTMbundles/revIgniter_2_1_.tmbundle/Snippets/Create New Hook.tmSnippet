@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>script "${1:hookName}"
+
+
+global gRigA
+
+local sStackInUse
+
+
+
+on libraryStack
+  if (gRigA is not an array) and (the environment is "server") then
+    put "No direct script access allowed."
+    exit to top
+  end if
+
+  if the short name of the target = the short name of me then 
+    if sStackInUse &lt;&gt; TRUE then
+      put TRUE into sStackInUse
+    end if
+    
+  else
+    pass libraryStack
+  end if -- if the short name of the target = the short name of me
+end libraryStack
+
+
+${0}
+
+
+
+--| END OF ${1:hookName}.lc
+--| Location:  ./application/hooks/${1:hookName}.lc
+----------------------------------------------------------------------</string>
+	<key>name</key>
+	<string>Create New Hook</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>hook</string>
+	<key>uuid</key>
+	<string>F8453BE8-7C70-4E51-A227-176B09A45B16</string>
+</dict>
+</plist>

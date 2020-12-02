@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigVarGetPost("${1:item}"${2:, ${3:xssFilter}})${0}</string>
+	<key>name</key>
+	<string>GET POST</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>input</string>
+	<key>uuid</key>
+	<string>838D07F6-EB29-4C60-94F1-37A7EC1C6285</string>
+</dict>
+</plist>

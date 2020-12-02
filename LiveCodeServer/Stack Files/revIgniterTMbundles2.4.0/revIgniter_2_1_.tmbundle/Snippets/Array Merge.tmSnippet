@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigArrayMerge(${1:arrayA}, ${2:arrayB}${3:, "${4:firstDelim}", "${5:secondDelim}"})${0}</string>
+	<key>name</key>
+	<string>Array Merge</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>array</string>
+	<key>uuid</key>
+	<string>B1A2194C-23A9-4992-9940-4AE6D564A029</string>
+</dict>
+</plist>

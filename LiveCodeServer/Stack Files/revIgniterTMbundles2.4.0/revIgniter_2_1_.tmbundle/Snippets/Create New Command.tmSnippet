@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>/*----------------------------------------------------------------------
+--| COMMAND ${1:handlerName}
+--|
+--| Author: ${2:$TM_FULLNAME}
+--| Version:  1.0
+--| Created: ${3:`date "+%Y-%m-%d"`}
+--| Last Mod: ${3}
+--| Requires: ${4:--}
+--|
+--| Summary: ${5:description}
+--| 
+--| Format:  ${1} ${6:params}
+--|
+--| Parameters: ${7:--}
+--|
+--| Return: ${8:empty}
+----------------------------------------------------------------------*/
+
+command ${1} ${9:pParams}
+	${10:# code...}
+end ${1}
+${0}</string>
+	<key>name</key>
+	<string>Create New Command</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>com</string>
+	<key>uuid</key>
+	<string>84AE7D0E-BB60-491B-92BE-F15E4B217736</string>
+</dict>
+</plist>

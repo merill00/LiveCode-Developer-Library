@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigDbOrWhere ${1:string}, ""${2:, ${3:protect}}${0}</string>
+	<key>name</key>
+	<string>Or Where Custom String</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>database</string>
+	<key>uuid</key>
+	<string>FE42FC1D-58FF-458D-8F9E-F94090059C3E</string>
+</dict>
+</plist>

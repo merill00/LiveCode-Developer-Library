@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigLoaderLoadLibrary "${1:libraryName}"${2:, ${3:configArray}${4:, "${5:module}"}}${0}</string>
+	<key>name</key>
+	<string>Load Library</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>loader</string>
+	<key>uuid</key>
+	<string>BB3EBB6B-CFEC-4709-9161-D2D3023BD699</string>
+</dict>
+</plist>

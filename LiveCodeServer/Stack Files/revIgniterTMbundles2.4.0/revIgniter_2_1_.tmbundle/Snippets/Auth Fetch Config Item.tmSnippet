@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigAuthFetchConfigItem(${1:item}${2:, ${3:index}})${0}</string>
+	<key>name</key>
+	<string>Auth Fetch Config Item</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>auth</string>
+	<key>uuid</key>
+	<string>03A92647-61B6-4E90-9B33-DF5C91F9AC16</string>
+</dict>
+</plist>

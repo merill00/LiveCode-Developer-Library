@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigLangLangLine("${1:languageKey}")${0}</string>
+	<key>name</key>
+	<string>Language Line</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>language</string>
+	<key>uuid</key>
+	<string>C7942C0F-5DDA-45A4-9BFD-09DE726F7384</string>
+</dict>
+</plist>

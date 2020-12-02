@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigLoaderLoadLibrary "Encrypt"</string>
+	<key>name</key>
+	<string>Encrypt Library</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>encrypt</string>
+	<key>uuid</key>
+	<string>FF4A90C7-437A-4F5E-9048-D0FA826A7728</string>
+</dict>
+</plist>

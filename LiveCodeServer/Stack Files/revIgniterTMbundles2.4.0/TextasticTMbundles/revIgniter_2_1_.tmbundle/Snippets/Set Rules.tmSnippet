@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSetRules "${1:fieldName}", "${2:lang:}${3:humanName}", "${4:rules}"${0}</string>
+	<key>name</key>
+	<string>Set Rules</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>formvalidation</string>
+	<key>uuid</key>
+	<string>4371224D-E335-4FC2-8549-3A97F12CB9A2</string>
+</dict>
+</plist>

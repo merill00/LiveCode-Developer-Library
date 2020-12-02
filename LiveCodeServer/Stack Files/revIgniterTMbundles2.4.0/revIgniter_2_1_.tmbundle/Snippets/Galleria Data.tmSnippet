@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigGalleriaData("${1:path}"${2:, ${3:options}${4:, "${5:id}"${6:, "${7:varname}"${8:, ${9:cachebuster}${10:, ${11:replacefile}${12:, ${13:returnreference}}}}}}})${0}</string>
+	<key>name</key>
+	<string>Galleria Data</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>galleria</string>
+	<key>uuid</key>
+	<string>994E0B9D-DBA9-406A-BC12-13B4A1C8C945</string>
+</dict>
+</plist>

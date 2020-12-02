@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigAddFavicon(${1:"${2:moduleName}"${3:, ${4:cacheBuster}}})${0}</string>
+	<key>name</key>
+	<string>Asset Add Favicon</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>asset</string>
+	<key>uuid</key>
+	<string>849172C8-EE0B-4B27-8284-6B55A49BADB0</string>
+</dict>
+</plist>

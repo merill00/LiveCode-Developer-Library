@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env livecode-community-server
+
+if the outputLineEndings = "cr" then
+	set the outputLineEndings to "lf"
+end if
+
+-- GET RELATIVE FILE PATH
+if $TM_FILEPATH is not empty then
+  put $TM_FILEPATH into tFilePath
+  set the itemDel to "/"
+  put itemOffset("controllers", tFilePath) into tContrDirNameOffset
+  put "./" &amp; (item (tContrDirNameOffset - 1) to -1 of tFilePath) into tFilePath
+ else
+  put "./application/controllers/controllerName.lc" into tFilePath
+end if
+ -- GET DEFAULT CONTROLLER NAME
+if $TM_FILENAME is not empty then
+  put byte 1 to - 4 of $TM_FILENAME into tControllerName
+else
+  put "controllerName" into tControllerName
+end if
+-- BUILD CONTROLLER
+if "modules" is among the items of tFilePath then
+	put "gModuleHandlers" into tControllerHandlers
+	put tControllerName &amp; "Index" into tIndexContrName
+else
+	put "gControllerHandlers" into tControllerHandlers
+	put "index" into tIndexContrName
+end if
+
+put "&lt;?lc" &amp; return &amp; return into tController
+-- put "global gControllerHandlers, gData" &amp; return &amp; return after tController
+put "put" &amp;&amp; quote &amp; tControllerName &amp; "," &amp; tIndexContrName &amp; quote &amp;&amp; "into" &amp;&amp; tControllerHandlers &amp; return &amp; return &amp; return after tController
+put "command" &amp;&amp; tControllerName &amp; return &amp; tab &amp; "# code..." &amp; return after tController
+put "end" &amp;&amp; tControllerName &amp; return &amp; return &amp; return after tController
+
+put "command" &amp;&amp; tIndexContrName &amp; return &amp; tab &amp; "# SET PAGE TITLE" &amp; return after tController
+
+put tab &amp; "put" &amp;&amp; quote &amp; "YourPageTitle" &amp; quote &amp;&amp; "into gData[" &amp; quote &amp; "pageTitle" &amp; quote &amp; "]" &amp; return &amp; return after tController
+put tab &amp; "# LOAD THE VIEW FILE" &amp; return after tController
+put tab &amp; "get rigLoadView(" &amp; quote &amp; tControllerName &amp; "View" &amp; quote &amp; ")" &amp; return after tController
+
+put "end" &amp;&amp; tIndexContrName &amp; return &amp; return &amp; return &amp; return &amp; return after tController
+
+put "--| END OF" &amp;&amp; tControllerName &amp; ".lc" &amp; return after tController
+put "--| Location:" &amp;&amp; tFilePath &amp; return after tController
+put "----------------------------------------------------------------------" after tController
+put tController</string>
+	<key>input</key>
+	<string>document</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>name</key>
+	<string>Controller</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>atCaret</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>ctrl</string>
+	<key>uuid</key>
+	<string>0034F7B3-6B20-42F5-8B72-6FA844663F2B</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>

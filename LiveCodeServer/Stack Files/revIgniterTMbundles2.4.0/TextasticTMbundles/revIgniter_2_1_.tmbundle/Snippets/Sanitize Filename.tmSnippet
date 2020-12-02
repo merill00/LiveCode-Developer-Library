@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSanitizeFilename(${1:fileName}${2:, ${3:relativePath}})${0}</string>
+	<key>name</key>
+	<string>Sanitize Filename</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>input</string>
+	<key>uuid</key>
+	<string>6BDD7DD5-5160-47FB-9ED5-4E7785B06769</string>
+</dict>
+</plist>

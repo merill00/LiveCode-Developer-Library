@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigCaptchaMathProblem(${1:numberOfOperators})${0}</string>
+	<key>name</key>
+	<string>Captcha Math</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>captcha</string>
+	<key>uuid</key>
+	<string>A87F8335-F376-46D2-AA66-B554746ED750</string>
+</dict>
+</plist>

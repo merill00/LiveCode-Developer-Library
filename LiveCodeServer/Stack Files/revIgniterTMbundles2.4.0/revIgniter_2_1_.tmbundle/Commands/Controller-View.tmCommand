@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env livecode-community-server
+
+if the outputLineEndings = "cr" then
+	set the outputLineEndings to "lf"
+end if
+
+-- GET RELATIVE FILE PATH OF CONTROLLER
+if $TM_FILEPATH is not empty then
+  put $TM_FILEPATH into tControllerPath
+	put "mate" &amp;&amp; tControllerPath into tShellOpenController
+	put $TM_FILEPATH into tViewPath
+  set the itemDel to "/"
+  put itemOffset("controllers", tControllerPath) into tContrDirNameOffset
+  put "./" &amp; (item (tContrDirNameOffset - 1) to -1 of tControllerPath) into tControllerPath
+
+-- BUILD FILE PATH FOR VIEW, NEEDED FOR WRITING A CORRESPONDING VIEW FILE
+	put (item 1 to (tContrDirNameOffset - 1) of tViewPath) &amp; "/views/" &amp; item -1 of tViewPath into tViewPath
+	put item 1 to -2 of tViewPath into tViewFolderPath
+	
+	if there is a folder tViewFolderPath then
+		set the itemDel to "."
+		put (the number of chars of item -1 of tViewPath) + 1 into tCharsToReplace
+		replace char - tCharsToReplace to -1 of tViewPath with "View.lc" in tViewPath
+	
+-- WRITE VIEW FILE
+		if there is not a file tViewPath then
+			put tViewFolderPath &amp; "/template/template.lc" into tViewTemplatePath
+			if there is a file tViewTemplatePath then
+				put URL ("binfile:" &amp; tViewTemplatePath) into tViewData
+			else
+				put "&lt;!DOCTYPE html&gt;" &amp; return &amp; "&lt;html&gt;" &amp; return &amp; "&lt;head&gt;" &amp; return &amp; tab &amp; "&lt;meta charset=" &amp; quote &amp; "utf-8" &amp; quote &amp; "&gt;" \
+					&amp; return &amp; return &amp; tab &amp; "&lt;title&gt;[[gData[" &amp; quote &amp; "pageTitle" &amp; quote &amp; "] ]]&lt;/title&gt;" &amp; return &amp; return &amp; "&lt;/head&gt;" \
+					&amp; return &amp; return &amp; "&lt;body&gt;" &amp; return &amp; return &amp; tab &amp; "&lt;div id=" &amp; quote &amp; "main" &amp; quote &amp;&amp; "role=" &amp; quote &amp; "main" &amp; quote &amp; "&gt;" \
+					&amp; return &amp; return &amp; tab &amp; "&lt;/div&gt;" &amp; return &amp; return &amp; "&lt;/body&gt;" &amp; return &amp; "&lt;/html&gt;" into tViewData
+			end if
+		
+  		set the convertOctals to true
+ 			put the umask into tCurrentUmask
+			set the umask to "0111"
+			try
+				put tViewData into URL ("binfile:" &amp; tViewPath)
+			end try
+  		set the umask to tCurrentUmask
+		end if
+		
+		put "mate" &amp;&amp; tViewPath into tShellOpenView
+		try
+			get shell(tShellOpenView)
+			get shell(tShellOpenController)
+		end try
+	end if
+	
+ else
+  put "./application/controllers/myController.lc" into tControllerPath
+end if
+ -- GET DEFAULT CONTROLLER NAME
+if $TM_FILENAME is not empty then
+  put byte 1 to - 4 of $TM_FILENAME into tControllerName
+else
+  put "controllerName" into tControllerName
+end if
+-- BUILD CONTROLLER
+set the itemDel to "/"
+if "modules" is among the items of tControllerPath then
+	put "gModuleHandlers" into tControllerHandlers
+	put tControllerName &amp; "Index" into tIndexContrName
+else
+	put "gControllerHandlers" into tControllerHandlers
+	put "index" into tIndexContrName
+end if
+
+put "&lt;?lc" &amp; return &amp; return into tController
+-- put "global gControllerHandlers, gData" &amp; return &amp; return after tController
+put "put" &amp;&amp; quote &amp; tControllerName &amp; "," &amp; tIndexContrName &amp; quote &amp;&amp; "into" &amp;&amp; tControllerHandlers &amp; return &amp; return &amp; return after tController
+put "command" &amp;&amp; tControllerName &amp; return &amp; tab &amp; "# code..." &amp; return after tController
+put "end" &amp;&amp; tControllerName &amp; return &amp; return &amp; return after tController
+
+put "command" &amp;&amp; tIndexContrName &amp; return &amp; tab &amp; "# SET PAGE TITLE" &amp; return after tController
+
+put tab &amp; "put" &amp;&amp; quote &amp; "YourPageTitle" &amp; quote &amp;&amp; "into gData[" &amp; quote &amp; "pageTitle" &amp; quote &amp; "]" &amp; return &amp; return after tController
+put tab &amp; "# LOAD THE VIEW FILE" &amp; return after tController
+put tab &amp; "get rigLoadView(" &amp; quote &amp; tControllerName &amp; "View" &amp; quote &amp; ")" &amp; return after tController
+
+put "end" &amp;&amp; tIndexContrName &amp; return &amp; return &amp; return &amp; return &amp; return after tController
+
+put "--| END OF" &amp;&amp; tControllerName &amp; ".lc" &amp; return after tController
+put "--| Location:" &amp;&amp; tControllerPath &amp; return after tController
+put "----------------------------------------------------------------------" after tController
+put tController</string>
+	<key>input</key>
+	<string>document</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>name</key>
+	<string>Controller-View</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>atCaret</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>ctrlv</string>
+	<key>uuid</key>
+	<string>73DBF940-7B4B-4380-848F-9AAA17116970</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>

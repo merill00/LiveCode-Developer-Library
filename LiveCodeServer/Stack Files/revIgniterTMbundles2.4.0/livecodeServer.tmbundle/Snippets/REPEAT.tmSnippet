@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>repeat ${1:loopform}
+	${0:# code...}
+end repeat</string>
+	<key>name</key>
+	<string>Repeat</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>repeat</string>
+	<key>uuid</key>
+	<string>D3303BEB-C785-4103-9E41-D5496ACEE79C</string>
+</dict>
+</plist>

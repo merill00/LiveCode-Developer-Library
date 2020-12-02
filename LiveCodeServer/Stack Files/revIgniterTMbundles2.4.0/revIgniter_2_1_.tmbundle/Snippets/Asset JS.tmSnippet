@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigJsAsset("${1:jsName}"${2:, "${3:moduleName}"${4:, ${5:cacheBuster}${6:, "${7:async defer}"}}})${0}</string>
+	<key>name</key>
+	<string>Asset JS</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>asset</string>
+	<key>uuid</key>
+	<string>8A814560-A970-4B2F-BE1E-14EE9C5EE43C</string>
+</dict>
+</plist>

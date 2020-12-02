@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigFormLabel("${1:label}", "${2:for}"${3:, ${4:attributes}})${0}</string>
+	<key>name</key>
+	<string>Form Label</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>form</string>
+	<key>uuid</key>
+	<string>D8D68315-36D7-47AA-8BDC-60E77390DBE7</string>
+</dict>
+</plist>

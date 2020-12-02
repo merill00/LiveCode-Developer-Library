@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSelectSum "${1:field}"${2:, "${3:resultName}"}${0}</string>
+	<key>name</key>
+	<string>Select Sum</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>database</string>
+	<key>uuid</key>
+	<string>13D38CB1-11F0-4AED-9D66-C360B99AABEA</string>
+</dict>
+</plist>

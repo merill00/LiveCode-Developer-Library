@@ -1,0 +1,167 @@
+<?lc
+
+	global gRigA -- array keys are: EXT, FCPATH, SELF, BASEPATH, APPPATH, errorData, databaseID, docTypes, systemFolder
+	             -- controller, handler, module, COOKIE, segments, rSegments, applicationFolder, activeRecord, CLI
+
+##
+#---------------------------------------------------------------
+# SYSTEM FOLDER NAME
+#---------------------------------------------------------------
+#
+# This variable must contain the name of your "system" folder.
+# Include the path if the folder is not in the same  directory
+# as this file.
+#
+# NO TRAILING SLASH!
+# PATH MUST USE UNIX STYLE DIRECTORY SEPARATORS
+#
+##
+	put "system" into gRigA["systemFolder"]
+
+
+##
+#---------------------------------------------------------------
+# APPLICATION FOLDER NAME
+#---------------------------------------------------------------
+#
+# If you want this front controller to use a different "application"
+# folder then the default one you can set its name here. The folder
+# can also be renamed or relocated anywhere on your server.
+# For more info please see the user guide:
+# http://www.revigniter.com/userGuide/general/managing_apps.html
+#
+#
+# NO TRAILING SLASH!
+# PATH MUST USE UNIX STYLE DIRECTORY SEPARATORS
+#
+##
+	put "application" into gRigA["applicationFolder"]
+
+
+##
+#===============================================================
+# END OF USER CONFIGURABLE SETTINGS
+#===============================================================
+##
+
+##
+#---------------------------------------------------------------
+# SET THE SERVER PATH
+#---------------------------------------------------------------
+#
+# Let's attempt to determine the full-server path to the "system"
+# folder in order to reduce the possibility of path problems.
+# Note: We only attempt this if the user hasn't specified a
+# full server path.
+#
+##
+
+	put $_SERVER["PATH_TRANSLATED"] into sTempPath
+
+# CHECK IF THE APPLICATION IS LOADED VIA THE CLI
+#
+  if sTempPath is empty then
+    put TRUE into gRigA["CLI"]
+
+    if the outputLineEndings = "cr" then
+      set the outputLineEndings to "lf"
+    end if
+
+    put the defaultFolder & "/index.lc" into sTempPath
+  end if -- if sTempPath is empty
+##
+
+ 	put (the platform is "Win32") into sIsWin
+ 	if sIsWin is TRUE then
+		replace "\" with "/" in sTempPath
+ 	end if
+
+  set the itemdel to "/"
+# IN RARE CASES THE SERVER GLOBAL GIVES THE WRONG PATH
+# TO THE CURRENT SCRIPT (index.lc). SO, REMOVE URI SEGMENT STRINGS
+# AND STORE THE CORRECT PATH IN gRigA TO BE USED BY OTHER SCRIPTS
+	if "index" is not in item -1 of sTempPath then
+		put (char 1 to (offset("index.lc", sTempPath ) - 1) of sTempPath) & "index.lc" into sTempPath
+	end if
+	put sTempPath into gRigA["pathTranslated"]
+
+ 	if ((sIsWin is FALSE) and (char 1 of gRigA["systemFolder"] is not "/")) or ((sIsWin is TRUE) and (char 2 of gRigA["systemFolder"] is not ":")) then
+   	put item 1 to -2 of sTempPath & "/" & gRigA["systemFolder"] into gRigA["systemFolder"]
+ 	end if
+
+##
+#---------------------------------------------------------------
+# DEFINE APPLICATION (CONSTANTS) GLOBALS
+#---------------------------------------------------------------
+#
+# SHOULD BE CONSTANTS, BUT AS VALUES MUST BE LITERAL STRINGS
+# AND THE VALUES ARE VARIABLES WE DECLARE GLOBALS
+# TO USE MERGE IS NO SOLUTION AS THIS DOES NOT WORK WITH iRev
+# EXT		- The file extension.  Typically ".lc"
+# FCPATH	- The full server path to THIS file
+# SELF		- The name of THIS file (typically "index.lc")
+# BASEPATH	- The full server path to the "system" folder
+# APPPATH	- The full server path to the "application" folder
+#
+##
+
+	put item -1 of sTempPath into sTempFileName
+	set the itemdel to "."
+	--constant EXT = "." & item -1 of sTempFileName
+	--constant FCPATH = sTempPath
+	--constant SELF = sTempFileName
+	--constant BASEPATH = gRigA["systemFolder"] & "/"
+
+	--constant EXT = "[[" & quote & "." & quote && "item -1 of sTempFileName]]"
+	--constant FCPATH = "[[sTempPath]]"
+	--constant SELF = "[[sTempFileName]]"
+	--constant BASEPATH = "[[gRigA["systemFolder"]" && quote & "/" & quote & "]]"
+
+	put "." & item -1 of sTempFileName into gRigA["EXT"]
+
+	put sTempPath into gRigA["FCPATH"]
+	put sTempFileName into gRigA["SELF"]
+	put gRigA["systemFolder"] & "/" into gRigA["BASEPATH"]
+
+	if (char 1 of gRigA["applicationFolder"] is "/") or ((sIsWin is TRUE) and (char 2 of gRigA["applicationFolder"] is ":")) then
+		# Absolute path
+		-- constant APPPATH = gRigA["applicationFolder"] & "/"
+		put gRigA["applicationFolder"] & "/" into gRigA["APPPATH"]
+	else
+		# Relative path
+		if gRigA["applicationFolder"] is "" then put "application" into gRigA["applicationFolder"]
+
+		set the itemDel to slash
+		# look for app folder relative to the index folder
+		if there is a folder (item 1 to -2 of sTempPath & "/" & gRigA["applicationFolder"]) then
+			-- constant APPPATH = index folder & "/" & gRigA["applicationFolder"] & "/"
+			put item 1 to -2 of sTempPath & "/" & gRigA["applicationFolder"] & "/" into gRigA["APPPATH"]
+		else
+			# app folder must me relative to system folder
+			-- constant APPPATH = BASEPATH & gRigA["applicationFolder"] & "/"
+			put gRigA["BASEPATH"] & gRigA["applicationFolder"] & "/" into gRigA["APPPATH"]
+		end if
+	end if
+
+
+	set the itemDel to comma
+
+  delete variable sTempPath
+  delete variable sIsWin
+  delete variable sTempFileName
+
+##
+#---------------------------------------------------------------
+# LOAD THE FRONT CONTROLLER
+#---------------------------------------------------------------
+#
+# And away we go...
+#
+##
+
+	include gRigA["BASEPATH"] & "revigniter/RevIgniter" & gRigA["EXT"]
+
+
+--| END OF index.lc
+--| Location: ./index.lc
+----------------------------------------------------------------------

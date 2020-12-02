@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Managing your Applications : revIgniter User Guide</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="robots" content="all" />
+		<meta name="author" content="Ralf Bitter" />
+		<meta name="description" content="revIgniter User Guide" />
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" media="screen" href="../css/style-ck.css">
+
+		
+		<script src="../js/nav-ck.js"></script>
+		
+		<!-- Touch icons -->
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../images/apple-touch-icon-144-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../images/apple-touch-icon-114-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../images/apple-touch-icon-72-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" href="../images/apple-touch-icon-57-precomposed.png">
+		
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		    <script src="../js/html5shiv.js"></script>
+		    <script src="../js/respond.min.js"></script>
+		<![endif]-->
+
+	</head>
+<body>
+	<!-- START PAGE HEAD -->
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+    			<a class="navbar-brand" href="#">revIgniter User Guide Version 2.1.6</a>
+        </div>
+
+        <div class="collapse navbar-collapse">
+          <form class="navbar-form navbar-right" role="search" method="get" action="https://duckduckgo.com/">
+ 		      <div class="form-group">
+ 				<input type="hidden" name="sites" value="revigniter.com/userGuide/"/>
+				<input type="hidden" name="kj" value="#000000"/>
+				<input type="hidden" name="k7" value="#2B3137"/>
+				<input type="hidden" name="k8" value="#C7C7C7"/>
+			  <input type="hidden" name="k9" value="#85EAFB"/>
+				<input type="hidden" name="kx" value="#FFFFFF"/>
+				<input type="hidden" name="kaa" value="#FFFFFF"/>
+				<input type="hidden" name="kaa" value="#FFFFFF"/>
+			  <input type="hidden" name="k1" value="-1"/>
+ 		        <span id="searchLabel">Search User Guide</span> &nbsp; <input type="search" placeholder="Search&hellip;" name="q" id="q" class="revignitersearch" maxlength="255" />
+ 				&nbsp;<input type="image" id="submitSearch" src="../images/searchGo.png" />
+ 		      </div>
+ 		 	 		</form>
+        </div><!--/.navbar-collapse -->
+     </div>
+		 
+		 <!-- START BREADCRUMB -->		 
+		 <div id="breadcrumbContainer">
+			 <div class="container">
+			 		<ol class="breadcrumb">
+			 			<li><a href="https://revigniter.com/">revIgniter Home</a></li>
+			 		 	<li><a href="../index.html">User Guide Home</a></li>
+			 		 	<li class="active">Managing Your Application</li>
+						<li id="tocListItem" class="pull-right"><a href="../toc.html">Table of Contents Page</a></li>
+			 		 </ol>
+				</div>
+		</div>
+		<!-- END BREADCRUMB -->		
+		
+		<!-- START SLIDEBOX -->
+		<div class="slide-panel top">
+			<div class="container">
+				<div id="panelContent"><script type="text/javascript">createMenu('../');</script></div>
+			</div>
+			<div id="open-button" class="slide-button">Table of Contents</div>
+			<div id="close-button" class="slide-button">Close</div>
+		</div>
+		<!-- END SLIDEBOX -->
+	 
+  </div>
+<!-- END PAGE HEAD -->
+
+ 
+
+<!-- START CONTENT -->
+<div class="container gridContainer">
+	
+<div id="content">
+
+<h1>Managing your Applications</h1>
+
+<p>By default it is assumed that you only intend to use revIgniter to manage one application, which you will build in your
+<dfn>application/</dfn> directory.  It is possible, however, to have multiple sets of applications that share a single
+revIgniter installation, or even to rename or relocate your <dfn>application</dfn> folder and / or your <dfn>system</dfn> folder.</p>
+
+<h2>Renaming the Application Folder</h2>
+
+<p>If you would like to rename your <dfn>application</dfn> folder you may do so as long as you open your main <kbd>index.lc</kbd>
+file and set its name using the <var>gRigA["applicationFolder"]</var> variable:</p>
+
+<pre><code>put "application" into gRigA["applicationFolder"]</code></pre>
+
+<h2>Relocating your Application Folder</h2>
+
+<p>It is possible to move your <dfn>application</dfn> folder to a different location on your server than your <kbd>root</kbd> folder. 
+To do so open your main <kbd>index.lc</kbd> and set a <em>full server path</em> in the <var>gRigA["applicationFolder"]</var> variable.
+You may use a relative path as long as your application folder is in the <kbd>root</kbd> folder or below.</p>
+
+
+<pre><code>put "/Path/to/your/application" into gRigA["applicationFolder"]</code></pre>
+
+<p>If you just like to move the application folder to the <kbd>system</kbd> folder you do not need to modify index.lc at all.</p>
+
+<h2>Renaming the System Folder</h2>
+
+<p>Similar to the way to rename the application folder described above you may rename your system folder as long as you open your main <kbd>index.lc</kbd>
+file and set its name using the <samp>gRigA["systemFolder"]</samp> variable:</p>
+
+<pre><code>put "system" into gRigA["systemFolder"]</code></pre>
+
+
+<h2>Relocating your System Folder</h2>
+
+<p>To move your <dfn>system</dfn> folder to a different location on your server than your <kbd>root</kbd> folder open your main <kbd>index.lc</kbd> and set 
+	a <em>full server path</em> in the <samp>gRigA["systemFolder"]</samp> variable.
+You may use a relative path as long as your application folder is in the <kbd>root</kbd> folder or below.</p>
+
+
+<pre><code>put "/Path/to/your/system" into gRigA["systemFolder"]</code></pre>
+
+
+<p class="important"><strong>Note:</strong>&nbsp; The path to your application folder or system folder must use Unix style directory separators. Do not add
+	a trailing slash.</p>
+
+
+<h2>Running Multiple Applications with one revIgniter Installation</h2>
+
+<p>If you would like to share a common revIgniter installation to manage several different applications simply 
+put all of the directories located inside your <kbd>application</kbd> folder into their
+own sub-folder.</p>
+
+<p>For example, let's say you want to create two applications, "foo" and "bar".  You will structure your
+application folder like this:</p>
+
+<pre><code>application/<var>foo</var>/
+application/<var>foo</var>/cache/
+application/<var>foo</var>/config/
+application/<var>foo</var>/controllers/
+application/<var>foo</var>/db/
+application/<var>foo</var>/errors/
+application/<var>foo</var>/extensions/
+application/<var>foo</var>/helpers/
+application/<var>foo</var>/hooks/
+application/<var>foo</var>/index.html
+application/<var>foo</var>/language/
+application/<var>foo</var>/libraries/
+application/<var>foo</var>/logs/
+application/<var>foo</var>/models/
+application/<var>foo</var>/modules/
+application/<var>foo</var>/stacks/
+application/<var>foo</var>/views/
+application/<samp>bar</samp>/
+application/<samp>bar</samp>/cache/
+application/<samp>bar</samp>/config/
+application/<samp>bar</samp>/controllers/
+application/<samp>bar</samp>/db/
+application/<samp>bar</samp>/errors/
+application/<samp>bar</samp>/extensions/
+application/<samp>bar</samp>/helpers/
+application/<samp>bar</samp>/hooks/
+application/<samp>bar</samp>/index.html
+application/<samp>bar</samp>/language/
+application/<samp>bar</samp>/libraries/
+application/<samp>bar</samp>/logs/
+application/<samp>bar</samp>/models/
+application/<samp>bar</samp>/modules/
+application/<samp>bar</samp>/stacks/
+application/<samp>bar</samp>/views/</code></pre>
+
+
+<p>To select a particular application for use requires that you open your main front controller, the <kbd>index.lc</kbd> file, and set the <var>gRigA["applicationFolder"]</var>
+variable. For example, to select the "foo" application for use you would do this:</p>
+
+<pre><code>put "application/foo" into gRigA["applicationFolder"]</code></pre>
+
+<p>To set the <var>gRigA["applicationFolder"]</var> variable for the "bar" application you need another front controller located at document <kbd>root</kbd>. Let's name it <kbd>bar.lc</kbd>. The corresponding setting should read like this:</p>
+
+<pre><code>put "application/bar" into gRigA["applicationFolder"]</code></pre>
+
+<p class="important"><strong>Note:</strong>&nbsp; Each of your applications will need its own <dfn>index.lc</dfn> file which 
+calls the desired application.  The index.lc file can be named anything you want.</p>
+
+<p>To exclude <kbd>index.lc</kbd> and <kbd>bar.lc</kbd> from your URLs you need to modify the mod_rewrite rules explained in <a href="urls.html">revIgniter URLs</a> like this:</p>
+
+
+<div class="codeSample">
+<pre><code>&lt;IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond $1 !^(index\.lc|bar\.lc|image|img|assets|robots\.txt|css|js|bar)
+RewriteRule ^(.*)$ index.lc?/$1 [L]
+
+RewriteCond $1 !^(bar\.lc|index\.lc|image|img|assets|robots\.txt|css|js)
+RewriteRule ^bar/?$ bar.lc?/ [L]
+RewriteRule ^(bar)/(.*)$ bar.lc?/$2 [L]
+&lt;/IfModule>
+</code></pre>
+</div>
+
+
+
+
+<p>Now, assuming the name of your default controllers is "welcome.lc", the URLs of your applications look like this:</p>
+
+<p><kbd>http://www.MyDomain.com/</kbd> refers to http://www.MyDomain.com/index.lc/welcome.lc<br />
+
+<kbd>http://www.MyDomain.com/bar/</kbd> refers to http://www.MyDomain.com/bar.lc/welcome.lc</p>
+
+
+
+
+
+
+
+
+</div>
+<!-- END CONTENT -->
+
+</div> <!-- /container -->
+
+
+<div id="footer">
+	<div class="container">
+<p>
+Previous Topic:&nbsp;&nbsp;<a href="profiling.html">Profiling Your Application</a>
+<span class="separator"> :: </span>
+<a href="#top">Top of Page</a><span class="separator"> :: </span>
+<a href="../index.html">User Guide Home</a><span class="separator"> :: </span>
+Next Topic:&nbsp;&nbsp;<a href="security.html">Security</a>
+</p>
+<p><a href="https://revigniter.com/">revIgniter</a><span class="separator"> :: </span>Copyright &#169; 2009 - 2020<span class="separator"> :: </span><a href="https://revigniter.com/">dimensionB Bitter u. Bitter GmbH</a></p>
+	</div>
+</div>
+
+
+
+
+<script src="../js/highlight.pack.js"></script>
+ <script>
+  	hljs.tabReplace = '    ';
+  	hljs.initHighlightingOnLoad();
+ </script>
+
+<script src="../js/script-ck.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() { 
+  Slidebox.init();
+	MobileSearchBar.init();
+});
+</script>
+
+<script src="../js/clipboard-ck.js"></script>
+
+
+</body>
+</html>

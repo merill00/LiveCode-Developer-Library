@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigLoadPlugin "sitelinks"${0}</string>
+	<key>name</key>
+	<string>Load Sitelinks Plugin</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>sitelinks</string>
+	<key>uuid</key>
+	<string>EB8199C0-E8BB-44B2-9A4B-89717F28B35F</string>
+</dict>
+</plist>

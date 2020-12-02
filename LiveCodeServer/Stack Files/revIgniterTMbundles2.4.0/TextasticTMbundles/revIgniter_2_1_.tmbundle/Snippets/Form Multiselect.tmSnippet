@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigFormMultiselect("${1:name}[]", ${2:options}, ${3:selectedValues}${4:, ${5:additionalData}})${0}</string>
+	<key>name</key>
+	<string>Form Multiselect</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>form</string>
+	<key>uuid</key>
+	<string>6645FCD3-EF4D-4D69-B68D-81EFF26371E1</string>
+</dict>
+</plist>

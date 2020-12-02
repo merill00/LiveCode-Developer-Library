@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>put "${1:picSelector}" into t${2:Array}["${3:class/id}"]
+put "${4:altText}" into t${2}["alt"]
+put "${5:0}" into t${2}["width"]
+put "${6:0}" into t${2}["height"]
+put rigImageAsset("${7:fileName}", t${2}${8:, "${9:module}"${10:, ${11:cacheBuster}}}) into ${12:var}${0}
+</string>
+	<key>name</key>
+	<string>Asset Image Data</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>asset</string>
+	<key>uuid</key>
+	<string>02FB9DFD-3A5B-4418-A770-69158355C259</string>
+</dict>
+</plist>

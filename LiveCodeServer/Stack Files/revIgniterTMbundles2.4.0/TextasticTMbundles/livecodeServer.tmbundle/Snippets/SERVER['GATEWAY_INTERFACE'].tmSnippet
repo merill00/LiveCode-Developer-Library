@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>\$_SERVER["GATEWAY_INTERFACE"]</string>
+	<key>name</key>
+	<string>SERVER['GATEWAY_INTERFACE']</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>$_</string>
+	<key>uuid</key>
+	<string>A38C94AD-07D1-4B4A-AADD-0D70EDD2E334</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigTotalRsegments()</string>
+	<key>name</key>
+	<string>Total Segments Routed</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>uri</string>
+	<key>uuid</key>
+	<string>E727AFC6-8AE6-42D2-B3A1-40FDFAAAB5F0</string>
+</dict>
+</plist>

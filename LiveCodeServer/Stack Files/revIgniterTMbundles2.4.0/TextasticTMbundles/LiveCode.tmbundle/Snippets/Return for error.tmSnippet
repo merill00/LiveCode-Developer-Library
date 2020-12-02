@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>return ${1:# code...} for error
+${0}</string>
+	<key>name</key>
+	<string>Return for Error</string>
+	<key>scope</key>
+	<string>text.livecode</string>
+	<key>tabTrigger</key>
+	<string>returnerror</string>
+	<key>uuid</key>
+	<string>F59F051F-4EA6-4443-B1BD-33B0C421C884</string>
+</dict>
+</plist>

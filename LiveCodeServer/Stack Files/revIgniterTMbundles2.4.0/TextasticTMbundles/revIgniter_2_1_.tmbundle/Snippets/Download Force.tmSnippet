@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigForceDownload "${1:fileName}", ${2:data}${0}</string>
+	<key>name</key>
+	<string>Download Force</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>download</string>
+	<key>uuid</key>
+	<string>C7103733-DB94-4795-A41C-29D953EAFA97</string>
+</dict>
+</plist>

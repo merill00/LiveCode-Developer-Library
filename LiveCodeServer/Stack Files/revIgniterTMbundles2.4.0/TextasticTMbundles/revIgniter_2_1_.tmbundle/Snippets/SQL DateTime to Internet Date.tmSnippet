@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSqlDateTimeToIntDate("${1:datetime}")${0}</string>
+	<key>name</key>
+	<string>SQL DateTime to Internet Date</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>database</string>
+	<key>uuid</key>
+	<string>37F66F82-AE53-4DC7-8358-657233CFD259</string>
+</dict>
+</plist>

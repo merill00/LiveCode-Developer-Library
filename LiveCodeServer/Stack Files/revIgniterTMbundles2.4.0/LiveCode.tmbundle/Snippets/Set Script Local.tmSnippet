@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>setScriptLocalVar "${1:varName}", ${2:value}
+${0}</string>
+	<key>name</key>
+	<string>Set Script Local</string>
+	<key>scope</key>
+	<string>text.livecode</string>
+	<key>tabTrigger</key>
+	<string>set</string>
+	<key>uuid</key>
+	<string>10F47822-2176-4136-B1B9-FD1408DCCA30</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSendEmail("${1:recipient}", "${2:subject}", "${3:message}"${5:, "${6:cc}"${7:, "${8:bcc}"}})${0}</string>
+	<key>name</key>
+	<string>Email Send</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>email</string>
+	<key>uuid</key>
+	<string>9ABFFA12-36D3-4CF9-862F-B06B6DE63BC8</string>
+</dict>
+</plist>

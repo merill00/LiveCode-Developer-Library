@@ -1,0 +1,14 @@
+.DS_Store
+
+.htaccess
+.editorconfig
+.htmlhintrc
+
+application/cache/*
+!application/cache/index.html
+
+application/logs/*
+!application/logs/index.html
+
+system/temp/*
+!system/temp/index.html

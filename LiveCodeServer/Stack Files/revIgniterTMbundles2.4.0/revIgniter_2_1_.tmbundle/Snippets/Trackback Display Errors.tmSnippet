@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigTrackbackDisplayErrors(${1:"${2:openTag}", "${3:closeTag}"})${0}</string>
+	<key>name</key>
+	<string>Trackback Display Errors</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>trackback</string>
+	<key>uuid</key>
+	<string>0AB6C0F0-B75C-4962-BC70-2B313630C330</string>
+</dict>
+</plist>

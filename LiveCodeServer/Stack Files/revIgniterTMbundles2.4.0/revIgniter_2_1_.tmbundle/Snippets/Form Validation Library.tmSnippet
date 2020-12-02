@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigLoaderLoadLibrary "Formvalidation"</string>
+	<key>name</key>
+	<string>Form Validation Library</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>formvalidation</string>
+	<key>uuid</key>
+	<string>30863863-A673-4C82-88E1-29A4BC64BF54</string>
+</dict>
+</plist>

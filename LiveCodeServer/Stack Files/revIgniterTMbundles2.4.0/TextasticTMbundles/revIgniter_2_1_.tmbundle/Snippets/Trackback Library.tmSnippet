@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigLoaderLoadLibrary "Trackback"</string>
+	<key>name</key>
+	<string>Trackback Library</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>trackback</string>
+	<key>uuid</key>
+	<string>FA33728F-7DD1-4FAF-8318-700AC5B5124C</string>
+</dict>
+</plist>

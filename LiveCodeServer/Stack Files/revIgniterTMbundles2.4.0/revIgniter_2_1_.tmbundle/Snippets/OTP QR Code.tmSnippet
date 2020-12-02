@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigOTPqrCode(${1:"${2:key}"}, ${3:"${4:account}"}, ${5:"${6:issuer}"}${7:, ${8:"${9:algo}"}${10:, ${11:digits}${12:, ${13:period}${14:, ${15:"${16:ecc}"}${17:, ${18:size}${19:, ${20:mask}}}}}}})${0}</string>
+	<key>name</key>
+	<string>OTP QR Code</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>otp</string>
+	<key>uuid</key>
+	<string>CAE7FD70-239E-423E-BF56-E76F9B9C7895</string>
+</dict>
+</plist>

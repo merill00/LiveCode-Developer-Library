@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigIsReferral()</string>
+	<key>name</key>
+	<string>Is Referral</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>useragent</string>
+	<key>uuid</key>
+	<string>74BAABFE-CA26-4F16-926C-C45689610A58</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigDbLike "${1:field}", "${2:match}"${3:, "${4:wildcardPosition}"}${0}</string>
+	<key>name</key>
+	<string>Like</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>database</string>
+	<key>uuid</key>
+	<string>F6112129-2DCB-4184-925C-637772063C39</string>
+</dict>
+</plist>

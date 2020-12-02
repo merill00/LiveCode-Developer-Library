@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>[[gData["${1:key}"] ]]</string>
+	<key>name</key>
+	<string>Data Array Value Merge</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>gdmerge</string>
+	<key>uuid</key>
+	<string>CD5B8CD7-DBF1-46EA-8EBB-9A2E5C5CF955</string>
+</dict>
+</plist>

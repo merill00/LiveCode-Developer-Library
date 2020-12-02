@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigFtpMirror ${1:localPath}, ${2:remotePath}${0}</string>
+	<key>name</key>
+	<string>FTP Mirror</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>ftp</string>
+	<key>uuid</key>
+	<string>96D35CFE-DE01-4FBF-A0D3-C7EF54B595F9</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSetCookie "${1:name}", "${2:value}"${3:, ${4:expire}${5:, "${6:domain}"${7:, "${8:path}"${9:, "${10:prefix}"${11:, ${12:replace}${13:, ${14:httponly}}}}}}}${0}</string>
+	<key>name</key>
+	<string>Cookie Set Params</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>cookie</string>
+	<key>uuid</key>
+	<string>1E3A7474-2E39-482F-AA38-51C2D033BA66</string>
+</dict>
+</plist>

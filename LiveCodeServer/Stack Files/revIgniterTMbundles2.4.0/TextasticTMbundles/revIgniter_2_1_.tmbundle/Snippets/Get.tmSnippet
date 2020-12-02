@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigDbGet("${1:table}"${2:, ${3:limit}, ${4:offset}${5:, ${6:subquery}}})${0}</string>
+	<key>name</key>
+	<string>Get</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>database</string>
+	<key>uuid</key>
+	<string>E027582A-AF49-4181-B907-8BECF491CD00</string>
+</dict>
+</plist>

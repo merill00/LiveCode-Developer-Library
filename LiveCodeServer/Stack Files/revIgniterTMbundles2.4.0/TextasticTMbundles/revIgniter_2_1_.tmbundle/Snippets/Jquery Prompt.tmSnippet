@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigJQprompt ${1:varName}, ${2:prompt}${3:, ${4:default}}${5:, ${6:global}}${0}</string>
+	<key>name</key>
+	<string>Jquery Prompt</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>jquery</string>
+	<key>uuid</key>
+	<string>9BA45712-3A1F-418E-9E82-F2CCF9168B48</string>
+</dict>
+</plist>

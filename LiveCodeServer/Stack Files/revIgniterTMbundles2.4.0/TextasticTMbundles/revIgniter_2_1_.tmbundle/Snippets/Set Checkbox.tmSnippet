@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSetCheckbox("${1:checkbox}[]", "${2:value}"${3:, ${4:default}})${0}</string>
+	<key>name</key>
+	<string>Set Checkbox</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>formvalidation</string>
+	<key>uuid</key>
+	<string>3CA6831B-A53C-4A93-8335-3E908E849B3E</string>
+</dict>
+</plist>

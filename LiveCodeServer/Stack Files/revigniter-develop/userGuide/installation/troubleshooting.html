@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Troubleshooting : revIgniter User Guide</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="robots" content="all" />
+		<meta name="author" content="Ralf Bitter" />
+		<meta name="description" content="revIgniter User Guide" />
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" media="screen" href="../css/style-ck.css">
+
+		
+		<script src="../js/nav-ck.js"></script>
+		
+		<!-- Touch icons -->
+		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../images/apple-touch-icon-144-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../images/apple-touch-icon-114-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../images/apple-touch-icon-72-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" href="../images/apple-touch-icon-57-precomposed.png">
+		
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		    <script src="../js/html5shiv.js"></script><a href="models.html" id="" title="models">models</a>
+		    <script src="../js/respond.min.js"></script>
+		<![endif]-->
+
+	</head>
+<body>
+	<!-- START PAGE HEAD -->
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+    			<a class="navbar-brand" href="#">revIgniter User Guide Version 2.1.6</a>
+        </div>
+
+        <div class="collapse navbar-collapse">
+          <form class="navbar-form navbar-right" role="search" method="get" action="https://duckduckgo.com/">
+ 		      <div class="form-group">
+ 				<input type="hidden" name="sites" value="revigniter.com/userGuide/"/>
+				<input type="hidden" name="kj" value="#000000"/>
+				<input type="hidden" name="k7" value="#2B3137"/>
+				<input type="hidden" name="k8" value="#C7C7C7"/>
+			  <input type="hidden" name="k9" value="#85EAFB"/>
+				<input type="hidden" name="kx" value="#FFFFFF"/>
+				<input type="hidden" name="kaa" value="#FFFFFF"/>
+				<input type="hidden" name="kaa" value="#FFFFFF"/>
+			  <input type="hidden" name="k1" value="-1"/>
+ 		        <span id="searchLabel">Search User Guide</span> &nbsp; <input type="search" placeholder="Search&hellip;" name="q" id="q" class="revignitersearch" maxlength="255" />
+ 				&nbsp;<input type="image" id="submitSearch" src="../images/searchGo.png" />
+ 		      </div>
+ 		 	 		</form>
+        </div><!--/.navbar-collapse -->
+     </div>
+		 
+		 <!-- START BREADCRUMB -->		 
+		 <div id="breadcrumbContainer">
+			 <div class="container">
+			 		<ol class="breadcrumb">
+			 			<li><a href="https://revigniter.com/">revIgniter Home</a></li>
+			 		 	<li><a href="../index.html">User Guide Home</a></li>
+			 		 	<li class="active">Troubleshooting</li>
+						<li id="tocListItem" class="pull-right"><a href="../toc.html">Table of Contents Page</a></li>
+			 		 </ol>
+				</div>
+		</div>
+		<!-- END BREADCRUMB -->		
+		
+		<!-- START SLIDEBOX -->
+		<div class="slide-panel top">
+			<div class="container">
+				<div id="panelContent"><script type="text/javascript">createMenu('../');</script></div>
+			</div>
+			<div id="open-button" class="slide-button">Table of Contents</div>
+			<div id="close-button" class="slide-button">Close</div>
+		</div>
+		<!-- END SLIDEBOX -->
+	 
+  </div>
+<!-- END PAGE HEAD -->
+
+ 
+
+<!-- START CONTENT -->
+<div class="container gridContainer">
+	
+<div id="content">
+
+<h1>Troubleshooting</h1>
+
+<h2>Handler Names</h2>
+
+<p>Make sure to put all your handler names in your controller as a comma separated list into the global 
+variable <samp>gControllerHandlers</samp>, otherwise you get a <kbd>"Page Not Found"</kbd> error.<br />
+See the comments in the sample files in the <dfn>application/controllers</dfn> folder.</p>
+
+<h2>Error Logging</h2>
+
+<p>If you enable error logging in <dfn>application/config/config.lc</dfn> make sure that the <dfn>application/logs</dfn> folder is writable.</p>
+
+<h2>Search-Engine Friendly URLs</h2>
+
+<p>If you find that no matter what you put in your URL only your default page is loading, it might be that your server
+does not support the PATH_INFO variable needed to serve search-engine friendly URLs. This does not apply to the 
+LiveCode hosting service.<br />
+
+As a first step, open your <dfn>application/config/config.lc</dfn> file and look for the <kbd>URI Protocol</kbd>
+information. It will recommend that you try a couple alternate settings.  If it still doesn't work you may try to use 
+query string based URLs by setting <samp>gConfig["enableQueryStrings"]</samp> in the <dfn>config.lc</dfn> file to TRUE.</p>
+
+
+<h2>Setting Headers and Cookies</h2>
+
+<p>If you have problems setting headers or cookies watch out for whitespace. Make sure that there is no whitespace before the &lt;?lc tag of your script files and that no whitespace follows the terminating "?>" tag because anything outside the opening and closing tags will be sent before the actual content (generated by your script), including the default headers sent by the engine. This means setting custom headers by script has no effect because headers can be sent only once. Generally it is better to leave terminating "?>" tags off, this way whitespace at the end of the script does not accidentally output content to the browser. Furthermore make sure that your files are not saved using UTF-8 (BOM). Using BOM prevents changing any header because characters are sent prior to sending headers, this means headers you set or cookies can not be sent.</p>
+
+<h2>Cross Site Request Forgery Protection (CSRF)</h2>
+
+<p>In case CSRF Protection yields error <kbd>"The action you have requested is not allowed."</kbd>, either set the master time reference in <dfn>application/config/config.lc</dfn> to “gmt” or increase the value of <samp>gConfig["csrf_expire”]</samp> (the number in seconds the CSRF token should expire), also found in config.lc.</p>
+
+
+<h2>Code in View Files</h2>
+
+<p>
+Keep in mind, that using return statements enclosed in "&lt;?" and "?>" is the only way to include LiveCode in your view files like in the following example:
+</p>
+
+<pre><code class="lang-livecodeserver">&lt;? put "&lt;ul>" into tToDo
+repeat for each item thisItem in gData["toDoList"]
+  put "&lt;li>" & thisItem & "&lt;/li>" after tToDo
+end repeat
+put "&lt;/ul>" after tToDo
+return tToDo ?>
+</code></pre>
+
+
+
+<h2>Email Library</h2>
+
+<p>As of server version 7.0.6-rc-1 the SMTP protocol is not available on Linux because the commands open socket with message and write to socket are still not working in the Linux server engine. On Mac OS X SMTP should work as expected since server version 7.0.1.<br><kbd>Update</kbd>: Sockets work in Linux server engine since version 7.1.0 RC 1 too. This means you can use the SMTP protocol on Linux.<br><kbd>Update</kbd>: This issue reappeared with LC server version 8.0.0 and applies to all socket callback messages. So, sending emails using SMTP is broken again.</p>
+<p>See <a href="https://quality.livecode.com/show_bug.cgi?id=14607">LC server bug (14607)</a></p>
+
+
+<h2>Trackback Library</h2>
+
+<p>As of server version 7.0.6-rc-1 the Trackback library does not work on Linux because the write to socket command is still not working in the Linux server engine. On Mac OS X Trackback should work as expected since server version 7.0.1.<br><kbd>Update</kbd>: Sockets work in Linux server engine since version 7.1.0 RC 1 too. This means you can use the Trackback library on Linux.<br><kbd>Update</kbd>: This issue reappeared with LC server version 9.0.0 on macOS.</p>
+<p>See <a href="https://quality.livecode.com/show_bug.cgi?id=15514">LC server bug (15514)</a></p>
+
+
+<h2>FTP Library</h2>
+
+<p>Asynchronous requests are currently (up to LC server version 9.0.1) not working, presumably this is due to a bug in tsNet, <a href="http://quality.livecode.com/show_bug.cgi?id=18961">see bug 18961.</a></p>
+
+
+<h2>Output Compression</h2>
+
+<p>Gzip output compression does not work with 32bit Linux LC server versions 9.0.5 and 9.5.0. So, if you set gConfig["compress_output"] in config.lc to TRUE you need to use either a 64bit server or the 32bit flavor of version 9.0.4.</p>
+
+<p>See <a href="https://quality.livecode.com/show_bug.cgi?id=22098">LC server bug (22098)</a></p>
+
+
+</div>
+<!-- END CONTENT -->
+
+</div> <!-- /container -->
+
+
+<div id="footer">
+	<div class="container">
+<p>
+Previous Topic:&nbsp;&nbsp;<a href="upgrading.html">Upgrading from a Previous Version</a>
+<span class="separator"> :: </span>
+<a href="#top">Top of Page</a><span class="separator"> :: </span>
+<a href="../index.html">User Guide Home</a><span class="separator"> :: </span>
+Next Topic:&nbsp;&nbsp;<a href="../overview/getting_started.html">Getting Started</a>
+</p>
+<p><a href="https://revigniter.com/">revIgniter</a><span class="separator"> :: </span>Copyright &#169; 2009 - 2020<span class="separator"> :: </span><a href="https://revigniter.com/">dimensionB Bitter u. Bitter GmbH</a></p>
+	</div>
+</div>
+
+
+
+<script src="../js/highlight.pack.js"></script>
+ <script>
+  	hljs.tabReplace = '    ';
+  	hljs.initHighlightingOnLoad();
+ </script>
+
+<script src="../js/script-ck.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() { 
+  Slidebox.init();
+	MobileSearchBar.init();
+});
+</script>
+
+
+</body>
+</html>

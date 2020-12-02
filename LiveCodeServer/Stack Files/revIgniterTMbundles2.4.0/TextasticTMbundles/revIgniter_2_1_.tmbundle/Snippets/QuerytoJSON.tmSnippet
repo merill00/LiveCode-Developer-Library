@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigQueryToJSON(${1:queryResultArray}${2:, ${3:fieldNamesArray}})${0}</string>
+	<key>name</key>
+	<string>QuerytoJSON</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>querytojson</string>
+	<key>uuid</key>
+	<string>A5E6789C-143A-490F-B208-F2036DE383A5</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSlashSegment(${1:segmentNumber}${2:, "${3:where}"})${0}</string>
+	<key>name</key>
+	<string>Slash Segment</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>uri</string>
+	<key>uuid</key>
+	<string>313D75EF-7778-4CA1-8331-6273FB3AE182</string>
+</dict>
+</plist>

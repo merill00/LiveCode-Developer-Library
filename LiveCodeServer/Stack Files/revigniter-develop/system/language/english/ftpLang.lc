@@ -1,0 +1,19 @@
+<?lc
+
+put "Unable to create the directory you have specified." into gLang["ftp_unable_to_makdir"]
+put "Unable to change directories." into gLang["ftp_unable_to_changedir"]
+put "Unable to set file permissions.  Please check your path." into gLang["ftp_unable_to_chmod"]
+put "Unable to upload the specified file.  Please check your path." into gLang["ftp_unable_to_upload"]
+put "Unable to download the specified file. Please check your path." into gLang["ftp_unable_to_download"]
+put "Unable to locate the source file.  Please check your path." into gLang["ftp_no_source_file"]
+put "Unable to rename (move) the file." into gLang["ftp_unable_to_rename"]
+put "Unable to delete the file (folder)." into gLang["ftp_unable_to_delete"]
+put "The tsNet external could not be initialised." into gLang["ftp_tsNet_initialisation_failed"]
+put "Unable to close the connection." into gLang["ftp_unable_to_close"]
+put "Unable to transfer file list." into gLang["ftp_unable_to_list"]
+put "A synchronous network call is already in progress." into gLang["ftp_sync_blocked"]
+
+
+--| END OF ftpLang.lc
+--| Location:  ./system/language/english/ftpLang.lc
+----------------------------------------------------------------------

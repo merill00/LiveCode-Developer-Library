@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>/*----------------------------------------------------------------------
+--| FUNCTION ${1:functionName}
+--|
+--| Author: ${2:$TM_FULLNAME}
+--| Version:  1.0
+--| Created: ${3:`date "+%Y-%m-%d"`}
+--| Last Mod: ${3}
+--| Requires: ${4:--}
+--|
+--| Summary: ${5:description}
+--|
+--| Parameters: ${6:--}
+--|
+--| Return: ${7:returnType}
+----------------------------------------------------------------------*/
+
+${8:private }function ${1} ${9:pParams}
+	${10:# code...}
+end ${1}
+${0}</string>
+	<key>name</key>
+	<string>Function + Comment</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>func+</string>
+	<key>uuid</key>
+	<string>E8FE5B92-6E21-4D36-AE6D-9D4EC11493F6</string>
+</dict>
+</plist>

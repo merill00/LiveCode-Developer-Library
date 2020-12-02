@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigSetRadio("${1:radio}", "${2:value}"${3:, ${4:default}})${0}</string>
+	<key>name</key>
+	<string>Set Radio</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>formvalidation</string>
+	<key>uuid</key>
+	<string>728B081E-1E9C-40B6-99DF-289C7DB212AD</string>
+</dict>
+</plist>

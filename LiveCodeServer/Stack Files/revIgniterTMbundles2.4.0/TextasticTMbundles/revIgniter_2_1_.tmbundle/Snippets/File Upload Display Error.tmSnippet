@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigDisplayUploadErrors(${1:"&lt;${2:p}&gt;", "&lt;/${3:p}&gt;"})${0}
+</string>
+	<key>name</key>
+	<string>File Upload Display Error</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>upload</string>
+	<key>uuid</key>
+	<string>CBEFB87B-51C6-4A22-9E82-5431F87EC321</string>
+</dict>
+</plist>

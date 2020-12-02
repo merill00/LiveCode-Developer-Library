@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>\$_SERVER["HTTP_ACCEPT_LANGUAGE"]</string>
+	<key>name</key>
+	<string>SERVER['HTTP_ACCEPT_LANGUAGE']</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>$_</string>
+	<key>uuid</key>
+	<string>9CC3A8A1-BC23-4DD7-9D8C-4704F9CB7494</string>
+</dict>
+</plist>

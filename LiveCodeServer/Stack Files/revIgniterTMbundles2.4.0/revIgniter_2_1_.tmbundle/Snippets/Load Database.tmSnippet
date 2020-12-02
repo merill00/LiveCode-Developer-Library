@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>get rigLoadDatabase(${1: "${2:groupName}"${3:, ${4:returnID}${5:, ${6:enableActiveRec}}}})${0}</string>
+	<key>name</key>
+	<string>Load Database</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>loader</string>
+	<key>uuid</key>
+	<string>852D6DF9-CB94-4AAE-B6AF-F0AA7D12FD21</string>
+</dict>
+</plist>

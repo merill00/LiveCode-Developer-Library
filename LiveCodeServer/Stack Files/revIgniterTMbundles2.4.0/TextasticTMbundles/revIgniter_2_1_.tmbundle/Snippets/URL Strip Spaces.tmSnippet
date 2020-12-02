@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigUrlStripSpace(${1:url}${2:, ${3:replacement}})${0}</string>
+	<key>name</key>
+	<string>URL Strip Space</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>url</string>
+	<key>uuid</key>
+	<string>FE917190-071D-43CA-988C-A2AFF3A3E6B9</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigJQeffectR(${1:selector}, ${2:effect}${3:, ${4:duration}}${5:, ${6:callback}})${0}</string>
+	<key>name</key>
+	<string>Jquery EffectR</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>jquery</string>
+	<key>uuid</key>
+	<string>6131E663-EC4F-4D41-BF99-85D9B06B5E19</string>
+</dict>
+</plist>

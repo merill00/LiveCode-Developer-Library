@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigHumanToTimestamp(${1:datestring})${0}</string>
+	<key>name</key>
+	<string>Date Human to Timestamp</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>date</string>
+	<key>uuid</key>
+	<string>252F62D2-0BC4-4DC3-B55F-4EEA76CD3999</string>
+</dict>
+</plist>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigAutoLink(${1:string}, "${2:type}"${3:, ${4:bool}})${0}</string>
+	<key>name</key>
+	<string>URL Autolink</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>url</string>
+	<key>uuid</key>
+	<string>F1E47BB7-CEF5-4B29-8B5C-D0A4C5129160</string>
+</dict>
+</plist>

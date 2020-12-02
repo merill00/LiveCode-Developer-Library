@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigHtmlLinkTag("${1:href}", "${2:rel}", "${3:type}"${4:, "${5:title}", "${6:media}", ${7:bool}})${0}</string>
+	<key>name</key>
+	<string>HTML Link Tag</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>html</string>
+	<key>uuid</key>
+	<string>ADE7D625-1C35-482D-B1CF-19BAC9158026</string>
+</dict>
+</plist>

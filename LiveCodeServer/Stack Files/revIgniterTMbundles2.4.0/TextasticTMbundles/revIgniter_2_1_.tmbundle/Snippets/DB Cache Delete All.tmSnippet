@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>content</key>
+	<string>rigDbCacheDeleteAll${1: "${2:fileToExclude}"}${0}</string>
+	<key>name</key>
+	<string>DB Cache Delete All</string>
+	<key>scope</key>
+	<string>text.html.iRev</string>
+	<key>tabTrigger</key>
+	<string>database</string>
+	<key>uuid</key>
+	<string>10F48399-3676-48F2-95DD-EF2A97381983</string>
+</dict>
+</plist>

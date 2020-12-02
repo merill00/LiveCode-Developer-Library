@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>[[gData["pageTitle"] ]]</title>
+
+	<!-- Sencha Touch CSS -->
+	<? return rigCssAsset("sencha-touch.css", , "touch/resources")?>
+
+	<!-- Custom CSS -->
+	<? return rigCssAsset("myCSS.css") ?>
+	
+	<!-- Sencha Touch JS -->
+	<script type="text/javascript" src="assets/modules/touch/sencha-touch.js"></script>
+	
+	<!-- Application JS -->
+	<? return rigJsAsset("myScript.js")?>
+	
+</head>
+
+<body></body>
+
+</html>
