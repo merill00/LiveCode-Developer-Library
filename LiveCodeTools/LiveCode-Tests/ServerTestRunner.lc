@@ -1,0 +1,14 @@
+#!/Users/peter/Code/LiveCodeServer/livecode
+#coding:utf-8
+
+if the platform is "MacOS" then
+  set the outputLineEndings to "lf"
+  set the outputTextEncoding to "utf8"
+end if
+
+start using stack "../LiveCode-MiniTest/MiniTest.livecode"
+start using stack "Tests/AllTests.livecode"
+stop using stack "AllTests"
+delete stack "AllTests"
+stop using stack "MiniTest"
+delete stack "MiniTest"

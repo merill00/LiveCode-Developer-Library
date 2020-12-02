@@ -1,0 +1,268 @@
+-- SYNTAX TEST "Packages/LiveCode/LiveCode Builder.sublime-syntax"
+library sublime.syntaxtest
+--^^^^^ storage.type
+--      ^^^^^^^^^^^^^^^^^^ entity.name.class
+    use com.livecode.engine
+--  ^^^ meta.import keyword.other.import
+--      ^^^^^^^^^^^^^^^^^^^ meta.import variable.other
+    use com.livecode.math
+--  ^^^ meta.import keyword.other.import
+--      ^^^^^^^^^^^^^^^^^ meta.import variable.other
+
+    metadata author is "Trevor DeVore"
+--  ^^^^^^^^ keyword.other
+--           ^^^^^^ constant.language
+--                  ^^ keyword.operator.assignment
+--                     ^ punctuation.definition.string.begin
+--                     ^^^^^^^^^^^^^^^ string.quoted.double
+--                                   ^ punctuation.definition.string.end
+    metadata version is "0.1.0"
+--  ^^^^^^^^ keyword.other
+--           ^^^^^^^ constant.language
+--                   ^^ keyword.operator.assignment
+--                      ^ punctuation.definition.string.begin
+--                      ^^^^^^^ string.quoted.double
+--                            ^ punctuation.definition.string.end
+    metadata st3_syntax_test is "string#not a comment"
+--                              ^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double - comment
+--                                                   ^ punctuation.definition.string.end
+
+    private foreign handler ObjC_NSApplicationSharedApplication() returns ObjcId binds to "objc:NSApplication.+sharedApplication"
+--  ^^^^^^^ storage.modifier
+--          ^^^^^^^ storage.modifier
+--                  ^^^^^^^ storage.modifier
+--                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ entity.name.function
+--                                                             ^ meta.method.parameters punctuation.section.parameters.begin
+--                                                              ^ meta.method.parameters punctuation.section.parameters.end
+--                                                                ^^^^^^^ keyword.other
+--                                                                        ^^^^^^ support.type
+--                                                                               ^^^^^^^^^ storage.modifier
+--                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double
+
+    private foreign handler NSWorkspaceSelectFile(in pSharedWorkspace as ObjcId, in pFilename as ObjcId, in pRootedAtPath as ObjcId) returns CBool binds to "objc:NSWorkspace.-selectFile:inFileViewerRootedAtPath:"
+--  ^^^^^^^ storage.modifier
+--          ^^^^^^^ storage.modifier
+--                  ^^^^^^^ storage.modifier
+--                          ^^^^^^^^^^^^^^^^^^^^^ entity.name.function
+--                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.method.parameters
+--                                               ^ punctuation.section.parameters.begin
+--                                                ^^ storage.modifier.parameter
+--                                                   ^^^^^^^^^^^^^^^^ variable.parameter
+--                                                                    ^^ storage.modifier
+--                                                                       ^^^^^^ support.type
+--                                                                             ^ punctuation.separator.parameter
+--                                                                               ^^ storage.modifier.parameter
+--                                                                                  ^^^^^^^^^ variable.parameter
+--                                                                                            ^^ storage.modifier
+--                                                                                               ^^^^^^ support.type
+--                                                                                                     ^ punctuation.separator.parameter
+--                                                                                                       ^^ storage.modifier.parameter
+--                                                                                                          ^^^^^^^^^^^^^ variable.parameter
+--                                                                                                                        ^^ storage.modifier
+--                                                                                                                           ^^^^^^ support.type
+--                                                                                                                                 ^ punctuation.section.parameters.end
+--                                                                                                                                   ^^^^^^^ keyword.other
+--                                                                                                                                           ^^^^^ support.type
+--                                                                                                                                                 ^^^^^^^^^ storage.modifier
+--                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double
+
+    private variable mDotPaths          as List
+--  ^^^^^^^ storage.modifier
+--          ^^^^^^^^ storage.modifier
+--                   ^^^^^^^^^ variable.other
+--                                      ^^ storage.modifier
+--                                         ^^^^ storage.type
+    public  variable mCircleCount       as Integer
+--  ^^^^^^ storage.modifier
+--          ^^^^^^^^ storage.modifier
+--                   ^^^^^^^^^^^^ variable.other
+--                                      ^^ storage.modifier
+--                                         ^^^^^^^ storage.type
+
+    property cornerRadius            get mCornerRadius              set setCornerRadius
+--  ^^^^^^^^ storage.modifier
+--           ^^^^^^^^^^^^ entity.name.function.property
+--                                   ^^^ storage.modifier
+--                                       ^^^^^^^^^^^^^ variable.property.getter
+--                                                                  ^^^ storage.modifier
+--                                                                      ^^^^^^^^^^^^^^^ variable.property.setter
+
+    property idealWidth              get mIDealWidth
+--  ^^^^^^^^ storage.modifier
+--           ^^^^^^^^^^ entity.name.function.property
+--                                   ^^^ storage.modifier
+--                                       ^^^^^^^^^^^ variable.property.getter
+
+    public handler NSAppIsActive() returns Boolean
+--  ^^^^^^ storage.modifier
+--         ^^^^^^^ storage.modifier
+--                 ^^^^^^^^^^^^^ entity.name.function
+--                              ^^ meta.method.parameters
+--                              ^ punctuation.section.parameters.begin
+--                               ^ punctuation.section.parameters.end
+--                                 ^^^^^^^ keyword.other
+--                                         ^^^^^^^ storage.type
+        variable nsApp as ObjcObject
+--      ^^^^^^^^ storage.modifier
+--               ^^^^^ variable.other
+--                     ^^ storage.modifier
+--                        ^^^^^^^^^^ support.type
+        variable isActive as Boolean
+--      ^^^^^^^^ storage.modifier
+--               ^^^^^^^^ variable.other
+--                        ^^ storage.modifier
+--                           ^^^^^^^ storage.type
+        
+        unsafe
+--      ^^^^^^ keyword.other
+            repeat for each char tChar in "abcdef"
+--          ^^^^^^^^^^^^^^^ keyword.control.flow
+--                          ^^^^ support.type
+--                               ^^^^^ variable.other
+--                                     ^^ keyword.other
+--                                        ^^^^^^^^ string.quoted.double
+            end repeat
+--          ^^^^^^^^^^ meta.block.repeat keyword.control.flow
+            put ObjC_NSApplicationSharedApplication() into nsApp
+--          ^^^ keyword.other
+--              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call variable.function
+--                                                 ^ meta.function-call punctuation.section.parameters.begin
+--                                                  ^ meta.function-call punctuation.section.parameters.end
+--                                                    ^^^^ keyword.other
+--                                                         ^^^^^ variable.other
+            put ObjC_NSApplicationIsActive(nsApp) into isActive
+--          ^^^ keyword.other
+--              ^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.function-call variable.function
+--                                        ^ meta.function-call punctuation.section.parameters.begin
+--                                         ^^^^^ meta.function-call meta.parameters variable.other
+--                                              ^ meta.function-call punctuation.section.parameters.end
+--                                                ^^^^ keyword.other
+--                                                     ^^^^^^^^ variable.other
+        end unsafe
+--      ^^^^^^^^^^ keyword.other
+        return isActive
+--      ^^^^^^ keyword.control.flow.return
+--             ^^^^^^^^ variable.other
+    end handler
+--  ^^^^^^^^^^^ keyword.other
+
+    public handler OnMouseUp()
+        if the mouse position is within my bounds then
+            post "mouseUp" to my script object with [the click button formatted as string] -- formatint needed until dp-2
+--                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.double-dash
+        else
+--      ^^^^ keyword.control.flow
+            post "mouseRelease" to my script object with [the click button formatted as string] -- formatint needed until dp-2
+        end if
+    end handler
+
+    private handler _GetLevels() returns Array
+        return {"floating": 3, \
+--      ^^^^^^ keyword.control.flow.return
+--             ^ meta.mapping punctuation.section.mapping.begin
+--              ^^^^^^^^^^ meta.mapping string.quoted.double
+--                        ^ meta.mapping punctuation.separator.key-value
+--                          ^ meta.mapping constant.numeric.integer.denary
+--                           ^ meta.mapping punctuation.separator.mapping
+--                             ^ meta.mapping punctuation.separator.continuation.line
+                "main menu": 24, \
+                "panel": 8, \
+                "normal": 0, \
+                "pop-up menu": 101, \
+                "screen saver": 1000, \
+                "status": 25, \
+                "submenu": 3, \
+                "torn off": 3 \
+--              ^^^^^^^^^^ meta.mapping string.quoted.double
+--                        ^ meta.mapping punctuation.separator.key-value
+--                          ^ meta.mapping constant.numeric.integer.denary
+--                            ^ meta.mapping punctuation.separator.continuation.line
+                }
+--              ^ meta.mapping punctuation.section.mapping.end
+    end handler
+--  ^^^^^^^^^^^ keyword.other
+end library
+--^^^^^^^^^ keyword.other
+
+widget sublime.syntaxtest.widget
+    ----------
+    -- called whenever LiveCode needs to redraw the widget
+    public handler OnPaint()
+        variable tPath as Path
+        variable tCounter as Integer
+
+        put 0 into tCounter
+
+        repeat for each element tPath in mDotPaths
+            add 1 to tCounter
+
+            if tCounter is mHilitedIndex then
+--          ^^ keyword.control.flow
+--             ^^^^^^^^ meta.between-if-and-then variable.other
+--                      ^^ meta.between-if-and-then keyword.operator
+--                         ^^^^^^^^^^^^^ meta.between-if-and-then variable.other
+--                                       ^^^^ meta.between-if-and-then keyword.control.flow
+                set the paint of this canvas to my foreground paint
+--^^^^^^^^^^^^^^ meta.block.repeat meta.if.block
+--              ^^^ keyword.other
+--                  ^^^ keyword.other
+--                      ^^^^^ keyword.other
+--                            ^^ keyword.other
+--                               ^^^^ variable.language
+--                                    ^^^^^^ variable.other
+--                                           ^^ keyword.other
+--                                              ^^ variable.other
+--                                                 ^^^^^^^^^^ variable.other
+            else
+--          ^^^^ meta.block.repeat meta.if.block keyword.control.flow
+                set the paint of this canvas to my background paint
+            end if
+--          ^^^^^^ meta.block.repeat meta.if.block keyword.control.flow
+            
+            fill tPath on this canvas
+--          ^^^^ support.function
+        end repeat
+    end handler
+end widget
+
+module com.livecode.compiler.bytecode.tests
+    public unsafe handler TestJumpIfFalse()
+--  ^^^^^^ storage.modifier
+--         ^^^^^^ storage.modifier
+--                ^^^^^^^ storage.modifier
+--                        ^^^^^^^^^^^^^^^ entity.name.function
+       variable tTest as Boolean
+       put false into tTest
+--     ^^^ keyword.other
+--         ^^^^^ constant.language
+--               ^^^^ keyword.other
+--                    ^^^^^ variable.other
+       bytecode
+--     ^^^^^^^^ keyword.other
+             register regTemp
+--           ^^^^^^^^ keyword.other
+--                    ^^^^^^^ variable.other.register
+             assign_constant regTemp, false
+--           ^^^^^^^^^^^^^^^ support.function.opcode
+--                           ^^^^^^^ variable.other
+--                                  ^ punctuation.separator.parameter
+--                                    ^^^^^ constant.language
+             jump_if_false regTemp, lAfterAssign
+--           ^^^^^^^^^^^^^ support.function.opcode
+--                         ^^^^^^^ variable.other
+--                                ^ punctuation.separator.parameter
+--                                  ^^^^^^^^^^^^ variable.other
+             assign_constant tTest, true
+--           ^^^^^^^^^^^^^^^ support.function.opcode
+--                           ^^^^^ variable.other
+--                                ^ punctuation.separator.parameter
+--                                  ^^^^ constant.language
+          lAfterAssign:
+--        ^^^^^^^^^^^^ entity.name.label
+--                    ^ punctuation.separator
+       end bytecode
+--     ^^^^^^^^^^^^ keyword.other
+       test "jumpiffalse forward label" when tTest is false
+    end handler
+--  ^^^^^^^^^^^ keyword.other
+end module

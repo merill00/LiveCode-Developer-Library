@@ -1,0 +1,17 @@
+﻿script "UnicodeTests"
+
+on libraryStack
+
+  MT.startTestFile "Unicode"
+   
+  MT.startTest "Unicode1"
+  MT.assertEqual 2, offset("a","𝄢a")
+  MT.endTest
+  
+  MT.startTest "Unicode2"
+  MT.assertEqual 1, offset("𝄢","𝄢")
+  MT.endTest
+   
+  MT.endTestFile
+
+end libraryStack

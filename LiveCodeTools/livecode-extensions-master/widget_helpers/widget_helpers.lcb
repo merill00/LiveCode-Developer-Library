@@ -1,0 +1,426 @@
+module community.livecode.trevordevore.widgethelpers
+
+   use com.livecode.canvas
+   use com.livecode.engine
+   use com.livecode.math
+
+   metadata title is "Widget Helpers"
+   metadata author is "Trevor DeVore"
+   metadata version is "1.0.1"
+
+   public handler AdjustColorForEnabledState(in pColor as Color, in pEnabled as Boolean) returns Color
+      if pEnabled then
+   		set the alpha of pColor to 1
+   	else
+   		set the alpha of pColor to 0.5
+   	end if
+
+      return pColor
+   end handler
+
+
+   public handler colorToString(in pColor as Color, in pIncludeAlpha as Boolean) returns String
+   	variable tColor as String
+
+   	if pColor is nothing then
+   		return ""
+   	end if
+
+   	put FormatInt(the rounded of ((the red of pColor) * 255)) into tColor
+   	put "," & FormatInt(the rounded of ((the green of pColor) * 255)) after tColor
+   	put "," & FormatInt(the rounded of ((the blue of pColor) * 255)) after tColor
+
+   	if pIncludeAlpha then
+   		put "," & FormatInt(the rounded of ((the alpha of pColor) * 255)) after tColor
+   	end if
+
+   	return tColor
+   end handler
+
+   ----------
+   -- this handler converts a String of numbers to an RGBA color
+   public handler stringToColor(in pString as String) returns Color
+   	if the number of chars in pString is 0 then
+   	     return ""
+   	end if
+
+   	variable tRed as Number
+   	variable tGreen as Number
+   	variable tBlue as Number
+   	variable tAlpha as Number
+
+   	variable tComponentList as List
+   	split pString by "," into tComponentList
+
+   	variable tComponentCount
+   	put the number of elements in tComponentList into tComponentCount
+   	if tComponentCount is not 3 and tComponentCount is not 4 then
+   		// Invalid number of components detected
+   		throw "Invalid color"
+   	end if
+
+   	put (element 1 of tComponentList) parsed as number into tRed
+   	put (element 2 of tComponentList) parsed as number into tGreen
+   	put (element 3 of tComponentList) parsed as number into tBlue
+
+   	if tComponentCount is 4 then
+   	  if element 4 of tComponentList is "inf" then
+   	    put 255 into tAlpha
+   	  else
+        put the minimum value of [255, (element 4 of tComponentList) parsed as number] into tAlpha
+   	  end if   		
+   	else
+   		put 255 into tAlpha
+   	end if
+
+   	return color [ tRed/255, tGreen/255, tBlue/255, tAlpha/255 ]
+   end handler
+
+
+   public handler fitStringToRect(inout pString as String, in pFont as Font, in pMaxWidth as Number) returns nothing
+   	-- Now make sure that text will fit within the available width
+   	variable tTextRect as Rectangle
+   	variable tEllipsis as String
+   	variable tCharCount as Integer
+
+   	put "..." into tEllipsis
+   	put the number of chars in tEllipsis into tCharCount
+
+   	put the bounds of text pString with pFont into tTextRect
+   	if the width of tTextRect > pMaxWidth then
+   		put tEllipsis into char -tCharCount to -1 of pString
+   		put the bounds of text pString with pFont into tTextRect
+   		repeat forever
+   			if the width of tTextRect <= pMaxWidth or pString is tEllipsis then
+   				exit repeat
+   			else
+   				put "..." into char -(tCharCount+1) to -1 of pString
+   				put the bounds of text pString with pFont into tTextRect
+   			end if
+   		end repeat
+   	end if
+   end handler
+
+
+   public handler stringToPoint(in pString as String) returns Point
+   	variable tList as List
+   	variable tPoint as Point
+
+   	put point [0,0] into tPoint
+
+   	split pString by ","
+   	put the result into tList
+   	put tList parsed as list of number into tList
+   	if the number of elements in tList is 2 then
+   		put point [element 1 of tList, element 2 of tList] into tPoint
+   	end if
+
+   	return tPoint
+   end handler
+
+
+   public handler pointToString(in pPoint as Point) returns String
+   	return FormatInt(the x of pPoint) & "," & FormatInt(the y of pPoint)
+   end handler
+
+
+   public handler FormatInt(in pNumber as Number) returns String
+   	variable tNumberString as String
+
+   	put pNumber formatted as string into tNumberString
+
+   	if "." is in tNumberString then
+   		variable tDotOffset
+   		put the first offset of "." in tNumberString into tDotOffset
+   		delete char tDotOffset to (the number of chars in tNumberString) of tNumberString
+   	end if
+
+   	return tNumberString
+   end handler
+
+
+   public handler rectCenter(in pRect as Rectangle) returns Point
+   	return point [the left of pRect + the width of pRect / 2, the top of pRect + the height of pRect / 2]
+   end handler
+
+
+   public handler resizeControlWidth(in pScriptObject as ScriptObject, in pIdealWidth as Number) returns nothing
+   	variable tLeft as String
+   	get property "topleft" of pScriptObject
+   	put the result into tLeft
+
+   	variable tList
+   	split tLeft by "," into tList
+   	put element 1 of tList into tLeft
+
+     set property "width" of pScriptObject to the rounded of (pIdealWidth + 0.5)
+     set property "left" of pScriptObject to tLeft
+   end handler
+
+
+   public handler resizeControlToRect(in pScriptObject as ScriptObject, in pRect as Rectangle, in pAlignToSide as String) returns nothing
+      // We want to maintain the center left coordinate
+      variable tSide as String
+      variable tLoc as String
+      variable tFixedLoc as String
+      variable tList as List
+      variable tProp as String
+
+      -- Get current position
+      if ["top left", "bottom left", "top right", "bottom right"] contains [pAlignToSide] then
+      	put pAlignToSide into tProp
+      	replace " " with "" in tProp
+      else if ["left", "right"] contains [pAlignToSide] then
+      	put "top" & pAlignToSide into tProp
+      else if pAlignToSide is "top" then
+      	put "topleft" into tProp
+      else
+      	put "bottomleft" into tProp
+      end if
+
+      get property tProp of pScriptObject
+      put the result into tSide
+      split tSide by "," into tList
+
+      -- Set dimensions
+      set property "width" of pScriptObject to the rounded of (the width of pRect + 0.5)
+      set property "height" of pScriptObject to the rounded of (the height of pRect + 0.5)
+
+      -- Now reposition
+      if ["top left", "bottom left", "top right", "bottom right"] contains [pAlignToSide] then
+      	set property tProp of pScriptObject to element 1 of tList & "," & element 2 of tList
+      else
+
+      	if pAlignToSide is "left" or pAlignToSide is "right" then
+      		put element 1 of tList into tSide
+      	else
+      		put element 2 of tList into tSide
+      	end if
+
+      	get property "loc" of pScriptObject
+      	put the result into tLoc
+      	split tLoc by "," into tList
+
+      	if pAlignToSide is "left" or pAlignToSide is "right" then
+      		put element 2 of tList into tFixedLoc
+      	else
+      		put element 1 of tList into tFixedLoc
+      	end if
+
+      	set property pAlignToSide of pScriptObject to tSide
+
+      	-- now set y and maintain x
+      	get property "loc" of pScriptObject
+      	put the result into tLoc
+      	split tLoc by "," into tList
+      	if pAlignToSide is "left" or pAlignToSide is "right" then
+      		put element 1 of tList & "," & tFixedLoc into tLoc
+      	else
+      		put tFixedLoc & "," & element 2 of tList into tLoc
+      	end if
+
+      	-- set loc
+      	set property "loc" of pScriptObject to tLoc
+      end if
+   end handler
+
+
+   /*
+   Summary: Scales and translates a path to fit within a rectangle
+
+   Parameters:
+   pTargetRect: The rectangle to fit the path within
+   xPath: The path to transform
+
+   Example:
+   use com.livecode.library.iconSVG
+
+   public handler OnPaint() returns nothing
+   	-- get the 'shopping cart' icon from the icon library
+   	variable tPathString as String
+    	put iconSVGPathFromName("shopping cart") into tPathString
+
+   	-- create the path
+   	variable tPath as Path
+   	put path tPathString into tPath
+
+   	-- scale the path to fit within the bounds of the widget
+   	constrainPathToRect(my bounds, tPath)
+
+   	-- fill the path
+   	fill tPath on this canvas
+   end handler
+
+   Description:
+   Scales and transforms <xPath> so that it fits within <pTargetRect> whilst maintaining its
+   aspect ratio.
+   */
+   public handler constrainPathToRect(in pTargetRect as Rectangle, inout xPath as Path) returns nothing
+
+      // Scale the icon
+      variable tBounds
+      put the bounding box of xPath into tBounds
+
+      // Scale appropriately
+      variable tXScale as Real
+      variable tYScale as Real
+
+      put the width of pTargetRect / the width of tBounds into tXScale
+      put the height of pTargetRect / the height of tBounds into tYScale
+
+      if tXScale > tYScale then
+         put tYScale into tXScale
+      else
+         put tXScale into tYScale
+      end if
+
+      scale xPath by [tXScale, tYScale]
+
+      variable tXTranslate as Real
+      variable tYTranslate as Real
+
+      put the bounding box of xPath into tBounds
+
+      put the left of pTargetRect - the left of tBounds into tXTranslate
+      put the top of pTargetRect - the top of tBounds into tYTranslate
+
+      variable tXDiff as Real
+      variable tYDiff as Real
+
+      put the width of pTargetRect - the width of tBounds into tXDiff
+      put the height of pTargetRect - the height of tBounds into tYDiff
+
+      // align center
+      divide tXDiff by 2
+      divide tYDiff by 2
+
+      translate xPath by [tXTranslate + tXDiff, tYTranslate + tYDiff]
+   end handler
+
+
+  public handler centerBoxWithinBox(inout xPathToCenter as Path, in pFocalPath as Path) returns nothing
+    // 0 out
+    translate xPathToCenter by [-the x of the bounding box of xPathToCenter, - the y of the bounding box of xPathToCenter]
+    // Center
+    translate xPathToCenter by [the right of the bounding box of pFocalPath - the width of the bounding box of pFocalPath/2 - the width of the bounding box of xPathToCenter/2, \
+      the bottom of the bounding box of pFocalPath - the height of the bounding box of pFocalPath/2 - the height of the bounding box of xPathToCenter/2]
+  end handler
+
+
+  -- Very useful article: http://docs.rainmeter.net/tips/transformation-matrix-guide
+  public handler calculateRotatedPath(inout pPath as Path, in pRotation as Number, in pCenter as Point, in pRotateClockwise as Boolean)
+     variable tTransform as Transform
+     put rotatedPathTransformation(pRotation, pCenter, pRotateClockwise) into tTransform
+     transform pPath by tTransform
+  end handler
+
+
+  public handler rotatedPathTransformation(in pRotation as Number, in pCenter as Point, in pRotateClockwise as Boolean) returns Transform
+     variable tX as Number
+     variable tY as Number
+     variable tOriginX as Number
+     variable tOriginY as Number
+     variable tMatrix as List
+     variable tA as Number
+     variable tB as Number
+     variable tC as Number
+     variable tD as Number
+
+     -- Clockwise: sin for B, -sin for C
+     -- Counterclockwise: -sin for B, sin for C
+     variable tAngle as Number
+     put (pRotation mod 360)/360*2*pi into tAngle
+
+     put cos(tAngle) into tA -- scale the x
+
+     if pRotateClockwise then
+        put sin(tAngle) into tB -- scale the y
+        put -sin(tAngle) into tC -- skew the x
+     else
+        put -sin(tAngle) into tB -- scale the y
+        put sin(tAngle) into tC -- skew the x
+     end if
+     put cos(tAngle) into tD -- skew the y
+     put the x of pCenter into tOriginX
+     put the y of pCenter into tOriginY
+
+     put tOriginX - tOriginX*tA - tOriginY*tC into tX
+     put tOriginY - tOriginX*tB - tOriginY*tD into tY
+
+     variable tTransform as Transform
+     put transform with matrix [tA,tB,tC,tD,tX,tY] into tTransform
+
+     return tTransform
+  end handler
+
+
+  -- mIconOrigin Element 1 is percent of icon width that represents center X (e.g. 0.5). Element 2 is percent of icon height that represents center Y (e.g. 0.5).
+  -- pDestBounds Rectangle to constrain the path to.
+  -- pConstraintBounds The rect to center the path in.
+  public handler preparePathForRotation(inout xPath as Path, in pIconOrgin as List, in pDestBounds as Rectangle, in pConstraintBounds as Rectangle) returns Point
+     transform xPath by scaleAndMaintainAspectRatioTransform(the bounding box of xPath, pDestBounds, pConstraintBounds)
+     -- Reset to 0,0
+     translate xPath by [- the x of the bounding box of xPath, \
+                                   - the y of the bounding box of xPath]
+
+     -- Find center point to rotate around and center path
+     variable tCenterX as Number
+     variable tCenterY as Number
+
+     put (the width of the bounding box of xPath * element 1 of pIconOrgin) into tCenterX
+     put (the height of the bounding box of xPath * element 2 of pIconOrgin) into tCenterY
+     translate xPath by [the width of pConstraintBounds/2-tCenterX, the height of pConstraintBounds/2-tCenterY]
+     return point [(the left of the bounding box of xPath) + tCenterX, \
+                       (the top of the bounding box of xPath) + tCenterY]
+  end handler
+
+
+   -- Translated from some Skia code
+   public handler scaleAndMaintainAspectRatioTransform(in pSrcBounds as Rectangle, in pDestBounds as Rectangle, in pConstraintBounds as Rectangle) returns Transform
+   	// Prepare values for matrix transformation
+   	variable isLarger as Boolean
+   	variable sX as Number
+   	variable sY as Number
+
+   	put false into isLarger
+   	put the width of pDestBounds / the width of pSrcBounds into sX
+   	put the height of pDestBounds / the height of pSrcBounds into sY
+
+   	if sX > sY then
+   		put true into isLarger
+   		put sY into sX
+   	else
+   		put sX into sY
+   	end if
+
+   	variable tX as Number
+   	variable tY as Number
+
+   	put the left of pDestBounds - (the left of pSrcBounds*sX) into tX
+   	put the top of pDestBounds - (the top of pSrcBounds*sY) into tY
+
+   	variable tDiff as Number
+
+   	if isLarger then
+   		put the width of pConstraintBounds - (the width of pSrcBounds*sY) into tDiff
+   	else
+   		put the height of pConstraintBounds - (the height of pSrcBounds*sY) into tDiff
+   	end if
+
+   	// align center
+   	divide tDiff by 2
+
+   	if isLarger then
+   		add tDiff to tX
+   	else
+   		add tDiff to tY
+   	end if
+
+   	// create transformation matrix and apply
+   	variable tTransform as Transform
+   	put transform with matrix [sX, 0, 0, sY, tX, tY] into tTransform
+
+   	return tTransform
+   end handler
+
+end module

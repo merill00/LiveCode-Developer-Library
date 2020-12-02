@@ -1,0 +1,10 @@
+library community.livecode.lmerithew.helloworld
+
+public handler SayHello()
+   return "Hello World"
+end handler
+
+metadata title is "Hello World"
+metadata author is "Lloyd Merithew"
+metadata version is "1.0.0"
+end library

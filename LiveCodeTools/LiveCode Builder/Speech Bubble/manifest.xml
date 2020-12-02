@@ -1,0 +1,27 @@
+<package version="0.0">
+  <name>community.livecode.gohutchings.speechbubble</name>
+  <title>Speech Bubble</title>
+  <author>Georgia Hutchings</author>
+  <version>1.0.0</version>
+  <license>community</license>
+  <type>widget</type>
+  <requires name="com.livecode.canvas"/>
+  <requires name="com.livecode.array"/>
+  <requires name="com.livecode.list"/>
+  <requires name="com.livecode.arithmetic"/>
+  <requires name="com.livecode.binary"/>
+  <requires name="com.livecode.logic"/>
+  <requires name="com.livecode.string"/>
+  <requires name="com.livecode.type"/>
+  <requires name="com.livecode.widget"/>
+  <property name="bubbleText" get="string" set="string"/>
+  <property name="bubbleColor" get="string" set="string"/>
+  <metadata key="bubbleText.editor">com.livecode.pi.string</metadata>
+  <metadata key="bubbleText.default">Hello World</metadata>
+  <metadata key="bubbleColor.editor">com.livecode.pi.enum</metadata>
+  <metadata key="bubbleColor.options">blue,grey</metadata>
+  <metadata key="bubbleColor.default">blue</metadata>
+  <handler name="OnSave" parameters="out array" return="any"/>
+  <handler name="OnCreate" parameters="" return="any"/>
+  <handler name="OnPaint" parameters="" return="any"/>
+</package>

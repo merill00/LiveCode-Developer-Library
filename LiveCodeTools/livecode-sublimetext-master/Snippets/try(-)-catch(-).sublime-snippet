@@ -1,0 +1,10 @@
+<snippet>
+	<content><![CDATA[try
+  ${1:# code...}
+catch ${2:variable}
+  ${0:# code...}
+end try]]></content>
+	<tabTrigger>try catch</tabTrigger>
+	<scope>source.livecode</scope>
+	<description>try … catch …</description>
+</snippet>

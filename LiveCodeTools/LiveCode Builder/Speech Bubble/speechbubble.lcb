@@ -1,0 +1,126 @@
+-- declaring extension as widget, followed by identifier
+widget community.livecode.gohutchings.speechbubble
+
+use com.livecode.canvas
+use com.livecode.widget
+
+property bubbleText 	get mText 		set setText
+property bubbleColor 	get mBubbleColor 	set setBubbleColor
+
+metadata title is "Speech Bubble"
+metadata author is "Georgia Hutchings"
+metadata version is "1.0.0"
+
+metadata bubbleText.editor	is "com.livecode.pi.string"
+metadata bubbleText.default	is "Hello World"
+
+metadata bubbleColor.editor	is "com.livecode.pi.enum"
+metadata bubbleColor.options	is "blue,grey"
+metadata bubbleColor.default	is "blue"
+
+private variable mText as String
+private variable mBubbleColor as String
+
+private variable mBackgroundPaint as Paint
+private variable mTextPaint as Paint
+
+constant kBuffer is 10
+
+public handler OnSave(out rProperties as Array)
+	put the empty array into rProperties
+
+	put mText into rProperties["bubbleText"]
+	put mBubbleColor into rProperties["bubbleColor"]
+
+end handler
+
+private handler setText(in pText as String)
+	put pText into mText
+end handler
+
+private handler setBubbleColor(in pColor as String)
+	if pColor is "blue" then
+		put solid paint with color [0,128/255,1] into mBackgroundPaint
+		put solid paint with color [1,1,1] into mTextPaint
+	else if pColor is "grey" then
+		put solid paint with color [224/255,224/255,224/255] into mBackgroundPaint
+		put solid paint with color [0,0,0] into mTextPaint
+	end if
+	put pColor into mBubbleColor
+end handler
+
+public handler OnCreate()
+
+	put "Hello World" into mText
+	setBubbleColor("blue")
+
+end handler
+
+public handler OnPaint()
+
+	-- draw the speech bubble
+	set the paint of this canvas to fetchPaint("bubble")
+	fill fetchPath("rounded rectangle") on this canvas
+	fill fetchPath("crescent") on this canvas
+
+	-- fill in the text
+	set the paint of this canvas to fetchPaint("text")
+	set the font of this canvas to font "Helvetica" at size 12
+	fill text mText at top left of fetchTextBox() on this canvas
+
+end handler
+
+private handler fetchPaint(in pObject as String) returns Paint
+
+	if pObject is "bubble" then
+		return mBackgroundPaint
+	else if pObject is "text" then
+		return mTextPaint
+	end if
+
+end handler
+
+private handler fetchPath(in pObject as String) returns Path
+	if pObject is "rounded rectangle" then
+
+		variable tRect as Rectangle
+
+		if mBubbleColor is "blue" then
+			put rectangle [0,0,my width-kBuffer,my height-kBuffer] into tRect
+		else if mBubbleColor is "grey" then
+			put rectangle [kBuffer,0,my width,my height-kBuffer] into tRect
+		end if
+
+		return rounded rectangle path of tRect with radius 10
+	else if pObject is "crescent" then
+		variable tCrescentPath as Path
+		put the empty path into tCrescentPath
+
+		if mBubbleColor is "blue" then
+			move to point [my width-kBuffer,my height-2*kBuffer] on tCrescentPath
+			curve through point [my width-kBuffer/2,my height-kBuffer] to point [my width,my height-kBuffer] on tCrescentPath
+			curve through point [my width-kBuffer,my height-kBuffer/2] to point [my width-2*kBuffer,my height-2*kBuffer] on tCrescentPath
+		else if mBubbleColor is "grey" then
+			move to point [kBuffer,2*kBuffer] on tCrescentPath
+			curve through point [kBuffer/2,my height-kBuffer] to point [0,my height-kBuffer] on tCrescentPath
+			curve through point [kBuffer,my height-kBuffer/2] to point [2*kBuffer,my height-2*kBuffer] on tCrescentPath
+		end if
+
+		return tCrescentPath
+
+	end if
+end handler
+
+private handler fetchTextBox() returns Rectangle
+	variable tRect as Rectangle
+
+	if mBubbleColor is "blue" then
+		put rectangle [kBuffer,kBuffer,my width-2*kBuffer,my height-2*kBuffer] into tRect
+	else if mBubbleColor is "grey" then
+		put rectangle [2*kBuffer,kBuffer,my width-kBuffer,my height-2*kBuffer] into tRect
+	end if
+
+	return tRect
+end handler
+
+end widget

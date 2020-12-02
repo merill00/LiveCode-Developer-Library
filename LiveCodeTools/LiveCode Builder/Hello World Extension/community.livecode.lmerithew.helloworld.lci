@@ -1,0 +1,3 @@
+import module community.livecode.lmerithew.helloworld
+  handler SayHello() returns optional any
+end module

@@ -1,0 +1,56 @@
+﻿script "RegExTests"
+
+on libraryStack
+  # locals
+  local tString
+     
+  MT.startTestFile "Regular Expression Tests"
+   
+  MT.startTest "Regex1"
+  MT.assert matchText("dog and cat", "cat")
+  MT.endTest
+   
+  MT.startTest "Regex2"
+  MT.assert matchText("catch", "cat")
+  MT.endTest
+   
+  MT.startTest "Regex3"
+  MT.refute matchText("cat", "Cat")
+  MT.endTest
+   
+  MT.startTest "Regex4"
+  MT.assertEqual "Gerbil and Dog", replaceText("Cat and Dog", "Cat", "Gerbil")
+  MT.endTest
+   
+  MT.startTest "Regex5"
+  put "Cat and Dog" into tString
+  if matchChunk(tString, "(a)", tStartPos, tEndPos) then 
+    put "*" into char tStartPos to tEndPos of tString
+  end if
+  MT.assertEqual "C*t and Dog", tString
+  MT.endTest
+   
+  MT.startTest "Regex6"
+  MT.assertEqual "C*t *nd Dog", replaceText("Cat and Dog", "a", "*")
+  MT.endTest
+   
+  MT.startTest "Regex7"
+  MT.assert matchText(numToCodepoint(0xE7), "c" & numToCodepoint(0x0327))
+  MT.endTest
+   
+  MT.startTest "Regex8"
+  MT.assert matchText("é", "(?i)É")
+  MT.endTest 
+      
+  MT.startTest "Regex9"
+  MT.assert matchText("e", "(?i)E")
+  MT.endTest
+  
+  MT.startTest "Regex10"
+  # characters above the BMP
+  MT.assert matchText("𝄢", "𝄢")
+  MT.endTest
+
+  MT.endTestFile
+   
+end libraryStack

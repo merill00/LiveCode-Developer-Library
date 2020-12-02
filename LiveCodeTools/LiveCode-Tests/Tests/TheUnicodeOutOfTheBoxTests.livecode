@@ -1,0 +1,173 @@
+﻿script "TheUnicodeOutOfTheBoxTests"
+
+# This test script implements The Unicode Out Of The Boxt Tests in LiveCode
+
+#locals
+local tCodepoint
+local tDecomposed
+local tPrecomposed
+local tUnicodeString
+
+# helper functions
+function reversed pString
+  local tReversedString = ""
+  repeat with tChar = the length of pString down to 1
+    put char tChar of pString after tReversedString
+  end repeat
+  return tReversedString
+end reversed
+
+on libraryStack
+
+  MT.startTestFile "Unicode Out Of The Box"
+   
+  MT.startTest "UOOTB1"
+  # comparison precomposed and decomposed treated the same
+  put numToCodepoint(0xE7) into tPrecomposed
+  put "c" & numToCodepoint(0x0327) into tDecomposed
+  MT.assertEqual tPrecomposed, tDecomposed
+  MT.endTest
+   
+  MT.startTest "UOOTB2"
+  # comparison precomposed and decomposed treated differently
+  put numToCodepoint(0xE7) into tPrecomposed
+  put  "c" & numToCodepoint(0x0327) into tDecomposed
+  set the formSensitive to true
+  MT.assert tPrecomposed <> tDecomposed
+  set the formSensitive to false
+  MT.endTest
+   
+  MT.startTest "UOOTB3"
+  # correct length of text with decomposed string
+  put "noe" & numToCodepoint(0x0308) & "l" into tUnicodeString
+  MT.assertEqual 4, the length of tUnicodeString
+  MT.endTest
+   
+  MT.startTest "UOOTB4"
+  # correct reversing of decomposed string
+  put "noe" & numToCodepoint(0x0308) & "l" into tUnicodeString
+  MT.assertEqual "le" & numToCodepoint(0x0308) & "on", reversed(tUnicodeString)
+  MT.endTest
+   
+  MT.startTest "UOOTB5"
+  # correct substring of decomposed string
+  put "noe" & numToCodepoint(0x0308) & "l" into tUnicodeString
+  MT.assertEqual noë, char 1 to 3 of tUnicodeString
+  MT.endTest
+   
+  MT.startTest "UOOTB6"
+  # correct uppercase conversion of U+FB04
+  put "ba" & numToCodepoint(0xFB04) & "e" into tUnicodeString
+  MT.assertStrictEqual "BAFFLE", the Upper of tUnicodeString
+  MT.assertEqual 6, the Length of the Upper of tUnicodeString
+  MT.endTest
+   
+  MT.startTest "UOOTB7"
+  # correct upercase of non-ASCII
+  # precomposed
+  put "cant" & numToCodepoint(0xF9) into tUnicodeString
+  MT.assertStrictEqual "CANT" & numToCodepoint(0XD9), the Upper of tUnicodestring
+  MT.endTest
+   
+  MT.startTest "UOOTB8"
+  # correct upercase of non-ASCII
+  # decomposed
+  put "cantu" & numToCodepoint(0x0300) into tUnicodeString
+  MT.assertStrictEqual "CANTU" & numToCodepoint(0X0300), the Upper of tUnicodestring
+  MT.endTest
+   
+  MT.startTest "UOOTB9"
+  # Processing chars above BMP
+  put numToCodepoint(0x1D11E) & " - The Treble Clef" into tUnicodeString
+  replace "𝄞" with "𝄢" in tUnicodeString
+  replace "Treble" with "Bass" in tUnicodeString
+  MT.assertEqual "𝄢 - The Bass Clef", tUnicodeString
+  MT.endTest
+   
+  MT.startTest "UOOTB10"
+  # Processing chars above BMP
+  put "𝄢 - The Bass Clef" into tUnicodeString
+  MT.assertEqual 17, the length of tUnicodeString
+  MT.endTest
+  
+  MT.startTest "UOOTB11"
+  # special case - Turkish - uppercase "i"
+  put "i" into tUnicodeString
+  MT.assertStrictEqual numToCodepoint(0x0130), the Upper of tUnicodeString
+  MT.endTest
+   
+  MT.startTest "UOOTB12"
+  # special case - Turkish - lowercase "I"
+  put "I" into tUnicodeString
+  MT.assertStrictEqual numToCodepoint(0x131), the Upper of tUnicodeString
+  MT.endTest
+  
+  MT.startTest "UOOTB13"
+  # Upper case sharp s (U+00DF)
+  put "ma" & numToCodepoint(0xDF) into  tUnicodeString
+  MT.assertStrictEqual "MASS", the Upper of tUnicodeString
+  MT.endTest
+  
+  MT.startTest "UOOTB14"
+  # Length of string with decomposed character with no precomposed alternative
+  put numToCodepoint( 0x30C8) & numToCodepoint( 0x3099) into tUnicodeString
+  MT.assertEqual 1, the length of tUnicodeString
+  MT.endTest
+   
+  MT.startTest "UOOTB15"
+  # Length of string with decomposed characters and characters above BMP
+  put "e" & numToCodepoint(0x0308) into tUnicodeString
+  put numToCodepoint(0x1D11E) after tUnicodeString
+  put numToCodepoint( 0x30C8) & numToCodepoint( 0x3099) after tUnicodeString
+  MT.assertEqual 3, the length of tUnicodeString
+  MT.endTest
+   
+  MT.startTest "UOOTB16"
+  # Case folding "weiss" = "weiß"
+  put "wei" & numToCodepoint(0xDF) into  tUnicodeString
+  MT.assertStrictEqual "weiss", tUnicodeString
+  MT.endTest
+ 
+  MT.startTest "UOOTB 17"
+  put "e" & numToCodepoint(0x0303) & numToCodepoint(0x033D) & numToCodepoint(0x032A) into tUnicodeString
+  MT.assertStrictEqual tUnicodeString, "e" & numToCodepoint(0x032A) & numToCodepoint(0x0303) & numToCodepoint(0x033D)
+  MT.endTest
+   
+  MT.startTest "UOOTB 18"
+  MT.assertEqual normalizeText(numToCodepoint(0x216B), "NFKC"), normalizeText("XII", "NFKC") 
+  MT.endTest
+   
+  MT.startTest "UOOTB 19"
+  MT.refuteEqual normalizeText(numToCodepoint(0x216B), "NFC"), normalizeText("XII", "NFC") 
+  MT.endTest
+   
+  MT.startTest "UOOTB 20"
+  MT.assertEqual numToCodepoint(0x1E14), normalizeText(numToCodepoint(0x1E14), "NFC")
+  MT.endTest
+   
+  MT.startTest "UOOTB 21"
+  MT.assertEqual "E" & numToCodepoint(0x0304) & numToCodepoint(0x0300), normalizeText(numToCodepoint(0x1E14), "NFD")
+  MT.endTest
+   
+  MT.startTest "UOOTB 22"
+  MT.assertEqual numToCodepoint(0x1E14), normalizeText(numToCodepoint(0x0112) & numToCodepoint(0x0300), "NFC")
+  MT.endTest
+   
+  MT.startTest "UOOTB 23"
+  put numToCodepoint(0x0112) & numToCodepoint(0x0300) into tUnicodeString
+  MT.assertEqual "E" & numToCodepoint(0x0304) & numToCodepoint(0x0300), normalizeText(tUnicodeString, "NFD")
+  MT.endTest
+   
+  MT.startTest "UOOTB 24"
+  put numToCodepoint(0xC8) & numToCodepoint(0x0304) into tUnicodeString
+  MT.assertEqual numToCodepoint(0xC8) & numToCodepoint(0x0304), normalizeText(tUnicodeString, "NFC")
+  MT.endTest
+   
+  MT.startTest "UOOTB 25"
+  put "e" & numToCodepoint(0x0303) & numToCodepoint(0x033D) & numToCodepoint(0x032A) into tUnicodeString
+  MT.refuteEqual tUnicodeString, "e" & numToCodepoint(0x033D) & numToCodepoint(0x032A) & numToCodepoint(0x0303)
+  MT.endTest
+   
+  MT.endTestFile
+
+end libraryStack

@@ -1,0 +1,163 @@
+﻿script "ChunkingTests"
+
+## Helper Commands
+command testWholeChunk pInitVal, pChunk, pNewVal
+   put pInitVal into tText
+   do "put " & pNewVal & " into the first " & pChunk & " of tText"
+   MT.assertEqual tText, pNewVal
+end testWholeChunk
+
+on libraryStack
+   
+   # locals
+   local tText
+   
+   # intialise test
+   MT.startTestFile "The Unicode Chunking Tests"
+   
+   # tests
+   MT.startTest "Chunking1"
+   # words of a simple English sentence
+   put "The cat sat on the mat" into tText
+   MT.assertEqual "The", the first word of tText
+   MT.assertEqual "The", the first trueWord of tText
+   MT.assertEqual "cat", the second word of tText
+   MT.assertEqual "cat", the second trueWord of tText
+   MT.assertEqual "sat", the third word of tText
+   MT.assertEqual "sat", the third trueWord of tText
+   MT.assertEqual "on", the fourth word of tText
+   MT.assertEqual "on", the fourth trueWord of tText
+   MT.assertEqual "the", the fifth word of tText
+   MT.assertEqual "the", the fifth trueWord of tText
+   MT.assertEqual "mat", the sixth word of tText
+   MT.assertEqual "mat", the sixth trueWord of tText
+   MT.assertEqual "", the seventh word of tText
+   MT.assertEqual "", the seventh trueWord of tText
+   MT.endTest
+   
+   MT.startTest "Chunking2"
+   # words of a simple English sentence with a fullstop
+   put "The cat sat on the mat." into tTexT
+   MT.assertEqual "mat.", the sixth word of tText
+   MT.assertEqual "mat", the sixth trueWord of tText
+   MT.assertEqual "", the seventh trueWord of tText
+   MT.endTest
+   
+   MT.startTest "Chunking3"
+   # words of two short English sentences both with fullstops
+   put "The shirt is gold. The shorts are black." into tText
+   MT.assertEqual "gold.", the fourth word of tText
+   MT.assertEqual "gold", the fourth trueWord of tText
+   MT.assertEqual "The", the fifth word of tText
+   MT.assertEqual "The", the fifth trueWord of tText
+   MT.assertEqual "black.", the eighth word of tText
+   MT.assertEqual "black", the eighth trueWord of tText
+   MT.assertEqual "", the ninth word of tText
+   MT.assertEqual "", the ninth trueWord of tText
+   MT.endTest
+   
+    MT.startTest "Chunking4"
+   # the heirarchy of chunks of single "ASCII" character
+   MT.assertEqual "a", the first codeunit of "a"
+   MT.assertEqual "a", the first codepoint of "a"
+   MT.assertEqual "a", the first character of "a"
+   MT.assertEqual "a", the first trueWord of "a"
+   MT.assertEqual "a", the first segment of "a"
+   MT.assertEqual "a", the first sentence of "a"
+   MT.assertEqual "a", the first paragraph of "a"
+   MT.endTest
+   
+   MT.startTest "Chunking5"
+   # the heirarchy of chunks of single ISO-8859-1 character
+   MT.assertEqual "à", the first codeunit of "à"
+   MT.assertEqual "à", the first codepoint of "à"
+   MT.assertEqual "à", the first character of "à"
+   MT.assertEqual "à", the first trueWord of "à"
+   MT.assertEqual "à", the first segment of "à"
+   MT.assertEqual "à", the first sentence of "à"
+   MT.assertEqual "à", the first paragraph of "à"
+   MT.endTest
+   
+   MT.startTest "Chunking6"
+   # a simple paragraph with two sentences
+   put "The cat sat on the mat. The mat was on the floor." into tText
+   MT.assertEqual "mat", the sixth trueWord of tText
+   MT.assertEqual "The cat sat on the mat. ", the first sentence of tText
+   MT.assertEqual "mat", the sixth trueWord of the first sentence of tText 
+   MT.endTest
+   
+   MT.startTest "Chunking7"
+   # a "line" with two simple paragraphs
+   put "The cat sat on the mat. The mat was on the floor." & return & "my second paragraph" into tText
+   MT.assertEqual "The cat sat on the mat. The mat was on the floor.", the first line of tText
+   MT.assertEqual the first line of tText, the first paragraph of tText
+   MT.endTest
+   
+   MT.startTest "Chunking8"
+   # line and paragraph with Unicode paragraph separator
+   put "The cat sat on the mat. The mat was on the floor." & numToCodepoint(0x2029) & "my second paragraph" into tText
+   MT.assertEqual tText, the first line of tText
+   MT.assertEqual "The cat sat on the mat. The mat was on the floor.", the first paragraph of tText
+   MT.endTest
+   
+   MT.startTest "Chunking9"
+   # line and paragraph with Unicode paragraph separator and return
+   put "The cat sat on the mat. The mat was on the floor." & numToCodepoint(0x2029) & return &"my second paragraph" into tText
+   MT.assertEqual "The cat sat on the mat. The mat was on the floor." & numToCodepoint(0x2029), the first line of tText
+   MT.assertEqual "The cat sat on the mat. The mat was on the floor.", the first paragraph of tText
+   MT.endTest
+
+   MT.startTest "Chunking10"
+   # line and paragraph with return and Unicode paragraph separator
+   put "The cat sat on the mat. The mat was on the floor." & return  & numToCodepoint(0x2029) &"my second paragraph" into tText
+   MT.assertEqual "The cat sat on the mat. The mat was on the floor.", the first line of tText
+   MT.assertEqual "The cat sat on the mat. The mat was on the floor.", the first paragraph of tText
+   MT.endTest
+   
+   MT.startTest "Chunking11"
+   # adding a number to a chunk
+   put "There are 0 errors" into tText
+   add 1 to word 3 of tText
+   MT.assertEqual "There are 1 errors", tText
+   MT.endTest
+   
+   MT.startTest "Chunking12"
+   # adding a number to a chunk and altering the text.
+   put "There are 0 errors" into tText
+   add 1 to word 3 of tText
+   put "is" into word 2 of tText
+   delete the last character of the last word of tText
+   MT.assertEqual "There is 1 error", tText
+   MT.endTest
+   
+   MT.startTest "Chunking13"
+   # the heirarchy of chunks of single "ASCII" character
+   MT.assertEqual "a", the first codeunit of "a"
+   MT.assertEqual "a", the first codeunit of the first codepoint of "a"
+   MT.assertEqual "a", the first codeunit of the first codepoint of the first character of "a"
+   MT.assertEqual "a", the first codeunit of the first codepoint of the first character of  the first trueWord of "a"
+   MT.assertEqual "a", the first codeunit of the first codepoint of the first character of  the first trueWord of the first segment of "a"
+   MT.assertEqual "a", the first codeunit of the first codepoint of the first character of  the first trueWord of the first segment of the first sentence of "a"
+   MT.endTest
+   
+   MT.startTest "Chunking14"
+   # replacing a single "ASCII" character
+   testWholeChunk "a", "codeunit", "b"
+   testWholeChunk "a", "codepoint", "b"
+   testWholeChunk "a", "character", "b"
+   testWholeChunk "a", "trueWord", "b"
+   testWholeChunk "a", "segment", "b"
+   testWholeChunk "a", "sentence", "b"
+   testWholeChunk "a", "paragraph", "b"
+   MT.endTest
+   
+   MT.startTest "Chunking15"
+   put "The cat sat on the mat. The mat was on the floor." & return  & numToCodepoint(0x2029) &"my second paragraph" into tText
+   set the itemDel to numToCodepoint(0x2029)
+   MT.assertEqual "The cat sat on the mat. The mat was on the floor." & return, item 1 of tText
+   MT.endTest
+   
+   # display summary
+   MT.endTestFile
+
+end libraryStack

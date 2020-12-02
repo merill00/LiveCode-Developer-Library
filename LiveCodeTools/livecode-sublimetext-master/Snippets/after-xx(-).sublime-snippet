@@ -1,0 +1,8 @@
+<snippet>
+	<content><![CDATA[after ${1:HandlerName} ${2:param}
+	${0:# code...}
+end ${1}]]></content>
+	<tabTrigger>after</tabTrigger>
+	<scope>source.livecode</scope>
+	<description>after …</description>
+</snippet>

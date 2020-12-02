@@ -1,0 +1,42 @@
+﻿script "IsTests"
+
+on libraryStack
+  local tTemp
+     
+  MT.startTestFile "Is Tests"
+   
+  MT.startTest "Is1"
+    MT.assert "1/16/98" is a date
+  MT.endTest
+  
+  MT.startTest "Is2"
+    MT.refute 1 is a boolean
+  MT.endTest
+  
+  MT.startTest "Is3"
+    MT.refute 45.4 is an integer
+  MT.endTest
+  
+  MT.startTest "Is4"
+    MT.assert "red" is a color
+  MT.endTest
+  
+  MT.startTest "Is5"
+    local tArray
+    put "test" into tArray[1]
+    MT.assert tArray is an array
+  MT.endTest
+  
+  MT.startTest "Is6"
+    MT.refute numToCodepoint(128) is an ASCII string
+  MT.endTest
+  
+  MT.startTest "Is Really 1"
+    put "0" + 0 into tTemp
+    MT.refute tTemp is strictly an integer
+  MT.endTest
+  
+  MT.endTestFile
+  
+end libraryStack
+   

@@ -1,0 +1,25 @@
+﻿script "AllTests"
+
+on libraryStack
+
+  MT.startTestRun
+  
+    start using stack "Tests/TheUnicodeOutOfTheBoxTests.livecode"
+    stop using stack "TheUnicodeOutOfTheBoxTests"
+    delete stack "TheUnicodeOutOfTheBoxTests"
+    start using stack "Tests/UnicodeTests.livecode"
+    stop using stack "UnicodeTests"
+    delete stack "UnicodeTests" 
+    start using stack "Tests/ChunkingTests.livecode"
+    stop using stack "ChunkingTests"
+    delete stack "ChunkingTests"
+    start using stack "Tests/RegExTests.livecode"
+    stop using stack "RegExTests"
+    delete stack "RegExTests"
+    start using stack "Tests/IsTests.livecode"
+    stop using stack "IsTests"
+    delete stack "IsTests"
+
+  MT.endTestRun
+  
+end libraryStack

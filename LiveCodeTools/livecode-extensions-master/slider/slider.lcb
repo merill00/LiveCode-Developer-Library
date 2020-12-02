@@ -1,0 +1,419 @@
+/*
+
+A slider control. As the user drags the knob the 'sliderValueChanged' message will be sent 
+to the widget. The first parameter is a value between 0 and 1 representing the 
+percentage of the location of the knob relative to the bar.
+
+You can set the valueRange property to a list of two numbers (e.g. "3,10"). If you do, then the 
+parameter passed to sliderValueChanged will be an integer between and including 
+[low number, high number].
+
+*/
+
+widget community.livecode.trevordevore.slider
+
+	use com.livecode.widget
+	use com.livecode.canvas
+	
+	metadata title is "Slider" 
+	metadata author is "Trevor DeVore"
+	metadata version is "1.0.0"
+	
+	-- properties
+	variable mCornerRadius          as Number
+	variable mBarColor              as Color
+	variable mKnobColor             as Color
+	variable mKnobHiliteColor       as Color
+	variable mKnobBorderColor       as Color
+	variable mKnobBorderHiliteColor as Color
+	variable mKnobBorderSize        as Number
+	variable mValueRange            as optional List
+	
+	-- private
+	variable mDrag            as Boolean
+	variable mKnobX           as Real
+	variable mKnobRadius      as Real
+	variable mSliderBounds    as Rectangle
+	variable mClickXOffset      as Real
+	variable mCurrentKnobBounds as Rectangle 
+	variable mKnobSlidingBounds as Rectangle
+	
+	property cornerRadius            get mCornerRadius              set setCornerRadius
+	property barColor                get getBarColor                set setBarColor
+	property knobColor               get getKnobColor               set setKnobColor
+	property knobHiliteColor         get getKnobHiliteColor         set setKnobHiliteColor
+	property knobBorderColor         get getKnobBorderColor         set setKnobBorderColor
+	property knobBorderHiliteColor   get getKnobBorderHiliteColor   set setKnobBorderHiliteColor
+	property knobBorderSize          get mKnobBorderSize            set setKnobBorderSize
+	property sliderPercent           get getKnobPercent             set setKnobPercent
+	property valueRange              get getValueRange              set setValueRange
+	property sliderValue             get getKnobValue               set setKnobValue
+
+	metadata barColor.editor        is "com.livecode.pi.color"
+	metadata knobColor.editor       is "com.livecode.pi.color"
+	metadata knobHiliteColor.editor       is "com.livecode.pi.color"	
+	metadata knobBorderColor.editor is "com.livecode.pi.color"	
+	metadata knobBorderHiliteColor.editor is "com.livecode.pi.color"
+	
+	public handler OnCreate()
+		-- variables
+		put 3 into mCornerRadius
+		put color [192/255, 198/255, 213/255] into mBarColor
+		put color [1, 1, 1] into mKnobColor
+		put color [53/255, 151/255, 243/255] into mKnobHiliteColor
+		put color [155/255, 168/255, 179/255] into mKnobBorderColor
+		put color [53/255, 151/255, 243/255] into mKnobBorderHiliteColor
+		put 1 into mKnobBorderSize
+		
+		-- private 
+		put false into mDrag
+		
+		calculateGeometry()
+	end handler
+	
+	
+	public handler OnSave(out rProperties as Array)
+		put the empty array into rProperties
+		
+		put mCornerRadius into rProperties["cornerRadius"]
+		put colorToString(mBarColor, true) into rProperties["barColor"]
+		put colorToString(mKnobColor, true) into rProperties["knobColor"]
+		put colorToString(mKnobBorderColor, true) into rProperties["knobBorderColor"]
+		put mKnobBorderSize into rProperties["knobBorderSize"]
+		put mValueRange into rProperties["valueRange"]
+	end handler
+	
+	
+	public handler OnLoad(in pProperties as Array)
+		put pProperties["cornerRadius"] into mCornerRadius
+		put stringToColor(pProperties["barColor"]) into mBarColor
+		put stringToColor(pProperties["knobColor"]) into mKnobColor
+		put stringToColor(pProperties["knobBorderColor"]) into mKnobBorderColor
+		put pProperties["knobBorderSize"] into mKnobBorderSize
+		put pProperties["valueRange"] into mValueRange
+	end handler
+	
+	
+	public handler OnGeometryChanged()
+		-- maintain percentage value of slider
+		variable tPercent as Real
+		put getKnobPercent() into tPercent
+		
+		calculateGeometry()
+		
+		setKnobX(the left of mKnobSlidingBounds + the width of mKnobSlidingBounds * tPercent)
+	end handler
+	
+	
+	public handler OnPaint()
+	
+		variable tY as Real
+		
+		put the top of mSliderBounds + the height of mSliderBounds/2 into tY
+	
+		-- Draw the bar
+		set the paint of this canvas to solid paint with mBarColor
+		fill rounded rectangle path of mSliderBounds with radius mCornerRadius on this canvas
+		
+		-- Draw the knob
+		variable tPath as Path
+		
+		set the paint of this canvas to getPaint("knob")
+		put circle path centered at point [mKnobX, tY] with radius mKnobRadius into tPath
+		put the bounding box of tPath into mCurrentKnobBounds -- for hit tracking
+		fill tPath on this canvas
+		
+		set the paint of this canvas to getPaint("knob border")
+		set the stroke width of this canvas to mKnobBorderSize
+		stroke circle path centered at point [mKnobX, tY] with radius mKnobRadius on this canvas
+	end handler
+	
+
+	public handler OnMouseMove()
+		if mDrag then
+			variable tCurValue as Real
+			
+			put mKnobX into tCurValue
+			
+			setKnobX(the x of the mouse position - mClickXOffset)
+			
+			if tCurValue is not mKnobX then
+				redraw all
+				postValueChanged()
+			end if
+		end if
+	end handler
+	
+	
+	public handler OnMouseUp()	
+		put false into mDrag
+		redraw all
+		post "sliderDragEnd" to my script object
+	end handler
+
+
+	public handler OnMouseCancel()
+		put false into mDrag
+		redraw all
+		post "sliderDragEnd" to my script object
+	end handler
+
+
+	public handler OnMouseDown()
+		if the click button is 1 then
+			variable tLoc as Point
+		
+			put the click position into tLoc
+		
+			if tLoc is within mCurrentKnobBounds then
+				-- start dragging operation
+				put the x of tLoc - mKnobX into mClickXOffset
+				put true into mDrag
+				redraw all
+				post "sliderDragStart" to my script object
+			else if tLoc is within mSliderBounds then
+				-- Jump to location clicked on
+				setKnobX(the x of tLoc)
+				postValueChanged()
+				redraw all
+			end if
+		end if
+	end handler
+	
+	
+	private handler postValueChanged()
+		if mValueRange is not nothing then
+			post "sliderValueChanged" to my script object with [getKnobValue()]
+		else
+			post "sliderValueChanged" to my script object with [getKnobPercent()]
+		end if
+	end handler
+
+	
+	private handler getValueRange() returns String
+		if mValueRange is not nothing then
+			return FormatInt(element 1 of mValueRange) & "," & \
+				FormatInt(element 2 of mValueRange)
+		else
+			return ""
+		end if
+	end handler
+	
+	private handler setValueRange(in pRange as String)
+		variable tList as List
+				
+		split pRange by "," into tList
+		put tList parsed as list of number into tList
+		if the number of elements in tList is not 2 then
+			put nothing into mValueRange
+		else
+			put tList into mValueRange
+		end if
+	end handler
+	
+	
+	private handler getPaint(in pType as String) returns Paint
+		if pType is "knob" then
+			if mDrag then
+				return solid paint with mKnobHiliteColor
+			else
+				return solid paint with mKnobColor
+			end if
+		else if pType is "knob border" then
+			if mDrag then
+				return solid paint with mKnobBorderHiliteColor
+			else
+				return solid paint with mKnobBorderColor
+			end if
+		end if
+	end handler
+	
+	
+	private handler calculateGeometry()
+		-- determine measurements for everything
+		variable tSliderHeight as Real
+		variable tEffectiveKnobDiameter as Real
+		
+		put my height * 0.416 into tSliderHeight
+		put my height/2-mKnobBorderSize/2 into mKnobRadius -- border will go stroke width/2 beyond this radius
+		put mKnobRadius + mKnobBorderSize/2 into tEffectiveKnobDiameter
+		
+		put rectangle [0, my height/2 - tSliderHeight/2, \
+										my width, my height/2 + tSliderHeight/2] into mSliderBounds
+										
+		-- TODO: Once widgets can draw outside of their natural bounds we want knob to go 1 point
+		-- beyond left and right so that it completely covers edges of bar.
+		put mSliderBounds into mKnobSlidingBounds
+		subtract tEffectiveKnobDiameter * 2 from the width of mKnobSlidingBounds
+		add tEffectiveKnobDiameter to the left of mKnobSlidingBounds
+		
+		put the left of mKnobSlidingBounds into mKnobX
+		put 0 into mClickXOffset
+		put rectangle [0,0,0,0] into mCurrentKnobBounds
+	end handler
+	
+	
+	private handler setKnobX(in pSuggestedX as Number)
+		put the maximum of the left of mKnobSlidingBounds and \
+						(the minimum of the right of mKnobSlidingBounds and pSuggestedX) into mKnobX
+	end handler
+	
+	
+	private handler getKnobValue() returns Integer
+		if mValueRange is not nothing then
+			variable tPercent as Number
+			variable tLength as Number
+	
+			put getKnobPercent() into tPercent
+			put element 2 of mValueRange - element 1 of mValueRange into tLength
+			return the rounded of (element 1 of mValueRange + (tLength * tPercent))
+		end if
+	end handler
+	
+	private handler setKnobValue(in pValue as Number)
+		if mValueRange is not nothing then
+			variable tLength as Number
+			put element 2 of mValueRange - element 1 of mValueRange into tLength
+			setKnobPercent ((pValue-element 1 of mValueRange)/tLength)
+		end if
+	end handler
+	
+	
+	private handler getKnobPercent() returns Number
+		return (mKnobX - the left of mKnobSlidingBounds) / the width of mKnobSlidingBounds
+	end handler
+	
+	private handler setKnobPercent(in pPercent as Number)
+		setKnobX(the left of mKnobSlidingBounds + the width of mKnobSlidingBounds * pPercent)
+		redraw all
+	end handler
+	
+	
+	private handler setCornerRadius(in pRadius as Number)
+		put pRadius into mCornerRadius
+		redraw all
+	end handler
+	
+	
+	private handler getBarColor() returns String
+		return colorToString(mBarColor, false)
+	end handler
+	
+	private handler setBarColor(in pColor as String)
+		put stringToColor(pColor) into mBarColor
+		redraw all
+	end handler
+	
+	
+	private handler getKnobColor() returns String
+		return colorToString(mKnobColor, false)
+	end handler
+	
+	private handler setKnobColor(in pColor as String)
+		put stringToColor(pColor) into mKnobColor
+		redraw all
+	end handler
+	
+	
+	private handler getKnobHiliteColor() returns String
+		return colorToString(mKnobHiliteColor, false)
+	end handler
+	
+	private handler setKnobHiliteColor(in pColor as String)
+		put stringToColor(pColor) into mKnobHiliteColor
+		redraw all
+	end handler
+	
+	
+	private handler getKnobBorderColor() returns String
+		return colorToString(mKnobBorderColor, false)
+	end handler
+	
+	private handler setKnobBorderColor(in pColor as String)
+		put stringToColor(pColor) into mKnobBorderColor
+		redraw all
+	end handler
+	
+	
+	private handler getKnobBorderHiliteColor() returns String
+		return colorToString(mKnobBorderHiliteColor, false)
+	end handler
+	
+	private handler setKnobBorderHiliteColor(in pColor as String)
+		put stringToColor(pColor) into mKnobBorderHiliteColor
+		redraw all
+	end handler
+	
+	
+	private handler setKnobBorderSize(in pSize as Number)
+		put pSize into mKnobBorderSize
+		redraw all
+	end handler
+	
+	
+	private handler colorToString(in pColor as Color, in pIncludeAlpha as Boolean) returns String
+		variable tColor as String
+	
+		if pColor is nothing then
+			return ""
+		end if
+	
+		put FormatInt(the rounded of ((the red of pColor) * 255)) into tColor
+		put "," & FormatInt(the rounded of ((the green of pColor) * 255)) after tColor
+		put "," & FormatInt(the rounded of ((the blue of pColor) * 255)) after tColor
+	
+		if pIncludeAlpha then
+			put "," & FormatInt(the rounded of ((the alpha of pColor) * 255)) after tColor
+		end if
+	
+		return tColor
+	end handler
+
+	private handler stringToColor(in pString as String) returns Color
+		if the number of chars in pString is 0 then
+			return ""
+			end if
+
+		variable tRed as Real
+		variable tGreen as Real
+		variable tBlue as Real
+		variable tAlpha as Real
+
+		variable tComponentList as List
+		split pString by "," into tComponentList
+
+		variable tComponentCount
+		put the number of elements in tComponentList into tComponentCount
+		if tComponentCount is not 3 and tComponentCount is not 4 then
+			// Invalid number of components detected
+			throw "Invalid color"
+		end if
+
+		put (element 1 of tComponentList) parsed as number into tRed
+		put (element 2 of tComponentList) parsed as number into tGreen
+		put (element 3 of tComponentList) parsed as number into tBlue
+
+		if tComponentCount is 4 then
+			put (element 4 of tComponentList) parsed as number into tAlpha
+		else
+			put 1.0 into tAlpha
+		end if
+
+		return color [ tRed/255, tGreen/255, tBlue/255, tAlpha ]
+	end handler
+
+	handler FormatInt(in pNumber as Number) returns String
+		variable tNumberString as String
+
+		put pNumber formatted as string into tNumberString
+
+		if "." is in tNumberString then
+			variable tDotOffset
+			put the first offset of "." in tNumberString into tDotOffset
+			delete char tDotOffset to (the number of chars in tNumberString) of tNumberString
+		end if
+
+		return tNumberString
+	end handler
+	
+end widget

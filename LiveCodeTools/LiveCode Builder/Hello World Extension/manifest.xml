@@ -1,0 +1,9 @@
+<package version="0.0">
+  <name>community.livecode.lmerithew.helloworld</name>
+  <title>Hello World</title>
+  <author>Lloyd Merithew</author>
+  <version>1.0.0</version>
+  <license>community</license>
+  <type>library</type>
+  <handler name="SayHello" parameters="" return="any"/>
+</package>
