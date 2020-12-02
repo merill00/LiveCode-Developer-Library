@@ -1,0 +1,3882 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 Helvetica-Bold;\f2\fswiss\fcharset0 Helvetica-Oblique;
+\f3\fnil\fcharset0 Menlo-Regular;\f4\fnil\fcharset0 Menlo-Bold;\f5\fswiss\fcharset0 Helvetica-BoldOblique;
+}
+{\colortbl;\red255\green255\blue255;\red31\green31\blue31;\red255\green255\blue255;\red239\green239\blue239;
+}
+{\*\expandedcolortbl;;\cssrgb\c16078\c16078\c16078;\cssrgb\c100000\c100000\c100000;\cssrgb\c94902\c94902\c94902;
+}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{none\}}{\leveltext\leveltemplateid1\'00;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\margl1440\margr1440\vieww25540\viewh18560\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs80 \cf2 \cb3 \expnd0\expndtw0\kerning0
+Nodejs databases- Using CouchDB\
+{\field{\*\fldinst{HYPERLINK "https://medium.com/yld-blog/node-js-databases-using-couchdb-5135f6f45dc1"}}{\fldrslt 
+\fs24 https://medium.com/yld-blog/node-js-databases-using-couchdb-5135f6f45dc1}}
+\fs24 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs42 \cf2 Much like the previous two databases we presented here, CouchDB is an open-source key-value store. But it\'92s also a bit more than that. Each record is not an opaque string: it\'92s a JSON document that the engine understands.\cb1 \
+\cb3 By default, CouchDB does not impose any specific schema to the documents it stores. Instead, it allows any data that JSON allows \'97 as long as we have an object as the root. Because of that, any two documents in the same database can hold completely different documents, and it\'92s up to the application to make sense of them.\cb1 \
+\cb3 A schema-less document store like CouchDB is then optimised for flexibility and ease of use: there\'92s no need to know the document schema upfront or to run expensive data migrations when you need to add another field.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 Starting off\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 If you don\'92t have CouchDB already installed, you can head to the official website ({\field{\*\fldinst{HYPERLINK "http://couchdb.apache.org/"}}{\fldrslt http://couchdb.apache.org/}}) to download and install it.\cb1 \
+\cb3 Once you have your CouchDB server started, you can begin interacting with it. CouchDB contains an HTTP server that you can use to make operations and issue queries on. You can use any command-line HTTP client like 
+\f2\i curl
+\f0\i0  to interact with it:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs31\fsmilli15750 \cf2 \cb4 curl
+\f0\fs42 \cb3  comes bundled with most operating system distributions, and is compatible with Windows. If you need to install it try using your favourite package manager, or head out to {\field{\*\fldinst{HYPERLINK "http://curl.haxx.se/download.html"}}{\fldrslt the official curl downloads page}}.
+\f2\i \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\i0 \cf2 \cb3 First, let\'92s create a database we can play with:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ curl -X PUT http://127.0.0.1:5984/test\cb1 \
+\cb4 \{"ok":true\}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here we\'92re sending an HTTP request to our local CouchDB HTTP server, which is listening to the default port 5984. We\'92re specifying the HTTP method as 
+\f3\fs31\fsmilli15750 \cb4 PUT
+\f0\fs42 \cb3 , which, in this case, instructs CouchDB to create the database we are specifying in the path portion of the URL: a database called 
+\f3\fs31\fsmilli15750 \cb4 test
+\f0\fs42 \cb3 .\cb1 \
+\cb3 Each CouchDB server has one or more databases, and each database can hold any number of documents. Each document has a unique identifier. Let\'92s then try to create one document inside this new 
+\f3\fs31\fsmilli15750 \cb4 test
+\f0\fs42 \cb3  database:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ curl -X POST http://127.0.0.1:5984/test -d '\{"some": "data"\}' -H 'Content-Type: application/json'\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here we\'92re performing an HTTP request that specifies 
+\f3\fs31\fsmilli15750 \cb4 POST
+\f0\fs42 \cb3  as the method. The URL is our 
+\f3\fs31\fsmilli15750 \cb4 test
+\f0\fs42 \cb3 database URL, and we're specifying the request body payload to be this JSON-encoded object. We also have to add a request header which specifies that the content type is JSON.\cb1 \
+\cb3 On hitting the return key you shoud see a reply similar to the following:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 \{"ok":true,"id":"58767f1d0a41baca470d2af44f000bf2","rev":"1-56b8a3a98ed03fbb3a804751a38611b2"\}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 This indicates that CouchDB has accepted our request, and that the new document was created and given the identifier contained in the response 
+\f3\fs31\fsmilli15750 \cb4 id
+\f0\fs42 \cb3  property. The response also contains a 
+\f3\fs31\fsmilli15750 \cb4 rev
+\f0\fs42 \cb3  property, which indicates the current document revision ID. We will later see what these revision identifiers are needed for.\cb1 \
+\cb3 Now we can try to use the ID returned to you to retrieve this document:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ curl {\field{\*\fldinst{HYPERLINK "http://127.0.0.1:5984/test/ID"}}{\fldrslt http://127.0.0.1:5984/test/ID}}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 In your case, you will have to replace 
+\f3\fs31\fsmilli15750 \cb4 ID
+\f0\fs42 \cb3  with the document ID returned to you when you first created it. In our case:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ curl {\field{\*\fldinst{HYPERLINK "http://127.0.0.1:5984/test/58767f1d0a41baca470d2af44f000bf2"}}{\fldrslt http://127.0.0.1:5984/test/58767f1d0a41baca470d2af44f000bf2}}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 , which returns the document:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 \{"_id":"58767f1d0a41baca470d2af44f000bf2","_rev":"1-56b8a3a98ed03fbb3a804751a38611b2","some":"data"\}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 You can now see that the simple document you inserted contains a few more attributes in it: 
+\f3\fs31\fsmilli15750 \cb4 _id
+\f0\fs42 \cb3  and the 
+\f3\fs31\fsmilli15750 \cb4 _rev
+\f0\fs42 \cb3 . CouchDB documents are augmented to contain the document metadata: the unique document identifier and the revision identifier.\cb1 \
+\cb3 In CouchDB, attributes prefixed with the underscore character 
+\f3\fs31\fsmilli15750 \cb4 _
+\f0\fs42 \cb3  are reserved for internal use.
+\f2\i \cb1 \
+
+\f0\i0 \cb3 Let\'92s now try to get a document that doesn\'92t exist in our database, this time inspecting the full HTTP response:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ curl -i http://127.0.0.1:5984/test/does-not-exist\cb1 \
+\cb4 HTTP/1.1 404 Object Not Found  \cb1 \
+\cb4 Server: CouchDB/1.6.1 (Erlang OTP/17)  \cb1 \
+\cb4 Date: Wed, 21 Jan 2015 10:16:07 GMT  \cb1 \
+\cb4 Content-Type: text/plain; charset=utf-8  \cb1 \
+\cb4 Content-Length: 41  \cb1 \
+\cb4 Cache-Control: must-revalidate\cb1 \
+\cb4 \{"error":"not_found","reason":"missing"\}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here you can see that CouchDB replied with a status code 404, indicating that the requested document did not exist.\cb1 \
+\cb3 Let\'92s now do another experiment: let\'92s try to update the existing document from the command line:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ curl -X PUT http://127.0.0.1:5984/test/58767f1d0a41baca470d2af44f000bf2 -d '\{"some": "other", "attribute": true\}' -H "Content-Type: application/json" -i\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 If you replace the ID part of the URL with the ID of your document and hit the return key, you should see the following output:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 HTTP/1.1 409 Conflict  \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 Server
+\f3\b0 : CouchDB/1.6.1 (Erlang OTP/17)  \cb1 \
+
+\f4\b \cb4 Date
+\f3\b0 : Wed, 21 Jan 2015 10:19:06 GMT  \cb1 \
+
+\f4\b \cb4 Content-Type
+\f3\b0 : text/plain; charset=utf-8  \cb1 \
+
+\f4\b \cb4 Content-Length
+\f3\b0 : 58  \cb1 \
+
+\f4\b \cb4 Cache-Control
+\f3\b0 : must-revalidate\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 \{"error":"conflict","reason":"Document update conflict."\}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Oops \'97 CouchDB isn\'92t letting us update our document. What\'92s up there? This happened because of the way that CouchDB handles concurrency: to update a document you must specify the previous revision identifier you know. If CouchDB detects that the revision identifier you specify in the update request does not match the stored revision identifier for that document, it will indicate a conflict by replying with a 409 code. When two clients hold the same revision of the same document and do an update with the same revision ID, one of them will succeed \'97 advancing the revision ID \'97 and the other one will fail. By implementing conflict detection like this, it\'92s up to the clients to handle conflicts.\cb1 \
+\cb3 When it happens, a client can either give up or retry by querying the latest revision, perhaps merging the documents and then writing again, repeating this until successful.
+\f2\i \cb1 \
+
+\f0\i0 \cb3 Let\'92s then specify the revision ID in our update command:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ curl -X PUT http://127.0.0.1:5984/test/58767f1d0a41baca470d2af44f000bf2 -d '\{"some": "other", "attribute": true, "_rev": "1-56b8a3a98ed03fbb3a804751a38611b2"\}' -H "Content-Type: application/json" -i\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 If you type this last command, but first replace the ID in the URL and the revision identifier in the request data, you should get a reply indicating that the update was successful. You also get the identifier for the new revision of this document:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 HTTP/1.1 201 Created  \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 Server
+\f3\b0 : CouchDB/1.6.1 (Erlang OTP/17)  \cb1 \
+
+\f4\b \cb4 Location
+\f3\b0 : http://127.0.0.1:5984/test/58767f1d0a41baca470d2af44f000bf2  \cb1 \
+
+\f4\b \cb4 ETag
+\f3\b0 : "2-221c0d018a44424525493a1c1ff34828"  \cb1 \
+
+\f4\b \cb4 Date
+\f3\b0 : Wed, 21 Jan 2015 10:29:57 GMT  \cb1 \
+
+\f4\b \cb4 Content-Type
+\f3\b0 : text/plain; charset=utf-8  \cb1 \
+
+\f4\b \cb4 Content-Length
+\f3\b0 : 95  \cb1 \
+
+\f4\b \cb4 Cache-Control
+\f3\b0 : must-revalidate\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 \{"ok":true,"id":"58767f1d0a41baca470d2af44f000bf2","rev":"2-221c0d018a44424525493a1c1ff34828"\}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 Ladies and Gentlemen, start your Nodes\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 Now let\'92s see how you can interact with a CouchDB server from a Node process. CouchDB speaks HTTP, so it would be enough to use the Node HTTP client or even the 
+\f3\fs31\fsmilli15750 \cb4 request
+\f0\fs42 \cb3  NPM package. Instead, we're going to use this small wrapper around 
+\f3\fs31\fsmilli15750 \cb4 request
+\f0\fs42 \cb3  that gives some nice convenient functions called 
+\f3\fs31\fsmilli15750 \cb4 nano
+\f0\fs42 \cb3 . Let's install it:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ npm install nano --save\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 For the previous command to work, you should have a basic 
+\f3\fs31\fsmilli15750 \cb4 package.json
+\f0\fs42 \cb3  file sitting in a new directory you can create for running the examples in this chapter.
+\f2\i \cb1 \
+
+\f0\i0 \cb3 Let\'92s now create a basic module that exports a given server reference:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 couchdb.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  nano = require('nano');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 module.exports = nano(process.env.COUCHDB_URL || 'http://127.0.0.1:5984');\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 As you can see, this module only requires the 
+\f3\fs31\fsmilli15750 \cb4 nano
+\f0\fs42 \cb3  package and uses it to construct a database wrapper that points to the CouchDB server specified by the URL contained in the environment variable named 
+\f3\fs31\fsmilli15750 \cb4 COUCHDB_URL
+\f0\fs42 \cb3 .\cb1 \
+\cb3 If that environment variable isn\'92t present, our 
+\f3\fs31\fsmilli15750 \cb4 couchdb
+\f0\fs42 \cb3  module defaults to pointing to a local CouchDB installation, which can be useful during development time.
+\f2\i \cb1 \
+
+\f0\i0 \cb3 Here we\'92re assuming that you didn\'92t specify any admin user with a password for your CouchDB server \'97 your CouchDB server is still in \'93Admin Party\'94 mode. If you specified a username and password, you can place the username and password in the URL in the form {\field{\*\fldinst{HYPERLINK "http://username:password@127.0.0.1:5984."}}{\fldrslt 
+\f3\fs31\fsmilli15750 \cb4 http://username:password@127.0.0.1:5984
+\f0\fs42 \cb3 .}}
+\f2\i \cb1 \
+
+\f0\i0 \cb3 Let\'92s now try to create a database on our server:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 create_db.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  couch = require('./couchdb');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 couch.db.create('test2', 
+\f4\b function
+\f3\b0 (err) \{  \cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     console.error(err);\cb1 \
+\cb4   \}\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Let\'92s try to run this:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node create_db\cb1 \
+\cb4 database test2 created successfully\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 You should see by the output that the database was successfully created. Now let\'92s try to run this again:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node create_db\cb1 \
+\cb4 [Error: The database could not be created, the file already exists.]\cb1 \
+\cb4  name: 'Error',\cb1 \
+\cb4  error: 'file_exists',\cb1 \
+\cb4  reason: 'The database could not be created, the file already exists.',\cb1 \
+\cb4  scope: 'couch',\cb1 \
+\cb4  statusCode: 412,\cb1 \
+\cb4  request:\cb1 \
+\cb4   \{ method: 'PUT',\cb1 \
+\cb4     headers:\cb1 \
+\cb4      \{ 'content-type': 'application/json',\cb1 \
+\cb4        accept: 'application/json' \},\cb1 \
+\cb4     uri: 'http://127.0.0.1:5984/test2' \},\cb1 \
+\cb4  headers:\cb1 \
+\cb4   \{ date: 'Wed, 21 Jan 2015 11:29:09 GMT',\cb1 \
+\cb4     'content-type': 'application/json',\cb1 \
+\cb4     'cache-control': 'must-revalidate',\cb1 \
+\cb4     statusCode: 412,\cb1 \
+\cb4     uri: 'http://127.0.0.1:5984/test2' \},\cb1 \
+\cb4  errid: 'non_200',\cb1 \
+\cb4  description: 'couch returned 412' \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 You will now see that CouchDB returned an error because the 
+\f3\fs31\fsmilli15750 \cb4 test2
+\f0\fs42 \cb3  database already existed. But it happens that we just want to make sure that the database exists, so we don't really care if this type of error happens. Let's then choose to ignore it:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 create_db.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  couch = require('./couchdb');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 couch.db.create('test2', 
+\f4\b function
+\f3\b0 (err) \{  \cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (err && err.statusCode != 412) \{\cb1 \
+\cb4     console.error(err);\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     console.log('database test2 exists');\cb1 \
+\cb4   \}\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Generally, when your Node process starts up, you want to make sure that all the necessary databases are up and running. Let\'92s create a module to handle this initialisation step. But first you will need to install an NPM module we\'92ll be using for helping us with the asynchronous flow control:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ npm install async --save\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Now, onto the module:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 init_couch.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  
+\f4\b async
+\f3\b0  = require('async');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  couch = require('./couchdb');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  databases = ['users', 'messages'];\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 module.exports = initCouch;\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b initCouch
+\f3\b0 (cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   createDatabases(cb);\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b createDatabases
+\f3\b0 (cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b async
+\f3\b0 .each(databases, createDatabase, cb);\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b createDatabase
+\f3\b0 (db, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   couch.db.create(db, 
+\f4\b function
+\f3\b0 (err) \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (err && err.statusCode == 412) \{\cb1 \
+\cb4       err = null;\cb1 \
+\cb4     \}\cb1 \
+\cb4     cb(err);\cb1 \
+\cb4   \});\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 This module exports this one function that only takes a callback function for when the initialisation is complete (or an unrecoverable error happens). This function then starts the database creation by calling the 
+\f3\fs31\fsmilli15750 \cb4 createDatabases
+\f0\fs42 \cb3  function. This function uses 
+\f3\fs31\fsmilli15750 \cb4 async
+\f0\fs42 \cb3  to create each database defined in the 
+\f3\fs31\fsmilli15750 \cb4 databases
+\f0\fs42 \cb3  configuration array. Each database gets created by calling the 
+\f3\fs31\fsmilli15750 \cb4 createDatabase
+\f0\fs42 \cb3 , which in turn uses 
+\f3\fs31\fsmilli15750 \cb4 nano
+\f0\fs42 \cb3  to create the database, ignoring any error that occurs if the database already exists.\cb1 \
+\cb3 If you\'92re unsure about how the asynchronous control flow works, there is another book in this series named \'93Flow Control Patterns\'94 that addresses this subject.
+\f2\i \cb1 \
+
+\f0\i0 \cb3 You can now use this module to initialise the state of you CouchDB server when the app is initialising:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 app.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  initCouch = require('./init_couch');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 initCouch(
+\f4\b function
+\f3\b0 (err) \{  \cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     
+\f4\b throw
+\f3\b0  err\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     console.log('couchdb initialized');\cb1 \
+\cb4   \}\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Sometimes applications have separate scripts to initialise the database, but I find it much more convenient to have it transparently done at app start-up time, since there is no penalty involved, and it gracefully handles concurrent processes trying to initialise CouchDB at the same time.
+\f2\i \cb1 \
+
+\f0\i0 \cb3 Let\'92s then run the 
+\f3\fs31\fsmilli15750 \cb4 app
+\f0\fs42 \cb3  set-up:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node app\cb1 \
+\cb4 couchdb initialized\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Now that the 
+\f3\fs31\fsmilli15750 \cb4 users
+\f0\fs42 \cb3  and 
+\f3\fs31\fsmilli15750 \cb4 messages
+\f0\fs42 \cb3  databases are created in our CouchDB server, we can start putting documents there.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 The directory structure\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 As you may already have guessed, our application is going to handle users and messages between them. Instead of throwing the modules that handle these into the root directory, we\'92re going to create a specific directory named 
+\f3\fs31\fsmilli15750 \cb4 db
+\f0\fs42 \cb3 .\cb1 \
+\cb3 Other common names for a directory holding data-access objects would be 
+\f3\fs31\fsmilli15750 \cb4 models
+\f0\fs42 \cb3  or even 
+\f3\fs31\fsmilli15750 \cb4 data
+\f0\fs42 \cb3 .
+\f2\i \cb1 \
+
+\f0\i0 \cb3 When creating a real application, consider using a specific separate module to wrap database access instead of just one directory. This enables you to a) properly version this part of the system; b) have specific automated tests for this module; and c) increase the separation of concerns.
+\f2\i \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\i0\b\fs72 \cf2 \cb3 Creating documents with a specific ID\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 When creating a document, CouchDB can manufacture a unique document ID for you if you don\'92t specify one. But it may happen that occasionally you want to force the identifier: like, for instance, when you want to reference a user document by the user ID or email. This has the automatic advantages of a) making it easy to fetch a given record, and b) avoiding duplicate entries.\cb1 \
+\cb3 Here is the minimum function for creating a user record:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 db/users.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  users = require('../couchdb').use('users');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 exports.create = 
+\f4\b function
+\f3\b0  
+\f4\b create
+\f3\b0 (user, cb) \{  \cb1 \
+\cb4   users.insert(user, user.email, cb);\cb1 \
+\cb4 \};\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 For each document type we\'92re trying to mostly follow a REST-like convention for verbs. I usually try to stick with the verbs 
+\f3\fs31\fsmilli15750 \cb4 create
+\f0\fs42 \cb3 , 
+\f3\fs31\fsmilli15750 \cb4 get
+\f0\fs42 \cb3 , 
+\f3\fs31\fsmilli15750 \cb4 list
+\f0\fs42 \cb3 , 
+\f3\fs31\fsmilli15750 \cb4 destroy
+\f0\fs42 \cb3 , with some exceptions. One example of an exception is the getters or finders like 
+\f3\fs31\fsmilli15750 \cb4 messages.getForUser
+\f0\fs42 \cb3 . Experts in REST may disagree with me...
+\f2\i \cb1 \
+
+\f0\i0 \cb3 This module starts out by getting a reference to the CouchDB users database in our CouchDB server.\cb1 \
+\cb3 Unlike the two previous databases we addressed, this 
+\f3\fs31\fsmilli15750 \cb4 users
+\f0\fs42 \cb3  object does not hold an actual database connection. Instead, it points to the base URL of that database, which in our case is {\field{\*\fldinst{HYPERLINK "http://127.0.0.1:5984/users."}}{\fldrslt 
+\f3\fs31\fsmilli15750 \cb4 http://127.0.0.1:5984/users
+\f0\fs42 \cb3 .}}
+\f2\i \cb1 \
+
+\f0\i0 \cb3 Then it exports a 
+\f3\fs31\fsmilli15750 \cb4 create
+\f0\fs42 \cb3  function. This function receives a user record as the first argument and inserts a document into the CouchDB 
+\f3\fs31\fsmilli15750 \cb4 users
+\f0\fs42 \cb3  database. It specifies the ID as being the user email.\cb1 \
+\cb3 Let\'92s use this module to create one user document:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 user
+\f5\i insert
+\f1\i0 test.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  users = require('./db/users');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  user = \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   email: 'johndoe@example.com',\cb1 \
+\cb4   name: 'John Doe',\cb1 \
+\cb4   address: '1 Sesame Street'\cb1 \
+\cb4 \};\cb1 \
+\cb4 users.create(user, 
+\f4\b function
+\f3\b0 (err) \{  \cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     
+\f4\b throw
+\f3\b0  err;\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     console.log('user inserted');\cb1 \
+\cb4   \}\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 If you try to run this, you should see a success message:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node user_insert_test.js\cb1 \
+\cb4 user inserted\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 When you try to run this for the second time, you should see the following conflict error, caused by a record with the same ID already existing:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node user_insert_test.js\cb1 \
+\cb4 Error: Document update conflict.  \cb1 \
+\cb4    ...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 Forcing a schema\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 The current implementation of the user creation is too simple. It lacks at least two things: schema validation and error unification.\cb1 \
+\cb3 Currently, the database user creation API doesn\'92t verify that the user-object argument is formatted as expected; it doesn\'92t even validate that the user is an object. What we would want is to validate that the user document conforms to an expected schema, and not even try to create that user in the database if that schema is not respected.\cb1 \
+\cb3 To represent and validate schemas we\'92re going to use an NPM module called 
+\f3\fs31\fsmilli15750 \cb4 joi
+\f0\fs42 \cb3 . Let's then install it:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ npm install joi --save\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 First, let\'92s create a 
+\f3\fs31\fsmilli15750 \cb4 schemas
+\f0\fs42 \cb3  directory where we will keep all the schemas our application will use:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ mkdir schemas\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Inside it, let\'92s then create our user document schema:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 schemas/user.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  Joi = require('joi');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 module.exports = Joi.object().keys(\{  \cb1 \
+\cb4   email: Joi.string().email().required(),\cb1 \
+\cb4   username: Joi.string().alphanum().min(3).max(30).required(),\cb1 \
+\cb4   password: Joi.string().regex(/[a-zA-Z0-9]\{3,30\}/),\cb1 \
+\cb4   access_token: [Joi.string(), Joi.number()],\cb1 \
+\cb4   birthyear: Joi.number().integer().min(1900).max((
+\f4\b new
+\f3\b0  Date()).getFullYear()),\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here we\'92re using the Joi API to define a schema in an easy-to-read manner: a user is an object that contains the following keys:\cb1 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls1\ilvl0\cf2 \cb3 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+an email, which must be a valid email address and is required to exist;\cb1 \
+\ls1\ilvl0\cb3 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+a username, which is a required alphanumerical string, containing at least three characters and a maximum of 30;\cb1 \
+\ls1\ilvl0\cb3 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+a password, which must respect a certain regular expression;\cb1 \
+\ls1\ilvl0\cb3 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+an access token, which is an optional string or number; and\cb1 \
+\ls1\ilvl0\cb3 \kerning1\expnd0\expndtw0 		\expnd0\expndtw0\kerning0
+a birthyear, which is an integer between 1900 and the current year.\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 This just serves as an example; Joi has many other types and options, described in the package instructions ({\field{\*\fldinst{HYPERLINK "https://github.com/hapijs/joi#readme"}}{\fldrslt https://github.com/hapijs/joi#readme}}).
+\f2\i \cb1 \
+
+\f0\i0 \cb3 Now we need a way to verify whether a certain object respects this schema or not:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 schemas/index.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  schemaNames = ['user'];\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  schemas = \{\};\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 schemaNames.forEach(
+\f4\b function
+\f3\b0 (schemaName) \{  \cb1 \
+\cb4   schemas[schemaName] = require('./' + schemaName);\cb1 \
+\cb4 \});\cb1 \
+\cb4 exports.validate = validate;\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b validate
+\f3\b0 (doc, schema, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b if
+\f3\b0  (
+\f4\b typeof
+\f3\b0  schema == 'string') \{\cb1 \
+\cb4     schema = schemas[schema];\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (! schema) \{\cb1 \
+\cb4     cb(
+\f4\b new
+\f3\b0  Error('Unknown schema'));\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     Joi.validate(doc, schema, cb);\cb1 \
+\cb4   \}\cb1 \
+\cb4 \};\cb1 \
+\cb4 exports.validating = 
+\f4\b function
+\f3\b0  
+\f4\b validating
+\f3\b0 (schemaName, fn) \{  \cb1 \
+\cb4   
+\f4\b var
+\f3\b0  schema = schemas[schemaName];\cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (! schema) \{\cb1 \
+\cb4     
+\f4\b throw
+\f3\b0  
+\f4\b new
+\f3\b0  Error('Unknown schema: ' + schemaName);\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b return
+\f3\b0  
+\f4\b function
+\f3\b0 (doc, cb) \{\cb1 \
+\cb4     validate(doc, schema, 
+\f4\b function
+\f3\b0 (err, doc) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         cb(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         fn.call(null, doc, cb);\cb1 \
+\cb4       \}\cb1 \
+\cb4     \});\cb1 \
+\cb4   \};\cb1 \
+\cb4 \};\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 This module collects the schema names in a 
+\f3\fs31\fsmilli15750 \cb4 schemaNames
+\f0\fs42 \cb3  variable. (Now it just contains the 
+\f3\fs31\fsmilli15750 \cb4 user
+\f0\fs42 \cb3 document schema, but in the future it may contain more.) It uses these names to load the schema modules from the current directory. This module then exports a 
+\f3\fs31\fsmilli15750 \cb4 validating
+\f0\fs42 \cb3  function, which accepts a schema name and a continuation function and returns a function. This function will check validation of the given document, and call the continuation function if it is valid. If the given document does not respect the schema, instead of calling the continuation function it will directly call the callback with the validation error.\cb1 \
+\cb3 This lets us easily plug the validation into the user creation API like this:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 db/users.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  schemas = require('../schemas');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  users = require('../couchdb').use('users');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 /// Create user\cb1 \
+\cb4 exports.create = schemas.validating('user', createUser);\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b createUser
+\f3\b0 (user, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   users.insert(user, user.email, cb);\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Now, when our 
+\f3\fs31\fsmilli15750 \cb4 createUser
+\f0\fs42 \cb3  function gets called, we are already assured that the given user object is valid, and that we can proceed to insert it into the database.\cb1 \
+\cb3 If you require a directory path, and that directory contains an 
+\f3\fs31\fsmilli15750 \cb4 index.js
+\f0\fs42 \cb3  file, that file gets loaded and evaluated as the value of that directory. The call 
+\f3\fs31\fsmilli15750 \cb4 require('../schemas')
+\f0\fs42 \cb3  loads the module in 
+\f3\fs31\fsmilli15750 \cb4 ../schemas/index.js
+\f0\fs42 \cb3 .
+\f2\i \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\i0\b\fs72 \cf2 \cb3 Unifying errors\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 When an error happens at the validation layer, Joi calls our callback function with an error object that contains a descriptive message. If, on the contrary, the user object is a valid one, we proceed to try inserting it on CouchDB by handing it off to 
+\f3\fs31\fsmilli15750 \cb4 nano
+\f0\fs42 \cb3 . If an error happens here, nano calls back with that error. This time the error can be an error not related to CouchDB (like when the CouchDB server is unreachable or times out) or related to CouchDB (like when there is already a user with that particular email address). How does a client handle these errors?\cb1 \
+\cb3 Imagine that we\'92re building an HTTP API server. What HTTP status codes should we use for any of these errors? When a validation occurs, we should probably reply with a 400 (Bad Request) status code. When we try to create a user with an email that already exists, CouchDB replies with a 409 status code, which is the same code we should reply to the client, indicating a conflict. When we\'92re having problems connecting or getting a response fromthe CouchDB server, we should return an internal error on the 5xx range, a 502 (Bad Gateway), a 504 (Gateway Timeout), or simply an opaque 500 (Internal Server Error).\cb1 \
+\cb3 In any case, we should make this easy on the API HTTP server implementation, and always return a unified error type which we can easily propagate to the client.\cb1 \
+\cb3 I usually resort to using 
+\f3\fs31\fsmilli15750 \cb4 boom
+\f0\fs42 \cb3 , an NPM package that provides HTTP-friendly error codes.\cb1 \
+\cb3 Why translate all errors to HTTP status codes? Because HTTP status codes are the closest thing we\'92ve got to a universal agreement over error codes; and you are probably going to serve your application over an HTTP API anyway.
+\f2\i \cb1 \
+
+\f0\i0 \cb3 Let\'92s then install 
+\f3\fs31\fsmilli15750 \cb4 boom
+\f0\fs42 \cb3 :\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ npm install boom --save\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Next, we need to convert validation errors into a proper Boom error. Let\'92s change our 
+\f3\fs31\fsmilli15750 \cb4 schemas.validating
+\f0\fs42 \cb3  function to do just that:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 schemas/index.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  Joi = require('joi');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  Boom = require('boom');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  schemaNames = ['user'];\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  schemas = \{\};\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 schemaNames.forEach(
+\f4\b function
+\f3\b0 (schemaName) \{  \cb1 \
+\cb4   schemas[schemaName] = require('./' + schemaName);\cb1 \
+\cb4 \});\cb1 \
+\cb4 exports.validate = validate;\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b validate
+\f3\b0 (doc, schema, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b if
+\f3\b0  (
+\f4\b typeof
+\f3\b0  schema == 'string') \{\cb1 \
+\cb4     schema = schemas[schema];\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (! schema) \{\cb1 \
+\cb4     cb(
+\f4\b new
+\f3\b0  Error('Unknown schema'));\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     Joi.validate(doc, schema, 
+\f4\b function
+\f3\b0 (err, value) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         Boom.wrap(err, 400);\cb1 \
+\cb4         cb(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         cb(null, doc);\cb1 \
+\cb4       \}\cb1 \
+\cb4     \});\cb1 \
+\cb4   \}\cb1 \
+\cb4 \};\cb1 \
+\cb4 exports.validating = 
+\f4\b function
+\f3\b0  
+\f4\b validating
+\f3\b0 (schemaName, fn) \{  \cb1 \
+\cb4   
+\f4\b var
+\f3\b0  schema = schemas[schemaName];\cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (! schema) \{\cb1 \
+\cb4     
+\f4\b throw
+\f3\b0  
+\f4\b new
+\f3\b0  Error('Unknown schema: ' + schemaName);\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b return
+\f3\b0  
+\f4\b function
+\f3\b0 (doc, cb) \{\cb1 \
+\cb4     validate(doc, schema, 
+\f4\b function
+\f3\b0 (err, doc) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         cb(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         fn.call(null, doc, cb);\cb1 \
+\cb4       \}\cb1 \
+\cb4     \});\cb1 \
+\cb4   \};\cb1 \
+\cb4 \};\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 In the case where we catch a validation error after invoking Joi, we wrap the error using 
+\f3\fs31\fsmilli15750 \cb4 Boom.wrap
+\f0\fs42 \cb3 , turning it into a proper Boom error.\cb1 \
+\cb3 Wrapping errors is generally better than replacing them: this way we don\'92t lose context information that may be helpful for debugging a server or client problem.
+\f2\i \cb1 \
+
+\f0\i0 \cb3 Next, we can wrap the calls to CouchDB, turning any nano/CouchDB errors into Boom errors. We\'92re going to create an 
+\f3\fs31\fsmilli15750 \cb4 errors
+\f0\fs42 \cb3  module to do just that:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 errors.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  Boom = require('boom');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 exports.wrapNano = 
+\f4\b function
+\f3\b0  
+\f4\b wrapNanoError
+\f3\b0 (cb) \{  \cb1 \
+\cb4   
+\f4\b return
+\f3\b0  
+\f4\b function
+\f3\b0 (err) \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4       Boom.wrap(err, err.statusCode || 500);\cb1 \
+\cb4     \}\cb1 \
+\cb4     cb.apply(null, arguments);\cb1 \
+\cb4   \};\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here we\'92re exporting a 
+\f3\fs31\fsmilli15750 \cb4 wrapNano
+\f0\fs42 \cb3  function that wraps the callback for a call to Nano, always calling back with a Boom error. Nano errors usually have a 
+\f3\fs31\fsmilli15750 \cb4 statusCode
+\f0\fs42 \cb3  attribute (if they failed at the CouchDB server). We try to propagate that code. If we don't have an error code, we fall back into using a generic 
+\f3\fs31\fsmilli15750 \cb4 500
+\f0\fs42 \cb3  error status code. After certifying that we have a Boom error or none at all, we delegate all arguments into the given callback.\cb1 \
+\cb3 Now we just need to use this new function to wrap every nano call:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 db/users.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  schemas = require('../schemas');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  errors = require('../errors');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  users = require('../couchdb').use('users');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 /// Create user\cb1 \
+\cb4 exports.create = schemas.validating('user', createUser);\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b createUser
+\f3\b0 (user, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   users.insert(user, user.email, errors.wrapNano(cb));\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 How to consume Boom errors\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 Now that we guarantee that all errors given by 
+\f3\fs31\fsmilli15750 \cb4 users.create
+\f0\fs42 \cb3  are Boom errors, an HTTP JSON API just needs to propagate the status codes to the clients. If the HTTP JSON API server is implemented using Hapi.js, we don't need to do anything: Hapi already accepts Boom errors and will construct a proper reply to the client. If, for instance, you're using Express, you can create a simple error-handling middleware to respond to the client:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 expressboom.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 module.exports = 
+\f4\b function
+\f3\b0  (err, req, res, next) \{  \cb1 \
+\cb4   res.set(err.output.headers);\cb1 \
+\cb4   res.status(err.output.statusCode);\cb1 \
+\cb4   res.json(err.output.payload);\cb1 \
+\cb4 \};\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here we\'92re using the 
+\f3\fs31\fsmilli15750 \cb4 output
+\f0\fs42 \cb3  property (present on all Boom errors) to propagate the headers, status code and error object into the client response. This error-handling middleware can then be included in an Express app to help the API users to hopefully get meaningful status codes when an error occurs.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 Updating specific fields while handling conflicts\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 When we need to update some fields on a given document (like when the user updates their profile data), we need to send it to CouchDB. Unlike some databases, CouchDB has an opinion about concurrency: if two updates to the same document occur in concurrency, only one of them will win. To implement this, all CouchDB document updates must contain a revision ID. CouchDB will only accept to commit changes to a given document if the given revision ID matches the latest revision ID stored for that document.\cb1 \
+\cb3 Revision IDs are metadata contained inside a document. Let\'92s see what they look like:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ curl http://127.0.0.1:5984/users/whaa@example.com\cb1 \
+\cb4 \{\cb1 \
+\cb4   "_id":"whaa@example.com",\cb1 \
+\cb4   "_rev":"1-25ee577ef2de8819d642687c38d6b777",\cb1 \
+\cb4   "username":"johndoe",\cb1 \
+\cb4   "email":"whaa@example.com"\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here you can spot the revision inside an attribute named 
+\f3\fs31\fsmilli15750 \cb4 _rev
+\f0\fs42 \cb3 . To update a given document you have to pass in the whole document to CouchDB, which must include the revision ID.\cb1 \
+\cb3 As we already surfaced, this leaves us two basic choices of how to implement conflict-handling: we either delegate to the client (which is what CouchDB does) or we try to handle it on the application.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 Delegate conflicts entirely to the client.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 When delegating conflicts to the client, the easiest way to implement this is to force the client to give us the entire document (including the revision ID). In this case, updating the user record would look something like this:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 end of db/users.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 // ...\cb1 \
+\cb4 /// Update user\cb1 \
+\cb4 exports.update = schemas.validating('user', updateUser);\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b updateUser
+\f3\b0 (user, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   users.insert(user, errors.wrapNano(cb));\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 To allow a user object to have a 
+\f3\fs31\fsmilli15750 \cb4 _rev
+\f0\fs42 \cb3  and 
+\f3\fs31\fsmilli15750 \cb4 _id
+\f0\fs42 \cb3  attribute, we must first allow it on the schema:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 schemas/user.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  Joi = require('joi');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 module.exports = Joi.object().keys(\{  \cb1 \
+\cb4   _rev: Joi.string(),\cb1 \
+\cb4   _id: Joi.string(),\cb1 \
+\cb4   username: Joi.string().alphanum().min(3).max(30).required(),\cb1 \
+\cb4   password: Joi.string().regex(/[a-zA-Z0-9]\{3,30\}/),\cb1 \
+\cb4   access_token: [Joi.string(), Joi.number()],\cb1 \
+\cb4   birthyear: Joi.number().integer().min(1900).max((
+\f4\b new
+\f3\b0  Date()).getFullYear()),\cb1 \
+\cb4   email: Joi.string().email()\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 We can now create a small script to try to update a specific user document:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 update
+\f5\i user
+\f1\i0 test.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  users = require('./db/users');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  user = \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   _id: 'whaa@example.com',\cb1 \
+\cb4   _rev: process.argv[2],\cb1 \
+\cb4   username: 'johndoe',\cb1 \
+\cb4   email: 'whaa@example.com',\cb1 \
+\cb4   access_token: 'some access token'\cb1 \
+\cb4 \};\cb1 \
+\cb4 users.update(user, 
+\f4\b function
+\f3\b0 (err) \{  \cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     console.error(err);\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     console.log('user updated');\cb1 \
+\cb4   \}\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here we\'92re specifying that the revision ID is given by a command-line argument. Once you find out the current revision ID of your 
+\f3\fs31\fsmilli15750 \cb4 johndoe
+\f0\fs42 \cb3  user document, you can use it to invoke this script:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node user_update_test.js 1-25ee577ef2de8819d642687c38d6b777\cb1 \
+\cb4 user updated\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 Diff doc with last write wins.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 Instead of having to specify the entire user document, you can just require that the client specifies which fields are changing:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 end of users.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 exports.updateDiff = updateUserDiff;\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b updateUserDiff
+\f3\b0 (userDiff, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   merge();\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b merge
+\f3\b0 () \{\cb1 \
+\cb4     users.get(userDiff._id, errors.wrapNano(
+\f4\b function
+\f3\b0 (err, user) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         cb(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         extend(user, userDiff);\cb1 \
+\cb4         schemas.validate(user, 'user', 
+\f4\b function
+\f3\b0 (err) \{\cb1 \
+\cb4           
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4             cb(err);\cb1 \
+\cb4           \}\cb1 \
+\cb4           
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4             users.insert(user, errors.wrapNano(done));\cb1 \
+\cb4           \}\cb1 \
+\cb4         \})\cb1 \
+\cb4       \}\cb1 \
+\cb4     \}));\cb1 \
+\cb4     
+\f4\b function
+\f3\b0  
+\f4\b done
+\f3\b0 (err) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err && err.statusCode == 409 && !userDiff._rev) \{\cb1 \
+\cb4         merge(); // try again\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         cb.apply(null, arguments);\cb1 \
+\cb4       \}\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here our 
+\f3\fs31\fsmilli15750 \cb4 db/users
+\f0\fs42 \cb3  module exports a new 
+\f3\fs31\fsmilli15750 \cb4 updateDiff
+\f0\fs42 \cb3  function that accepts an incomplete user document, containing only the attributes that have changed. This function starts by declaring this 
+\f3\fs31\fsmilli15750 \cb4 merge
+\f0\fs42 \cb3 function, which is responsible for 1) getting the latest version of the given document; 2) applying the given changes to this document; and 3) trying to save it into CouchDB. If this last step has a conflict error (which can happen when two or more clients are updating the same document concurrently), we try again from the beginning.\cb1 \
+\cb3 Before retrying we make sure that the user didn\'92t specify the revision ID in his differential document. If they did, this 
+\f3\fs31\fsmilli15750 \cb4 merge
+\f0\fs42 \cb3  function would always fail and retry indefinitely because the revision ID is irredeemably outdated.
+\f2\i \cb1 \
+
+\f0\i0 \cb3 If the saving of the merged document succeeds, or we cannot recover from an error, we just apply the response arguments into the callback.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 Disallowing changes to specific fields\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 Sometimes you may want to disallow changes to some specific fields in some document types. Let\'92s say that you don\'92t want to allow changes to the email address of a user. Optimally, we would like to be able to easily verify this both in our integral update 
+\f3\fs31\fsmilli15750 \cb4 users.update
+\f0\fs42 \cb3  function and also in our partial 
+\f3\fs31\fsmilli15750 \cb4 users.updateDiff
+\f0\fs42 \cb3  function. How would we implement such a change to the API flow in a way that's easy to implement for other cases?\cb1 \
+\cb3 What we need is a way to have two different schemas: one for when the user document is being created, and another for when the user document is getting updated. Typically, the updating schema is a subset of the creation schema: the first one is a trimmed-down version of the last.\cb1 \
+\cb3 We need to be able to define two schemas, depending on the operation. Let\'92s then add two schemas to 
+\f3\fs31\fsmilli15750 \cb4 schemas/user.js
+\f0\fs42 \cb3 :\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 schemas/user.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  extend = require('util')._extend;  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  Joi = require('joi');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  updateAttributes = \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   _id: Joi.string(),\cb1 \
+\cb4   _rev: Joi.string(),\cb1 \
+\cb4   password: Joi.string().regex(/[a-zA-Z0-9]\{3,30\}/),\cb1 \
+\cb4   access_token: [Joi.string(), Joi.number()],\cb1 \
+\cb4   birthyear: Joi.number().integer().min(1900).max((
+\f4\b new
+\f3\b0  Date()).getFullYear())\cb1 \
+\cb4 \};\cb1 \
+\cb4 exports.update = Joi.object().keys(updateAttributes);\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 var
+\f3\b0  createAttributes = extend(\{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   username: Joi.string().alphanum().min(3).max(30).required(),\cb1 \
+\cb4   email: Joi.string().email()\cb1 \
+\cb4 \}, updateAttributes);\cb1 \
+\cb4 exports.create = Joi.object().keys(createAttributes);\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here we\'92re exporting one Joi schema for each operation: one for 
+\f3\fs31\fsmilli15750 \cb4 update
+\f0\fs42 \cb3  and another for 
+\f3\fs31\fsmilli15750 \cb4 insert
+\f0\fs42 \cb3 , the last one extending the first.\cb1 \
+\cb3 Now we need to add an option to the validation functions:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 schemas/index.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  Joi = require('joi');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  Boom = require('boom');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  schemaNames = ['user'];\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  schemas = \{\};\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 schemaNames.forEach(
+\f4\b function
+\f3\b0 (schemaName) \{  \cb1 \
+\cb4   schemas[schemaName] = require('./' + schemaName);\cb1 \
+\cb4 \});\cb1 \
+\cb4 exports.validate = validate;\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b validate
+\f3\b0 (doc, schema, op, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b if
+\f3\b0  (
+\f4\b typeof
+\f3\b0  schema == 'string') \{\cb1 \
+\cb4     schema = schemas[schema];\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (! schema) \{\cb1 \
+\cb4     cb(
+\f4\b new
+\f3\b0  Error('Unknown schema'));\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     schema = schema[op];\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (! schema) \{\cb1 \
+\cb4       
+\f4\b throw
+\f3\b0  
+\f4\b new
+\f3\b0  Error('Undefined op ' + op);\cb1 \
+\cb4     \}\cb1 \
+\cb4     
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4       Joi.validate(doc, schema, 
+\f4\b function
+\f3\b0 (err, value) \{\cb1 \
+\cb4         
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4           Boom.wrap(err, 400);\cb1 \
+\cb4           cb(err);\cb1 \
+\cb4         \}\cb1 \
+\cb4         
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4           cb(null, doc);\cb1 \
+\cb4         \}\cb1 \
+\cb4       \});\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}\cb1 \
+\cb4 \};\cb1 \
+\cb4 exports.validating = 
+\f4\b function
+\f3\b0  
+\f4\b validating
+\f3\b0 (schemaName, op, fn) \{  \cb1 \
+\cb4   
+\f4\b var
+\f3\b0  schema = schemas[schemaName];\cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (! schema) \{\cb1 \
+\cb4     
+\f4\b throw
+\f3\b0  
+\f4\b new
+\f3\b0  Error('Unknown schema: ' + schemaName);\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b return
+\f3\b0  
+\f4\b function
+\f3\b0 (doc, cb) \{\cb1 \
+\cb4     validate(doc, schema, op, 
+\f4\b function
+\f3\b0 (err, doc) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         cb(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         fn.call(null, doc, cb);\cb1 \
+\cb4       \}\cb1 \
+\cb4     \});\cb1 \
+\cb4   \};\cb1 \
+\cb4 \};\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 These are all the changes we need in the schema validation layer. Moving on to the database layer, we will need to install a utility module that helps us calculate the difference between two objects:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ npm install object-versions --save\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Now our 
+\f3\fs31\fsmilli15750 \cb4 user.update
+\f0\fs42 \cb3  function has to get a little more complicated. Instead of validating the user document before sending it to CouchDB, it needs to get the current version, calculate the difference, and validate it:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 middle of db/users.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  diff = require('object-versions').diff;\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 /// Update user\cb1 \
+\cb4 exports.update = updateUser;\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b updateUser
+\f3\b0 (user, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   users.get(user._id, errors.wrapNano(
+\f4\b function
+\f3\b0 (err, currentUser) \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4       cb(err);\cb1 \
+\cb4     \}\cb1 \
+\cb4     
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4       
+\f4\b var
+\f3\b0  userDiff = diff(currentUser, user);\cb1 \
+\cb4       schemas.validate(userDiff, 'user', 'update', 
+\f4\b function
+\f3\b0 (err) \{\cb1 \
+\cb4         
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4           cb(err);\cb1 \
+\cb4         \}\cb1 \
+\cb4         
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4           users.insert(user, errors.wrapNano(cb));\cb1 \
+\cb4         \}\cb1 \
+\cb4       \});\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}));\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Our 
+\f3\fs31\fsmilli15750 \cb4 users.updateDiff
+\f0\fs42 \cb3  also needs some changes: now that we're able to tell whether a user differential document is valid, we can validate it before merging the current document with the diff document:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 end of db/users.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 exports.updateDiff = updateUserDiff;\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b updateUserDiff
+\f3\b0 (userDiff, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   schemas.validate(userDiff, 'user', 'update', 
+\f4\b function
+\f3\b0 (err) \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4       cb(err);\cb1 \
+\cb4     \}\cb1 \
+\cb4     
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4       merge();\cb1 \
+\cb4     \}\cb1 \
+\cb4   \});\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b merge
+\f3\b0 () \{\cb1 \
+\cb4     users.get(userDiff._id, errors.wrapNano(
+\f4\b function
+\f3\b0 (err, user) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         cb(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         extend(user, userDiff);\cb1 \
+\cb4         users.insert(user, errors.wrapNano(done));\cb1 \
+\cb4       \}\cb1 \
+\cb4     \}));\cb1 \
+\cb4     
+\f4\b function
+\f3\b0  
+\f4\b done
+\f3\b0 (err) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err && err.statusCode == 409 && !userDiff._rev) \{\cb1 \
+\cb4         merge(); // try again\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         cb.apply(null, arguments);\cb1 \
+\cb4       \}\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 Views\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 Up until now we have used CouchDB as a key-value store: we just index each document by its key. Unlike other databases that let you do slow queries that don\'92t use indexes, CouchDB won\'92t let you. If you want to search for a document or a set of documents using anything other than the document identifier, you will have to create a CouchDB view.\cb1 \
+\cb3 In essence, a CouchDB view is a transformation of a database into another database. The transformation is defined by some JavaScript functions that take each document as it gets inserted or updated and maps it into an alternative key and value. CouchDB stores the views in the same way that it stores a normal database, by using a file-based index that differs in just one main thing: it allows you to store more than one document for a given key.\cb1 \
+\cb3 Let\'92s see some uses for CouchDB views:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 Inverted indexes\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 In CouchDB we can search for documents where a specific attribute is equal to a given value. For that we\'92ll have to create a specific view.\cb1 \
+\cb3 Let\'92s say that, for instance, you want to search for messages that were addressed to a given user.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ npm install deep-equal --save\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Now we\'92re going to create a directory where we will store all the CouchDB views, one file per database.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ mkdir views\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Let\'92s create the one for the 
+\f3\fs31\fsmilli15750 \cb4 messages
+\f0\fs42 \cb3  database:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 views/messages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 exports.by_to = \{  \cb1 \
+\cb4   map: 
+\f4\b function
+\f3\b0 (doc) \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (doc.to) \{\cb1 \
+\cb4       emit(doc.to, \{_id: doc._id\});\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}\cb1 \
+\cb4 \};\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 This is a CouchDB view: it contains a map function that will run inside CouchDB. This function will be called each time there is an updated or a new message document. It receives the document as the sole argument, and then it uses the 
+\f3\fs31\fsmilli15750 \cb4 emit
+\f0\fs42 \cb3  function to write changes to the view. The first argument of the 
+\f3\fs31\fsmilli15750 \cb4 emit
+\f0\fs42 \cb3  function is the index key and the second argument is the value. In this case we're specifying that the key is the 
+\f3\fs31\fsmilli15750 \cb4 to
+\f0\fs42 \cb3  attribute of the message, and that the emitted doc is one document containing only one 
+\f3\fs31\fsmilli15750 \cb4 _id
+\f0\fs42 \cb3  field.\cb1 \
+\cb3 We could emit the whole document, but here we\'92re only emitting a document with an 
+\f3\fs31\fsmilli15750 \cb4 _id
+\f0\fs42 \cb3  field. This is an optimisation: in this case CouchDB will use the 
+\f3\fs31\fsmilli15750 \cb4 _id
+\f0\fs42 \cb3  field to look up and get the referenced document when we're consulting the view.
+\f2\i \cb1 \
+
+\f0\i0 \cb3 CouchDB stores the views as special documents. These are called 
+\f2\i design documents
+\f0\i0 , and they\'92re all prefixed by the 
+\f3\fs31\fsmilli15750 \cb4 _design/
+\f0\fs42 \cb3  path. Now we need a module that takes the views' definitions and sends them to CouchDB.\cb1 \
+\cb3 CouchDB design documents are also used for things other than views, but we\'92re not going to use these here.
+\f2\i \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\i0\b \cf2 \cb3 top part of views/index.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  
+\f4\b async
+\f3\b0  = require('async');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  equal = require('deep-equal');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  couch = require('../couchdb');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  databaseNames = ['messages'];\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  views = \{\};\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 databaseNames.forEach(
+\f4\b function
+\f3\b0 (database) \{  \cb1 \
+\cb4   views[database] = require('./' + database);\cb1 \
+\cb4 \});\cb1 \
+\cb4 exports.populate = 
+\f4\b function
+\f3\b0  
+\f4\b populate
+\f3\b0 (cb) \{  \cb1 \
+\cb4   
+\f4\b async
+\f3\b0 .each(databaseNames, populateDB, cb);\cb1 \
+\cb4 \};\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here we\'92re just showing the top part of the 
+\f3\fs31\fsmilli15750 \cb4 views/index.js
+\f0\fs42 \cb3  file. This file exports a 
+\f3\fs31\fsmilli15750 \cb4 populate
+\f0\fs42 \cb3  function that will ensure that the views in CouchDB are up to date. When we call this function, 
+\f3\fs31\fsmilli15750 \cb4 populate
+\f0\fs42 \cb3  uses 
+\f3\fs31\fsmilli15750 \cb4 async.each
+\f0\fs42 \cb3  to call 
+\f3\fs31\fsmilli15750 \cb4 populateDB
+\f0\fs42 \cb3  for each database.\cb1 \
+\cb3 Here is 
+\f3\fs31\fsmilli15750 \cb4 populateDB
+\f0\fs42 \cb3 :\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 bottom part of views/index.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 function
+\f3\b0  
+\f4\b populateDB
+\f3\b0 (dbName, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b var
+\f3\b0  db = couch.use(dbName);\cb1 \
+\cb4   
+\f4\b var
+\f3\b0  dbViews = views[dbName];\cb1 \
+\cb4   
+\f4\b async
+\f3\b0 .eachSeries(Object.keys(dbViews), ensureView, cb);\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b ensureView
+\f3\b0 (viewName, cb) \{\cb1 \
+\cb4     
+\f4\b var
+\f3\b0  view = dbViews[viewName];\cb1 \
+\cb4     
+\f4\b var
+\f3\b0  ddocName = '_design/' + viewName;\cb1 \
+\cb4     db.get(ddocName, 
+\f4\b function
+\f3\b0 (err, ddoc) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err && err.statusCode == 404) \{\cb1 \
+\cb4         insertDDoc(null, cb);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         cb(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  
+\f4\b if
+\f3\b0  (equal(ddoc.views[viewName], view)) \{\cb1 \
+\cb4         cb();\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         insertDDoc(ddoc, cb);\cb1 \
+\cb4       \}\cb1 \
+\cb4     \});\cb1 \
+\cb4     
+\f4\b function
+\f3\b0  
+\f4\b insertDDoc
+\f3\b0 (ddoc, cb) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (! ddoc) \{\cb1 \
+\cb4         ddoc = \{\cb1 \
+\cb4           language: 'javascript',\cb1 \
+\cb4           views: \{\}\cb1 \
+\cb4         \};\cb1 \
+\cb4       \}\cb1 \
+\cb4       ddoc.views[viewName] = view;\cb1 \
+\cb4       db.insert(ddoc, ddocName, 
+\f4\b function
+\f3\b0 (err) \{\cb1 \
+\cb4         
+\f4\b if
+\f3\b0  (err && err.statusCode == 409) \{\cb1 \
+\cb4           ensureView(viewName, cb);\cb1 \
+\cb4         \}\cb1 \
+\cb4         
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4           cb(err);\cb1 \
+\cb4         \}\cb1 \
+\cb4       \});\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 This function fetches the views we defined for a given database and calls the 
+\f3\fs31\fsmilli15750 \cb4 ensureView
+\f0\fs42 \cb3  function for each. This last function tries to get the design document. If it doesn't exist, it calls the 
+\f3\fs31\fsmilli15750 \cb4 insertDDoc
+\f0\fs42 \cb3 function. Otherwise, if it exists, it uses the 
+\f3\fs31\fsmilli15750 \cb4 deep-equal
+\f0\fs42 \cb3  module we just installed to check whether the view is up to date. If the view coming from CouchDB needs updating, it calls 
+\f3\fs31\fsmilli15750 \cb4 insertDDoc
+\f0\fs42 \cb3 .\cb1 \
+\cb3 The 
+\f3\fs31\fsmilli15750 \cb4 insertDDoc
+\f0\fs42 \cb3  function then creates or updates the design document, attaching it the latest version of the view definition. If there is a conflict on updating it, it tries to repeat the operation.\cb1 \
+\cb3 Now we need to change our 
+\f3\fs31\fsmilli15750 \cb4 init_couch.js
+\f0\fs42 \cb3  module to populate the views after we have ensured the databases exist:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 top of init_couch.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  
+\f4\b async
+\f3\b0  = require('async');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  couch = require('./couchdb');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  views = require('./views');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  databases = ['users', 'messages'];\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 module.exports = initCouch;\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b initCouch
+\f3\b0 (cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b async
+\f3\b0 .series([createDatabases, createViews], cb);\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b createDatabases
+\f3\b0 (cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b async
+\f3\b0 .each(databases, createDatabase, cb);\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b createViews
+\f3\b0 (cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   views.populate(cb);\cb1 \
+\cb4 \}\cb1 \
+\cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Now we can run our simulated application bootstrap procedure in 
+\f3\fs31\fsmilli15750 \cb4 app.js
+\f0\fs42 \cb3 :\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node app.js\cb1 \
+\cb4 couchdb initialized\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Before we can query our messages database, we must first create our database layer module:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 db/messages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  extend = require('util')._extend;  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  schemas = require('../schemas');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  errors = require('../errors');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  messages = require('../couchdb').use('messages');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 /// Create user\cb1 \
+\cb4 exports.create = schemas.validating('message', 'create', createMessage);\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b createMessage
+\f3\b0 (message, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   message.createdAt = Date.now();\cb1 \
+\cb4   messages.insert(message, errors.wrapNano(cb));\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 This file is similar to the 
+\f3\fs31\fsmilli15750 \cb4 db/users.js
+\f0\fs42 \cb3  one, except that it only exports the 
+\f3\fs31\fsmilli15750 \cb4 create
+\f0\fs42 \cb3  method.\cb1 \
+\cb3 Now we need to define a message document schema:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 schemas/messages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  Joi = require('joi');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  createAttributes = \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   from: Joi.string().email().required(),\cb1 \
+\cb4   to: Joi.string().email().required(),\cb1 \
+\cb4   subject: Joi.string().max(120).required(),\cb1 \
+\cb4   body: Joi.string().max(1024).required(),\cb1 \
+\cb4   createdAt: Joi.date()\cb1 \
+\cb4 \};\cb1 \
+\cb4 exports.create = Joi.object().keys(createAttributes);\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 \'85 and add it to the schemas list:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 top of schemas/index.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  Joi = require('joi');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  Boom = require('boom');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  schemaNames = ['user', 'message'];  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 // ...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Next, we need to create a script that inserts some message documents:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 messages_insert.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  extend = require('util')._extend;  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  messages = require('./db/messages');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  message = \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body'\cb1 \
+\cb4 \};\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 var
+\f3\b0  count = 10;  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  left = count;\cb1 \
+
+\f4\b \cb4 for
+\f3\b0 (
+\f4\b var
+\f3\b0  i = 1 ; i <= count ; i ++) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   messages.create(message, created);\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b created
+\f3\b0 (err) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     
+\f4\b throw
+\f3\b0  err;\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (-- left == 0) \{\cb1 \
+\cb4     console.log('%d messages inserted', count);\cb1 \
+\cb4   \}\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 This script creates 10 messages for our user. Let\'92s run it:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node messages_insert\cb1 \
+\cb4 10 messages inserted\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs52 \cf2 \cb3 Query\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 Now we need to find a way, using this view, to get all the messages sent to a particular user. Let\'92s add this method to 
+\f3\fs31\fsmilli15750 \cb4 db/messages.js
+\f0\fs42 \cb3 :\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 bottom of db/messages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 /// Messages for a given user\cb1 \
+\cb4 exports.getFor = getMessagesFor;\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b getMessagesFor
+\f3\b0 (user, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   messages.view(\cb1 \
+\cb4     'by_to', 'by_to', \{keys: [user], include_docs: true\},\cb1 \
+\cb4     errors.wrapNano(
+\f4\b function
+\f3\b0 (err, result) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         cb(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         result = result.rows.map(
+\f4\b function
+\f3\b0 (row) \{\cb1 \
+\cb4           
+\f4\b return
+\f3\b0  row.doc;\cb1 \
+\cb4         \});\cb1 \
+\cb4         cb(null, result);\cb1 \
+\cb4       \}\cb1 \
+\cb4     \})\cb1 \
+\cb4   );\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 This new message method uses the 
+\f3\fs31\fsmilli15750 \cb4 db.view
+\f0\fs42 \cb3  method of nano to query a view. The first argument to this method is the design document name, and the second is the view name. In our case these two are equal \'97 we create a design document named after the view for each.\cb1 \
+\cb3 After that we have some view arguments in an object: first, the 
+\f3\fs31\fsmilli15750 \cb4 keys
+\f0\fs42 \cb3  argument contains all the keys we are looking for. In our case, we're looking for only one key, which value is the user ID. Next, we set the 
+\f3\fs31\fsmilli15750 \cb4 include_docs
+\f0\fs42 \cb3  argument to 
+\f3\fs31\fsmilli15750 \cb4 true
+\f0\fs42 \cb3  \'97 this makes CouchDB fetch the document referenced in the 
+\f3\fs31\fsmilli15750 \cb4 _id
+\f0\fs42 \cb3 field of the view records.\cb1 \
+\cb3 This is why we only emitted one document with a single 
+\f3\fs31\fsmilli15750 \cb4 _id
+\f0\fs42 \cb3  attribute: by setting the 
+\f3\fs31\fsmilli15750 \cb4 include_docs
+\f0\fs42 \cb3 argument to 
+\f3\fs31\fsmilli15750 \cb4 true
+\f0\fs42 \cb3 , we make CouchDB also fetch the referred document.
+\f2\i \cb1 \
+
+\f0\i0 \cb3 When the result comes, we need to fetch the documents from the 
+\f3\fs31\fsmilli15750 \cb4 rows
+\f0\fs42 \cb3  attribute from it and, for each element of this array, fetch the document that resides inside the 
+\f3\fs31\fsmilli15750 \cb4 doc
+\f0\fs42 \cb3  attribute.\cb1 \
+\cb3 Now we can create a small script to query the messages for a given user:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 get_messages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  user = process.argv[2];\cb1 \
+
+\f4\b \cb4 if
+\f3\b0  (! user) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   console.error('please specify user');\cb1 \
+\cb4   
+\f4\b return
+\f3\b0 ;\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 var
+\f3\b0  messages = require('./db/messages');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 messages.getFor(user, 
+\f4\b function
+\f3\b0 (err, messages) \{  \cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     
+\f4\b throw
+\f3\b0  err;\cb1 \
+\cb4   \}\cb1 \
+\cb4   console.log('messages for user %s:', user);\cb1 \
+\cb4   messages.forEach(printMessage);\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b printMessage
+\f3\b0 (message) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   console.log(message);\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 We can now query all the messages for our beloved user by doing:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node get_messages.js whaa@example.com\cb1 \
+\cb4 messages 
+\f4\b for
+\f3\b0  user whaa@example.com:  \cb1 \
+\cb4 \{ _id: '712f741349de658d85795fffb4015103',\cb1 \
+\cb4   _rev: '1-54e5f503f3ecbf537978a9d7adc6ce03',\cb1 \
+\cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body',\cb1 \
+\cb4   createdAt: '2015-01-27T15:10:28.256Z' \}\cb1 \
+\cb4 \{ _id: '712f741349de658d85795fffb40151ce',\cb1 \
+\cb4   _rev: '1-035b12416b21c1705eddfd82defc795d',\cb1 \
+\cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body',\cb1 \
+\cb4   createdAt: '2015-01-27T15:10:28.260Z' \}\cb1 \
+\cb4 ...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 Multi-value inverted indexes\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 The previous view had at least one problem: the view doesn\'92t sort the messages for a given user by creation time \'97 the order is undefined. CouchDB sorts by the keys, and in this case we have the same key for all the messages for a given user: the user ID. What we would like is to be able to filter by the value in the 
+\f3\fs31\fsmilli15750 \cb4 to
+\f0\fs42 \cb3  property and then order by the 
+\f3\fs31\fsmilli15750 \cb4 createdAt
+\f0\fs42 \cb3  property. Let's then create a new view that allows that:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 bottom of views/messages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 exports.by_to_createdAt = \{  \cb1 \
+\cb4   map: 
+\f4\b function
+\f3\b0 (doc) \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (doc.to && doc.createdAt) \{\cb1 \
+\cb4       emit([doc.to, doc.createdAt], \{_id: doc._id\});\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}\cb1 \
+\cb4 \};\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 This new view emits a different type of key: instead of a string, we emit an array \'97 CouchDB will treat an array key as a composed key, and will be able to sort it by the order of the elements, which is just what we need. Let\'92s now create that view definition in CouchDB:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node app\cb1 \
+\cb4 couchdb initialized\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Now we need to change our query implementation to use this view:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 bottom of db/messages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 /// Messages for a given user\cb1 \
+\cb4 exports.getFor = getMessagesFor;\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b getMessagesFor
+\f3\b0 (user, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   messages.view(\cb1 \
+\cb4     'by_to_createdAt', 'by_to_createdAt',\cb1 \
+\cb4     \{\cb1 \
+\cb4       startkey: [user, 0],\cb1 \
+\cb4       endkey: [user, Date.now()],\cb1 \
+\cb4       include_docs: true\cb1 \
+\cb4     \},\cb1 \
+\cb4     errors.wrapNano(
+\f4\b function
+\f3\b0 (err, result) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         cb(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         result = result.rows.map(
+\f4\b function
+\f3\b0 (row) \{\cb1 \
+\cb4           
+\f4\b return
+\f3\b0  row.doc;\cb1 \
+\cb4         \});\cb1 \
+\cb4         cb(null, result);\cb1 \
+\cb4       \}\cb1 \
+\cb4     \})\cb1 \
+\cb4   );\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Now we\'92re passing different arguments into the CouchDB view: instead of passing a 
+\f3\fs31\fsmilli15750 \cb4 keys
+\f0\fs42 \cb3  array, we're specifying that we want a range by specifying the 
+\f3\fs31\fsmilli15750 \cb4 startkey
+\f0\fs42 \cb3  and the 
+\f3\fs31\fsmilli15750 \cb4 endkey
+\f0\fs42 \cb3  arguments. The first one contains the minimum value of the keys it will be finding, and the second one contains the maximum one. Since we want to get the records for a given user, we always specify the same user in the first position of the key array, but we let the second position vary between 0 (the start of the computer's time) and the current timestamp. This query returns us all the messages created up until now that have a given user as the recipient.\cb1 \
+\cb3 We can now test this using our 
+\f3\fs31\fsmilli15750 \cb4 get_messages
+\f0\fs42 \cb3  script from the command line as before:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node get_messages.js whaa@example.com\cb1 \
+\cb4 messages 
+\f4\b for
+\f3\b0  user whaa@example.com:  \cb1 \
+\cb4 \{ _id: '89f2204c421281219758d49818000152',\cb1 \
+\cb4   _rev: '1-ab4a6fbdc966e6644fa7f470c3d2f414',\cb1 \
+\cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body',\cb1 \
+\cb4   createdAt: 1422438090485 \}\cb1 \
+\cb4 \{ _id: '89f2204c421281219758d4981800044b',\cb1 \
+\cb4   _rev: '1-b17d04a94cfcd70b83e6b68707a59e58',\cb1 \
+\cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body',\cb1 \
+\cb4   createdAt: 1422438090489 \}\cb1 \
+\cb4 ...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Wait \'97 but this query is returning the results in ascending timestamp order, and we probably want to present the most recent message first. Let\'92s then change our query to reverse the order:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 bottom part of db/messages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 function
+\f3\b0  
+\f4\b getMessagesFor
+\f3\b0 (user, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   messages.view(\cb1 \
+\cb4     'by_to_createdAt', 'by_to_createdAt',\cb1 \
+\cb4     \{\cb1 \
+\cb4       startkey: [user, Date.now()],\cb1 \
+\cb4       endkey: [user, 0],\cb1 \
+\cb4       descending: true,\cb1 \
+\cb4       include_docs: true\cb1 \
+\cb4     \},\cb1 \
+\cb4     errors.wrapNano(
+\f4\b function
+\f3\b0 (err, result) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         cb(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         result = result.rows.map(
+\f4\b function
+\f3\b0 (row) \{\cb1 \
+\cb4           
+\f4\b return
+\f3\b0  row.doc;\cb1 \
+\cb4         \});\cb1 \
+\cb4         cb(null, result);\cb1 \
+\cb4       \}\cb1 \
+\cb4     \})\cb1 \
+\cb4   );\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here we switched the value of 
+\f3\fs31\fsmilli15750 \cb4 startkey
+\f0\fs42 \cb3  with 
+\f3\fs31\fsmilli15750 \cb4 endkey
+\f0\fs42 \cb3  and set the 
+\f3\fs31\fsmilli15750 \cb4 descending
+\f0\fs42 \cb3  argument to true. (It defaults to 
+\f3\fs31\fsmilli15750 \cb4 false
+\f0\fs42 \cb3 .) Now you can see that the messages are being returned in reverse chronological order:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node get_messages.js whaa@example.com\cb1 \
+\cb4 messages 
+\f4\b for
+\f3\b0  user whaa@example.com:  \cb1 \
+\cb4 \{ _id: '89f2204c421281219758d49818002e6c',\cb1 \
+\cb4   _rev: '1-76ed2ec67fadc424d6f7cfd1cd1327e9',\cb1 \
+\cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body',\cb1 \
+\cb4   createdAt: 1422438090494 \}\cb1 \
+\cb4 \{ _id: '89f2204c421281219758d49818002b17',\cb1 \
+\cb4   _rev: '1-76ed2ec67fadc424d6f7cfd1cd1327e9',\cb1 \
+\cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body',\cb1 \
+\cb4   createdAt: 1422438090494 \}\cb1 \
+\cb4 ...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 CouchDB views are 
+\f2\i materialised
+\f0\i0  views, which means that they\'92re generated ahead of time; which means that, when you create or modify a view, CouchDB has to (re)generate the whole view. While CouchDB does that, your database may become irresponsive; view creation and change to big datasets has to be done with great care, since it may imply some database down-time.
+\f2\i \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\i0\b\fs72 \cf2 \cb3 Paginating results\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 There\'92s yet another limitation with our query: we get the entire history of messages. A user interface displaying the messages would show only one page of messages at a time, allowing the user to cycle through pages.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs52 \cf2 \cb3 The wrong way of doing pagination\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 Let\'92s try to implement message pagination then:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 bottom of db/messsages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 function
+\f3\b0  
+\f4\b getMessagesFor
+\f3\b0 (user, page, maxPerPage, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   messages.view(\cb1 \
+\cb4     'by_to_createdAt', 'by_to_createdAt',\cb1 \
+\cb4     \{\cb1 \
+\cb4       startkey: [user, Date.now()],\cb1 \
+\cb4       endkey: [user, 0],\cb1 \
+\cb4       descending: true,\cb1 \
+\cb4       include_docs: true,\cb1 \
+\cb4       limit: maxPerPage,\cb1 \
+\cb4       skip: page * maxPerPage\cb1 \
+\cb4     \},\cb1 \
+\cb4     errors.wrapNano(
+\f4\b function
+\f3\b0 (err, result) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         cb(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         result = result.rows.map(
+\f4\b function
+\f3\b0 (row) \{\cb1 \
+\cb4           
+\f4\b return
+\f3\b0  row.doc;\cb1 \
+\cb4         \});\cb1 \
+\cb4         cb(null, result);\cb1 \
+\cb4       \}\cb1 \
+\cb4     \})\cb1 \
+\cb4   );\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Now our 
+\f3\fs31\fsmilli15750 \cb4 getMesssagesFor
+\f0\fs42 \cb3  function accepts two additional arguments: the page number and the maximum number of messages per page. This allows us to calculate how many records CouchDB should be skipping before it reaches the first record of the page we need.\cb1 \
+\cb3 Let\'92s change our 
+\f3\fs31\fsmilli15750 \cb4 get_messages.js
+\f0\fs42 \cb3  script to accept these new arguments from the command line and apply them to the new version of the 
+\f3\fs31\fsmilli15750 \cb4 messages.getFor
+\f0\fs42 \cb3  function:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 get_messages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  user = process.argv[2];\cb1 \
+
+\f4\b \cb4 if
+\f3\b0  (! user) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   console.error('please specify user');\cb1 \
+\cb4   
+\f4\b return
+\f3\b0 ;\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 var
+\f3\b0  start = Number(process.argv[3]) || 0;  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  maxPerPage = Number(process.argv[4]) || 4;\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  messages = require('./db/messages');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 messages.getFor(user, page, maxPerPage, 
+\f4\b function
+\f3\b0 (err, messages) \{  \cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     
+\f4\b throw
+\f3\b0  err;\cb1 \
+\cb4   \}\cb1 \
+\cb4   console.log('messages for user %s:', user);\cb1 \
+\cb4   messages.forEach(printMessage);\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b printMessage
+\f3\b0 (message) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   console.log(message);\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here we\'92re using a maximum number of items per page of four if it\'92s not specified in the command line arguments.\cb1 \
+\cb3 Let\'92s test this then:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node get_messages.js whaa@example.com\cb1 \
+\cb4 messages 
+\f4\b for
+\f3\b0  user whaa@example.com:  \cb1 \
+\cb4 \{ _id: '89f2204c421281219758d49818002e6c',\cb1 \
+\cb4   _rev: '1-76ed2ec67fadc424d6f7cfd1cd1327e9',\cb1 \
+\cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body',\cb1 \
+\cb4   createdAt: 1422438090494 \}\cb1 \
+\cb4 \{ _id: '89f2204c421281219758d49818002b17',\cb1 \
+\cb4   _rev: '1-76ed2ec67fadc424d6f7cfd1cd1327e9',\cb1 \
+\cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body',\cb1 \
+\cb4   createdAt: 1422438090494 \}\cb1 \
+\cb4 ...\cb1 \
+\cb4 $ node get_messages.js whaa@example.com 1\cb1 \
+\cb4 messages 
+\f4\b for
+\f3\b0  user whaa@example.com:  \cb1 \
+\cb4 \{ _id: '89f2204c421281219758d498180019ef',\cb1 \
+\cb4   _rev: '1-145100821a440accea8c7127fd7ed3ef',\cb1 \
+\cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body',\cb1 \
+\cb4   createdAt: 1422438090491 \}\cb1 \
+\cb4 \{ _id: '89f2204c421281219758d498180018c5',\cb1 \
+\cb4   _rev: '1-145100821a440accea8c7127fd7ed3ef',\cb1 \
+\cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body',\cb1 \
+\cb4   createdAt: 1422438090491 \}\cb1 \
+\cb4 ...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Looks like it\'92s working.\cb1 \
+\cb3 This approach has one problem though: CouchDB stores the index in a B-Tree and will be scanning all the elements that are to be skipped. This means that the performance of this query will decrease as we get more pages; CouchDB will have to count and skip more records.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs52 \cf2 \cb3 A better way of paginating\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 So what\'92s the alternative? Instead of telling CouchDB how many records to skip, we should be telling CouchDB which record key to begin at. Here is how we can implement that:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 bottom of db/messages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 function
+\f3\b0  
+\f4\b getMessagesFor
+\f3\b0 (user, startKey, maxPerPage, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   messages.view(\cb1 \
+\cb4     'by_to_createdAt', 'by_to_createdAt',\cb1 \
+\cb4     \{\cb1 \
+\cb4       startkey: [user, startKey],\cb1 \
+\cb4       endkey: [user, 0],\cb1 \
+\cb4       descending: true,\cb1 \
+\cb4       include_docs: true,\cb1 \
+\cb4       limit: maxPerPage + 1\cb1 \
+\cb4     \},\cb1 \
+\cb4     errors.wrapNano(
+\f4\b function
+\f3\b0 (err, result) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         cb(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         result = result.rows.map(
+\f4\b function
+\f3\b0 (row) \{\cb1 \
+\cb4           
+\f4\b return
+\f3\b0  row.doc;\cb1 \
+\cb4         \});\cb1 \
+\cb4         
+\f4\b if
+\f3\b0  (result.length > maxPerPage) \{\cb1 \
+\cb4           // remove the last record\cb1 \
+\cb4           
+\f4\b var
+\f3\b0  next = result.pop().createdAt;\cb1 \
+\cb4         \}\cb1 \
+\cb4         cb(null, result, next);\cb1 \
+\cb4       \}\cb1 \
+\cb4     \})\cb1 \
+\cb4   );\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Now our 
+\f3\fs31\fsmilli15750 \cb4 getMessagesFor
+\f0\fs42 \cb3  function accepts a start key instead of a page number. We use this start key as the past part of the 
+\f3\fs31\fsmilli15750 \cb4 startkey
+\f0\fs42 \cb3  parameter we send to CouchDB, allowing it to jump to the correct first record immediately.\cb1 \
+\cb3 We\'92re then requesting one more document than what the user requested. This allows us to calculate the start key of the next page. We then pop the last doc from the result set and pass its key into the result callback.\cb1 \
+\cb3 Let\'92s see how a client can now implement pagination using this:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 get_messages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  user = process.argv[2];\cb1 \
+
+\f4\b \cb4 if
+\f3\b0  (! user) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   console.error('please specify user');\cb1 \
+\cb4   
+\f4\b return
+\f3\b0 ;\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 var
+\f3\b0  start = Number(process.argv[3]) || Date.now();  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  maxPerPage = Number(process.argv[4]) || 4;\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  messages = require('./db/messages');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 messages.getFor(user, start, maxPerPage, 
+\f4\b function
+\f3\b0 (err, messages, next) \{  \cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     
+\f4\b throw
+\f3\b0  err;\cb1 \
+\cb4   \}\cb1 \
+\cb4   console.log('messages for user %s:', user);\cb1 \
+\cb4   messages.forEach(printMessage);\cb1 \
+\cb4   console.log('\\nNext message ID is %s', next);\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b printMessage
+\f3\b0 (message) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   console.log(message);\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 In addition to printing the messages, we also print the ID of the next message. Let\'92s see this in action:\cb1 \
+\cb3 Request the first page:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node get_messages.js whaa@example.com\cb1 \
+\cb4 messages 
+\f4\b for
+\f3\b0  user whaa@example.com:  \cb1 \
+\cb4 \{ _id: '89f2204c421281219758d49818002e6c',\cb1 \
+\cb4   _rev: '1-76ed2ec67fadc424d6f7cfd1cd1327e9',\cb1 \
+\cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body',\cb1 \
+\cb4   createdAt: 1422438090494 \}\cb1 \
+\cb4 ...\cb1 \
+\cb4 Next message ID is 1422438090491\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Now we have an ID we can use to get to the next page. Let\'92s use it:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node get_messages.js whaa@example.com 1422438090491\cb1 \
+\cb4 messages 
+\f4\b for
+\f3\b0  user whaa@example.com:  \cb1 \
+\cb4 \{ _id: '89f2204c421281219758d498180019ef',\cb1 \
+\cb4   _rev: '1-145100821a440accea8c7127fd7ed3ef',\cb1 \
+\cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body',\cb1 \
+\cb4   createdAt: 1422438090491 \}\cb1 \
+\cb4 ...\cb1 \
+\cb4 Next message ID is 1422438090489\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Since we get four records per page, our next page will have two records and no message ID. Let\'92s verify that:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 node get_messages.js whaa@example.com 1422438090489  \cb1 \
+\cb4 messages 
+\f4\b for
+\f3\b0  user whaa@example.com:  \cb1 \
+\cb4 \{ _id: '89f2204c421281219758d4981800044b',\cb1 \
+\cb4   _rev: '1-b17d04a94cfcd70b83e6b68707a59e58',\cb1 \
+\cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body',\cb1 \
+\cb4   createdAt: 1422438090489 \}\cb1 \
+\cb4 \{ _id: '89f2204c421281219758d49818000152',\cb1 \
+\cb4   _rev: '1-ab4a6fbdc966e6644fa7f470c3d2f414',\cb1 \
+\cb4   from: 'someone@example.com',\cb1 \
+\cb4   to: 'whaa@example.com',\cb1 \
+\cb4   subject: 'Test 123',\cb1 \
+\cb4   body: 'Test message body',\cb1 \
+\cb4   createdAt: 1422438090485 \}\cb1 \
+\cb4 Next message ID is undefined\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 So how do you create a link to the previous page? You will have to keep the previous start key around, passing it in the URL. This approach has one limitation: it doesn\'92t allow you to jump to a page number.
+\f2\i \cb1 \
+
+\f0\i0 \cb3 For the ID of the message we\'92re using the timestamp. A timestamp has a resolution of milliseconds. If we have more than one message being created during the same timestamp, our pagination scheme won\'92t work. To remedy this, we need to tell which exact record to start at by specifying the 
+\f3\fs31\fsmilli15750 \cb4 startdocid
+\f0\fs42 \cb3  view argument. This means that you will also have to pass this argument from the client to the query, and that the query result should also pass the first message ID of the next page to the client.
+\f2\i \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\i0\b\fs72 \cf2 \cb3 Reducing\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 Views are implemented by specifying a map function and also an optional reduce function. This reduce function can be used to, as the name says, somehow reduce the number of records stored in this view.\cb1 \
+\cb3 Let\'92s build on our messages example and create a view that calculates the number of messages in a given user\'92s inbox.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 bottom of views/messages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 exports.to_count = \{  \cb1 \
+\cb4   map: 
+\f4\b function
+\f3\b0 (doc) \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (doc.to) \{\cb1 \
+\cb4       emit(doc.to, 1);\cb1 \
+\cb4     \}\cb1 \
+\cb4   \},\cb1 \
+\cb4   reduce: 
+\f4\b function
+\f3\b0 (keys, values) \{\cb1 \
+\cb4     
+\f4\b return
+\f3\b0  sum(values);\cb1 \
+\cb4   \}\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 This view now has a reduce function. This reduce function uses the CouchDB built-in 
+\f3\fs31\fsmilli15750 \cb4 sum
+\f0\fs42 \cb3  function to return the sum of the given values. We start out by mapping each message to the value 
+\f3\fs31\fsmilli15750 \cb4 1
+\f0\fs42 \cb3 , which we then get on the values in the reduce function. Our reduce function can be called iteratively and recursively, each time just blindly summing the values.\cb1 \
+\cb3 We can now query this view to find out how many messages a given user has addressed to them:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 bottom of db/messages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 /// Count messages for a given user\cb1 \
+\cb4 exports.countFor = countMessagesFor;\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b countMessagesFor
+\f3\b0 (user, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   messages.view('to_count', 'to_count', \{\cb1 \
+\cb4     keys: [user],\cb1 \
+\cb4     group: true\cb1 \
+\cb4   \}, errors.wrapNano(
+\f4\b function
+\f3\b0 (err, result) \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4       cb(err);\cb1 \
+\cb4     \}\cb1 \
+\cb4     
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4       cb(null, result.rows[0].value);\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}));\cb1 \
+\cb4 \};\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 This view query now queries a specific key (the user ID), but tells it to use the reduced values by setting the 
+\f3\fs31\fsmilli15750 \cb4 group
+\f0\fs42 \cb3  argument to 
+\f3\fs31\fsmilli15750 \cb4 true
+\f0\fs42 \cb3 . We then expect the result to have only one row, from which we extract the value.\cb1 \
+\cb3 Now our 
+\f3\fs31\fsmilli15750 \cb4 get_messages.js
+\f0\fs42 \cb3  client can query the number of messages to present it before getting the messages:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 get_messages.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  user = process.argv[2];\cb1 \
+
+\f4\b \cb4 if
+\f3\b0  (! user) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   console.error('please specify user');\cb1 \
+\cb4   
+\f4\b return
+\f3\b0 ;\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 var
+\f3\b0  start = Number(process.argv[3]) || Date.now();  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  maxPerPage = Number(process.argv[4]) || 4;\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  messages = require('./db/messages');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 messages.countFor(user, 
+\f4\b function
+\f3\b0 (err, count) \{  \cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     
+\f4\b throw
+\f3\b0  err;\cb1 \
+\cb4   \}\cb1 \
+\cb4   console.log('%s has a total of %d messages.', user, count);\cb1 \
+\cb4   messages.getFor(user, start, maxPerPage, 
+\f4\b function
+\f3\b0 (err, messages, next) \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4       
+\f4\b throw
+\f3\b0  err;\cb1 \
+\cb4     \}\cb1 \
+\cb4     console.log('messages for user %s:', user);\cb1 \
+\cb4     messages.forEach(printMessage);\cb1 \
+\cb4     console.log('\\nNext message ID is %s', next);\cb1 \
+\cb4   \});\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b printMessage
+\f3\b0 (message) \{\cb1 \
+\cb4     console.log(message);\cb1 \
+\cb4   \}\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Let\'92s test this:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node get_messages.js whaa@example.com\cb1 \
+\cb4 whaa@example.com has a total of 10 messages.  \cb1 \
+\cb4 ...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 Using the Changes Feed\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 A CouchDB database has the amazing ability to provide a feed of all the changes it has gone through over time. This changes feed is what lies behind CouchDB\'92s replication mechanism, but you can use it for many other things.\cb1 \
+\cb3 For instance, in our users-and-messages system, we can use the changes feed of the 
+\f3\fs31\fsmilli15750 \cb4 messages
+\f0\fs42 \cb3  database to have a separate worker sending notification emails to the recipient of each message. Let's see how we could implement that:\cb1 \
+\cb3 First we will have to install the 
+\f3\fs31\fsmilli15750 \cb4 follow
+\f0\fs42 \cb3  NPM package, which allows us to get the changes feed of a CouchDB database.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ npm install follow --save\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Now let\'92s create an email-sending worker that listens to the changes feed from the 
+\f3\fs31\fsmilli15750 \cb4 messages
+\f0\fs42 \cb3  database and sends emails. For that we will create a 
+\f3\fs31\fsmilli15750 \cb4 workers
+\f0\fs42 \cb3  directory:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ mkdir workers\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Let\'92s now create our worker:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 workers/messages.sendmail.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  follow = require('follow');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  couch = require('../couchdb');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  messages = couch.use('messages');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  messages = couch.use('messages');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  feed = follow(\{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   db: couch.config.url + '/' + 'messages',\cb1 \
+\cb4   include_docs: true\cb1 \
+\cb4 \}, onChange);\cb1 \
+\cb4 feed.filter = 
+\f4\b function
+\f3\b0  
+\f4\b filter
+\f3\b0 (doc) \{  \cb1 \
+\cb4   
+\f4\b return
+\f3\b0  doc._id.indexOf('_design/') != 0 && !doc.notifiedRecipient;\cb1 \
+\cb4 \};\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b onChange
+\f3\b0 (err, change) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     console.error(err);\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     console.log('change:', change);\cb1 \
+\cb4     feed.pause();\cb1 \
+\cb4     
+\f4\b var
+\f3\b0  message = change.doc;\cb1 \
+\cb4     sendEmail(message, sentEmail);\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b sentEmail
+\f3\b0 (err) \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4       console.error(err);\cb1 \
+\cb4     \}\cb1 \
+\cb4     
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4       message.notifiedRecipient = true;\cb1 \
+\cb4     \}\cb1 \
+\cb4     messages.insert(message, savedMessage);\cb1 \
+\cb4   \}\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b sendEmail
+\f3\b0 (message, cb) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   // Fake send email\cb1 \
+\cb4   setTimeout(cb, randomTime(1e3));\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b savedMessage
+\f3\b0 (err) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     console.error(err);\cb1 \
+\cb4   \}\cb1 \
+\cb4   feed.resume();\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b randomTime
+\f3\b0 (max) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b return
+\f3\b0  Math.floor(Math.random() * max);\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 The worker starts out (using the 
+\f3\fs31\fsmilli15750 \cb4 follow
+\f0\fs42 \cb3  package we just installed), by creating a feed on the 
+\f3\fs31\fsmilli15750 \cb4 messages
+\f0\fs42 \cb3 database.\cb1 \
+\cb3 This feed object can be configured with a filter that defines whether a certain document change is interesting to us or not. In our case we\'92re not interested in design documents (ones whose ID begins with 
+\f3\fs31\fsmilli15750 \cb4 _design/
+\f0\fs42 \cb3 ), and messages that we have marked with a 
+\f3\fs31\fsmilli15750 \cb4 notifiedRecipient
+\f0\fs42 \cb3  property. (As you will see later, this property is 
+\f3\fs31\fsmilli15750 \cb4 true
+\f0\fs42 \cb3  for all messages that have been successfully sent.)\cb1 \
+\cb3 Each change we get will be handled by our 
+\f3\fs31\fsmilli15750 \cb4 onChange
+\f0\fs42 \cb3  function. This function starts by pausing the feed and then sending the email.\cb1 \
+\cb3 Here we\'92re using a fake email-sending function that just calls the callback after a random amount of time (smaller than one second) has passed.
+\f2\i \cb1 \
+
+\f0\i0 \cb3 Once the email has been sent, the 
+\f3\fs31\fsmilli15750 \cb4 sentEmail
+\f0\fs42 \cb3  function gets called. We take this chance to flag the message as having been sent by setting the 
+\f3\fs31\fsmilli15750 \cb4 notifiedRecipient
+\f0\fs42 \cb3  property to 
+\f3\fs31\fsmilli15750 \cb4 true
+\f0\fs42 \cb3 . We then persist the message into the database.\cb1 \
+\cb3 After saving the message we resume the feed, and the worker gets the next pending message if there is any, restarting the work cycle. If there is no pending change, the feed will sit waiting for changes.\cb1 \
+\cb3 Let\'92s test this worker:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node workers/messages.sendmail.js\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 You should start to see a series of messages being processed, and then the process waits for more relevant changes.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 Minimising the chance of repeated jobs\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 There\'92s at least one problem with this set-up: there is the slight chance that a duplicate email will get sent:\cb1 \
+\cb3 If a worker process shuts down after sending the email, but before having the chance to save the message, the message stats will have been lost. Once the worker comes back up, this message will be picked up again by the changes feed, it will be selected by the filter, and a second email will be sent. There are several ways to minimise this risk.\cb1 \
+\cb3 The first way is for the worker process to have a signal handler. By listening to 
+\f3\fs31\fsmilli15750 \cb4 SIGINT
+\f0\fs42 \cb3 , we can catch attempts to kill the worker process and react accordingly:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  working = false;  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  quit = false;\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 process.once('SIGINT', 
+\f4\b function
+\f3\b0 () \{  \cb1 \
+\cb4   console.log('shutting down...');\cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (! working) \{\cb1 \
+\cb4     process.exit();\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     quit = true;\cb1 \
+\cb4   \}\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 We can set the 
+\f3\fs31\fsmilli15750 \cb4 working
+\f0\fs42 \cb3  flag to 
+\f3\fs31\fsmilli15750 \cb4 true
+\f0\fs42 \cb3  when we get a change:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b onChange
+\f3\b0 (err, change) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     console.error(err);\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     console.log(change);\cb1 \
+\cb4     working = true;\cb1 \
+\cb4     feed.pause();\cb1 \
+\cb4     
+\f4\b var
+\f3\b0  message = change.doc;\cb1 \
+\cb4     sendEmail(message, sentEmail);\cb1 \
+\cb4   \}\cb1 \
+\cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 \'85and reset it when a message is finished, also quitting the process if necessary:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b savedMessage
+\f3\b0 (err) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     console.error(err);\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (quit) \{\cb1 \
+\cb4     process.exit();\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     working = false;\cb1 \
+\cb4     feed.resume();\cb1 \
+\cb4   \}\cb1 \
+\cb4 \}\cb1 \
+\cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 This pattern works when you run separate processes for separate workers. If you absolutely need to have more than one worker running in the same process, you will need to coordinate the shutdown procedure between them.
+\f2\i \cb1 \
+
+\f0\i0 \cb3 Anyway, this scheme won\'92t work if your process dies abruptly without the chance to catch a 
+\f3\fs31\fsmilli15750 \cb4 SIGINT
+\f0\fs42 \cb3 signal. If you need to handle this case, a proper queuing service (covered by another book in this series) should be used.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 Recording the sequence\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 If you need to restart the worker process, the changes feed starts from the beginning of the database history. In this case, our filter function will filter out all the messages that have already been sent (the ones that have the 
+\f3\fs31\fsmilli15750 \cb4 notifiedRecipient
+\f0\fs42 \cb3  property set to 
+\f3\fs31\fsmilli15750 \cb4 true
+\f0\fs42 \cb3 ), but it may take our feed to get past all the messages that have been processed. But there is a way around that.\cb1 \
+\cb3 Each change to a CouchDB database contains a sequence number. The first change to a database creates a change with sequence number 1, and it keeps increasing with every change you make. When you get the changes feed, each change is identified by that sequence number. Once the work is done, you can somehow record that sequence. When the process comes up, you start by querying that sequence. If it exists, you use it to specify the point from which the feed should start.\cb1 \
+\cb3 In this case we will use our CouchDB server to store the last processed sequence. It could alternatively be saved in a local file, but then we would have to periodically back up that file.\cb1 \
+\cb3 Then we will need to create a database where we will store the worker sequences:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 top of init_couch.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  
+\f4\b async
+\f3\b0  = require('async');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  couch = require('./couchdb');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  views = require('./views');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  databases = ['users', 'messages', 'workersequences'];  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Then we need to create this database by running the app initialisation:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ node app\cb1 \
+\cb4 couchdb initialized\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Next, we will need to query the sequence before starting the feed:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 middle of workers/messages.sendmail.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 var
+\f3\b0  workerSequences = couch.use('workersequences');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 workerSequences.get('messages.sendmail', 
+\f4\b function
+\f3\b0 (err, sequence) \{  \cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (! sequence) \{\cb1 \
+\cb4     sequence = \{\cb1 \
+\cb4       _id: 'messages.sendmail',\cb1 \
+\cb4       since: 0\cb1 \
+\cb4     \};\cb1 \
+\cb4   \}\cb1 \
+\cb4   console.log('last sequence:', sequence);\cb1 \
+\cb4   
+\f4\b var
+\f3\b0  feed = follow(\{\cb1 \
+\cb4     db: couch.config.url + '/' + 'messages',\cb1 \
+\cb4     include_docs: true,\cb1 \
+\cb4     since: sequence.since\cb1 \
+\cb4   \}, onChange);\cb1 \
+\cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here we\'92re using the 
+\f3\fs31\fsmilli15750 \cb4 since
+\f0\fs42 \cb3  parameter to the 
+\f3\fs31\fsmilli15750 \cb4 follow
+\f0\fs42 \cb3  feed constructor, specifying that we want to use the saved sequence. If no sequence has been saved, we create a 
+\f3\fs31\fsmilli15750 \cb4 sequence
+\f0\fs42 \cb3  object where the 
+\f3\fs31\fsmilli15750 \cb4 since
+\f0\fs42 \cb3 attribute is 0, which will make the feed start from the beginning of the history.\cb1 \
+\cb3 Next we need to update the sequence number when we get a change:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b onChange
+\f3\b0 (err, change) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     console.error(err);\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     console.log(change);\cb1 \
+\cb4     sequence.since = change.seq;\cb1 \
+\cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Now we need to save the sequence when we finish processing a message:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b savedMessage
+\f3\b0 (err) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     console.error(err);\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (quit) \{\cb1 \
+\cb4     process.exit();\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     saveSequence();\cb1 \
+\cb4   \}\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b saveSequence
+\f3\b0 () \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   workerSequences.insert(sequence, savedSequence);\cb1 \
+\cb4 \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 function
+\f3\b0  
+\f4\b savedSequence
+\f3\b0 (err, result) \{  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4   
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4     
+\f4\b throw
+\f3\b0 (err);\cb1 \
+\cb4   \}\cb1 \
+\cb4   sequence._rev = result.rev;\cb1 \
+\cb4   working = false;\cb1 \
+\cb4   feed.resume();\cb1 \
+\cb4 \}\cb1 \
+\cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here we\'92re making sure that we update the new revision number on the 
+\f3\fs31\fsmilli15750 \cb4 sequence
+\f0\fs42 \cb3  object after we saved it to prevent CouchDB declaring a conflict.\cb1 \
+\cb3 You may have noticed that we\'92re throwing an error if we get an error saving the sequence. This may need some refinement, but it\'92s mainly because the error is almost certainly caused by a CouchDB conflict. A conflict may arise if you\'92re running more than one worker process, in which case it\'92s good that we throw and stop: this set-up doesn\'92t support multiple worker processes of the same type.
+\f2\i \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\i0\b\fs72 \cf2 \cb3 Scaling: how to support more than one job in parallel\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 Using this set-up we can only have one worker process. This can be OK if the feed frequency is not too high; but if that\'92s not the case, we have two choices. The first one is feasible if, and only if, the type of work is I/O-intensive (as was the case of sending emails). If that\'92s the case, we can easily support more than one pending message waiting to be processed at the same time, which will increase the overall throughput of one single worker.\cb1 \
+\cb3 To support more than one worker we need to make a set of considerable changes. First, we will be having individual emails being sent in parallel that can finish in any order. We must be sure not to save a sequence number that is higher than any pending change, or else we may lose data. To enable this we will use a sorted list where we will store all the sequences that are pending. Let\'92s install an NPM package that allows us to have a sorted list:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 $ npm install sortedlist --save\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Next we will need to create a sorted list that will contain all the pending sequences:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 top of workers/messages.sendmail.parallel.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  follow = require('follow');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  couch = require('../couchdb');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  messages = couch.use('messages');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  SortedList = require('sortedlist');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  pendingSequences = SortedList.create();  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 After that we need to define a variable that will hold the number of messages currently pending:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 var
+\f3\b0  worker = 'messages.sendmail';\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  maxParallel = 5;  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  pending = 0;  \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Next we need to update the 
+\f3\fs31\fsmilli15750 \cb4 SIGINT
+\f0\fs42 \cb3  signal handler accordingly:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 var
+\f3\b0  quit = false;\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 process.once('SIGINT', 
+\f4\b function
+\f3\b0 () \{  \cb1 \
+\cb4   console.log('shutting down...');\cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (! pending) \{\cb1 \
+\cb4     process.exit();\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     quit = true;\cb1 \
+\cb4   \}\cb1 \
+\cb4 \});\cb1 \
+\cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 When starting up, we need to query the last known sequence ID and start the feed, somewhat similar to before:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 var
+\f3\b0  workerSequences = couch.use('workersequences');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 workerSequences.get(worker, 
+\f4\b function
+\f3\b0 (err, sequence) \{\cb1 \
+\cb4   
+\f4\b var
+\f3\b0  since = sequence && sequence.since || 0;\cb1 \
+\cb4   console.log('since:', since);\cb1 \
+\cb4   
+\f4\b var
+\f3\b0  feed = follow(\{\cb1 \
+\cb4     db: couch.config.url + '/' + 'messages',\cb1 \
+\cb4     include_docs: true,\cb1 \
+\cb4     since: since\cb1 \
+\cb4   \}, onChange);\cb1 \
+\cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 The feed filter function remains unchanged:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 //...\cb1 \
+\cb4   feed.filter = 
+\f4\b function
+\f3\b0  
+\f4\b filter
+\f3\b0 (doc) \{\cb1 \
+\cb4     
+\f4\b return
+\f3\b0  doc._id.indexOf('_design/') != 0 && !doc.notifiedRecipient;\cb1 \
+\cb4   \};\cb1 \
+\cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 The change handler needs to insert the change sequence into the sorted list of pending sequences:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 //...\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b onChange
+\f3\b0 (err, change) \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4       console.error(err);\cb1 \
+\cb4     \}\cb1 \
+\cb4     
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4       console.log(change);\cb1 \
+\cb4       pendingSequences.insert(change.seq);\cb1 \
+\cb4       pending ++;\cb1 \
+\cb4       maybePause();\cb1 \
+\cb4       
+\f4\b var
+\f3\b0  message = change.doc;\cb1 \
+\cb4       sendEmail(message, sentEmail);\cb1 \
+\cb4     \}\cb1 \
+\cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Note that we\'92re now using a function called 
+\f3\fs31\fsmilli15750 \cb4 maybePause
+\f0\fs42 \cb3  (which we define later), that will pause the feed if the number of pending messages has reached the maximum defined in 
+\f3\fs31\fsmilli15750 \cb4 maxParallel
+\f0\fs42 \cb3  (bluntly hard-coded to 5 in our case).\cb1 \
+\cb3 The 
+\f3\fs31\fsmilli15750 \cb4 sentEmail
+\f0\fs42 \cb3  function remains unchanged:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 function
+\f3\b0  
+\f4\b sentEmail
+\f3\b0 (err) \{\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         console.error(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         message.notifiedRecipient = true;\cb1 \
+\cb4       \}\cb1 \
+\cb4       messages.insert(message, savedMessage);\cb1 \
+\cb4     \}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 But the 
+\f3\fs31\fsmilli15750 \cb4 savedMessage
+\f0\fs42 \cb3  callback function now calls 
+\f3\fs31\fsmilli15750 \cb4 maybeSaveSequence
+\f0\fs42 \cb3 , which is then responsible for saving the sequence number to CouchDB if, and only if, the current job is the pending job with the smallest sequence:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb4 //...\cb1 \
+\cb4     
+\f4\b function
+\f3\b0  
+\f4\b savedMessage
+\f3\b0 (err) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         console.error(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       maybeSaveSequence();\cb1 \
+\cb4     \}\cb1 \
+\cb4     
+\f4\b function
+\f3\b0  
+\f4\b maybeSaveSequence
+\f3\b0 () \{\cb1 \
+\cb4       
+\f4\b var
+\f3\b0  pos = pendingSequences.key(change.seq);\cb1 \
+\cb4       pendingSequences.remove(pos);\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (pos == 0) \{\cb1 \
+\cb4         saveSequence();\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         savedSequence();\cb1 \
+\cb4       \}\cb1 \
+\cb4     \}\cb1 \
+\cb4     
+\f4\b function
+\f3\b0  
+\f4\b saveSequence
+\f3\b0 () \{\cb1 \
+\cb4       workerSequences.get(worker, 
+\f4\b function
+\f3\b0 (err, sequence) \{\cb1 \
+\cb4         
+\f4\b if
+\f3\b0  (! sequence) \{\cb1 \
+\cb4           sequence = \{\cb1 \
+\cb4             _id: worker,\cb1 \
+\cb4             since: 0\cb1 \
+\cb4           \};\cb1 \
+\cb4         \}\cb1 \
+\cb4         
+\f4\b if
+\f3\b0  (sequence.since < change.seq) \{\cb1 \
+\cb4           sequence.since = change.seq;\cb1 \
+\cb4           workerSequences.insert(sequence, savedSequence);\cb1 \
+\cb4         \}\cb1 \
+\cb4         
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4           savedSequence();\cb1 \
+\cb4         \}\cb1 \
+\cb4       \});\cb1 \
+\cb4     \}\cb1 \
+\cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Since now there is the possibility of concurrent sequence updates, the 
+\f3\fs31\fsmilli15750 \cb4 savedSequence
+\f0\fs42 \cb3  callback should now handle a conflict error by retrying to save the sequence:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 function
+\f3\b0  
+\f4\b savedSequence
+\f3\b0 (err) \{\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4       
+\f4\b if
+\f3\b0  (err && err.statusCode == 409) \{\cb1 \
+\cb4         saveSequence();\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         
+\f4\b throw
+\f3\b0 (err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         pending --;\cb1 \
+\cb4         console.log('PENDING: %d', pending);\cb1 \
+\cb4         maybeQuit();\cb1 \
+\cb4         maybeResume();\cb1 \
+\cb4       \}\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}\cb1 \
+\cb4 //...\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 This function now calls 
+\f3\fs31\fsmilli15750 \cb4 maybeQuit
+\f0\fs42 \cb3 , which detects whether we need to quit. (We need to quit if we caught a 
+\f3\fs31\fsmilli15750 \cb4 SIGINT
+\f0\fs42 \cb3  signal and we no longer have pending messages.) It also calls the 
+\f3\fs31\fsmilli15750 \cb4 maybeResume
+\f0\fs42 \cb3  function, which resumes the feed if we're not quitting and we still have room for more parallel operations.\cb1 \
+\cb3 Here is the rest of the file, containing the implementation of the fake email-sending (the same as before) and the 
+\f3\fs31\fsmilli15750 \cb4 maybe...
+\f0\fs42 \cb3  functions:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 function
+\f3\b0  
+\f4\b sendEmail
+\f3\b0 (message, cb) \{\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4     // Fake send email\cb1 \
+\cb4     setTimeout(cb, randomTime(1e3));\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b maybePause
+\f3\b0 () \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (quit || pending > maxParallel) \{\cb1 \
+\cb4       feed.pause();\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b maybeResume
+\f3\b0 () \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (!quit && pending < maxParallel) \{\cb1 \
+\cb4       feed.resume();\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b maybeQuit
+\f3\b0 () \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (quit && !pending) \{\cb1 \
+\cb4       process.exit();\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b randomTime
+\f3\b0 (max) \{\cb1 \
+\cb4     
+\f4\b return
+\f3\b0  Math.floor(Math.random() * max);\cb1 \
+\cb4   \}\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here is the complete file for your delight:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb3 workers/messages.sendmil.parallel.js:
+\f0\b0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  follow = require('follow');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  couch = require('../couchdb');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  messages = couch.use('messages');  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  SortedList = require('sortedlist');\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  pendingSequences = SortedList.create();\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  worker = 'messages.sendmail';\cb1 \
+
+\f4\b \cb4 var
+\f3\b0  maxParallel = 5;  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  pending = 0;  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  quit = false;\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 process.once('SIGINT', 
+\f4\b function
+\f3\b0 () \{  \cb1 \
+\cb4   console.log('shutting down...');\cb1 \
+\cb4   
+\f4\b if
+\f3\b0  (! pending) \{\cb1 \
+\cb4     process.exit();\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4     quit = true;\cb1 \
+\cb4   \}\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b \cf2 \cb4 var
+\f3\b0  workerSequences = couch.use('workersequences');\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 workerSequences.get(worker, 
+\f4\b function
+\f3\b0 (err, sequence) \{\cb1 \
+\cb4   
+\f4\b var
+\f3\b0  since = sequence && sequence.since || 0;\cb1 \
+\cb4   console.log('since:', since);\cb1 \
+\cb4   
+\f4\b var
+\f3\b0  feed = follow(\{\cb1 \
+\cb4     db: couch.config.url + '/' + 'messages',\cb1 \
+\cb4     include_docs: true,\cb1 \
+\cb4     since: since\cb1 \
+\cb4   \}, onChange);\cb1 \
+\cb4   feed.filter = 
+\f4\b function
+\f3\b0  
+\f4\b filter
+\f3\b0 (doc) \{\cb1 \
+\cb4     
+\f4\b return
+\f3\b0  doc._id.indexOf('_design/') != 0 && !doc.notifiedRecipient;\cb1 \
+\cb4   \};\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b onChange
+\f3\b0 (err, change) \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4       console.error(err);\cb1 \
+\cb4     \}\cb1 \
+\cb4     
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4       console.log(change);\cb1 \
+\cb4       pendingSequences.insert(change.seq);\cb1 \
+\cb4       pending ++;\cb1 \
+\cb4       maybePause();\cb1 \
+\cb4       
+\f4\b var
+\f3\b0  message = change.doc;\cb1 \
+\cb4       sendEmail(message, sentEmail);\cb1 \
+\cb4     \}\cb1 \
+\cb4     
+\f4\b function
+\f3\b0  
+\f4\b sentEmail
+\f3\b0 (err) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         console.error(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         message.notifiedRecipient = true;\cb1 \
+\cb4       \}\cb1 \
+\cb4       messages.insert(message, savedMessage);\cb1 \
+\cb4     \}\cb1 \
+\cb4     
+\f4\b function
+\f3\b0  
+\f4\b savedMessage
+\f3\b0 (err) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         console.error(err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       maybeSaveSequence();\cb1 \
+\cb4     \}\cb1 \
+\cb4     
+\f4\b function
+\f3\b0  
+\f4\b maybeSaveSequence
+\f3\b0 () \{\cb1 \
+\cb4       
+\f4\b var
+\f3\b0  pos = pendingSequences.key(change.seq);\cb1 \
+\cb4       pendingSequences.remove(pos);\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (pos == 0) \{\cb1 \
+\cb4         saveSequence();\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         savedSequence();\cb1 \
+\cb4       \}\cb1 \
+\cb4     \}\cb1 \
+\cb4     
+\f4\b function
+\f3\b0  
+\f4\b saveSequence
+\f3\b0 () \{\cb1 \
+\cb4       workerSequences.get(worker, 
+\f4\b function
+\f3\b0 (err, sequence) \{\cb1 \
+\cb4         
+\f4\b if
+\f3\b0  (! sequence) \{\cb1 \
+\cb4           sequence = \{\cb1 \
+\cb4             _id: worker,\cb1 \
+\cb4             since: 0\cb1 \
+\cb4           \};\cb1 \
+\cb4         \}\cb1 \
+\cb4         
+\f4\b if
+\f3\b0  (sequence.since < change.seq) \{\cb1 \
+\cb4           sequence.since = change.seq;\cb1 \
+\cb4           workerSequences.insert(sequence, savedSequence);\cb1 \
+\cb4         \}\cb1 \
+\cb4         
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4           savedSequence();\cb1 \
+\cb4         \}\cb1 \
+\cb4       \});\cb1 \
+\cb4     \}\cb1 \
+\cb4     
+\f4\b function
+\f3\b0  
+\f4\b savedSequence
+\f3\b0 (err) \{\cb1 \
+\cb4       
+\f4\b if
+\f3\b0  (err && err.statusCode == 409) \{\cb1 \
+\cb4         saveSequence();\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  
+\f4\b if
+\f3\b0  (err) \{\cb1 \
+\cb4         
+\f4\b throw
+\f3\b0 (err);\cb1 \
+\cb4       \}\cb1 \
+\cb4       
+\f4\b else
+\f3\b0  \{\cb1 \
+\cb4         pending --;\cb1 \
+\cb4         console.log('PENDING: %d', pending);\cb1 \
+\cb4         maybeQuit();\cb1 \
+\cb4         maybeResume();\cb1 \
+\cb4       \}\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b sendEmail
+\f3\b0 (message, cb) \{\cb1 \
+\cb4     // Fake send email\cb1 \
+\cb4     setTimeout(cb, randomTime(1e3));\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b maybePause
+\f3\b0 () \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (quit || pending > maxParallel) \{\cb1 \
+\cb4       feed.pause();\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b maybeResume
+\f3\b0 () \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (!quit && pending < maxParallel) \{\cb1 \
+\cb4       feed.resume();\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b maybeQuit
+\f3\b0 () \{\cb1 \
+\cb4     
+\f4\b if
+\f3\b0  (quit && !pending) \{\cb1 \
+\cb4       process.exit();\cb1 \
+\cb4     \}\cb1 \
+\cb4   \}\cb1 \
+\cb4   
+\f4\b function
+\f3\b0  
+\f4\b randomTime
+\f3\b0 (max) \{\cb1 \
+\cb4     
+\f4\b return
+\f3\b0  Math.floor(Math.random() * max);\cb1 \
+\cb4   \}\cb1 \
+\cb4 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs72 \cf2 \cb3 Balancing work: how to use more than one worker process\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 This set-up still doesn\'92t allow us to use more than one worker process: if we spawn two of them, both will try to perform the same work, which in this case results in duplicate email messages.\cb1 \
+\cb3 To allow this you can either a) resort to a proper distributed message queue (discussed in another book of this series), or b) distribute the work amongst processes by splitting the workload.\cb1 \
+\cb3 Unfortunately, implementing the second strategy with our set-up is not trivial. There are at least two complicated problems: work sharding and saving sequences.\cb1 \
+\cb3 One way of distributing the work is by dividing the message ID space between workers. For instance, if you have two workers, one could be responsible for handling messages with an even message ID, and the other could be responsible for the odd message IDs. You would need to change the change filter to something like this:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f4\b\fs32 \cf2 \cb4 var
+\f3\b0  workerCount = Number(process.env.WORKER_COUNT);  \cb1 \
+
+\f4\b \cb4 var
+\f3\b0  workerID = Number(process.env.WORKER_ID);\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb4 feed.filter = 
+\f4\b function
+\f3\b0  
+\f4\b filter
+\f3\b0 (doc) \{  \cb1 \
+\cb4   
+\f4\b var
+\f3\b0  id = Buffer(doc._id, 'hex');\cb1 \
+\cb4   
+\f4\b var
+\f3\b0  forWorker = id[id.length - 1] % workerCount == workerID;\cb1 \
+\cb4   
+\f4\b return
+\f3\b0  forWorker && doc._id.indexOf('_design/') != 0 && !doc.notifiedRecipient;\cb1 \
+\cb4 \};\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Here we\'92re using environment variables to assign a different worker ID to each worker process.\cb1 \
+\cb3 One problem with this happens when you want to introduce another worker: you will first have to shut down all the workers, update the 
+\f3\fs31\fsmilli15750 \cb4 WORKER_COUNT
+\f0\fs42 \cb3  environment variable on each, and then start each one.\cb1 \
+\cb3 The second problem is about saving sequences: each worker will have to save a sequence separately from all the other workers, to guarantee that one worker saving a higher sequence ID will not clobber another pending message, which can eventually lead to missing messages if a worker process restarts.\cb1 \
+\cb3 All in all, if you absolutely need to distribute work between processes, it\'92s better that you stick with a traditional distributed work queue (discussed in another book in this series).\cb1 \
+\cb3 Written by Pedro Teixeira (extracted from 
+\f1\b Databases-Volume I
+\f0\b0 , {\field{\*\fldinst{HYPERLINK "http://nodepatternsbooks.com/"}}{\fldrslt Node Patterns series}}) \'97 published for {\field{\*\fldinst{HYPERLINK "https://www.yld.io/"}}{\fldrslt YLD}}.}

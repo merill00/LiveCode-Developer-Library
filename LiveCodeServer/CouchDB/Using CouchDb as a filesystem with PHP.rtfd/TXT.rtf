@@ -1,0 +1,192 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue-Bold;\f1\froman\fcharset0 Times-Roman;\f2\fnil\fcharset0 Menlo-Regular;
+}
+{\colortbl;\red255\green255\blue255;\red0\green1\blue0;\red255\green255\blue255;\red26\green28\blue40;
+\red36\green149\blue255;\red38\green38\blue38;\red242\green242\blue242;}
+{\*\expandedcolortbl;;\cssrgb\c0\c392\c0;\cssrgb\c100000\c100000\c100000;\cssrgb\c13333\c14902\c20784;
+\cssrgb\c16078\c65882\c100000;\cssrgb\c20000\c20000\c20000;\cssrgb\c96078\c96078\c96078;}
+\margl1440\margr1440\vieww24880\viewh18760\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\b\fs84 \cf2 \cb3 \expnd0\expndtw0\kerning0
+Using CouchDb as a filesystem with PHP\
+{\field{\*\fldinst{HYPERLINK "https://dzone.com/articles/using-couchdb-filesystem-php"}}{\fldrslt 
+\fs28 https://dzone.com/articles/using-couchdb-filesystem-php}}
+\fs28 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b0\fs38 \cf4 One of the problems I need to solve in my {\field{\*\fldinst{HYPERLINK "http://gonzalo123.wordpress.com/2010/07/27/clustering-php-applications-tips-and-hints/"}}{\fldrslt \cf5 clustered PHP applications}} is where to store files. When I say files I\'92m not speaking about source code. I\'92m speaking about additional data files, such as download-able pdfs, logs, etc. Those files must be on every node of the cluster. One possible approach to the solution is to use a distributed filesystem, rsync or maybe use a file-server mounted on every node. Another solution may be the usage of CouchDb. CouchDb has two great features to meet or requirements with this problem. It allows us to store files as attachments and it also allows to perform a great and very easy multi-master replica system.\cb1 \
+\cb3 The usage of CouchDB is pretty straightforward. It implements a RESTfull interface to perform every operations. So the only thing we need is a REST client. Zend Framework has a great {\field{\*\fldinst{HYPERLINK "http://framework.zend.com/manual/en/zend.http.html"}}{\fldrslt \cf5 one}}. We dont\'92t really need a library. We can easily perform REST requests with the PHP\'92s {\field{\*\fldinst{HYPERLINK "http://php.net/manual/en/book.curl.php"}}{\fldrslt \cf5 Curl\'92s extension}}. I\'92ve created two libraries for working with CouchDb one is a low-level HTTP client (with curl) and another is higher level one (it uses the HTTP Client) for CouchDB operations. You can read two post about those libraries {\field{\*\fldinst{HYPERLINK "http://gonzalo123.wordpress.com/2010/01/09/building-a-simple-http-client-with-php-a-rest-client/"}}{\fldrslt \cf5 here}} and {\field{\*\fldinst{HYPERLINK "http://gonzalo123.wordpress.com/2010/03/15/php-and-couchdb/"}}{\fldrslt \cf5 here}}.\cb1 \
+\cb3 Now I want to extend the features of my library. I want to use CouchDB as file storage in PHP. Instead of using {\field{\*\fldinst{HYPERLINK "http://es.php.net/manual/en/ref.filesystem.php"}}{\fldrslt \cf5 file}} functions (fopen, fwrite, fread, \'85) I want to use another ones and store/read files in CouchDB. For doing this I\'92ve refactored those two libraries into another one called {\field{\*\fldinst{HYPERLINK "http://code.google.com/p/nov-framework/"}}{\fldrslt \cf5 Nov}}. I also have embraced namespaces so I will use them in the library. This means it\'92s only available with PHP 5.3.\cb1 \
+\cb3 Here you are a summary of the library. That\'92s not a complete UML graph. It\'92s only a diagram with the main features only with educational purpose.\cb1 \
+\pard\pardeftab720\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "http://gonzalo123.files.wordpress.com/2010/08/couchdb_fs1.png"}}{\fldrslt \cf5 {{\NeXTGraphic couchdb_fs1.png \width12080 \height5680 \noorient \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}}}\pard\pardeftab720\partightenfactor0
+\cf4 \
+\cb3 \'a0\cb1 \
+\cb3 The best to show the library is with an example:\cb1 \
+\cb3 First I\'92m going to start with the basic usage of Nov\\CouchDb library:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs28 \cf6 \cb7 // Starting up the loader\
+require_once("Nov/Loader.php");\
+Nov\\Loader::init();\
+\
+use Nov\\CouchDb;\
+$cdb = new CouchDb('localhost', 5984);\
+$cdb->db('users');\
+$nombre = $cdb->db('ris_users')->select('gonzalo')->asObject()->name;\
+$apellido = $cdb->db('ris_users')->select('gonzalo')->asObject()->surname;\
+echo "Hello \{$nombre\} \{$apellido\}.\
+";\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs38 \cf4 \cb3 To allow me the use of different CouchDb Databases and to put the Database configuration in one file. I use the following configuration class:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs28 \cf6 \cb7 class NovConf\
+\{\
+    const CDB1 = 'CDB1';\
+    const PG1  = 'PG1';\
+\
+    public static $_dbs = array(\
+    	self::PG1  => array(\
+            'driver'   => 'pgsql',\
+            'dsn'      => 'pgsql:dbname=pg1;host=localhost',\
+            'username' => null\
+            'password' => null,\
+        ),\
+        self::CDB1  => array(\
+            'driver'   => 'couchdb',\
+            'host'     => 'localhost',\
+            'port'     => 5984,\
+            'protocol' => 'http',\
+            'username' => null,\
+            'password' => null,\
+        ),\
+    );\
+\}\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs38 \cf4 \cb3 As you can see I use the same configuration file for my PDO drivers and CouchDb.\cb1 \
+\cb3 Now I can use:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs28 \cf6 \cb7 require_once("Nov/Loader.php");\
+Nov\\Loader::init();\
+\
+use Nov\\CouchDb;\
+$cdb = CouchDb::factory(NovConf::CDB1)->db('users');\
+\
+try \{\
+    $cdb->insert('xxx', array('name' => 'xxx'));\
+\} catch (CouchDb\\Exception\\DupValOnIndex $e) \{\
+    echo "Already created\\n";\
+\}\
+\
+$data = $cdb->select('xxx')->asObject();\
+$cdb->update('xxx', array('name' => 'xxx1'));\
+$cdb->delete('xxx')->asObject();\
+require_once("Nov/Loader.php");\
+Nov\\Loader::init();\
+\
+use Nov\\CouchDb;\
+$cdb = CouchDb::factory(NovConf::CDB1)->db('users');\
+\
+try \{\
+    $cdb->insert('xxx', array('name' => 'xxx'));\
+\} catch (CouchDb\\Exception\\DupValOnIndex $e) \{\
+    echo "Already created\\n";\
+\}\
+\
+$data = $cdb->select('xxx')->asObject();\
+$cdb->update('xxx', array('name' => 'xxx1'));\
+$cdb->delete('xxx')->asObject();\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs38 \cf4 \cb3 And now finally the file storage part:\cb1 \
+\cb3 For storing the files I\'92ve taken one design decision. Every files will be stored into separate CouchDb document. That\'92s means one file, one document. There\'92s another possible approach. One CouchDb document can be one folder and store every files as attachments of this folder in the same document. But I prefer the idea of not to track folders. Only files. So each CouchDb document will have only one attachment.\cb1 \
+\cb3 That\'92s an example of one document in CouchDb\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs28 \cf6 \cb7 \{\
+   "_id": "/home/gonzalo/aasa.txt",\
+   "_rev": "2-48b501a81c38fd84a3e0351917e64135",\
+   "path": "/home/gonzalo",\
+   "_attachments": \{\
+       "aasa.txt": \{\
+           "stub": true,\
+           "content_type": "application/octet-stream",\
+           "length": 12,\
+           "revpos": 2\
+       \}\
+   \}\
+\}\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs38 \cf4 \cb3 There\'92s another usage script. Here we can see all the features together. We create files, update and delete them. Internally Nov\\CouchDb\\Fs uses a predefined CouchDb database called fs.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs28 \cf6 \cb7 use Nov\\CouchDb\\Fs;\
+use Nov\\CouchDb\\Fs\\Exception;\
+require_once ("Nov/Loader.php");\
+Nov\\Loader::init();\
+\
+echo "<pre>";\
+// create an instance from a factory method\
+$fs = Fs::factory(NovConf::CDB1);\
+// Now we're going to delete a file. If it doesn't exists will throw a FileNotFound exception\
+try \{\
+    $fs->delete("/home/gonzalo/aaa.txt");\
+\} catch (Exception\\FileNotFound  $e) \{\
+    echo $e->getMessage() . "\\n";\
+\}\
+// Now we are going to create a file.\
+// the second parameter 'true' means if the file doesn't exist will be created. Similar than 'r+'\
+try \{\
+    $fs->open("/home/gonzalo/aaa.txt", true)\
+	->write("asasasasasas", "application/octet-stream");\
+\} catch (Exception\\FileNotFound $e) \{\
+    echo $e->getMessage() . "\\n";\
+\} catch (Exception\\WriteError $e) \{\
+    echo $e->getMessage() . "\\n";\
+\} catch (Exception $e) \{\
+    echo $e->getMessage() . "\\n";\
+\}\
+// We open the file\
+$res = $fs->open("/home/gonzalo/aaa.txt");\
+\
+// we can get the length and the content type\
+echo $res->getLenght() . "\\n";\
+echo $res->getContentType(). "\\n";\
+// We move it to another location\
+$to = "/another/location";\
+$res->move($to);\
+\
+$res = $fs->open($to);\
+// we flush the file to the browser\
+echo $res->raw();\
+\
+// finally we delete it\
+$res->delete();\
+echo "</pre>";\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs38 \cf4 \cb3 I\'92ve also created an extra class to allow to dump files from filesystem to CouchDb and\'a0vice-versa.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs28 \cf6 \cb7 require_once ("Nov/Loader.php");\
+Nov\\Loader::init();\
+echo "<pre>";\
+// from filesystem to couchdb\
+\\Nov\\CouchDb\\Fs\\Utils::fs2cdb("/path/from/", NovConf::CDB1);\
+// from couchdb to filesystem\
+\\Nov\\CouchDb\\Fs\\Utils::cdb2fs(NovConf::CDB1, "/path/to/");\
+echo "</pre>";\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs38 \cf4 \cb3 And that\'92s all. You can download the source code with the examples {\field{\*\fldinst{HYPERLINK "http://code.google.com/p/nov-framework/"}}{\fldrslt \cf5 here}}. The examples are under document_root/tests/couchdb/ folder.\'a0Remember you will need PHP5.3.\cb1 \
+\cb3 \'a0\cb1 \
+\cb3 Source: {\field{\*\fldinst{HYPERLINK "http://gonzalo123.wordpress.com/2010/08/30/using-couchdb-as-filesystem-with-php/"}}{\fldrslt \cf5 http://gonzalo123.wordpress.com/2010/08/30/using-couchdb-as-filesystem-with-php/}}}

@@ -1,0 +1,198 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 Helvetica-Oblique;\f2\fswiss\fcharset0 Helvetica-Bold;
+\f3\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red31\green31\blue31;\red255\green255\blue255;\red98\green98\blue98;
+\red239\green239\blue239;}
+{\*\expandedcolortbl;;\cssrgb\c16078\c16078\c16078;\cssrgb\c100000\c100000\c100000;\cssrgb\c45882\c45882\c45882;
+\cssrgb\c94902\c94902\c94902;}
+\margl1440\margr1440\vieww19980\viewh9720\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs80 \cf2 \cb3 \expnd0\expndtw0\kerning0
+Getting started with Hapi JS\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\fs48 \cf4 \cb3 \
+{\field{\*\fldinst{HYPERLINK "https://itnext.io/getting-started-with-hapi-js-e841724da924"}}{\fldrslt https://itnext.io/getting-started-with-hapi-js-e841724da924}}\
+\
+Part 1: starting the server and basic routing\
+\pard\pardeftab720\partightenfactor0
+
+\fs42 \cf2 I know it seems like the only framework for Node is {\field{\*\fldinst{HYPERLINK "https://expressjs.com/"}}{\fldrslt Express}}, but I think it\'92s worth it for new programmers to give {\field{\*\fldinst{HYPERLINK "https://hapijs.com/"}}{\fldrslt hapi}} a shot. Hapi is extremely light weight and built around a plugin system that keeps everything modular. Plus, its {\field{\*\fldinst{HYPERLINK "https://hapijs.com/api"}}{\fldrslt docs are great}}
+\f1\i  
+\f0\i0 and they have
+\f1\i  
+\f0\i0 a nice little {\field{\*\fldinst{HYPERLINK "https://hapijs.com/tutorials"}}{\fldrslt tutorials section}}. In this series we\'92ll go over the basics, starting with getting your server going and adding some routes.\cb1 \
+
+\f1\i \cb3 Here is the {\field{\*\fldinst{HYPERLINK "https://github.com/MostlyFocusedMike/hapi-notes-1"}}{\fldrslt GitHub}} to see the finished project\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\i0\b\fs52 \cf2 \cb3 Hapi 16 vs 17\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 A 
+\f1\i quick 
+\f0\i0 side note about which version you should use. There was a shift in the framework from 16 to 17, where it went from using callbacks to async/await. This tutorial, and most of the professional world, will use hapi 17 and up. If you\'92re working on older code that has to be updated, I highly recommend using {\field{\*\fldinst{HYPERLINK "https://futurestud.io/tutorials/hapi-v17-upgrade-guide-your-move-to-async-await"}}{\fldrslt this hapi conversion article}} as a guide. That\'92s a great site just to poke around as well, I\'92ve loved going through their tutorials.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b\fs72 \cf2 \cb3 Getting started: installation\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 Run 
+\f3\fs31\fsmilli15750 \cb5 npm install hapi
+\f0\fs42 \cb3  and you\'92ll be good to go. You should also install {\field{\*\fldinst{HYPERLINK "https://nodemon.io/"}}{\fldrslt nodemon}} globally. That will take care of restarting the server on file changes. Or, you can just clone my {\field{\*\fldinst{HYPERLINK "https://github.com/MostlyFocusedMike/hapi-notes-1"}}{\fldrslt GitHub}}, which uses the magic of {\field{\*\fldinst{HYPERLINK "https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b"}}{\fldrslt npx}} to run a locally installed nodemon.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b\fs72 \cf2 \cb3 Up and running with the server.js file\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 Here\'92s what our 
+\f3\fs31\fsmilli15750 \cb5 server.js
+\f0\fs42 \cb3  file looks like so far:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb5 const Hapi = require(\'91hapi\'92); \cb1 \
+\cb5 const server = new Hapi.Server(\{ \cb1 \
+\cb5     host: \'91localhost\'92, \cb1 \
+\cb5     port: 3101, \cb1 \
+\cb5 \}); \cb1 \
+\cb5 const launch = async () => \{\cb1 \
+\cb5     try \{ \cb1 \
+\cb5         await server.start(); \cb1 \
+\cb5     \} catch (err) \{ \cb1 \
+\cb5         console.error(err); \cb1 \
+\cb5         process.exit(1); \cb1 \
+\cb5     \}; \cb1 \
+\cb5     console.log(`Server running at $\{server.info.uri\}`); \cb1 \
+\cb5 \}\cb1 \
+\cb5 launch();\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 If you run 
+\f3\fs31\fsmilli15750 \cb5 npm start
+\f0\fs42 \cb3  and go to {\field{\*\fldinst{HYPERLINK "http://localhost:3101/"}}{\fldrslt http://localhost:3101/}}, you\'92ll see that our server 
+\f1\i is
+\f0\i0  up and running, you\'92re just getting a 404 because we haven\'92t made a route handler yet. But before we do, let\'92s talk about the two main parts here:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b\fs52 \cf2 \cb3 The Server method and its config object\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 As you can see, we create our server by calling hapi\'92s {\field{\*\fldinst{HYPERLINK "https://hapijs.com/api#server"}}{\fldrslt 
+\f3\fs31\fsmilli15750 \cb5 Server method}}. It takes a {\field{\*\fldinst{HYPERLINK "https://hapijs.com/api#server.options"}}{\fldrslt config object}} and returns a 
+\f3\fs31\fsmilli15750 \cb5 server
+\f0\fs42 \cb3  object that we can work with. So much stuff 
+\f1\i can 
+\f0\i0 go into the config object, but for now all you need is a host and port, a string and an integer, respectively. Also, 
+\f3\fs31\fsmilli15750 \cb5 \'91localhost\'92
+\f0\fs42 \cb3  is fine if you\'92re just puttering around, but save {\field{\*\fldinst{HYPERLINK "https://stackoverflow.com/questions/47025647/localhost-vs-0-0-0-0-with-docker-on-mac-os"}}{\fldrslt yourself the aggravation}} and set your host to 
+\f3\fs31\fsmilli15750 \cb5 \'910.0.0.0\'92
+\f0\fs42 \cb3  if you\'92re using Docker.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b\fs52 \cf2 \cb3 The \'93launch\'94 method\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 Hapi has a built-in async method on the server called 
+\f3\fs31\fsmilli15750 \cb5 start()
+\f0\fs42 \cb3 , and you\'92d think that\'92s all you need. But soon, we\'92ll do a lot of things to our server before it actually starts, and it\'92ll be helpful to keep them all in one place. That\'92s why it\'92s common to create a function of your own. I like to name mine \'91launch,\'92 but you can call it whatever. It\'92s also going to handle any errors by printing them to the console and exiting out of the node process.\cb1 \
+\cb3 After we define the function, we call it at the end of our file, which finally starts our server. Now, let\'92s add some routes!\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b\fs72 \cf2 \cb3 Adding basic Routes\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 You add routes by using the server object\'92s {\field{\*\fldinst{HYPERLINK "https://hapijs.com/api#-serverrouteroute"}}{\fldrslt 
+\f3\fs31\fsmilli15750 \cb5 route()
+\f0\fs42 \cb3  method}}. The method takes either a config object or an array of objects. Here\'92s what the most basic route looks like:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb5 server.route(\{   \cb1 \
+\cb5     method: 'GET',   \cb1 \
+\cb5     path: '/',   \cb1 \
+\cb5     handler: (request, h) => \{     \cb1 \
+\cb5         return 'I am the home route'   \cb1 \
+\cb5     \} \cb1 \
+\cb5 \});\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Now if you go to {\field{\*\fldinst{HYPERLINK "http://localhost:3101/"}}{\fldrslt http://localhost:3101/}}, there\'92s a string printed out to the screen instead of a 404. Progress! As for the config object, we\'92ll give it the minimum three properties for now: 
+\f3\fs31\fsmilli15750 \cb5 method
+\f0\fs42 \cb3  , 
+\f3\fs31\fsmilli15750 \cb5 path
+\f0\fs42 \cb3  , and 
+\f3\fs31\fsmilli15750 \cb5 handler
+\f0\fs42 \cb3  .\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b\fs52 \cf2 \cb3 method\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 This is the http verb that will trigger the route, it can be a string or an array of strings (way more common to see a string). Capitalization doesn\'92t matter, but I personally think all caps looks neater.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b\fs52 \cf2 \cb3 path\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 This is the actual route string path that you would put into the browser, and where you would specify your {\field{\*\fldinst{HYPERLINK "https://hapijs.com/api#path-parameters"}}{\fldrslt parameters}}.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b\fs52 \cf2 \cb3 handler function\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 This is a function that determines what gets sent back to the client. It has access to both the initial {\field{\*\fldinst{HYPERLINK "https://hapijs.com/api#request"}}{\fldrslt 
+\f3\fs31\fsmilli15750 \cb5 request
+\f0\fs42 \cb3  object}}, as well as something called the {\field{\*\fldinst{HYPERLINK "https://hapijs.com/api#response-toolkit"}}{\fldrslt 
+\f3\fs31\fsmilli15750 \cb5 h response toolkit}}. They\'92re great for more complex responses, but a simple 
+\f3\fs31\fsmilli15750 \cb5 return
+\f0\fs42 \cb3  is all that\'92s needed to send back .json or strings.\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b\fs72 \cf2 \cb3 Adding routes to your server in context\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs42 \cf2 \cb3 All put together, this is what your final 
+\f3\fs31\fsmilli15750 \cb5 server.js
+\f0\fs42 \cb3  file looks like this:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs32 \cf2 \cb5 const Hapi = require('hapi');\cb1 \
+\cb5 // create a server with a host and port\cb1 \
+\cb5 const server = new Hapi.Server(\{\cb1 \
+\cb5     host: 'localhost',\cb1 \
+\cb5     port: 3101\cb1 \
+\cb5 \});\cb1 \
+\cb5 // add each route\cb1 \
+\cb5 server.route([\cb1 \
+\cb5     \{\cb1 \
+\cb5         method: 'GET',\cb1 \
+\cb5         path: '/',\cb1 \
+\cb5         handler: (request, h) => \{\cb1 \
+\cb5             return 'I am the home route';\cb1 \
+\cb5         \},\cb1 \
+\cb5     \},\cb1 \
+\cb5     \{\cb1 \
+\cb5         method: 'GET',\cb1 \
+\cb5         path: '/example',\cb1 \
+\cb5         handler: (request, h) => \{\cb1 \
+\cb5             return \{ msg: 'I am json' \};\cb1 \
+\cb5         \},\cb1 \
+\cb5     \}\cb1 \
+\cb5 ]);\cb1 \
+\cb5 // define server start function\cb1 \
+\cb5 const launch = async () => \{\cb1 \
+\cb5     try \{\cb1 \
+\cb5         await server.start(); \cb1 \
+\cb5     \} catch (err) \{\cb1 \
+\cb5         console.error(err);\cb1 \
+\cb5         process.exit(1);\cb1 \
+\cb5     \};\cb1 \
+\cb5     console.log(`Server running at $\{server.info.uri\}`);\cb1 \
+\cb5 \}\cb1 \
+\cb5 // start your server\cb1 \
+\cb5 launch();\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs42 \cf2 \cb3 Congratulations! You\'92ve built a tiny server with hapi! We\'92ll go over {\field{\*\fldinst{HYPERLINK "https://hapijs.com/api#path-parameters"}}{\fldrslt path parameters}} and how to use the {\field{\*\fldinst{HYPERLINK "https://hapijs.com/api#response-toolkit"}}{\fldrslt response toolkit}} in the next installment, but I encourage you to check out the tutorials and docs in the mean time.\cb1 \
+}
