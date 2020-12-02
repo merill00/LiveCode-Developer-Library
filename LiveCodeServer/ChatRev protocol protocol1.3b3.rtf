@@ -1,0 +1,490 @@
+{\rtf1\ansi\ansicpg1252\cocoartf949\cocoasubrtf330
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\froman\fcharset0 TimesNewRomanPSMT;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww9120\viewh12200\viewkind0
+\pard\qc
+
+\f0\b\fs32 \cf0 \ul \ulc0 ChatRev protocol:\
+
+\b0\fs24 \ulnone Pertains to version 1.2, including forum handling\
+\pard\ql\qnatural
+\cf0 \
+
+\b About:
+\b0 \
+The ChatRev protocoll was done by Bj\'f6rnke von Gierke, based on experience with the IRC protocol. It also has grown and evolved a bit since the first usable version. This document has very detailed descriptions of every term, but after some definitions there's first a list of every term with a short description, ordered by sender.\
+\
+
+\b A note on Styling and its meanings\
+\pard\ql\qnatural
+
+\b0 \cf0 \
+Every message is delimited by 
+\i returns
+\i0 . Every message is ended with 
+\i return
+\i0 . In the examples I give, "
+\i return
+\i0 " is written as "
+\i cr
+\i0 ". Note that no message can contain 
+\i returns 
+\i0 unless specific mentioned otherwise. Also in the examples is "
+\i comma
+\i0 " which means the comma character (,). The last mentioned delimiter is "
+\i tab
+\i0 " which means the 
+\i tabulator
+\i0 .\
+Text you send is in quotes (eg: "login", variables you need to fill in are plain (eg: yourMessageHere). All communication is case independent, as usual in Rev. Example code is in 
+\f1 Times new roman
+\f0 , example scripts from Rev is  
+\f1\i Italic
+\f0\i0  (also Times new Roman).\
+\
+\pard\ql\qnatural
+
+\b \cf0 Client Messages\
+\pard\ql\qnatural
+
+\f1\b0 \cf0 "register" & cr & nickname & comma & password & comma & "anything" & cr\
+
+\f0 Every chatter needs to register only once
+\f1 \
+"login" & cr & nickname & comma & password & cr\
+
+\f0 Initiates the login procedure\
+
+\f1 "version 1.2" & cr\
+
+\f0 Second part of the login procedures
+\f1 \
+"chat" & cr & htmltext & cr\
+
+\f0 Send a chat message to everyone\
+
+\f1 "message" & cr & htmltext & cr\
+
+\f0 Send a private message to a single person\
+
+\f1 "me" & cr & text & cr\
+
+\f0 Send a humorous emote message to everyone\
+
+\f1 "setabout" & cr & text & cr\
+
+\f0 Set your longer description, is only seen by other user on demand\
+
+\f1 "setMouse" & cr & text & cr\
+
+\f0 Short descriptive text, shown all the time in some clients, updates immediately\
+
+\f1 "setmail" & cr & text & cr
+\f0 \
+Specify a contact email\
+
+\f1 "getmail" & cr & Nickname & space & subject & cr\
+
+\f0 Querry the contact email of another person\
+
+\f1 "getAbout" & cr & Nickname & cr\
+
+\f0 Querry the longer description of a person\
+
+\f1 "pong" & cr\
+
+\f0 Answer to ping with this, only the server will notice\
+
+\f1 "disconnect" & cr\
+
+\f0 Quit the chat\
+
+\f1 "threads" & cr & forumName & cr\
+
+\f0 Get threads for the forum\
+
+\f1 "postReply" & cr & forumName & cr & threadID & cr & theCount & cr & theText\
+
+\f0 Make a Reply to a thread\
+
+\f1 "makeThread" & cr & theForum & cr & userLogin & theThread & cr & theCount & cr & theMessage\
+
+\f0 Create a thread, and make the first entry to it\
+
+\f1 "getThread" & cr & theForum & cr & threadID & cr
+\f0 \
+get all the entries in a thread.\
+
+\b \
+Server Messages
+\f1\b0 \
+"taken" & cr\
+
+\f0 this means that the nick is already registered\
+
+\f1 "empty nick" & cr\
+
+\f0 this means that item one (above: nickname) of your message was empty\
+
+\f1 "registered" & cr\
+
+\f0 Yay, new users!\
+
+\f1 "login wrong" & cr\
+
+\f0 either the user was not found, or the password was wrong\
+
+\f1 "logged in" & cr\
+
+\f0 This is a lie, you're not yet logged in, but on a good way towards that goal\
+
+\f1 "version OK" & cr
+\f0 \
+Your version string was approved\
+
+\f1 "please update to version 1.2, http://homepage.mac.com/bvg/chatrev1.2.rev" & cr\
+
+\f0 Your version was not approved\
+
+\f1 "chat" & cr & Nickname & cr & htmltext & cr\
+\pard\ql\qnatural
+
+\f0 \cf0 Someone send a chat message to everyone\
+\pard\ql\qnatural
+
+\f1 \cf0 "message" & cr & Nickname & cr & htmltext & cr
+\f0 \
+\pard\ql\qnatural
+\cf0 Someone send you a private message\
+\pard\ql\qnatural
+
+\f1 \cf0 "me" & cr & Nickname & cr & plaintext & cr
+\f0 \
+\pard\ql\qnatural
+\cf0 Someone has a feeling
+\b \
+\pard\ql\qnatural
+
+\f1\b0 \cf0 "setmouse" & cr & Nickname & tab & label & cr\
+\pard\ql\qnatural
+
+\f0 \cf0 Someone has set his caption\
+\pard\ql\qnatural
+
+\f1 \cf0 "member" & cr & nickname & tab & label & cr\
+\pard\ql\qnatural
+
+\f0 \cf0 Someone joined the chat\
+\pard\ql\qnatural
+
+\f1 \cf0 "unmember" & cr & nickname & tab & label & cr\
+
+\f0 Someone left the chat\
+
+\f1 "threads" & cr & theCount & cr & theThreads
+\f0 \
+You demanded the threats of a forum, and now you got em\
+
+\f1 "thread" & cr & theCount & theMessage\
+\pard\ql\qnatural
+
+\f0 \cf0 You demanded to know a threads messages, and now you got them\
+\pard\ql\qnatural
+
+\f1 \cf0 "error" & cr & theErrorMessage & cr\
+\pard\ql\qnatural
+
+\f0 \cf0 Disconnect immediately (i'm not sure this is used anywhere)\
+\pard\ql\qnatural
+
+\f1 \cf0 "ping" & cr\
+\pard\ql\qnatural
+
+\f0 \cf0 Answer with pong immediately\
+\pard\ql\qnatural
+
+\f1 \cf0 "kick" & cr\
+\pard\ql\qnatural
+
+\f0 \cf0 Should force client to disconnect, but not yet implemented on server\
+\
+
+\b \
+Connecting to the chat:
+\b0 \
+You need to know the IP and the port of the chat server to connect to it. The IP of my Server is currently  81.221.127.96, the port is 8008. This stable server has no planned downtimes. As a client, you are generally expected ignore messages that are not in this document. As a server you are expected to disconnect clients who send non-approved messages.\
+\
+
+\b registering:\
+
+\b0 \
+Registering is not very complicated, with few steps needed. First you open the socket to the chatrev server:\
+
+\f1\i open socket to field "ip" & ":8008" with message connected\
+
+\f0\i0 \
+Then you write your first message to the socket:\
+
+\f1 "register" & cr & nickname & comma & password & comma & cr
+\f0 \
+The nickname can contain any chars, besides "tab" or ","(comma).\
+the password can contain any chars, besides ",".\
+the last comma is due to a third parameter that got removed. One could add any string that does not contain a 
+\i comma
+\i0  there.\
+\
+The server responses with one of these messages:\
+
+\f1 "taken" & cr\
+
+\f0 this means that the nick is already registered.\
+
+\f1 "empty nick" & cr\
+
+\f0 this means that item one (above: nickname) of your message was empty.\
+
+\f1 "registered" & cr\
+
+\f0 your client has successfully registered the user nickname.\
+\
+if you want to set the user modifiable data (mouseover, about, label), then you just send the appropriate messages now (they are described further below).\
+\
+after registering you send a disconnect message:\
+
+\f1 "disconnect" & cr\
+
+\f0 the socket to the server should now be closed by using the "close socket" command.\
+\
+
+\b login:\
+
+\b0 \
+Login is a multi step affair. First you open the socket to the chatrev server.\
+\
+Then you send your login information:\
+
+\f1 "login" & cr & nickname & comma & password & cr\
+
+\f0 \
+The server responds with one of these messages:\
+
+\f1 "login wrong" & cr\
+
+\f0 either the user was not found, or the password was wrong.\
+
+\f1 "logged in" & cr\
+
+\f0 You can now proceed with logging in (you are not finished yet).\
+\
+\
+You now write your version information:\
+
+\f1 "version 1.2" & cr\
+
+\f0 \
+The server should now send you one of these:\
+
+\f1 "version OK" & cr\
+
+\f0 if it is ANYTHING else, then you should disconnect, and show the received message to the user.\
+
+\f1 "please update to version 1.2, http://homepage.mac.com/bvg/chatrev1.2.rev" & cr\
+
+\f0 the current error message, when connecting with anything but 1.2\
+\
+the server now proceeds to send your login information to everyone else that is connected. This contains: a "member" message and a "setmouse" message.\
+The server also sends the same to you about every other logged in client.\
+the other clients also get a "message" from the server, saying "Nickname: joined the chat at " and the server time. Whereas you get a "message" from the server saying "Nickname: you joined the chat at " and the server time. When you have received that, then you are properly connected.\
+\
+\pard\ql\qnatural
+
+\b \cf0 Chat messages:\
+
+\b0 \
+all these messages can be received at any time after you have send the version number.\
+\
+the chat message indicates a message that is send to everyone. Excluded are messages from the server which might get send to everyone, but are always "messages". Chat goes like this:\
+
+\f1 "chat" & cr & Nickname & cr & htmltext & cr\
+
+\f0 you receive this to show the text. Version 1.1 and 1.0 have submitted clear text here, but htmltext allows for multiple lines and formatting.\
+\
+the message message indicates a private message, only send to you (except server messages which are send to everyone). it goes like this:\
+
+\f1 "message" & cr & Nickname & cr & htmltext & cr\
+
+\f0 you receive this to show the text. Version 1.1 and 1.0 have submitted clear text here, but htmltext allows for multiple lines and formatting.\
+\
+the me message indicates a humorous action. it is send to everyone, like the chat message.\
+
+\f1 "me" & cr & Nickname & cr & plaintext & cr\
+
+\f0 The me message allows no formatting or htmltext.\
+\
+\pard\ql\qnatural
+
+\b \cf0 Status & special messages:\
+
+\b0 \
+all these messages can be received at any time after you have send the version number.\
+\
+the setmouse message sets the caption (previously called "MouseOver" or "Label") of a user to a certain value. It goes like this:\
+
+\f1 "setmouse" & cr & Nickname & tab & label & cr\
+
+\f0 This allows you to store the caption of a user. Note that this is necessary because messages about other chatters are always identified by both the nickname and the caption.\
+\
+the member message indicates that a user has logged on. It goes like this:\
+
+\f1 "member" & cr & nickname & tab & label & cr\
+
+\f0 After this message you automatically get a private message by the server that the person has logged on. Note that you can't rely on the label for identifying users, just use the nickname to do that.\
+\
+the unmember message indicates that a user has logged off It goes like this:\
+
+\f1 "unmember" & cr & Nickname & tab & label & cr\
+
+\f0 After this message you automatically get a message by the server that the person has logged off. Note that you can't rely on the label for identifying users, just use the nickname to do that.\
+\
+The error message indicates that you have done something bad (not following the protocol) so you get this message:\
+
+\f1 "error" & cr & theErrorMessage & cr\
+
+\f0 you should disconnect after this message, socket communication can not be guaranteed anymore. I'm not sure if this message is even used anymore.\
+\pard\ql\qnatural
+\cf0 \
+If you get a ping message, you should write a pong message to the server, or you will be disconnected.\
+
+\f1 "ping" & cr\
+"pong" & cr\
+\pard\ql\qnatural
+
+\f0 \cf0 \
+the kick message is there to kick too talkative people.\
+
+\f1 "kick" & cr \
+
+\f0 you should disconnect when receiving this message.\
+\
+\
+
+\b Messages you can write (non forum stuff):\
+
+\b0 \
+
+\f1 "chat" & cr & htmltext & cr\
+
+\f0 send a message to everyone\
+
+\f1 \
+"message" & cr & htmltext & cr\
+\pard\ql\qnatural
+
+\f0 \cf0 send a message to a single recipient\
+\pard\ql\qnatural
+
+\f1 \cf0 \
+"me" & cr & text & cr\
+\pard\ql\qnatural
+
+\f0 \cf0 send a humorous emote message to everyone\
+\pard\ql\qnatural
+
+\f1 \cf0 \
+"setabout" & cr & text & cr\
+
+\f0 set your about\
+
+\f1 \
+"setMouse" & cr & text & cr\
+
+\f0 set your caption\
+
+\f1 \
+"setmail" & cr & text & cr
+\f0 \
+this text may not contain spaces. and should be a mail address\
+\
+
+\f1 "getmail" & cr & Nickname & space & subject & cr\
+
+\f0 When you send this message you automatically get a response from the server:\
+"mail" & cr & mailadress & space & subject & cr\
+where subject is the same as you have send before.\
+\
+
+\f1 "getAbout" & cr & Nickname & cr\
+
+\f0 Again this gives you a autoreply, this time a private message which contains the about of the user Nickname.\
+\
+\
+\pard\ql\qnatural
+
+\b \cf0 Forum messages:\
+
+\b0 \
+There is a build in forum in ChatRev, these messages are used to interface it. As this was added later on, and the forum does not allow styles, there will be some messages that allow 
+\f1 returns
+\f0  in the data. For most messages, you need the name of an existing forum. Currently there's two valid forum names: 
+\f1 "General discussion"
+\f0  and  
+\f1 "Support forum"
+\f0 \
+\
+
+\f1 "threads" & cr & forumName & cr\
+
+\f0 You send this to get a list of threads in the specified forum. The server will respond with the following message:\
+\
+
+\f1 "threads" & cr & theCount & cr & theThreads
+\f0 \
+You should read for theCount chars/bytes. theThreads will be a comma delimited list. Item 1 of each line is a unique identifying integer (an ID). Item 2 of each line is a time in seconds. This time is the last time someone has made a reply to that thread (usefull for sorting). Item 3 of each line is the plain text thread title.\
+\
+
+\f1 "postReply" & cr & forumName & cr & threadID & cr & theCount & cr & theText\
+
+\f0 The threadID is a thread number you got by sending the 
+\f1 "threads"
+\f0  message. TheCount is the number of chars respectively bytes in theText, which is your plain text message. theMessage starts with the nickname/login of the current user , followed by colon (:), and ends with the actual message.\
+\
+
+\f1 "makeThread" & cr & theForum & cr & userLogin & theThread & cr & theCount & cr & theMessage\
+
+\f0 Similar to 
+\f1 "postReply"
+\f0 , but allows you to specify a new Thread.\
+theForum again is a valid forum name. theThread is a plain text line. theCount is the number of chars in (which is also the number of bytes of) theMessage. theMessage is plain text. It starts with the nickname/login of the current user , followed by colon (:), and ends with the actual message.\
+\
+
+\f1 "getThread" & cr & theForum & cr & threadID & cr
+\f0 \
+Used to read the Threads. Note that there's no way to get a single message. Again, the threadID is the number you got from the 
+\f1 "threads"
+\f0  message. You'll get this as an answer:\
+\
+
+\f1 "thread" & cr & theCount & theMessage\
+
+\f0 You should read from socket for theCount chars/bytes to get the whole message.\
+\
+\
+
+\b Deprecated and unused messages
+\b0 \
+\
+Generally you should never send or receive these messages, as they're mostly left overs from failed attempts. Maybe you'll get a response maybe not, maybe you'll be disconnected for sending a not approved message, or you might disconnect or disturb the remote user.\
+\
+
+\f1 "fileRequest" & cr & nickName & cr & filePath & cr & fileDescription
+\f0 \
+
+\f1 "fileAccept" & cr & theRemoteUser & cr & myFilePath & cr & "Not implemented" & cr\
+"fileAccept" & cr & theRemoteUser & cr & myFilePath & cr & "Accept" & cr\
+
+\f0 Peer to Peer File sending was tested, but didn't work satisfactory. It blocked the chat from working properly, due to the big data sizes.\
+\
+
+\f1 "subscribe" & cr & "rss" & cr\
+
+\f0 This was a trial to implement a RSS feed from the RunRev.com forums. Although it worked, it's currently disabled on the server, because it was a bit of a hack, and never really worked unobtrusively for the user, and wasn't updating often enough without taxing the runrev.com http server too much.}

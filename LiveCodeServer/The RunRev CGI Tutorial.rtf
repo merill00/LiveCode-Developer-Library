@@ -1,0 +1,97 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Geneva;}
+{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;\red133\green0\blue192;
+\red0\green0\blue120;}
+{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;\cssrgb\c60000\c0\c80000;
+\cssrgb\c0\c0\c54510;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs48 \cf0 \cb2 \expnd0\expndtw0\kerning0
+The RunRev CGI Tutorial\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\fs32 \cf0 \cb2 A reoccurring question is "where can I easily look up how to write CGI's with RunRev". Look no further! Of course there are some differences for each platform, but generally speaking you need to do the following:\cb1 \
+\cb2 1. Get a CGI engine. As of version 2.9, you can take the engine from your own Rev installation, found in:\cb1 \
+\cb2 <Rev Folder>/Runtime/Linux/\cb1 \
+\cb2 Alternatively, download the older CGI engine from the Revolution FTP site:\cb1 \
+\pard\pardeftab720\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "ftp://runrev.com/pub/revolution/downloads/engines/current"}}{\fldrslt \cf4 \cb2 \ul \ulc4 ftp://runrev.com/pub/revolution/downloads/engines/current}}\
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb2 Theoretically you can get the old Metacard engines here (but that's not recommended):\cb1 \
+\pard\pardeftab720\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "ftp://metacard.com/metacard"}}{\fldrslt \cf5 \cb2 \ul \ulc5 ftp://metacard.com/metacard}}\
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb2 2. Install the right engine:\cb1 \
+\cb2 You want to install the engine into the cgi-bin folder. Some servers have named this folder differently, so look out. The engine's permission needs executing rights, so set it to "rwx rx rx", respectively "755". The engine needs to be called from the server software, that's why it needs execution rights.\cb1 \
+\cb2 Note about permissions: Normally you would set the permission to 755 or even 700, but if things don't work, try to set the permission to 777, so you're sure that permissions are not the problem.\cb1 \
+\cb2 3. Create your HTML:\cb1 \
+\cb2 There are two ways to access a cgi on a server. I will explain them seperately:\cb1 \
+\cb2 A. You can simply link it, then the CGI wont receive any data, but you can do nifty stuff nonetheless. Write this into your HTML page:\cb1 \
+\cb2 view the <a href="cgi-bin/guestbook.cgi">guestbook</a>.\cb1 \
+\cb2 B1. Use a Form to generate Data to be processed in the CGI. There are two ways of using a form the "GET" method will show your submitted data in the URL, where the "POST" method will send it invisible. I use the "GET" method in my Example, as you can look at the parameters easily that way:\cb1 \
+\cb2 <form action="cgi-bin/guestbook.cgi" method="get">\cb1 \
+\cb2 Make a new guestbook entry:<br>\cb1 \
+\cb2 name:<br><input type="text" size="40" name="name"><br>\cb1 \
+\cb2 text:<br><textarea rows="9" cols="40" name="text"></textarea><br>\cb1 \
+\cb2 <input type="submit"><br>\cb1 \
+\cb2 </form>\cb1 \
+\cb2 4. Create your cgi script:\cb1 \
+\cb2 Now you can write your CGI script. The CGI file must be placed in the CGI-Bin directory, and have a permission to execute (777). Generally a cgi script works like any script in RunRev, but there are some things to be known, so I will explain them using a guestbook script I wrote:\cb1 \
+\
+\cb2 #!rev -ui\cb1 \
+\cb2 //the first line contains #!nameOfEngine, and a parameter\cb1 \
+\cb2 //I renamed the engine to "rev"\cb1 \
+\cb2 //the parameter -ui makes rev not load the ui and run faceless\cb1 \
+\cb2 on startup\cb1 \
+\cb2 //This is the message the CGI gets when called via a URL\cb1 \
+\cb2 \'a0\'a0open stack "guestbook"\cb1 \
+\cb2 //I open a stack, which is also in the cgi-bin directory\cb1 \
+\cb2 \'a0\'a0get $query_string\cb1 \
+\cb2 //Read submited parameters (using "GET")\cb1 \
+\cb2 \'a0\'a0if it <> empty then\cb1 \
+\cb2 \'a0\'a0\'a0\'a0put urldecode(it) into data\cb1 \
+\cb2 //the Data is urlencoded\cb1 \
+\cb2 \'a0\'a0\'a0\'a0split data by "&" and "="\cb1 \
+\cb2 //I put the data into an array, for easier access\cb1 \
+\cb2 \'a0\'a0\'a0\'a0go to last card\cb1 \
+\cb2 \'a0\'a0\'a0\'a0create card\cb1 \
+\cb2 //new data means a new entry in my guestbook\cb1 \
+\cb2 \'a0\'a0\'a0\'a0put the short internet date into field "date"\cb1 \
+\cb2 \'a0\'a0\'a0\'a0put data["name"] into field "name"\cb1 \
+\cb2 \'a0\'a0\'a0\'a0put data["text"] into field "entry"\cb1 \
+\cb2 //see, I told you the array would come in handy!\cb1 \
+\cb2 \'a0\'a0\'a0\'a0replace return with "<br>" in field "entry"\cb1 \
+\cb2 \'a0\'a0end if\cb1 \
+\cb2 \'a0\'a0put "Content-Type: text/html" & crlf & crlf\cb1 \
+\cb2 //by using put I output stuff to the server,\cb1 \
+\cb2 //and generate the HTML page for the browser\cb1 \
+\cb2 \'a0\'a0put "<html><head><title>You are on my iBook!</title></head><body bgcolor=" & quote & "148D00" & quote & ">"\cb1 \
+\cb2 \'a0\'a0repeat with x = the number of cards down to 1\cb1 \
+\cb2 \'a0\'a0\'a0\'a0go to card x\cb1 \
+\cb2 \'a0\'a0\'a0\'a0put "<p>date:<br> & field "date"\cb1 \
+\cb2 \'a0\'a0\'a0\'a0put "<br>name:<br>" & field "name"\cb1 \
+\cb2 \'a0\'a0\'a0\'a0put "<br>text:<br>" & field "entry" & "</p><hr>"\cb1 \
+\cb2 \'a0\'a0end repeat\cb1 \
+\cb2 \'a0\'a0put "</body>"\cb1 \
+\cb2 \'a0\'a0save stack "guestbook.rev"\cb1 \
+\cb2 // the directory where a saved stack is, needs\cb1 \
+\cb2 // write permissions for everybody!\cb1 \
+\cb2 \'a0\'a0close stack "guestbook"\cb1 \
+\cb2 //if you don't close stacks the cgi won't work\cb1 \
+\cb2 end startup\cb1 \
+\
+\cb2 To clarify I will restate the differences to a normal Script:\cb1 \
+\
+\cb2 1. You need the name of the engine on the first line of the text, like this:\cb1 \
+\cb2 #!revolution -ui\cb1 \
+\cb2 2. You need to use the "on Startup" message, as it gets send when the script executes.\cb1 \
+\cb2 3. Parameters are URLencoded, and in the form of Name1=value1&Name2=value2. You may read eventual parameters submitted with GET using a environment variable:\cb1 \
+\cb2 put $query_string into theQuery\cb1 \
+\cb2 4. You should use the "put" command to output stuff to the browser. Your output should start at least with this:\cb1 \
+\cb2 "Content-Type: text/html charset=ISO-8859-1" & crlf & crlf\cb1 \
+\cb2 5. When Saving a stack, the directory needs write permission for everybody (666)\cb1 \
+\cb2 6. You need to close opened Stacks before the end of the execution.\cb1 \
+\
+\cb2 I hope this enables you to write your own CGI's with RunRev. Fore more details and examples, visit the extensive CGI tutorial by {\field{\*\fldinst{HYPERLINK "http://www.hyperactivesw.com/cgitutorial/tutorialtoc.html"}}{\fldrslt \cf4 \ul \ulc4 Hyperactive Sowftware}}.}
