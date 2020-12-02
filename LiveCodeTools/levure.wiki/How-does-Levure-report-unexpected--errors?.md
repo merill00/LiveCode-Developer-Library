@@ -1,0 +1,7 @@
+Levure will report errors in two different ways:
+
+1. If Levure encounters an error while loading your application files then an error dialog will appear. The error dialog will include the path to the stack that failed to load as well as the raw error log that the LiveCode engine reported. You should only see this error message during development when you have code that has an error (e.g. a library script that generates an error in the `libraryStack` handler).
+2. After the application has loaded then Levure will throw errors if you pass an invalid parameter to a handler. Errors will be prefixed with `levureerr,`. `levureAppGet()`/`levureAppSet` will throw errors if you try to access or set a property that has not been defined in the `app.yml` file. `levureApplicationDataFolder()` will also throw an error if the `application data folder` has not been set in the `app.yml` file.
+3. The preferences helper will throw an error if you try to use it and have not set the `preferences filename` in the `app.yml` file. The error will be prefixed with `prefserr,`.
+
+Levure does not handle the `errorDialog` message. It is up to the developer to incorporate an `errorDialog` handler in their application if they would like to display errors to the end user.
