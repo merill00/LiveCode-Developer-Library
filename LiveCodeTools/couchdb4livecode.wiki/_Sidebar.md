@@ -1,0 +1,6 @@
+[[Home|Home]]
+* [[The Main functions|Main-functions]]
+  * [[List of Main functions|Main-Functions:-List]]
+  * [[Examples of Main funcs|Main-Functions:-Examples]]
+* [[The Quick functions|Quick-functions]]
+* [[The Sync functions|Sync-functions]]
